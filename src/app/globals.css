@@ -1,0 +1,412 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&display=swap");
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  /* Font families (Google Fonts loaded above) */
+  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-playfair-display: "Playfair Display", ui-serif, Georgia, serif;
+  /* Base Colors */
+  --color-primary-bg: #FAFAFB;
+  --color-font-primary: #2E2E2E;
+  --color-font-secondary: #8E857A;
+  /* Flower Navigation Colors */
+  --color-petal-bg: #F3F1EE;
+  --color-petal-border: #D3CEC7;
+  --color-center-circle: #C8BFAA;
+  --color-shadow-accent: #BC7E68;
+  
+}
+
+:root {
+  /* Icon tuning - unique variables not in @theme */
+  --icon-size: 92px;
+  --radius: 26%;
+  --blur: 18px;
+}
+
+/* Project card – same glass style as petals / home (reused from .ios-icon) */
+.project-card {
+  background:
+    radial-gradient(120% 120% at 18% 12%, rgba(250, 250, 248, 0.85), transparent 55%),
+    linear-gradient(180deg, rgba(243, 241, 238, 0.98), rgba(200, 191, 170, 0.22));
+  box-shadow:
+    0 18px 40px rgba(140, 126, 104, 0.22),
+    0 2px 10px rgba(46, 46, 46, 0.08),
+    inset 0 1px 0 rgba(250, 250, 248, 0.65),
+    inset 0 -10px 18px rgba(140, 126, 104, 0.14);
+  border: 1px solid rgba(211, 206, 199, 0.85);
+  backdrop-filter: blur(var(--blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+  background-color: var(--color-primary-bg);
+}
+
+/* Darker description text for accessibility (WCAG contrast) */
+.project-card__description {
+  color: #5a534d;
+}
+
+/* Contact page sections – same glass style as project cards for brand consistency */
+.contact-section {
+  background:
+    radial-gradient(120% 120% at 18% 12%, rgba(250, 250, 248, 0.85), transparent 55%),
+    linear-gradient(180deg, rgba(243, 241, 238, 0.98), rgba(200, 191, 170, 0.22));
+  box-shadow:
+    0 18px 40px rgba(140, 126, 104, 0.22),
+    0 2px 10px rgba(46, 46, 46, 0.08),
+    inset 0 1px 0 rgba(250, 250, 248, 0.65),
+    inset 0 -10px 18px rgba(140, 126, 104, 0.14);
+  border: 1px solid rgba(211, 206, 199, 0.85);
+  backdrop-filter: blur(var(--blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+  background-color: var(--color-primary-bg);
+}
+
+/* Project detail modal – same glass theme as project card */
+.project-modal-box {
+  background:
+    radial-gradient(120% 120% at 18% 12%, rgba(250, 250, 248, 0.85), transparent 55%),
+    linear-gradient(180deg, rgba(243, 241, 238, 0.98), rgba(200, 191, 170, 0.22));
+  box-shadow:
+    0 18px 40px rgba(140, 126, 104, 0.22),
+    0 2px 10px rgba(46, 46, 46, 0.08),
+    inset 0 1px 0 rgba(250, 250, 248, 0.65),
+    inset 0 -10px 18px rgba(140, 126, 104, 0.14);
+  border: 1px solid rgba(211, 206, 199, 0.85);
+  backdrop-filter: blur(var(--blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+  background-color: var(--color-primary-bg);
+  color: var(--color-font-primary);
+}
+
+/* Blur and saturate content behind the modal */
+.project-modal-backdrop {
+  backdrop-filter: blur(var(--blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+}
+
+body {
+  background-color: var(--color-primary-bg);
+  color: var(--color-font-primary);
+  height: 100%;
+  min-height: 100vh;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Flower Navigation Styles */
+.flower_container {
+  position: relative;
+  width: 355px;
+  height: 355px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .flower_container {
+    width: 400px;
+    height: 400px;
+    margin: 3rem auto;
+  }
+}
+
+.flower_center {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--color-center-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(188, 126, 104, 0.3);
+  font-family: var(--font-playfair-display);
+  font-weight: 500;
+  /* color: var(--color-font-primary); */
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  color: var(--color-font-secondary);
+}
+
+@media (min-width: 768px) {
+  .flower_center {
+    width: 110px;
+    height: 110px;
+    font-size: 1.25rem;
+  }
+}
+
+.flower_center:hover {
+  transform: scale(1.05);
+}
+
+.flower_petal {
+  position: absolute;
+  width: 100px;
+  height: 120px;
+  background-color: var(--color-petal-bg);
+  border: 1px solid var(--color-petal-border);
+  border-radius: 30% 30% 50% 50% / 60% 60% 40% 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(188, 126, 104, 0.2);
+  text-decoration: none;
+  font-family: var(--font-inter);
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: var(--color-font-secondary);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  top: 33%;
+  left: 36%;
+  transform-origin: center center;
+}
+
+/* .flower_petal:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 23px;
+  z-index: -1;
+  width: 95px;
+  height: 95px;
+  background: linear-gradient(#F3F1EE, #F3F1EE, #C8BFAA);
+  border-radius: 30% 30% 50% 50% / 60% 60% 40% 40%;
+} */
+
+@media (min-width: 768px) {
+  .flower_petal {
+    width: 140px;
+    height: 160px;
+    font-size: 0.875rem;
+    top: 30%;
+    left: 32.5%;
+  }
+  .flower_petal:after {
+    height: 160px;
+}
+}
+
+/* Position 6 petals in a circle - using translate and rotate */
+.flower_petal:nth-child(2) {
+  transform: translateY(-90px) rotate(0deg);
+}
+
+.flower_petal:nth-child(3) {
+  transform: translateY(-45px) translateX(78px) rotate(60deg);
+}
+
+.flower_petal:nth-child(4) {
+  transform: translateY(45px) translateX(78px) rotate(120deg);
+}
+
+.flower_petal:nth-child(5) {
+  transform: translateY(90px) rotate(180deg);
+}
+
+.flower_petal:nth-child(6) {
+  transform: translateY(45px) translateX(-78px) rotate(240deg);
+}
+
+.flower_petal:nth-child(7) {
+  transform: translateY(-45px) translateX(-78px) rotate(300deg);
+}
+
+@media (min-width: 768px) {
+  .flower_petal:nth-child(2) {
+    transform: translateY(-130px) rotate(0deg);
+  }
+
+  .flower_petal:nth-child(3) {
+    transform: translateY(-65px) translateX(113px) rotate(60deg);
+  }
+
+  .flower_petal:nth-child(4) {
+    transform: translateY(65px) translateX(113px) rotate(120deg);
+  }
+
+  .flower_petal:nth-child(5) {
+    transform: translateY(130px) rotate(180deg);
+  }
+
+  .flower_petal:nth-child(6) {
+    transform: translateY(65px) translateX(-113px) rotate(240deg);
+  }
+
+  .flower_petal:nth-child(7) {
+    transform: translateY(-65px) translateX(-113px) rotate(300deg);
+  }
+}
+
+/* Rotate text back to be readable */
+.flower_petal span {
+  display: inline-block;
+}
+
+.flower_petal:nth-child(2) span {
+  transform: rotate(0deg);
+}
+
+.flower_petal:nth-child(3) span {
+  transform: rotate(-60deg);
+}
+
+.flower_petal:nth-child(4) span {
+  transform: rotate(-120deg);
+}
+
+.flower_petal:nth-child(5) span {
+  transform: rotate(-180deg);
+}
+
+.flower_petal:nth-child(6) span {
+  transform: rotate(-240deg);
+}
+
+.flower_petal:nth-child(7) span {
+  transform: rotate(-300deg);
+}
+
+.flower_petal:hover {
+  box-shadow: 0 4px 12px rgba(188, 126, 104, 0.3);
+  z-index: 5;
+}
+
+.flower_petal:nth-child(2):hover {
+  transform: translateY(-90px) rotate(0deg) scale(1.1);
+}
+
+.flower_petal:nth-child(3):hover {
+  transform: translateY(-45px) translateX(78px) rotate(60deg) scale(1.1);
+}
+
+.flower_petal:nth-child(4):hover {
+  transform: translateY(45px) translateX(78px) rotate(120deg) scale(1.1);
+}
+
+.flower_petal:nth-child(5):hover {
+  transform: translateY(90px) rotate(180deg) scale(1.1);
+}
+
+.flower_petal:nth-child(6):hover {
+  transform: translateY(45px) translateX(-78px) rotate(240deg) scale(1.1);
+}
+
+.flower_petal:nth-child(7):hover {
+  transform: translateY(-45px) translateX(-78px) rotate(300deg) scale(1.1);
+}
+
+@media (min-width: 768px) {
+  .flower_petal:nth-child(2):hover {
+    transform: translateY(-130px) rotate(0deg) scale(1.1);
+  }
+
+  .flower_petal:nth-child(3):hover {
+    transform: translateY(-65px) translateX(113px) rotate(60deg) scale(1.1);
+  }
+
+  .flower_petal:nth-child(4):hover {
+    transform: translateY(65px) translateX(113px) rotate(120deg) scale(1.1);
+  }
+
+  .flower_petal:nth-child(5):hover {
+    transform: translateY(130px) rotate(180deg) scale(1.1);
+  }
+
+  .flower_petal:nth-child(6):hover {
+    transform: translateY(65px) translateX(-113px) rotate(240deg) scale(1.1);
+  }
+
+  .flower_petal:nth-child(7):hover {
+    transform: translateY(-65px) translateX(-113px) rotate(300deg) scale(1.1);
+  }
+}
+
+
+.ios-icon{
+  /* width: var(--icon-size);
+  height: var(--icon-size);
+  border-radius: var(--radius); */
+
+  /* translucent “petal” glass */
+  background:
+    /* highlight bloom */
+    radial-gradient(120% 120% at 18% 12%,
+      rgba(250,250,248,.85), transparent 55%),
+    /* subtle depth + glass tint based on petal + sand */
+    linear-gradient(180deg,
+      rgba(243,241,238,.98),
+      rgba(200,191,170,.22));
+
+  border: 1px solid rgba(211,206,199,.85); /* --petal-border, softened */
+
+  backdrop-filter: blur(var(--blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+
+  /* position: relative; */
+  display: grid;
+  place-items: center;
+  transform: translateZ(0);
+
+  /* outer + inner shadows using your shadow accent */
+  box-shadow:
+    0 18px 40px rgba(140,126,104,.22),  /* warm olive-taupe lift */
+    0 2px 10px rgba(46,46,46,.08),      /* soft neutral support */
+    inset 0 1px 0 rgba(250,250,248,.65),/* top inner edge */
+    inset 0 -10px 18px rgba(140,126,104,.14); /* lower depth */
+}
+
+/* top sheen */
+.ios-icon::before{
+  content:"";
+  position:absolute;
+  inset: 1px;
+  border-radius: calc(var(--radius) - 1px);
+  background: linear-gradient(
+    165deg,
+    rgba(250,250,248,.85) 0%,
+    rgba(243,241,238,.35) 26%,
+    transparent 60%
+  );
+  opacity: .85;
+  pointer-events: none;
+}
+
+.flower_center::before {
+  background: none;
+}
+
+/* soft vignette / edge depth */
+.ios-icon::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: radial-gradient(
+    140% 140% at 50% 112%,
+    rgba(140,126,104,.22),
+    transparent 56%
+  );
+  mix-blend-mode: multiply;
+  opacity: .35;
+  pointer-events: none;
+}
+
+/* icon glyph */
+.ios-icon img,
+.ios-icon svg{
+  width: 56%;
+  height: 56%;
+  display: block;
+
+  /* slight lift, kept neutral */
+  filter: drop-shadow(0 1px 1px rgba(46,46,46,.18));
+}
+
