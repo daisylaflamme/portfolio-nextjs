@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 
 // Existing site links (same as home page petals)
@@ -47,7 +47,6 @@ const FORM_ACTION =
     : "https://www.daisylaflamme.net/contact.php";
 
 export default function ContactPage() {
-  const formRef = useRef(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -97,6 +96,7 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setTouched({ name: true, email: true });
 
     if (honeypot) {
@@ -117,13 +117,13 @@ export default function ContactPage() {
       return;
     }
 
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-    // Option 2: submit form directly to PHP; use ref so we always have the DOM form
-    const form = formRef.current;
-    if (form && typeof form.submit === "function") {
-      form.submit();
-    }
+    // Option 2: submit form directly to PHP. Defer submit so the browser runs it
+    // after this handler (avoids React re-render or ref timing preventing the POST).
+    setTimeout(() => {
+      if (form && typeof form.submit === "function") {
+        form.submit();
+      }
+    }, 0);
   };
 
   return (
@@ -223,7 +223,6 @@ export default function ContactPage() {
               Send a Message
             </h2>
             <form
-              ref={formRef}
               action={FORM_ACTION}
               method="post"
               onSubmit={handleSubmit}
