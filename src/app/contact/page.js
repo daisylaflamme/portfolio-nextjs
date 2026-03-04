@@ -227,7 +227,7 @@ export default function ContactPage() {
             </div>
           </section>
 
-          <section
+          {/* <section
             className="contact-section rounded-2xl p-6 md:p-8 shadow-md"
             aria-labelledby="send-message-heading"
           >
@@ -339,7 +339,7 @@ export default function ContactPage() {
                 {isSubmitting ? "Sending…" : "Send Message"}
               </button>
             </form>
-          </section>
+          </section> */}
       </div>
     </main>
   );

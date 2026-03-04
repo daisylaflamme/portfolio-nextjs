@@ -624,7 +624,7 @@ export const projects = [
     imageAlt:
       "Grid of photography thumbnails on a clean portfolio page.",
     link:
-      "http://daisylaflamme.net/photography/final-photography-portfolio/portfolio.html",
+      "http://photography.daisylaflamme.net/portfolio.html",
   },
 
   {
