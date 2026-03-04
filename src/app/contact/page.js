@@ -94,8 +94,9 @@ export default function ContactPage() {
     if (field === "email") setErrors((prev) => ({ ...prev, email: validateEmail(email) }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setTouched({ name: true, email: true });
 
     if (honeypot) {
@@ -119,7 +120,7 @@ export default function ContactPage() {
     setIsSubmitting(true);
     setSubmitStatus(null);
     // Option 2: submit form directly to PHP; browser navigates to PHP response page
-    e.target.submit();
+    form.submit();
   };
 
   return (
