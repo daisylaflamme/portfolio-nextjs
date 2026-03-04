@@ -96,7 +96,6 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.currentTarget;
     setTouched({ name: true, email: true });
 
     if (honeypot) {
@@ -117,13 +116,29 @@ export default function ContactPage() {
       return;
     }
 
-    // Option 2: submit form directly to PHP. Defer submit so the browser runs it
-    // after this handler (avoids React re-render or ref timing preventing the POST).
-    setTimeout(() => {
-      if (form && typeof form.submit === "function") {
-        form.submit();
-      }
-    }, 0);
+    // Option 2: submit to PHP by creating a temporary form and submitting it.
+    // This avoids ref/timing issues with the React form.
+    const form = document.createElement("form");
+    form.method = "post";
+    form.action = FORM_ACTION;
+    form.style.display = "none";
+
+    // Do not add an input named "submit" — it shadows form.submit() and breaks the call.
+    const fields = [
+      ["name", nameForValidation],
+      ["email", email.trim()],
+      ["message", (message || "").trim()],
+      ["human", "4"],
+    ];
+    fields.forEach(([nameVal, value]) => {
+      const input = document.createElement("input");
+      input.name = nameVal;
+      input.value = value;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
   };
 
   return (
