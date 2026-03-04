@@ -41,7 +41,8 @@ export async function POST(request) {
     });
 
     if (!res.ok) {
-      console.error("PHP contact script error:", res.status, await res.text());
+      const phpBody = await res.text();
+      console.error("PHP contact script error:", res.status, phpBody);
       return NextResponse.json(
         { error: "Something went wrong. Please try again." },
         { status: 502 }

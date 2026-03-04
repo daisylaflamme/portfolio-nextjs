@@ -32,10 +32,10 @@ src/
 │   │   ├── ProjectCard.js  # Card with thumbnail, summary, View Details
 │   │   └── ProjectModal.js# Dialog for project details + link
 │   ├── contact/
-│   │   └── page.js        # Contact info + form (client, validation, /api/contact)
+│   │   └── page.js        # Contact info + form (client validation, POST to PHP)
 │   └── api/
 │       └── contact/
-│           └── route.js   # POST handler: forwards JSON to PHP (CONTACT_PHP_URL)
+│           └── route.js   # Optional: POST proxy to PHP (CONTACT_PHP_URL); not used in Option 2
 └── data/
     └── projects.js       # Array of project objects (id, title, summary, description, thumbnail, image, imageAlt, link)
 
@@ -83,16 +83,15 @@ public/
   - `<dialog>` controlled by `project` (truthy = open). Shows title, description, image, optional “Visit Site” link, close button. Uses `.project-modal-box` and `.project-modal-backdrop`.
 
 - **Contact page**  
-  - Two sections (Contact Information, Send a Message) in a responsive grid. Form: name, email, message; client-side validation and sanitization; honeypot; submits to `POST /api/contact`.
+  - Two sections (Contact Information, Send a Message) in a responsive grid. Form: name, email, message; client-side validation and sanitization; honeypot. **Option 2:** form posts directly to the PHP script on cPanel (`NEXT_PUBLIC_CONTACT_FORM_ACTION`); browser navigates to the PHP response page (success or error with “Back to contact” link).
 
 ---
 
 ## API
 
-- **`POST /api/contact`**  
-  - Accepts JSON: `{ name, email, message }`.  
-  - Validates `name` and `email`; forwards the payload to an external PHP script as `application/x-www-form-urlencoded` (with `human=4`, `submit=Submit` for compatibility).  
-  - PHP URL is set via **`CONTACT_PHP_URL`** in `.env.local` (e.g. `https://daisylaflamme.net/contact.php`).
+- **`POST /api/contact`** (optional)  
+  - Used only if you switch to Option 1 (API proxy). Accepts JSON: `{ name, email, message }`; forwards to PHP via **`CONTACT_PHP_URL`**.  
+  - **Current setup (Option 2):** The contact form does not use this route; it POSTs directly to the PHP URL from the browser.
 
 ---
 
@@ -120,8 +119,9 @@ public/
 
 ## Environment
 
-- **`.env.local`** (not committed)  
-  - `CONTACT_PHP_URL` — full URL of the PHP contact script so the API route can forward form submissions.
+- **Option 2 (current):** Form posts to PHP from the browser.  
+  - **`NEXT_PUBLIC_CONTACT_FORM_ACTION`** (optional) — full URL of the PHP script (e.g. `https://www.daisylaflamme.net/contact.php`). Defaults to that URL if unset.  
+- **Option 1 (API proxy):** If you use the API route instead, set **`CONTACT_PHP_URL`** in Vercel to the same PHP URL.
 
 ---
 
@@ -136,4 +136,4 @@ public/
 
 ## Summary
 
-The app is a **single Next.js 14 App Router app** with a **shared layout** (Header + NavMenu), **four main routes** (home flower, resume, web-projects grid + modal, contact form), **one API route** that proxies the contact form to PHP, and a **central design system** in `globals.css` (tokens + glass cards + flower nav). Data is static (`projects.js`); contact submissions go to an external PHP endpoint configured via `CONTACT_PHP_URL`.
+The app is a **single Next.js 14 App Router app** with a **shared layout** (Header + NavMenu), **four main routes** (home flower, resume, web-projects grid + modal, contact form), and a **central design system** in `globals.css` (tokens + glass cards + flower nav). Data is static (`projects.js`). **Contact form (Option 2):** the browser POSTs directly to a PHP script on cPanel; no Vercel env required for the form to work. Upload `contact.php` to `public_html` and optionally set `NEXT_PUBLIC_CONTACT_FORM_ACTION` if the URL differs.

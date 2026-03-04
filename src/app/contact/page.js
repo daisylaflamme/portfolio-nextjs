@@ -40,6 +40,12 @@ function sanitizeEmail(value) {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Option 2: form posts directly to PHP on cPanel (no Next.js API). Set in Vercel if different.
+const FORM_ACTION =
+  typeof process.env.NEXT_PUBLIC_CONTACT_FORM_ACTION !== "undefined"
+    ? process.env.NEXT_PUBLIC_CONTACT_FORM_ACTION
+    : "https://www.daisylaflamme.net/contact.php";
+
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -112,32 +118,8 @@ export default function ContactPage() {
 
     setIsSubmitting(true);
     setSubmitStatus(null);
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: nameForValidation,
-          email: email.trim(),
-          message: message.trim() || "",
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setSubmitStatus("error");
-        setErrors((prev) => ({ ...prev, submit: data.error || "Something went wrong. Please try again." }));
-        return;
-      }
-      setSubmitStatus("success");
-      setName("");
-      setEmail("");
-      setMessage("");
-    } catch {
-      setSubmitStatus("error");
-      setErrors((prev) => ({ ...prev, submit: "Network error. Please try again." }));
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Option 2: submit form directly to PHP; browser navigates to PHP response page
+    e.target.submit();
   };
 
   return (
@@ -236,7 +218,15 @@ export default function ContactPage() {
             >
               Send a Message
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-4 relative" noValidate>
+            <form
+              action={FORM_ACTION}
+              method="post"
+              onSubmit={handleSubmit}
+              className="space-y-4 relative"
+              noValidate
+            >
+              <input type="hidden" name="human" value="4" />
+              <input type="hidden" name="submit" value="Submit" />
               <div style={{ position: "absolute", left: "-9999px", width: "1px", height: "1px", overflow: "hidden" }} aria-hidden="true">
                 <label htmlFor="contact-website-url">Leave blank</label>
                 <input
