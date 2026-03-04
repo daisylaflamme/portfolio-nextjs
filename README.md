@@ -2,6 +2,8 @@
 
 A Next.js 14 (App Router) portfolio site for Daisy Laflamme: UI/Front-End Engineer. It uses React 18, Tailwind CSS 4, and DaisyUI, with a flower-style home navigation and shared glass-style UI.
 
+**Production:** Deployed with [Vercel](https://vercel.com) at **[https://www.daisylaflamme.net/](https://www.daisylaflamme.net/)**.
+
 ---
 
 ## Tech stack
@@ -126,7 +128,7 @@ public/
 ## Scripts
 
 - `npm run dev` — Development server (e.g. http://localhost:3000).
-- `npm run build` — Production build.
+- `npm run build` — Production build https://www.daisylaflamme.net/.
 - `npm run start` — Run production server after `build`.
 - `npm run lint` — Next.js lint.
 
