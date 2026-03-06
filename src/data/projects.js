@@ -51,6 +51,21 @@
 export const projects = [
   // --- Modern e-commerce: American Signature / Levin / Lovesac / HUB ---
   {
+    id: "blueport-multisite-platform-ui",
+    title: "E-commerce Platform UI",
+    summary:
+      "Implemented scalable, polished UI components and interactions that delivered consistent shopping experiences across 20+ furniture e-commerce sites on Blueport’s platform.",
+    description:
+      "Contributed to a multi-tenant e-commerce platform powering furniture retailers by translating hundreds of design mocks into production-ready, responsive front-end experiences. Implemented and enhanced a shared library of brand-configurable UI patterns—including custom pages, carousels, sliders, tabs, modals, forms, filters, and site configuration—so multiple clients could adopt consistent UX while preserving unique visual identity. Delivered core shopping surfaces such as mobile/desktop navigation and menus, global footers, search results grids, masonry galleries, product cards, PDP layouts, and cart pages with order summaries and sticky interactive CTAs. Collaborated cross-functionally to lead checkout UI flow initiatives, improving usability and consistency across brands while maintaining a high bar for semantic markup, maintainable styling, and scalable component architecture. Built and maintained features in a mixed legacy + modern stack (Angular, JavaScript, HTML,SCSS, CSS, C#, AngularJS, jQuery, LESS, Bootstrap) integrated with platform services.",
+    thumbnail: "/images/projects/thumbnails/masonry-collage.jpg",
+    images: [
+      "/images/projects/masonry-collage.jpg"
+    ],
+    imageAlt:
+      "Masonry collage of multi-brand e-commerce UI work: mobile navigation, PDPs, cart and checkout pages, search grids, content editor layouts, and marketing modules across multiple furniture storefronts.",
+    link: null,
+  },
+  {
     id: "checkout-multi-payments",
     title: "Multi‑Payment Checkout Enablement",
     summary:
@@ -206,63 +221,23 @@ export const projects = [
       "Product browse page showing fabric filter controls and large swatch grid.",
     link: "https://www.lovesac.com/search/fabric",
   },
-
   {
-    id: "mobile-checkout",
-    title: "Mobile Checkout",
+    id: "levin-dropship-checkout-responsive",
+    title: "Responsive Multi-Step Checkout & Cart Experience",
     summary:
-      "Built a responsive mobile checkout flow so customers can manage delivery options on smaller screens.",
+      "Implemented a responsive, multi-page cart-to-checkout experience for Levin Furniture—delivering consistent UI and UX flows across mobile, tablet, and desktop.",
     description:
-      "Based on a specific mobile mockup, implemented a responsive UI for a multi-page checkout flow that lets ecommerce customers select product delivery preferences on their phones. Focused on clarity, ease of use, and preserving key cart information on small viewports.",
-    thumbnail:
-      "/images/projects/thumbnails/levin-dropship-checkout-page-iphoneX.png",
-    images: ["/images/projects/levin-dropship-checkout-page-iphoneX.png"],
+      "Collaborated within an engineering team to translate detailed device-specific mockups into a unified, production-ready checkout journey. Built responsive layouts and interaction patterns for the cart and multi-step checkout, ensuring delivery preferences, forms, and order details remained clear, touch-friendly, and consistent across breakpoints. Focused on usability and conversion fundamentals—readable hierarchy, persistent cart context, and predictable navigation—while maintaining a scalable front-end implementation that supports ongoing enhancements.",
+    thumbnail: "/images/projects/thumbnails/levin-dropship-checkout-page-iphoneX.png",
+    images: [
+      "/images/projects/levin-dropship-checkout-page-iphoneX.png",
+      "/images/projects/levin-dropship-checkout-page-ipad.png",
+      "/images/projects/levin-dropship-checkout-page.png",
+      "/images/projects/levin-dropship-cart-page.png"
+    ],
     imageAlt:
-      "iPhone checkout screen for Levin Furniture showing delivery options and order summary.",
-    link: "https://www.levinfurniture.com/shoppingcart",
-  },
-
-  {
-    id: "tablet-checkout",
-    title: "Tablet Checkout",
-    summary:
-      "Extended the new delivery-options checkout experience to a responsive tablet layout.",
-    description:
-      "Using a dedicated tablet mockup, implemented a responsive multi-page checkout UI tailored for tablet users. Ensured delivery options, forms, and order details remained readable and touch-friendly while staying consistent with the broader checkout experience.",
-    thumbnail:
-      "/images/projects/thumbnails/levin-dropship-checkout-page-ipad.png",
-    images: ["/images/projects/levin-dropship-checkout-page-ipad.png"],
-    imageAlt:
-      "Tablet view of Levin Furniture checkout page with delivery and shipping preferences.",
-    link: "https://www.levinfurniture.com/shoppingcart",
-  },
-
-  {
-    id: "desktop-checkout",
-    title: "Desktop Checkout",
-    summary:
-      "Implemented a desktop multi-step checkout with delivery preferences aligned to detailed mockups.",
-    description:
-      "Based on detailed desktop mockups, implemented a responsive multi-page checkout for Levin Furniture that includes delivery preferences, shipping options, and clear order summaries. The experience is consistent with the mobile and tablet flows while taking advantage of wider layouts.",
-    thumbnail: "/images/projects/thumbnails/levin-dropship-checkout-page.png",
-    images: ["/images/projects/levin-dropship-checkout-page.png"],
-    imageAlt:
-      "Desktop checkout page for Levin Furniture showing address, shipping, and delivery choices.",
-    link: "https://www.levinfurniture.com/shoppingcart",
-  },
-
-  {
-    id: "checkout-cart",
-    title: "Checkout Cart",
-    summary:
-      "Refined the cart step in the new multi-page checkout so delivery preferences connect cleanly from the cart.",
-    description:
-      "Implemented a responsive cart page as part of the new multi-page checkout experience, letting users review items and configure delivery options before proceeding. Ensured the cart flow integrates seamlessly with the subsequent checkout steps.",
-    thumbnail: "/images/projects/thumbnails/levin-dropship-cart-page.png",
-    images: ["/images/projects/levin-dropship-cart-page.png"],
-    imageAlt:
-      "Shopping cart page at Levin Furniture with products and delivery preference messaging.",
-    link: "https://www.levinfurniture.com/shoppingcart",
+      "Responsive Levin Furniture cart and multi-step checkout flow showing delivery options and order summaries across mobile, tablet, and desktop layouts.",
+    link: null,
   },
 
   {
@@ -295,60 +270,36 @@ export const projects = [
   },
 
   {
-    id: "lovesac-store-locator",
-    title: "Store Locator",
+    id: "multi-brand-store-locator",
+    title: "Multi-Brand Store Locator Experience",
     summary:
-      "Led UI implementation of a responsive, SEO-friendly store locator experience for Lovesac.",
+      "Delivered responsive, SEO-friendly store locator experiences across multiple retail brands, improving location discoverability while maintaining brand-consistent UI patterns.",
     description:
-      "Managed one teammate while implementing the UI for a responsive, search-engine-optimized store locator for Lovesac. The feature helps customers find locations by region, improving both discoverability and local store traffic.",
+      "Implemented and refined store locator UIs that combine searchable location listings with map-based browsing, optimized for responsiveness and search visibility. For Lovesac, led UI delivery while coordinating day-to-day work with a teammate to ensure consistent quality and timely execution. For American Signature Furniture, styled and integrated the locator experience to align with brand standards while keeping layouts fast, accessible, and easy to navigate. Across both implementations, focused on scalable UI patterns that support regional landing pages and help drive local store traffic.",
     thumbnail: "/images/projects/thumbnails/lovesac-store-locator.png",
-    images: ["/images/projects/lovesac-store-locator.png"],
+    images: [
+      "/images/projects/lovesac-store-locator.png",
+      "/images/projects/asi-store-locator.png"
+    ],
     imageAlt:
-      "Lovesac store locator page showing a map and list of store locations.",
-    link: "https://www.lovesac.com/store-locator/ma",
-  },
-
-  {
-    id: "asi-store-locator",
-    title: "Store Locator",
-    summary:
-      "Styled an American Signature Furniture store locator to be fully responsive and SEO-friendly.",
-    description:
-      "Fully styled a new responsive and search-engine-optimized store locator for American Signature Furniture. The UI makes it easy for shoppers to find nearby stores while staying consistent with the brand’s look and feel.",
-    thumbnail: "/images/projects/thumbnails/asi-store-locator.png",
-    images: ["/images/projects/asi-store-locator.png"],
-    imageAlt:
-      "American Signature Furniture store locator page with a map and store list.",
-    link: "https://www.americansignaturefurniture.com/store-locator/de",
-  },
-
-  {
-    id: "promo-shell",
-    title: "Promo Builder",
-    summary:
-      "Implemented tools that let non-technical users configure and launch shopping-cart promotions.",
-    description:
-      "Worked in a senior dev team implementing UI workflows that let non-technical users create web shopping-cart promotions. Built the promotion shell screens using AngularJS, Angular 6, C#, HTML, and LESS so marketers can configure offers without engineering help.",
-    thumbnail:
-      "/images/projects/thumbnails/hub-cart-promotion-shell.png",
-    images: ["/images/projects/hub-cart-promotion-shell.png"],
-    imageAlt:
-      "Internal promotion management interface showing shopping cart promotion configuration.",
+      "Store locator pages for multiple brands showing responsive layouts with a map and a list of nearby store locations.",
     link: null,
   },
 
   {
-    id: "promo-rules",
-    title: "Promo Rules",
+    id: "promo-builder",
+    title: "Promotion Builder for Cart Discounts",
     summary:
-      "Extended the promotion builder with detailed rules screens for advanced cart logic.",
+      "Delivered an internal promotion builder that enables non-technical teams to launch and manage sophisticated shopping-cart promotions through a guided UI—no engineering required for day-to-day updates.",
     description:
-      "Worked in a senior dev team implementing rule-definition UIs for shopping-cart promotions. The interface lets non-technical users create complex eligibility and discount logic through configurable forms instead of code.",
-    thumbnail:
-      "/images/projects/thumbnails/hub-cart-promotion-rules.png",
-    images: ["/images/projects/hub-cart-promotion-rules.png"],
+      "Collaborated with a senior engineering team to implement end-to-end UI workflows for creating shopping-cart promotions, from shell setup screens to advanced rule definition. Built configurable form experiences that support complex eligibility and discount logic while keeping the interface approachable for marketers. Implemented the front end in a mixed stack (AngularJS + Angular 6) and integrated with server-side services (C#) using scalable HTML and LESS patterns to ensure maintainability and consistent admin UX.",
+    thumbnail: "/images/projects/thumbnails/hub-cart-promotion-shell.png",
+    images: [
+      "/images/projects/hub-cart-promotion-shell.png",
+      "/images/projects/hub-cart-promotion-rules.png"
+    ],
     imageAlt:
-      "Admin screen showing rule configuration for shopping cart promotions.",
+      "Internal admin interfaces for managing shopping cart promotions, including promotion setup and rule configuration screens.",
     link: null,
   },
 
@@ -368,9 +319,9 @@ export const projects = [
 
   {
     id: "content-sections",
-    title: "Content Sections",
+    title: "Widget Management Dashboard",
     summary:
-      "Created interfaces for managing reusable content sections across CMS-driven pages.",
+      "Created interfaces for managing reusable widgets across CMS-driven web pages.",
     description:
       "Worked in a team that implemented a UI for non-technical users to add custom content sections to web pages. The interface organizes reusable elements into a list so editors can assemble rich layouts without editing code.",
     thumbnail:
@@ -428,65 +379,27 @@ export const projects = [
   },
 
   {
-    id: "globalu-itinerary",
-    title: "Tour Itinerary",
+    id: "globalu-site-pages",
+    title: "GlobalU Travel Site Pages & Responsive Templates",
     summary:
-      "Converted PSD travel layouts into responsive HTML, CSS, and Bootstrap pages.",
+      "Delivered responsive GlobalU website templates by converting PSD designs into production-ready code, supporting new content pages and ongoing site enhancements.",
     description:
-      "Translated a detailed PSD design into responsive HTML, CSS, and Bootstrap 3 for an individual tour itinerary page. Ensured the layout worked well across devices while staying faithful to the original design.",
-    thumbnail:
-      "/images/projects/thumbnails/globalu-individual-itinarary.jpg",
-    images: ["/images/projects/globalu-individual-itinarary.jpg"],
-    imageAlt:
-      "Travel itinerary page with photos and schedule details.",
-    link: null,
-  },
-
-  {
-    id: "globalu-usa-page",
-    title: "USA Overview",
-    summary:
-      "Built a responsive destination overview page from PSD using Bootstrap 3.",
-    description:
-      "Implemented a PSD design as a responsive USA destination overview page using HTML, CSS, and Bootstrap 3. Focused on clean typography and imagery to showcase travel programs.",
-    thumbnail: "/images/projects/thumbnails/usa-page.jpg",
-    images: ["/images/projects/usa-page.jpg"],
-    imageAlt:
-      "Travel website page introducing USA programs with hero imagery.",
-    link: null,
-  },
-
-  {
-    id: "globalu-tours",
-    title: "Tour Listings",
-    summary:
-      "Developed tour listing layouts as responsive Bootstrap pages from static designs.",
-    description:
-      "Converted static PSD designs into responsive HTML, CSS, and Bootstrap 3 for a tours listing page. Structured information and imagery so visitors can easily browse available trips.",
-    thumbnail: "/images/projects/thumbnails/globalu-tours.jpg",
-    images: ["/images/projects/globalu-tours.jpg"],
-    imageAlt:
-      "Tours listing page for GlobalU with multiple trip cards.",
-    link: null,
-  },
-
-  {
-    id: "globalu-home",
-    title: "GlobalU Site",
-    summary:
-      "Maintained and enhanced GlobalU.com with new pages, layouts, and content updates.",
-    description:
-      "Handled website development, maintenance, and updates for GlobalU.com. Delivered new templates and page variants while keeping the design cohesive and the site stable.",
+      "Implemented multiple GlobalU travel experiences by translating detailed PSD layouts into responsive, pixel-accurate front-end pages. Built key templates including tour listings, destination overviews, and individual itinerary pages, with a focus on clean typography, image-led storytelling, and mobile-friendly layout behavior. Also supported ongoing site maintenance and content updates, ensuring consistency across templates and a stable, cohesive user experience.",
     thumbnail: "/images/projects/thumbnails/globalu-home-page.jpg",
-    images: ["/images/projects/globalu-home-page.jpg"],
+    images: [
+      "/images/projects/globalu-individual-itinarary.jpg",
+      "/images/projects/usa-page.jpg",
+      "/images/projects/globalu-tours.jpg",
+      "/images/projects/globalu-home-page.jpg"
+    ],
     imageAlt:
-      "GlobalU home page with hero image and navigation.",
+      "GlobalU travel site pages including tour listings, USA overview, and itinerary layouts built from PSD designs as responsive Bootstrap templates.",
     link: null,
   },
 
   {
     id: "cornerstone-careers",
-    title: "Career Site",
+    title: "Cornerstone Career Website",
     summary:
       "Implemented a branded Cornerstone career site that matches the company’s main web presence.",
     description:
@@ -501,7 +414,7 @@ export const projects = [
 
   {
     id: "https-migration-kl",
-    title: "HTTPS Migration",
+    title: "Website HTTPS Migration",
     summary:
       "Led HTTP-to-HTTPS migration across multiple sites to improve security and SEO.",
     description:
@@ -514,25 +427,8 @@ export const projects = [
   },
 
   {
-    id: "blog-mobile",
-    title: "Blog Mobile",
-    summary:
-      "Optimized a content-heavy blog layout for mobile using Bootstrap 3.",
-    description:
-      "Implemented a responsive blog layout using Bootstrap 3 that delivers a better mobile reading experience. Improved typography, spacing, and navigation so posts are easy to read on phones.",
-    thumbnail:
-      "/images/projects/thumbnails/gphomestay-responsive-mobile-blog.jpg",
-    images: [
-      "/images/projects/gphomestay-responsive-mobile-blog.jpg",
-    ],
-    imageAlt:
-      "Mobile blog layout for GPHomestay with article list.",
-    link: null
-  },
-
-  {
     id: "cambridge-network-site",
-    title: "Network Site",
+    title: "Cambridge Network Marketing Website",
     summary:
       "Maintained and evolved the main Cambridge Network marketing site.",
     description:
@@ -547,7 +443,7 @@ export const projects = [
 
   {
     id: "wechat-raffle-game",
-    title: "Raffle Game",
+    title: "WeChat Raffle Game",
     summary:
       "Developed a mobile raffle game integrating jQuery UI with the WeChat SDK.",
     description:
@@ -563,31 +459,19 @@ export const projects = [
   },
 
   {
-    id: "dragon-boat-landing",
-    title: "Event Landing",
+    id: "dragon-boat-campaign",
+    title: "Dragon Boat Festival Campaign Landing Pages",
     summary:
-      "Designed and coded mobile-first landing pages for a Dragon Boat Festival campaign.",
+      "Delivered a cohesive Dragon Boat Festival campaign experience with mobile-first landing pages and a complementary desktop microsite layout optimized for clarity, speed, and conversion.",
     description:
-      "Created mobile landing pages for a Dragon Boat Festival event, focusing on concise information, clear calls to action, and quick loading on phones. Implemented the layouts with responsive HTML and CSS.",
-    thumbnail:
-      "/images/projects/thumbnails/dragon-boath-thank-you.jpg",
-    images: ["/images/projects/dragon-boat-festival-2016-landing-page.jpg"],
+      "Built the front-end experience for a Dragon Boat Festival event campaign by implementing responsive landing pages designed to load quickly and communicate key details at a glance. Created a mobile-first layout with clear calls to action and concise content, then extended the campaign into a desktop-friendly microsite that preserved the visual identity while improving readability and information hierarchy on larger screens. Implemented the layouts with clean, responsive HTML and CSS to ensure consistent behavior across devices.",
+    thumbnail: "/images/projects/thumbnails/dragon-boath-thank-you.jpg",
+    images: [
+      "/images/projects/dragon.jpg",
+      "/images/projects/dragon-boat-festival-2016-landing-page.jpg"
+    ],
     imageAlt:
-      "Dragon Boat Festival thank-you and landing page on mobile.",
-    link: null,
-  },
-
-  {
-    id: "dragon-boat-desktop",
-    title: "Event Microsite",
-    summary:
-      "Extended the Dragon Boat Festival campaign into a desktop microsite layout.",
-    description:
-      "Delivered a complementary desktop layout for the Dragon Boat Festival campaign, extending the visual identity from the mobile landing page. Ensured responsive behavior while highlighting key event details.",
-    thumbnail: "/images/projects/thumbnails/dragon.jpg",
-    images: ["/images/projects/dragon.jpg"],
-    imageAlt:
-      "Dragon Boat Festival desktop landing page with hero image.",
+      "Dragon Boat Festival campaign landing pages showing mobile-first layouts and a desktop microsite with hero imagery and event details.",
     link: null,
   },
 
@@ -610,219 +494,66 @@ export const projects = [
 
   {
     id: "cambridge-orientation-site",
-    title: "Orientation Site",
+    title: "WordPress Orientation Site for International Students",
     summary:
-      "Developed and maintained the CambridgeOrientation.org informational site.",
+      "Developed and maintained a WordPress orientation site that helps international students and families quickly find program information and resources.",
     description:
-      "Delivered website development, maintenance, and updates for CambridgeOrientation.org. Ensured that program information, registration links, and resources remained accurate and easy for families to find.",
-    thumbnail:
-      "/images/projects/thumbnails/cambridge-orientation-en.jpg",
+      "Delivered ongoing website development, maintenance, and content updates for a WordPress-based orientation site serving international students. Ensured program details, registration links, schedules, and key resources stayed accurate, well-organized, and easy to navigate—supporting a smooth onboarding experience for students and their families.",
+    thumbnail: "/images/projects/thumbnails/cambridge-orientation-en.jpg",
     images: ["/images/projects/cambridge-orientation-en.jpg"],
     imageAlt:
-      "Cambridge Orientation website home page.",
+      "Orientation website homepage for international students.",
     link: null
   },
-
   {
-    id: "online-quiz",
-    title: "Online Quiz",
+    id: "gphomestay-digital-experiences",
+    title: "GPHomestay Marketing, Content, and Lead Capture Experiences",
     summary:
-      "Built an interactive online quiz experience to collect user responses in a friendly format.",
+      "Delivered responsive, conversion-focused web experiences for GPHomestay—spanning mobile content UX, paid-campaign landing pages, testimonial storytelling, CRM-integrated lead capture, and interactive customer quizzes.",
     description:
-      "Designed and implemented an online quiz interface, focusing on clear questions, easy navigation, and a lightweight front-end so the experience feels fast and approachable.",
-    thumbnail: "/images/projects/thumbnails/customer-quiz.jpg",
-    images: ["/images/projects/customer-quiz.jpg"],
-    imageAlt:
-      "Online quiz page with customer questions and options.",
-    link: null,
-  },
-
-  {
-    id: "adwords-landing",
-    title: "AdWords Landing",
-    summary:
-      "Created a focused AdWords landing page to support a monetary incentives campaign.",
-    description:
-      "Built a conversion-oriented landing page for an AdWords campaign, aligning the layout and copy with the ad messaging. The page is streamlined to capture leads effectively from paid traffic.",
-    thumbnail:
-      "/images/projects/thumbnails/monetary-landing-page-a.jpg",
-    images: ["/images/projects/monetary-landing-page-a.jpg"],
-    imageAlt:
-      "AdWords campaign landing page offering monetary incentives.",
-    link: null
-  },
-
-  {
-    id: "testimonial-page",
-    title: "Host Stories",
-    summary:
-      "Integrated a testimonial design into a custom WordPress theme to showcase host stories.",
-    description:
-      "Integrated a new testimonial page design into a custom WordPress theme for GPHomestay. The page highlights host family stories in a structured, visually appealing layout that supports long-form content.",
-    thumbnail: "/images/projects/thumbnails/gp-testimonials.jpg",
-    images: ["/images/projects/gp-testimonials.jpg"],
-    imageAlt:
-      "WordPress testimonial page showing host stories and photos.",
-    link: null
-  },
-
-  {
-    id: "salesforce-lead-form",
-    title: "Lead Form",
-    summary:
-      "Implemented a Salesforce-integrated lead form to streamline host family inquiries.",
-    description:
-      "Built a lead-generation web form that integrates with Salesforce and other database APIs. The form captures host family inquiries and routes them into the company’s CRM pipeline automatically.",
-    thumbnail:
-      "/images/projects/thumbnails/gp-inqary-form-integration.jpg",
-    images: ["/images/projects/gp-inqary-form-integration.jpg"],
-    imageAlt:
-      "Lead generation form for host family inquiries integrated with Salesforce.",
-    link: null
-  },
-
-  {
-    id: "gphomestay-site",
-    title: "GPHomestay Site",
-    summary:
-      "Supported ongoing development and content updates for GPHomestay’s main site.",
-    description:
-      "Handled website development, maintenance, and updates for GPHomestay.com. Delivered new layouts and refined existing templates to support marketing campaigns and program information.",
-    thumbnail:
-      "/images/projects/thumbnails/dev-gphomestay-home-page-july28-2016.jpg",
+      "Contributed to the build and ongoing enhancement of GPHomestay.com by implementing key templates and interactive features that supported both marketing and program growth. Optimized a content-heavy blog for mobile readability with Bootstrap 3, created streamlined AdWords landing pages aligned with campaign messaging, and integrated a “Host Stories” testimonial layout into a custom WordPress theme for long-form content. Implemented a lead-generation form integrated with Salesforce and supporting database APIs to route inquiries into the CRM pipeline, and built a lightweight online quiz experience to collect user responses through an intuitive, guided UI. Supported site maintenance and iterative improvements to keep templates cohesive and performant.",
+    thumbnail: "/images/projects/thumbnails/dev-gphomestay-home-page-july28-2016.jpg",
     images: [
+      "/images/projects/monetary-landing-page-a.jpg",
+      "/images/projects/gp-testimonials.jpg",
+      "/images/projects/gp-inqary-form-integration.jpg",
       "/images/projects/dev-gphomestay-home-page-july28-2016.jpg",
+      "/images/projects/customer-quiz.jpg"
     ],
     imageAlt:
-      "GPHomestay home page showing hero, navigation, and feature content.",
-    link: null
-  },
-
-  // --- Selected academic / early portfolio projects ---
-
-  {
-    id: "hci-mockup",
-    title: "HCI Mockup",
-    summary:
-      "Produced a comprehensive interface mockup as part of a Human–Computer Interaction course.",
-    description:
-      "Created a comprehensive interface mockup for a Human–Computer Interaction project. Focused on user flows, layout, and visual hierarchy to demonstrate best practices in usable design.",
-    thumbnail: "/images/projects/thumbnails/validity.jpg",
-    images: ["/images/projects/validity.jpg"],
-    imageAlt:
-      "Complex application mockup created for an HCI project.",
+      "GPHomestay digital experiences including a mobile-optimized blog, AdWords landing page, testimonial stories, Salesforce-integrated lead form, main site homepage, and an interactive online quiz.",
     link: null,
   },
 
   {
-    id: "js-girls-platform",
-    title: "JS Learning",
+    id: "invite-education-prototypes",
+    title: "Invite Education White-Label Student Platform Prototypes",
     summary:
-      "Built an interactive JavaScript learning platform designed to engage early learners—especially girls—through visual, simplified, and confidence-building content.",
+      "Built front-end prototypes for a startup developing a white-label student guidance platform, collaborating with a San Francisco–based UX team to translate designs into clear, student-friendly experiences.",
     description:
-      "Created a full instructional platform for early learners as part of my Digital Media Instructor master’s thesis, focusing on increasing girls’ participation in technology. The system included a left-navigation tutorial structure and dynamic right-panel concept modals that broke down JavaScript, HTML, and CSS into approachable, highly visual lessons. I designed and authored tutorials for all major JavaScript fundamentals, integrating UX patterns that support young learners—clear pacing, simplified language, welcoming visuals, and scaffolded exercises. The platform demonstrated how thoughtful UI, tone, and educational design can make core programming concepts feel accessible, intuitive, and exciting for middle-school–level students.",
-    thumbnail: "/images/projects/thumbnails/jsgirls-small.jpg",
-    images: ["/images/projects/jsgirls2.jpg"],
-    imageAlt:
-      "UI screens from a JavaScript learning platform for young female learners, featuring tutorials and concept modals.",
-    link: null
-  },
-
-  {
-    id: "photo-portfolio",
-    title: "Photo Portfolio",
-    summary:
-      "Built a photography portfolio site to showcase curated work in a clean, responsive layout.",
-    description:
-      "Created a standalone photography portfolio site with a clean, responsive layout for browsing images. Focused on image presentation, simple navigation, and minimal chrome so the photos remain the primary focus.",
-    thumbnail: "/images/projects/thumbnails/photography-small.jpg",
-    images: ["/images/projects/photography.jpg"],
-    imageAlt:
-      "Grid of photography thumbnails on a clean portfolio page.",
-    link:
-      "http://photography.daisylaflamme.net/portfolio.html",
-  },
-
-  {
-    id: "invite-education-home",
-    title: "Education Prototype",
-    summary:
-      "Coded an Invite Education homepage prototype directly from visual designs.",
-    description:
-      "Developed an HTML prototype for Invite Education’s homepage, translating visual comps into semantic HTML and CSS. The prototype demonstrates layout, navigation, and content hierarchy for future development.",
+      "Contributed to an early-stage product that supports employees and soon-to-be college students throughout the college application journey. Worked closely with a UX team based in San Francisco—collaborating remotely and on-site as needed—to iterate on layout, navigation, and information hierarchy. Implemented semantic HTML/CSS prototypes for the public-facing homepage and a “Student Passport” dashboard concept, focusing on clarity, approachable UI, and a foundation that could be handed off for production development.",
     thumbnail: "/images/projects/thumbnails/ie-home.jpg",
-    images: ["/images/projects/ie-home.jpg"],
+    images: [
+      "/images/projects/ie-home.jpg",
+      "/images/projects/ie-passport.jpg"
+    ],
     imageAlt:
-      "Invite Education homepage prototype with hero banner and content tiles.",
-    link: null,
-  },
-
-  {
-    id: "invite-education-passport",
-    title: "Student Passport",
-    summary:
-      "Built a prototype of a student financial ‘passport’ experience for Invite Education.",
-    description:
-      "Implemented a prototype for a student financial passport interface, exploring ways to present complex information in a clear, student-friendly dashboard.",
-    thumbnail: "/images/projects/thumbnails/ie-passport.jpg",
-    images: ["/images/projects/ie-passport.jpg"],
-    imageAlt:
-      "Invite Education passport dashboard screen prototype.",
+      "Invite Education prototypes including a homepage concept and a student dashboard (“passport”) interface.",
     link: null,
   },
 
   {
     id: "umb-map-mooc",
-    title: "Map MOOC",
+    title: "Map-Based Learning Module for UMass Boston MOOC",
     summary:
-      "Created an interactive Google Maps experience as part of a UMass Boston MOOC project.",
+      "Collaborated with UMass Boston’s Instructional Design team to build an interactive Google Maps learning module for an online course experience.",
     description:
-      "Built an interactive Google Map experience for a UMass Boston MOOC project, visualizing course-related locations on a custom-styled map. The project explored how mapping can support online learning.",
+      "Partnered with the Instructional Design department to design and implement an interactive map component used within a UMass Boston MOOC. Built a custom-styled Google Map that visualized course-related locations and supported guided exploration as part of the curriculum. Focused on a clear learner experience, intuitive interactions, and a maintainable implementation that could be reused and updated as the course evolved.",
     thumbnail: "/images/projects/thumbnails/umb-map.jpg",
     images: ["/images/projects/umb-map.jpg"],
     imageAlt:
-      "Google Map interface showing course-related markers for a MOOC.",
-    link: "http://www.daisylaflamme.net/umb-map/index.html",
-  },
-  // 1) Flyer Design
-  {
-    id: "flyer-design",
-    title: "Flyer Design",
-    summary: "Designed a clean, engaging promotional flyer optimized for readability and brand consistency.",
-    description:
-      "Designed a visually appealing promotional flyer using balanced typography, structured layouts, and clear visual hierarchy. Focused on communicating key information quickly while aligning the design with modern branding aesthetics to improve engagement and clarity.",
-    thumbnail: "/images/projects/thumbnails/mariya.jpg",
-    images: ["/images/projects/mariya.jpg"],
-    imageAlt: "Marketing flyer design layout",
-    link: "http://www.daisylaflamme.net/mariyaholbrook/index.html",
-  },
-
-  // 2) Student Resume Portfolio
-  {
-    id: "student-portfolio",
-    title: "Student Portfolio",
-    summary:
-      "Built a responsive student resume and project portfolio showcasing academic work and design capabilities.",
-    description:
-      "Designed and developed a responsive digital resume and project portfolio to showcase academic achievements and early professional work. The layout was crafted for clarity and ease of navigation, highlighting the student's strengths through structured sections and cohesive visual presentation.",
-    thumbnail: "/images/projects/thumbnails/puhi.jpg",
-    images: ["/images/projects/puhi.jpg"],
-    imageAlt: "Student resume and project portfolio screenshot",
-    link: null
-  },
-
-  // 3) Mobile Joomla Portfolio App
-  {
-    id: "mobile-joomla-portfolio",
-    title: "Mobile Portfolio",
-    summary:
-      "Developed a mobile-optimized Joomla portfolio designed specifically for smartphones.",
-    description:
-      "Created a mobile-friendly web portfolio using Joomla, optimized exclusively for smartphone screens. The project included custom template adjustments, lightweight layouts, and simplified navigation to deliver an app-like browsing experience while preserving the portfolio’s visual identity.",
-    thumbnail: "/images/projects/thumbnails/i1.jpg",
-    images: ["/images/projects/i1.jpg"],
-    imageAlt: "Mobile Joomla portfolio interface",
-    link: null
+      "Interactive Google Map module showing course-related markers used in an online learning experience.",
+    link: null,//"http://www.daisylaflamme.net/umb-map/index.html",
   },
 
   // 4) Casino Ballroom Support
@@ -842,7 +573,7 @@ export const projects = [
   // 5) ClariLegal HTML Prototype
   {
     id: "clarilegal-prototype",
-    title: "Legal Prototype",
+    title: "eDiscovery Application Prototype",
     summary:
       "Built HTML wireframes and interactive prototypes for an e-discovery startup’s workflow tools.",
     description:
@@ -855,50 +586,40 @@ export const projects = [
 
   // 6) UMass Boston Wireframes
   {
-    id: "umb-wireframes",
-    title: "UMass Wireframes",
+    id: "umb-open-data-ux-ui",
+    title: "UMass Boston Open Data Analytics UX & UI",
     summary:
-      "Produced complete visual wireframes for UMass Boston’s Open Data Analytics initiative.",
+      "Delivered UX wireframes and implemented UI work for UMass Boston’s Open Data Analytics initiative, improving structure and accessibility for research-focused content.",
     description:
-      "Created a full set of UX wireframes for the UMass Boston Open Data Analytics website. The work included user-flow planning, page-level layout development, and structured interface sketches that guided the site’s presentation of academic and analytical content.",
-    thumbnail: "/images/projects/thumbnails/umbw.jpg",
-    images: ["/images/projects/odai-wireframes.jpg"],
-    imageAlt: "UMass Boston Open Data Analytics wireframes",
-    link: "http://www.daisylaflamme.net/wireframes.pdf"
-  },
-
-  // 7) UMass Boston Open Data Analytics Website
-  {
-    id: "umb-open-data",
-    title: "Open Data",
-    summary:
-      "Implemented UI for UMass Boston’s Open Data Analytics site supporting research accessibility.",
-    description:
-      "Implemented portions of the UI for UMass Boston’s Open Data Analytics platform, improving the accessibility and presentation of research data. Focused on layout refinement and content structure to support academic users and community engagement.",
+      "Created a complete set of UX wireframes for the Open Data Analytics website, including user-flow planning, page-level layouts, and structured interface sketches to guide how academic and analytical content would be presented. Contributed to the site’s UI implementation by refining layouts and content structure to support clarity, accessibility, and engagement for academic and community users.",
     thumbnail: "/images/projects/thumbnails/odai.jpg",
-    images: ["/images/projects/odai.jpg"],
-    imageAlt: "UMass Boston Open Data Analytics website",
-    link: null
+    images: [
+      "/images/projects/odai-wireframes.jpg",
+      "/images/projects/odai.jpg"
+    ],
+    imageAlt:
+      "UMass Boston Open Data Analytics wireframes and the implemented website UI showcasing research and analytical content.",
+    link: "http://photography.daisylaflamme.net/wireframes.pdf"
   },
 
   // 8) Boston Strategics
   {
     id: "boston-strategics",
-    title: "Strategics Site",
+    title: "WordPress Website for Startup (Boston Strategics)",
     summary:
-      "Designed proposal and early web concepts for Boston Strategics corporate presence.",
+      "Collaborated with the Boston Strategics team to build and iteratively refine a WordPress website that established their startup’s online presence and enabled the staff to manage content confidently.",
     description:
-      "Created early web design concepts and proposal layouts for Boston Strategics, focusing on clean presentation and structured messaging. The work supported the company’s planning for its future online corporate identity.",
-    thumbnail: "/images/projects/thumbnails/bs.jpg",
-    images: ["/images/projects/bs.jpg"],
-    imageAlt: "Boston Strategics early web proposal designs",
+      "Partnered closely with the company team to define requirements, iterate on page layouts and messaging, and deliver a polished WordPress marketing site aligned with evolving business needs. Implemented maintainable page templates and a clear content structure, then trained staff on day-to-day updates (editing pages, publishing content, and basic site management) to reduce reliance on engineering. Provided ongoing maintenance and enhancements to keep the site stable, current, and aligned with the company’s growth.",
+    thumbnail: "/images/projects/thumbnails/bs2.jpg",
+    images: ["/images/projects/bs2.jpg", "/images/projects/bs.jpg"],
+    imageAlt: "Boston Strategics WordPress website and supporting design concepts.",
     link: null
   },
 
   // 9) Bioarray Therapeutics
   {
     id: "bioarray-site",
-    title: "Bioarray Site",
+    title: "Bioarray Site Maintenance",
     summary:
       "Updated content and front-end layout for Bioarray Therapeutics’ corporate website.",
     description:
@@ -912,42 +633,124 @@ export const projects = [
   // 10) Refuge Place International
   {
     id: "refuge-place",
-    title: "Refuge Website",
+    title: "Refuge Place International WordPress Website",
     summary:
-      "Developed a WordPress site with customized templates, plug-ins, and API-powered features.",
+      "Volunteered to develop Refuge Place International’s WordPress website, including a PayPal-powered donation flow that supported fundraising efforts to help build a hospital in Liberia for women and children.",
     description:
-      "Built a WordPress website for Refuge Place International incorporating customized templates, third-party plug-ins, and API integrations. The site improved usability for editors while supporting the organization's community-driven mission.",
+      "Volunteered as a web developer for Refuge Place International by building and enhancing their WordPress site with customized templates, selected plug-ins, and API-powered features. Implemented a dedicated donation page wired to PayPal to streamline contributions, and optimized the editing experience so staff could update content with minimal friction. Delivered a stable, mission-aligned online presence that supported community outreach and fundraising initiatives.",
     thumbnail: "/images/projects/thumbnails/00.jpg",
     images: ["/images/projects/00.jpg"],
-    imageAlt: "Refuge Place International WordPress website",
+    imageAlt:
+      "Refuge Place International WordPress website with donation and mission-focused content.",
     link: null
   },
 
   // 11) GlobalPeace Aid
   {
     id: "globalpeace-aid",
-    title: "Aid Platform",
+    title: "Global Peace Aid Nonprofit WordPress Website",
     summary:
-      "Designed and developed a nonprofit site featuring custom UI, branding, and API integrations.",
+      "Volunteered to build and maintain Global Peace Aid’s WordPress website, strengthening their online presence and supporting fundraising and outreach—helping position the organization to secure $100K in state grants for global peace and conflict resolution initiatives.",
     description:
-      "Developed a nonprofit website for Global Peace Aid featuring custom UI elements, brand-aligned styling, and integrations with Google APIs, PayPal, and analytics tools. Delivered a modern, functional interface for global outreach and fundraising efforts.",
+      "Volunteered as the web lead for Global Peace Aid by developing and maintaining their WordPress site end-to-end. Managed website hosting and ongoing site operations, implemented key pages and flows including a PayPal donation experience and events content, and maintained the organization’s content assets to keep messaging accurate and up to date. Integrated tools such as Google APIs and analytics to support outreach and visibility, delivering a reliable, brand-aligned online presence that supported fundraising efforts and strengthened credibility for grant opportunities.",
     thumbnail: "/images/projects/thumbnails/7.jpg",
     images: ["/images/projects/7.jpg"],
-    imageAlt: "Global Peace Aid nonprofit website",
+    imageAlt: "Global Peace Aid nonprofit WordPress website with donation and events information.",
+    link: null
+  },
+  {
+    id: "js-girls-platform",
+    title: "JavaScript Learning Platform",
+    summary:
+      "Built an interactive JavaScript learning platform designed to engage early learners—especially girls—through visual, simplified, and confidence-building content.",
+    description:
+      "Created a full instructional platform for early learners as part of my Digital Media Instructor master’s thesis, focusing on increasing girls’ participation in technology. The system included a left-navigation tutorial structure and dynamic right-panel concept modals that broke down JavaScript, HTML, and CSS into approachable, highly visual lessons. I designed and authored tutorials for all major JavaScript fundamentals, integrating UX patterns that support young learners—clear pacing, simplified language, welcoming visuals, and scaffolded exercises. The platform demonstrated how thoughtful UI, tone, and educational design can make core programming concepts feel accessible, intuitive, and exciting for middle-school–level students.",
+    thumbnail: "/images/projects/thumbnails/jsgirls-small.jpg",
+    images: ["/images/projects/jsgirls2.jpg"],
+    imageAlt:
+      "UI screens from a JavaScript learning platform for young female learners, featuring tutorials and concept modals.",
+    link: null
+  },
+  {
+    id: "photo-portfolio",
+    title: "Photography Portfolio",
+    summary:
+      "Built a photography portfolio site to showcase curated work in a clean, responsive layout.",
+    description:
+      "Created a standalone photography portfolio site with a clean, responsive layout for browsing images. Focused on image presentation, simple navigation, and minimal chrome so the photos remain the primary focus.",
+    thumbnail: "/images/projects/thumbnails/photography-small.jpg",
+    images: ["/images/projects/photography.jpg"],
+    imageAlt:
+      "Grid of photography thumbnails on a clean portfolio page.",
+    link:
+      "http://photography.daisylaflamme.net/portfolio.html",
+  },
+  {
+    id: "hci-mockup",
+    title: "Human-Computer Interaction Mockups",
+    summary:
+      "Produced a comprehensive interface mockup as part of a Human–Computer Interaction course.",
+    description:
+      "Created a comprehensive interface mockup for a Human–Computer Interaction project. Focused on user flows, layout, and visual hierarchy to demonstrate best practices in usable design.",
+    thumbnail: "/images/projects/thumbnails/validity.jpg",
+    images: ["/images/projects/validity.jpg"],
+    imageAlt:
+      "Complex application mockup created for an HCI project.",
+    link: null,
+  },
+   {
+    id: "flyer-design",
+    title: "Cape Cod Small Business Website for Flyer Services",
+    summary:
+      "Built a simple, professional website to strengthen a Cape Cod small business’s online presence and help attract new clients who need event flyers.",
+    description:
+      "Designed and implemented a lightweight, mobile-friendly site for a local flyer-design business, focusing on credibility and lead generation. Organized the layout to showcase sample flyer work, communicate services clearly, and make it easy for potential customers to contact the business. Prioritized clean typography, strong visual hierarchy, and a polished presentation so the owner could stand out locally and convert visitors into new clients.",
+    thumbnail: "/images/projects/thumbnails/mariya.jpg",
+    images: ["/images/projects/mariya.jpg"],
+    imageAlt:
+      "Small business website showcasing event flyer design services and sample flyer work.",
+    link: null,
+  },
+
+  // 2) Student Resume Portfolio
+  {
+    id: "student-portfolio",
+    title: "IT Portfolio",
+    summary:
+      "Built a responsive student resume and project portfolio showcasing academic work and design capabilities.",
+    description:
+      "Designed and developed a responsive digital resume and project portfolio to showcase academic achievements and early professional work. The layout was crafted for clarity and ease of navigation, highlighting the student's strengths through structured sections and cohesive visual presentation.",
+    thumbnail: "/images/projects/thumbnails/puhi.jpg",
+    images: ["/images/projects/puhi.jpg"],
+    imageAlt: "Student resume and project portfolio screenshot",
+    link: null
+  },
+
+  // 3) Mobile Joomla Portfolio App
+  {
+    id: "mobile-joomla-portfolio",
+    title: "Mobile Portfolio",
+    summary:
+      "Developed a mobile-optimized Joomla portfolio designed specifically for smartphones.",
+    description:
+      "Created a mobile-friendly web portfolio using Joomla, optimized exclusively for smartphone screens. The project included custom template adjustments, lightweight layouts, and simplified navigation to deliver an app-like browsing experience while preserving the portfolio’s visual identity.",
+    thumbnail: "/images/projects/thumbnails/i2.jpg",
+    images: ["/images/projects/i2.jpg"],
+    imageAlt: "Mobile Joomla portfolio interface",
     link: null
   },
 
   // 12) Scratch Game Development
-  {
-    id: "scratch-game",
-    title: "Scratch Game",
-    summary:
-      "Built an interactive Scratch-based educational game featuring custom animations.",
-    description:
-      "Designed and implemented an interactive educational game using Scratch, combining simple animations, character interactions, and playful mechanics. The project demonstrates early programming logic and an understanding of user engagement through animated storytelling.",
-    thumbnail: "/images/projects/thumbnails/8.jpg",
-    images: ["/images/projects/8.jpg"],
-    imageAlt: "Scratch-based educational game with animated characters",
-    link: "http://scratch.mit.edu/projects/desislava/2778494"
-  },
+  // {
+  //   id: "scratch-game",
+  //   title: "Scratch Game",
+  //   summary:
+  //     "Built an interactive Scratch-based educational game featuring custom animations.",
+  //   description:
+  //     "Designed and implemented an interactive educational game using Scratch, combining simple animations, character interactions, and playful mechanics. The project demonstrates early programming logic and an understanding of user engagement through animated storytelling.",
+  //   thumbnail: "/images/projects/thumbnails/8.jpg",
+  //   images: ["/images/projects/8.jpg"],
+  //   imageAlt: "Scratch-based educational game with animated characters",
+  //   link: "http://scratch.mit.edu/projects/desislava/2778494"
+  // },
 ];
