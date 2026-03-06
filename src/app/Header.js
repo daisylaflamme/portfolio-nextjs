@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 
 function getSubtitle(pathname) {
+  if (pathname === "/about") return "About Me";
   if (pathname === "/web-projects") return "Web Projects";
   if (pathname === "/resume") return "Resume";
   if (pathname === "/contact") return "Let's Connect!";
