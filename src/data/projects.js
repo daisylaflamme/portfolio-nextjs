@@ -3,6 +3,7 @@
  * Add new projects here. Place images in public/images/projects/
  * (thumbnails in public/images/projects/thumbnails/).
  * Use paths like "/images/projects/thumbnails/your-image.png" for local images.
+ * Each project has `images`: an array of one or more image paths (e.g. ["/images/projects/foo.png"] or multiple).
  */
 // export const projects = [
 //   {
@@ -13,7 +14,7 @@
 //     description:
 //       "Worked in a senior dev team to add a major new product page feature allowing web site users to select different product configurations. Implemented angular 6 components, templates and styles. Implemented LESS architecture.",
 //     thumbnail: "/images/projects/thumbnails/asi-variant-pdp.png",
-//     image: "/images/projects/asi-variant-pdp.png",
+//     images: ["/images/projects/asi-variant-pdp.png",
 //     imageAlt: "Product Configuration",
 //     link: "https://www.americansignaturefurniture.com/product/group/living-room/seating/sectionals/campbell-cumulus-2-piece-sectional-with-right-facing-sofa-cement/2224589/2141781",
 //   },
@@ -25,7 +26,7 @@
 //     description:
 //       "Worked in a team to add interactive functionality to color swatches and optimize search page results.",
 //     thumbnail: "http://daisylaflamme.net/images/thumbnails/asi-search-page-clickable-swatches-angular6.png",
-//     image: "http://daisylaflamme.net/images/asi-search-page-clickable-swatches-angular6.png",
+//     images: ["http://daisylaflamme.net/images/asi-search-page-clickable-swatches-angular6.png",
 //     imageAlt: "Clickable Swatches",
 //     link: "https://www.americansignaturefurniture.com",
 //   },
@@ -35,7 +36,7 @@
 //     summary: "Re-styling a third party filter extension",
 //     description: "Re-styling a third party filter extension",
 //     thumbnail: "http://daisylaflamme.net/images/thumbnails/lovesac-swatch-page.png",
-//     image: "http://daisylaflamme.net/images/lovesac-swatch-page.png",
+//     images: ["http://daisylaflamme.net/images/lovesac-swatch-page.png",
 //     imageAlt: "Re-styling",
 //     link: "https://www.lovesac.com/search/fabric",
 //   },
@@ -49,7 +50,118 @@
 
 export const projects = [
   // --- Modern e-commerce: American Signature / Levin / Lovesac / HUB ---
-
+  {
+    id: "checkout-multi-payments",
+    title: "Multi‑Payment Checkout Enablement",
+    summary:
+      "Enabled enterprise furniture eCommerce brands to offer flexible checkout options by integrating multiple payment providers end‑to‑end.",
+    description:
+      "Led front‑end integration of a multi‑provider payment ecosystem across checkout (Payment → Review → Thank You pages) for multiple client storefronts. Implemented and standardized integrations for Acima, Affirm, PayLater, Progressive Leasing, SetPay, ChargeAfter, credit/debit cards, and gift cards—expanding customer choice and improving conversion potential. Wrapped complex vendor JavaScript SDKs / npm packages into secure, reusable Angular library components with configuration‑driven feature flags so the same codebase could be safely shared across brands. Coordinated UI state, validation, and async payment authorization flows, wiring components to BFF endpoints (tokenization, order totals, promotions, financing eligibility, and payment capture) to keep sensitive logic server‑side while delivering a seamless, responsive, cross‑browser experience across mobile, tablet, and desktop.",
+    thumbnail: "/images/projects/thumbnails/payment-morris.jpg",
+    images: [
+      "/images/projects/payment.png",
+      "/images/projects/payment-affirm.png",
+      "/images/projects/payment-ca.png",
+      "/images/projects/payment-credit-card.png",
+      "/images/projects/payment-mobile.png",
+      "/images/projects/payment-morris.png",
+      "/images/projects/payment-progressive.png",
+      "/images/projects/split-payment2.png"
+    ],
+    imageAlt:
+      "Checkout payment step showing multiple payment methods (credit/debit, Affirm, financing, and lease-to-own) across desktop and mobile flows.",
+    link: null,
+  },
+  {
+    id: "store-details-maps",
+    title: "Store Details Maps Modernization",
+    summary:
+      "Owned a full end‑to‑end migration of store‑locator maps across multiple brands—reducing annual mapping costs by ~80% while improving UX and brand consistency.",
+    description:
+      "Drove the initiative from discovery to delivery: evaluated map platform options, created a clear decision matrix for leadership, and aligned stakeholders on the recommended approach. Implemented a shared Angular base component that supports Mapbox and OpenStreetMap, with secure, configuration‑driven branding (custom pin colors, styles, and per‑brand toggles) reusable across all storefronts. Added a custom store‑type legend (e.g., Furniture Store vs Mattress Store) and ensured accessible, responsive behavior across devices. Partnered with QA and UX to validate interactions, edge cases, and performance, and delivered a production‑ready rollout with thorough testing and release support.",
+    thumbnail: "/images/projects/thumbnails/store-details.jpg",
+    images: [
+      "/images/projects/store-details.png",
+      "/images/projects/store-details-stn.png",
+      "/images/projects/store-details-rana.png",
+      "/images/projects/store-details-wgr.png"
+    ],
+    imageAlt:
+      "Store details pages showing an interactive map with a branded location pin, nearby store results, and a store-type legend across multiple furniture brands.",
+    link: "https://www.morrisathome.com/store/furniture-store/OH/Reynoldsburg/2339-Taylor-Park-Drive",
+  },
+  {
+    id: "cms-hero-carousel",
+    title: "CMS‑Driven Hero Carousel Widget",
+    summary:
+      "Built a reusable, plug‑and‑play hero carousel that lets non‑technical teams publish and manage homepage marketing content through the CMS—without code changes.",
+    description:
+      "Architected and delivered a configurable carousel widget that can be dropped into any client landing page or custom homepage layout. Integrated the Tiny‑Slider JavaScript library and wrapped it in a maintainable component pattern with CMS‑controlled content (images, slide order, links, and placement) so marketing teams could self‑serve updates. Optimized layout, touch interactions, and loading behavior for mobile, tablet, and desktop, and validated quality through cross‑browser and responsive testing. This unlocked faster campaign launches and improved homepage engagement by keeping featured promotions fresh across multiple brands.",
+    thumbnail: "/images/projects/thumbnails/carousel-desktop.jpg",
+    images: [
+      "/images/projects/carousel-desktop.jpg",
+      "/images/projects/carousel-tablet.jpg",
+      "/images/projects/carousel-iphone.jpg"
+    ],
+    imageAlt:
+      "Homepage hero carousel displaying promotional banners across desktop, tablet, and mobile breakpoints.",
+    link: "https://www.cardis.com/",
+  },
+  {
+    id: "angular-modal-system",
+    title: "Configurable Modal System for Checkout and UX Flows",
+    summary:
+      "Built a reusable, accessibility‑first modal system with multiple interaction patterns, enabling teams to standardize UX while meeting brand and ADA requirements.",
+    description:
+      "Architected a shared modal library in Angular to support common client interaction needs across high‑traffic eCommerce flows. Delivered multiple modal variants—including a lightweight info/lightbox modal for gated selections, a full‑width takeover modal for maximum focus, a header‑anchored modal with precise positioning and partial overlay, and a slide‑in side modal for smooth, non‑blocking experiences. Implemented configurable behavior via Angular inputs (layout, size, overlay, focus handling, and close rules) and validated keyboard navigation, focus trapping, screen‑reader semantics, and responsive behavior to align with ADA/WCAG expectations. This standardized UI patterns across brands while keeping implementations consistent, configurable, and easy to adopt.",
+    thumbnail: "/images/projects/thumbnails/header-modal.jpg",
+    images: [
+      "/images/projects/full-modal.png",
+      "/images/projects/header-modal.png",
+      "/images/projects/mobile-header-modal.png",
+      "/images/projects/info-modal.png",
+      "/images/projects/side-modal.png"
+    ],
+    imageAlt:
+      "Examples of reusable modal patterns, including full-page takeover, header-anchored, informational lightbox, and side-drawer modals.",
+    link: null,
+  },
+  {
+    id: "gift-card-balance-widget",
+    title: "Gift Card Balance Checker Widget",
+    summary:
+      "Built a plug‑and‑play gift card balance checker as a reusable web component, enabling multiple brands to add the feature anywhere on their websites with consistent UX across devices.",
+    description:
+      "Architected and implemented a standalone Angular library component packaged as a web component so client teams could embed a gift card balance check on any custom page without bespoke development. Integrated secure, configuration‑driven theming for brand consistency and delivered a seamless mobile, tablet, and desktop experience. Wired the front end to BFF endpoints that broker requests to the Loft API, keeping sensitive integrations server‑side while providing fast, reliable balance lookups. Supported multi‑brand reuse through shared configuration, robust validation, and thorough cross‑browser and responsive testing.",
+    thumbnail: "/images/projects/thumbnails/gift-card-desktop.jpg",
+    images: [
+      "/images/projects/gift-card-balance.png",
+      "/images/projects/gift-card-desktop.png",
+      "/images/projects/gift-card-mobile.png",
+      "/images/projects/gift-card-wgr.png"
+    ],
+    imageAlt:
+      "Gift card balance check page with a gift card number input and a branded visual, shown across desktop and mobile layouts for multiple furniture brands.",
+    link: "https://www.cardis.com/gift-card-balance",
+  },
+  {
+    id: "cross-sell-addon-slider",
+    title: "Add‑On & Cross‑Sell Slider",
+    summary:
+      "Implemented a configurable add‑on slider to display complementary products on the PDP, standardizing cross‑sell UX across brands and improving attach‑rate potential.",
+    description:
+      "Built a reusable Angular library component that renders add‑on and cross‑sell product options in a compact, scrollable slider—optimized for mobile and scalable to desktop. Implemented lightweight, semantic HTML and maintainable SCSS, with per‑brand styling driven by configuration to support multiple client themes. Wired the component to Cross‑Sell BFF services to fetch eligible items and update selection state, including real‑time price updates as shoppers add or remove items. Validated responsive behavior and accessibility (keyboard/touch interactions, focus states, and readable semantics) to ensure a consistent experience across clients while supporting higher cross‑sell conversion.",
+    thumbnail: "/images/projects/thumbnails/mobile-slider.jpg",
+    images: [
+      "/images/projects/mobile-slider.png",
+      "/images/projects/slider-cardis.png",
+      "/images/projects/slider-morris.png",
+      "/images/projects/desktop-slider.png"
+    ],
+    imageAlt:
+      "Product detail page showing add-on sliders for mattress protectors, foundations, and frames with selectable options and price updates.",
+    link: null,
+  },
   {
     id: "product-configuration",
     title: "Product Configuration",
@@ -58,7 +170,7 @@ export const projects = [
     description:
       "Worked in a senior dev team to add a major new product page feature that lets web users select different product configurations. Implemented Angular 6 components, templates, styles, and a reusable LESS architecture for consistent theming.",
     thumbnail: "/images/projects/thumbnails/asi-variant-pdp.png",
-    image: "/images/projects/asi-variant-pdp.png",
+    images: ["/images/projects/asi-variant-pdp.png"],
     imageAlt:
       "Product configuration page showing a sofa with selectable color swatches and configuration options.",
     link:
@@ -74,7 +186,7 @@ export const projects = [
       "Worked in a team to add interactive functionality to color swatches on the search page. Enhanced the product grid so shoppers can preview and switch product colors inline, while also improving how search results are presented.",
     thumbnail:
       "/images/projects/thumbnails/asi-search-page-clickable-swatches-angular6.png",
-    image: "/images/projects/asi-search-page-clickable-swatches-angular6.png",
+    images: ["/images/projects/asi-search-page-clickable-swatches-angular6.png"],
     imageAlt:
       "Furniture search results page with clickable color swatches on each product card.",
     link:
@@ -89,7 +201,7 @@ export const projects = [
     description:
       "Re-styled a third-party filter extension for Lovesac so it matched the brand’s design system and felt native to the site. Focused on clearer filter states, typography, and layout to make product discovery smoother for shoppers.",
     thumbnail: "/images/projects/thumbnails/lovesac-swatch-page.png",
-    image: "/images/projects/lovesac-swatch-page.png",
+    images: ["/images/projects/lovesac-swatch-page.png"],
     imageAlt:
       "Product browse page showing fabric filter controls and large swatch grid.",
     link: "https://www.lovesac.com/search/fabric",
@@ -104,7 +216,7 @@ export const projects = [
       "Based on a specific mobile mockup, implemented a responsive UI for a multi-page checkout flow that lets ecommerce customers select product delivery preferences on their phones. Focused on clarity, ease of use, and preserving key cart information on small viewports.",
     thumbnail:
       "/images/projects/thumbnails/levin-dropship-checkout-page-iphoneX.png",
-    image: "/images/projects/levin-dropship-checkout-page-iphoneX.png",
+    images: ["/images/projects/levin-dropship-checkout-page-iphoneX.png"],
     imageAlt:
       "iPhone checkout screen for Levin Furniture showing delivery options and order summary.",
     link: "https://www.levinfurniture.com/shoppingcart",
@@ -119,7 +231,7 @@ export const projects = [
       "Using a dedicated tablet mockup, implemented a responsive multi-page checkout UI tailored for tablet users. Ensured delivery options, forms, and order details remained readable and touch-friendly while staying consistent with the broader checkout experience.",
     thumbnail:
       "/images/projects/thumbnails/levin-dropship-checkout-page-ipad.png",
-    image: "/images/projects/levin-dropship-checkout-page-ipad.png",
+    images: ["/images/projects/levin-dropship-checkout-page-ipad.png"],
     imageAlt:
       "Tablet view of Levin Furniture checkout page with delivery and shipping preferences.",
     link: "https://www.levinfurniture.com/shoppingcart",
@@ -133,7 +245,7 @@ export const projects = [
     description:
       "Based on detailed desktop mockups, implemented a responsive multi-page checkout for Levin Furniture that includes delivery preferences, shipping options, and clear order summaries. The experience is consistent with the mobile and tablet flows while taking advantage of wider layouts.",
     thumbnail: "/images/projects/thumbnails/levin-dropship-checkout-page.png",
-    image: "/images/projects/levin-dropship-checkout-page.png",
+    images: ["/images/projects/levin-dropship-checkout-page.png"],
     imageAlt:
       "Desktop checkout page for Levin Furniture showing address, shipping, and delivery choices.",
     link: "https://www.levinfurniture.com/shoppingcart",
@@ -147,7 +259,7 @@ export const projects = [
     description:
       "Implemented a responsive cart page as part of the new multi-page checkout experience, letting users review items and configure delivery options before proceeding. Ensured the cart flow integrates seamlessly with the subsequent checkout steps.",
     thumbnail: "/images/projects/thumbnails/levin-dropship-cart-page.png",
-    image: "/images/projects/levin-dropship-cart-page.png",
+    images: ["/images/projects/levin-dropship-cart-page.png"],
     imageAlt:
       "Shopping cart page at Levin Furniture with products and delivery preference messaging.",
     link: "https://www.levinfurniture.com/shoppingcart",
@@ -162,7 +274,7 @@ export const projects = [
       "Developed and styled a responsive product grid used for product lists, search pages, and landing pages at Lovesac. Re-styled and debugged a third-party chat widget to match the site’s branding and ensure it worked reliably alongside the product layout.",
     thumbnail:
       "/images/projects/thumbnails/lovesac-search-page-with-chat.png",
-    image: "/images/projects/lovesac-search-page-with-chat.png",
+    images: ["/images/projects/lovesac-search-page-with-chat.png"],
     imageAlt:
       "Lovesac search results page showing sectional products and a floating chat widget.",
     link: "https://www.lovesac.com/search/modular-furniture/sectionals",
@@ -176,7 +288,7 @@ export const projects = [
     description:
       "Given very specific desktop and mobile mockups, implemented and styled a responsive user login page for Lovesac. Focused on clear hierarchy, accessible form controls, and a layout that feels consistent across devices.",
     thumbnail: "/images/projects/thumbnails/lovesac-log-in-page.png",
-    image: "/images/projects/lovesac-log-in-page.png",
+    images: ["/images/projects/lovesac-log-in-page.png"],
     imageAlt:
       "Lovesac customer sign-in page with email and password form fields.",
     link: "https://www.lovesac.com/account/sign-in",
@@ -190,7 +302,7 @@ export const projects = [
     description:
       "Managed one teammate while implementing the UI for a responsive, search-engine-optimized store locator for Lovesac. The feature helps customers find locations by region, improving both discoverability and local store traffic.",
     thumbnail: "/images/projects/thumbnails/lovesac-store-locator.png",
-    image: "/images/projects/lovesac-store-locator.png",
+    images: ["/images/projects/lovesac-store-locator.png"],
     imageAlt:
       "Lovesac store locator page showing a map and list of store locations.",
     link: "https://www.lovesac.com/store-locator/ma",
@@ -204,7 +316,7 @@ export const projects = [
     description:
       "Fully styled a new responsive and search-engine-optimized store locator for American Signature Furniture. The UI makes it easy for shoppers to find nearby stores while staying consistent with the brand’s look and feel.",
     thumbnail: "/images/projects/thumbnails/asi-store-locator.png",
-    image: "/images/projects/asi-store-locator.png",
+    images: ["/images/projects/asi-store-locator.png"],
     imageAlt:
       "American Signature Furniture store locator page with a map and store list.",
     link: "https://www.americansignaturefurniture.com/store-locator/de",
@@ -219,7 +331,7 @@ export const projects = [
       "Worked in a senior dev team implementing UI workflows that let non-technical users create web shopping-cart promotions. Built the promotion shell screens using AngularJS, Angular 6, C#, HTML, and LESS so marketers can configure offers without engineering help.",
     thumbnail:
       "/images/projects/thumbnails/hub-cart-promotion-shell.png",
-    image: "/images/projects/hub-cart-promotion-shell.png",
+    images: ["/images/projects/hub-cart-promotion-shell.png"],
     imageAlt:
       "Internal promotion management interface showing shopping cart promotion configuration.",
     link: null,
@@ -234,7 +346,7 @@ export const projects = [
       "Worked in a senior dev team implementing rule-definition UIs for shopping-cart promotions. The interface lets non-technical users create complex eligibility and discount logic through configurable forms instead of code.",
     thumbnail:
       "/images/projects/thumbnails/hub-cart-promotion-rules.png",
-    image: "/images/projects/hub-cart-promotion-rules.png",
+    images: ["/images/projects/hub-cart-promotion-rules.png"],
     imageAlt:
       "Admin screen showing rule configuration for shopping cart promotions.",
     link: null,
@@ -248,7 +360,7 @@ export const projects = [
     description:
       "Worked in a team to deliver a UI for non-technical users that enables them to create web pages, landing pages, and region-based home pages. The tool abstracts layout and content blocks so marketing teams can publish pages without direct developer involvement.",
     thumbnail: "/images/projects/thumbnails/hub-custom-page.png",
-    image: "/images/projects/hub-custom-page.png",
+    images: ["/images/projects/hub-custom-page.png"],
     imageAlt:
       "Custom page builder UI showing layout configuration and content blocks.",
     link: null,
@@ -263,7 +375,7 @@ export const projects = [
       "Worked in a team that implemented a UI for non-technical users to add custom content sections to web pages. The interface organizes reusable elements into a list so editors can assemble rich layouts without editing code.",
     thumbnail:
       "/images/projects/thumbnails/hub-page-element-list-page.png",
-    image: "/images/projects/hub-page-element-list-page.png",
+    images: ["/images/projects/hub-page-element-list-page.png"],
     imageAlt:
       "Admin UI listing reusable page elements and content sections.",
     link: null,
@@ -278,7 +390,7 @@ export const projects = [
       "Enhanced the content management UI used to add and edit store information on store web pages. The updates make it easier for editors to manage location details, operating hours, and region-specific content across a large store network.",
     thumbnail:
       "/images/projects/thumbnails/hub-store-edit-page.png",
-    image: "/images/projects/hub-store-edit-page.png",
+    images: ["/images/projects/hub-store-edit-page.png"],
     imageAlt:
       "Admin edit screen showing form fields for managing store information.",
     link: null,
@@ -295,7 +407,7 @@ export const projects = [
       "Integrated Zoom’s online classroom login with the company’s branding style guides. Customized the look and feel so students experience a seamless transition between marketing sites and the hosted Zoom environment.",
     thumbnail:
       "/images/projects/thumbnails/sage-academics-online-classroom-login-page.jpg",
-    image: "/images/projects/sage-academics-online-classroom-login-page.jpg",
+    images: ["/images/projects/sage-academics-online-classroom-login-page.jpg"],
     imageAlt:
       "Custom-branded Zoom classroom login page for Sage Academics.",
     link: "https://thecambridgenetwork.zoom.us/",
@@ -309,7 +421,7 @@ export const projects = [
     description:
       "Handled the migration of a PHP-coded website into a modern WordPress implementation. Recreated page layouts, moved content, and configured themes so future updates could be done more easily by non-developers.",
     thumbnail: "/images/projects/thumbnails/tciie-for-students.jpg",
-    image: "/images/projects/tciie-for-students.jpg",
+    images: ["/images/projects/tciie-for-students.jpg"],
     imageAlt:
       "WordPress site for TCIIE showing a student-focused layout.",
     link: null,
@@ -324,7 +436,7 @@ export const projects = [
       "Translated a detailed PSD design into responsive HTML, CSS, and Bootstrap 3 for an individual tour itinerary page. Ensured the layout worked well across devices while staying faithful to the original design.",
     thumbnail:
       "/images/projects/thumbnails/globalu-individual-itinarary.jpg",
-    image: "/images/projects/globalu-individual-itinarary.jpg",
+    images: ["/images/projects/globalu-individual-itinarary.jpg"],
     imageAlt:
       "Travel itinerary page with photos and schedule details.",
     link: null,
@@ -338,7 +450,7 @@ export const projects = [
     description:
       "Implemented a PSD design as a responsive USA destination overview page using HTML, CSS, and Bootstrap 3. Focused on clean typography and imagery to showcase travel programs.",
     thumbnail: "/images/projects/thumbnails/usa-page.jpg",
-    image: "/images/projects/usa-page.jpg",
+    images: ["/images/projects/usa-page.jpg"],
     imageAlt:
       "Travel website page introducing USA programs with hero imagery.",
     link: null,
@@ -352,7 +464,7 @@ export const projects = [
     description:
       "Converted static PSD designs into responsive HTML, CSS, and Bootstrap 3 for a tours listing page. Structured information and imagery so visitors can easily browse available trips.",
     thumbnail: "/images/projects/thumbnails/globalu-tours.jpg",
-    image: "/images/projects/globalu-tours.jpg",
+    images: ["/images/projects/globalu-tours.jpg"],
     imageAlt:
       "Tours listing page for GlobalU with multiple trip cards.",
     link: null,
@@ -366,7 +478,7 @@ export const projects = [
     description:
       "Handled website development, maintenance, and updates for GlobalU.com. Delivered new templates and page variants while keeping the design cohesive and the site stable.",
     thumbnail: "/images/projects/thumbnails/globalu-home-page.jpg",
-    image: "/images/projects/globalu-home-page.jpg",
+    images: ["/images/projects/globalu-home-page.jpg"],
     imageAlt:
       "GlobalU home page with hero image and navigation.",
     link: null,
@@ -381,7 +493,7 @@ export const projects = [
       "Delivered front-end development and branding integration for a Cornerstone-powered career site. Customized templates and styles so the job-search experience feels fully aligned with the main company website.",
     thumbnail:
       "/images/projects/thumbnails/the-cambridge-network-career-site.jpg",
-    image: "/images/projects/the-cambridge-network-career-site.jpg",
+    images: ["/images/projects/the-cambridge-network-career-site.jpg"],
     imageAlt:
       "Company career site listing open positions and search filters.",
     link: null,
@@ -395,7 +507,7 @@ export const projects = [
     description:
       "Supported the migration of five websites from HTTP to HTTPS, addressing mixed-content issues and template updates. Helped improve security posture and search-engine friendliness across the portfolio.",
     thumbnail: "/images/projects/thumbnails/kl.jpg",
-    image: "/images/projects/kl.jpg",
+    images: ["/images/projects/kl.jpg"],
     imageAlt:
       "Website home page for KL Education after HTTPS migration.",
     link: "https://www.kleducation.org/",
@@ -410,8 +522,9 @@ export const projects = [
       "Implemented a responsive blog layout using Bootstrap 3 that delivers a better mobile reading experience. Improved typography, spacing, and navigation so posts are easy to read on phones.",
     thumbnail:
       "/images/projects/thumbnails/gphomestay-responsive-mobile-blog.jpg",
-    image:
+    images: [
       "/images/projects/gphomestay-responsive-mobile-blog.jpg",
+    ],
     imageAlt:
       "Mobile blog layout for GPHomestay with article list.",
     link: null
@@ -426,7 +539,7 @@ export const projects = [
       "Handled website development, maintenance, and updates for TheCambridgeNetwork.com. Added new content sections, refined navigation, and ensured the site stayed aligned with evolving branding.",
     thumbnail:
       "/images/projects/thumbnails/thecambridgenetwork-home-page.jpg",
-    image: "/images/projects/thecambridgenetwork-home-page.jpg",
+    images: ["/images/projects/thecambridgenetwork-home-page.jpg"],
     imageAlt:
       "The Cambridge Network marketing home page.",
     link: null
@@ -441,8 +554,9 @@ export const projects = [
       "Built a mobile raffle game using HTML, CSS, jQuery, and the WeChat API. The experience lets users spin for prizes on their phones while capturing engagement data for the event.",
     thumbnail:
       "/images/projects/thumbnails/raffle-smart-phone-wechat-application-development-sdk.jpg",
-    image:
+    images: [
       "/images/projects/raffle-smart-phone-wechat-application-development-sdk.jpg",
+    ],
     imageAlt:
       "Mobile raffle game interface on a smartphone screen.",
     link: null,
@@ -457,7 +571,7 @@ export const projects = [
       "Created mobile landing pages for a Dragon Boat Festival event, focusing on concise information, clear calls to action, and quick loading on phones. Implemented the layouts with responsive HTML and CSS.",
     thumbnail:
       "/images/projects/thumbnails/dragon-boath-thank-you.jpg",
-    image: "/images/projects/dragon-boat-festival-2016-landing-page.jpg",
+    images: ["/images/projects/dragon-boat-festival-2016-landing-page.jpg"],
     imageAlt:
       "Dragon Boat Festival thank-you and landing page on mobile.",
     link: null,
@@ -471,7 +585,7 @@ export const projects = [
     description:
       "Delivered a complementary desktop layout for the Dragon Boat Festival campaign, extending the visual identity from the mobile landing page. Ensured responsive behavior while highlighting key event details.",
     thumbnail: "/images/projects/thumbnails/dragon.jpg",
-    image: "/images/projects/dragon.jpg",
+    images: ["/images/projects/dragon.jpg"],
     imageAlt:
       "Dragon Boat Festival desktop landing page with hero image.",
     link: null,
@@ -486,8 +600,9 @@ export const projects = [
       "Built and integrated a web registration form that posts data into a QuickBase database. The solution reduces manual data entry and keeps orientation registrations synchronized with internal systems.",
     thumbnail:
       "/images/projects/thumbnails/cambridge-orientation-registration-cn-and-database-integration-api.jpg",
-    image:
+    images: [
       "/images/projects/cambridge-orientation-registration-cn-and-database-integration-api.jpg",
+    ],
     imageAlt:
       "Registration form for Cambridge Orientation integrated with QuickBase.",
     link: null
@@ -502,7 +617,7 @@ export const projects = [
       "Delivered website development, maintenance, and updates for CambridgeOrientation.org. Ensured that program information, registration links, and resources remained accurate and easy for families to find.",
     thumbnail:
       "/images/projects/thumbnails/cambridge-orientation-en.jpg",
-    image: "/images/projects/cambridge-orientation-en.jpg",
+    images: ["/images/projects/cambridge-orientation-en.jpg"],
     imageAlt:
       "Cambridge Orientation website home page.",
     link: null
@@ -516,7 +631,7 @@ export const projects = [
     description:
       "Designed and implemented an online quiz interface, focusing on clear questions, easy navigation, and a lightweight front-end so the experience feels fast and approachable.",
     thumbnail: "/images/projects/thumbnails/customer-quiz.jpg",
-    image: "/images/projects/customer-quiz.jpg",
+    images: ["/images/projects/customer-quiz.jpg"],
     imageAlt:
       "Online quiz page with customer questions and options.",
     link: null,
@@ -531,7 +646,7 @@ export const projects = [
       "Built a conversion-oriented landing page for an AdWords campaign, aligning the layout and copy with the ad messaging. The page is streamlined to capture leads effectively from paid traffic.",
     thumbnail:
       "/images/projects/thumbnails/monetary-landing-page-a.jpg",
-    image: "/images/projects/monetary-landing-page-a.jpg",
+    images: ["/images/projects/monetary-landing-page-a.jpg"],
     imageAlt:
       "AdWords campaign landing page offering monetary incentives.",
     link: null
@@ -545,7 +660,7 @@ export const projects = [
     description:
       "Integrated a new testimonial page design into a custom WordPress theme for GPHomestay. The page highlights host family stories in a structured, visually appealing layout that supports long-form content.",
     thumbnail: "/images/projects/thumbnails/gp-testimonials.jpg",
-    image: "/images/projects/gp-testimonials.jpg",
+    images: ["/images/projects/gp-testimonials.jpg"],
     imageAlt:
       "WordPress testimonial page showing host stories and photos.",
     link: null
@@ -560,7 +675,7 @@ export const projects = [
       "Built a lead-generation web form that integrates with Salesforce and other database APIs. The form captures host family inquiries and routes them into the company’s CRM pipeline automatically.",
     thumbnail:
       "/images/projects/thumbnails/gp-inqary-form-integration.jpg",
-    image: "/images/projects/gp-inqary-form-integration.jpg",
+    images: ["/images/projects/gp-inqary-form-integration.jpg"],
     imageAlt:
       "Lead generation form for host family inquiries integrated with Salesforce.",
     link: null
@@ -575,8 +690,9 @@ export const projects = [
       "Handled website development, maintenance, and updates for GPHomestay.com. Delivered new layouts and refined existing templates to support marketing campaigns and program information.",
     thumbnail:
       "/images/projects/thumbnails/dev-gphomestay-home-page-july28-2016.jpg",
-    image:
+    images: [
       "/images/projects/dev-gphomestay-home-page-july28-2016.jpg",
+    ],
     imageAlt:
       "GPHomestay home page showing hero, navigation, and feature content.",
     link: null
@@ -592,7 +708,7 @@ export const projects = [
     description:
       "Created a comprehensive interface mockup for a Human–Computer Interaction project. Focused on user flows, layout, and visual hierarchy to demonstrate best practices in usable design.",
     thumbnail: "/images/projects/thumbnails/validity.jpg",
-    image: "/images/projects/validity.jpg",
+    images: ["/images/projects/validity.jpg"],
     imageAlt:
       "Complex application mockup created for an HCI project.",
     link: null,
@@ -606,7 +722,7 @@ export const projects = [
     description:
       "Created a full instructional platform for early learners as part of my Digital Media Instructor master’s thesis, focusing on increasing girls’ participation in technology. The system included a left-navigation tutorial structure and dynamic right-panel concept modals that broke down JavaScript, HTML, and CSS into approachable, highly visual lessons. I designed and authored tutorials for all major JavaScript fundamentals, integrating UX patterns that support young learners—clear pacing, simplified language, welcoming visuals, and scaffolded exercises. The platform demonstrated how thoughtful UI, tone, and educational design can make core programming concepts feel accessible, intuitive, and exciting for middle-school–level students.",
     thumbnail: "/images/projects/thumbnails/jsgirls-small.jpg",
-    image: "/images/projects/jsgirls2.jpg",
+    images: ["/images/projects/jsgirls2.jpg"],
     imageAlt:
       "UI screens from a JavaScript learning platform for young female learners, featuring tutorials and concept modals.",
     link: null
@@ -620,7 +736,7 @@ export const projects = [
     description:
       "Created a standalone photography portfolio site with a clean, responsive layout for browsing images. Focused on image presentation, simple navigation, and minimal chrome so the photos remain the primary focus.",
     thumbnail: "/images/projects/thumbnails/photography-small.jpg",
-    image: "/images/projects/photography.jpg",
+    images: ["/images/projects/photography.jpg"],
     imageAlt:
       "Grid of photography thumbnails on a clean portfolio page.",
     link:
@@ -635,7 +751,7 @@ export const projects = [
     description:
       "Developed an HTML prototype for Invite Education’s homepage, translating visual comps into semantic HTML and CSS. The prototype demonstrates layout, navigation, and content hierarchy for future development.",
     thumbnail: "/images/projects/thumbnails/ie-home.jpg",
-    image: "/images/projects/ie-home.jpg",
+    images: ["/images/projects/ie-home.jpg"],
     imageAlt:
       "Invite Education homepage prototype with hero banner and content tiles.",
     link: null,
@@ -649,7 +765,7 @@ export const projects = [
     description:
       "Implemented a prototype for a student financial passport interface, exploring ways to present complex information in a clear, student-friendly dashboard.",
     thumbnail: "/images/projects/thumbnails/ie-passport.jpg",
-    image: "/images/projects/ie-passport.jpg",
+    images: ["/images/projects/ie-passport.jpg"],
     imageAlt:
       "Invite Education passport dashboard screen prototype.",
     link: null,
@@ -663,7 +779,7 @@ export const projects = [
     description:
       "Built an interactive Google Map experience for a UMass Boston MOOC project, visualizing course-related locations on a custom-styled map. The project explored how mapping can support online learning.",
     thumbnail: "/images/projects/thumbnails/umb-map.jpg",
-    image: "/images/projects/umb-map.jpg",
+    images: ["/images/projects/umb-map.jpg"],
     imageAlt:
       "Google Map interface showing course-related markers for a MOOC.",
     link: "http://www.daisylaflamme.net/umb-map/index.html",
@@ -676,7 +792,7 @@ export const projects = [
     description:
       "Designed a visually appealing promotional flyer using balanced typography, structured layouts, and clear visual hierarchy. Focused on communicating key information quickly while aligning the design with modern branding aesthetics to improve engagement and clarity.",
     thumbnail: "/images/projects/thumbnails/mariya.jpg",
-    image: "/images/projects/mariya.jpg",
+    images: ["/images/projects/mariya.jpg"],
     imageAlt: "Marketing flyer design layout",
     link: "http://www.daisylaflamme.net/mariyaholbrook/index.html",
   },
@@ -690,7 +806,7 @@ export const projects = [
     description:
       "Designed and developed a responsive digital resume and project portfolio to showcase academic achievements and early professional work. The layout was crafted for clarity and ease of navigation, highlighting the student's strengths through structured sections and cohesive visual presentation.",
     thumbnail: "/images/projects/thumbnails/puhi.jpg",
-    image: "/images/projects/puhi.jpg",
+    images: ["/images/projects/puhi.jpg"],
     imageAlt: "Student resume and project portfolio screenshot",
     link: null
   },
@@ -704,7 +820,7 @@ export const projects = [
     description:
       "Created a mobile-friendly web portfolio using Joomla, optimized exclusively for smartphone screens. The project included custom template adjustments, lightweight layouts, and simplified navigation to deliver an app-like browsing experience while preserving the portfolio’s visual identity.",
     thumbnail: "/images/projects/thumbnails/i1.jpg",
-    image: "/images/projects/i1.jpg",
+    images: ["/images/projects/i1.jpg"],
     imageAlt: "Mobile Joomla portfolio interface",
     link: null
   },
@@ -718,7 +834,7 @@ export const projects = [
     description:
       "Supported front-end updates and UI improvements for the Casino Ballroom website as part of an I-volutions project. Assisted with layout refinements, styling updates, and visual consistency efforts to enhance user experience for event visitors.",
     thumbnail: "/images/projects/thumbnails/cb.jpg",
-    image: "/images/projects/cb.jpg",
+    images: ["/images/projects/cb.jpg"],
     imageAlt: "Casino Ballroom website interface",
     link: "http://www.casinoballroom.com/"
   },
@@ -732,7 +848,7 @@ export const projects = [
     description:
       "Delivered HTML wireframes and user interface prototypes for ClariLegal, an e-discovery startup. The project included iterative UX planning, layout structuring, and early-stage interface implementation on top of a Django-based technology stack to support legal workflow visualization.",
     thumbnail: "/images/projects/thumbnails/cl-dashboard.jpg",
-    image: "/images/projects/cl-dashboard.jpg",
+    images: ["/images/projects/cl-dashboard.jpg"],
     imageAlt: "ClariLegal HTML prototype dashboard",
     link: null
   },
@@ -746,7 +862,7 @@ export const projects = [
     description:
       "Created a full set of UX wireframes for the UMass Boston Open Data Analytics website. The work included user-flow planning, page-level layout development, and structured interface sketches that guided the site’s presentation of academic and analytical content.",
     thumbnail: "/images/projects/thumbnails/umbw.jpg",
-    image: "/images/projects/odai-wireframes.jpg",
+    images: ["/images/projects/odai-wireframes.jpg"],
     imageAlt: "UMass Boston Open Data Analytics wireframes",
     link: "http://www.daisylaflamme.net/wireframes.pdf"
   },
@@ -760,7 +876,7 @@ export const projects = [
     description:
       "Implemented portions of the UI for UMass Boston’s Open Data Analytics platform, improving the accessibility and presentation of research data. Focused on layout refinement and content structure to support academic users and community engagement.",
     thumbnail: "/images/projects/thumbnails/odai.jpg",
-    image: "/images/projects/odai.jpg",
+    images: ["/images/projects/odai.jpg"],
     imageAlt: "UMass Boston Open Data Analytics website",
     link: null
   },
@@ -774,7 +890,7 @@ export const projects = [
     description:
       "Created early web design concepts and proposal layouts for Boston Strategics, focusing on clean presentation and structured messaging. The work supported the company’s planning for its future online corporate identity.",
     thumbnail: "/images/projects/thumbnails/bs.jpg",
-    image: "/images/projects/bs.jpg",
+    images: ["/images/projects/bs.jpg"],
     imageAlt: "Boston Strategics early web proposal designs",
     link: null
   },
@@ -788,7 +904,7 @@ export const projects = [
     description:
       "Implemented content updates and front-end refinements for the Bioarray Therapeutics corporate website. Work included adjusting page structures, improving readability, and aligning the layout with branding needs while preparing for future content expansion.",
     thumbnail: "/images/projects/thumbnails/bioarray.jpg",
-    image: "/images/projects/bioarray.jpg",
+    images: ["/images/projects/bioarray.jpg"],
     imageAlt: "Bioarray Therapeutics website layout",
     link: null
   },
@@ -802,7 +918,7 @@ export const projects = [
     description:
       "Built a WordPress website for Refuge Place International incorporating customized templates, third-party plug-ins, and API integrations. The site improved usability for editors while supporting the organization's community-driven mission.",
     thumbnail: "/images/projects/thumbnails/00.jpg",
-    image: "/images/projects/00.jpg",
+    images: ["/images/projects/00.jpg"],
     imageAlt: "Refuge Place International WordPress website",
     link: null
   },
@@ -816,7 +932,7 @@ export const projects = [
     description:
       "Developed a nonprofit website for Global Peace Aid featuring custom UI elements, brand-aligned styling, and integrations with Google APIs, PayPal, and analytics tools. Delivered a modern, functional interface for global outreach and fundraising efforts.",
     thumbnail: "/images/projects/thumbnails/7.jpg",
-    image: "/images/projects/7.jpg",
+    images: ["/images/projects/7.jpg"],
     imageAlt: "Global Peace Aid nonprofit website",
     link: null
   },
@@ -830,7 +946,7 @@ export const projects = [
     description:
       "Designed and implemented an interactive educational game using Scratch, combining simple animations, character interactions, and playful mechanics. The project demonstrates early programming logic and an understanding of user engagement through animated storytelling.",
     thumbnail: "/images/projects/thumbnails/8.jpg",
-    image: "/images/projects/8.jpg",
+    images: ["/images/projects/8.jpg"],
     imageAlt: "Scratch-based educational game with animated characters",
     link: "http://scratch.mit.edu/projects/desislava/2778494"
   },

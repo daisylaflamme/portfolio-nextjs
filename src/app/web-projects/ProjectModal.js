@@ -34,14 +34,19 @@ export default function ProjectModal({ project, onClose }) {
       <div className="project-modal-box modal-box w-11/12 max-w-5xl">
         <h3 className="font-bold text-lg text-[var(--color-font-primary)]">{project.title}</h3>
         <p className="py-4 text-[var(--color-font-primary)] project-card__description">{project.description}</p>
-        <Image
-          src={project.image}
-          alt={project.imageAlt || project.title}
-          width={800}
-          height={500}
-          className="w-full h-auto max-w-full rounded-lg border border-[var(--color-petal-border)]"
-          sizes="(max-width: 1024px) 90vw, 800px"
-        />
+        <div className="space-y-4">
+          {(Array.isArray(project.images) ? project.images : project.image ? [project.image] : []).map((src, i) => (
+            <Image
+              key={src + i}
+              src={src}
+              alt={project.imageAlt || project.title}
+              width={800}
+              height={500}
+              className="w-full h-auto max-w-full rounded-lg border border-[var(--color-petal-border)]"
+              sizes="(max-width: 1024px) 90vw, 800px"
+            />
+          ))}
+        </div>
         {project.link && (
           <p className="pt-4">
             <a

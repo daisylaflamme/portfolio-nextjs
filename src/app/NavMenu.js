@@ -18,7 +18,7 @@ function HamburgerIcon({ open }) {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
+      stroke="var(--color-font-secondary)"
       className="w-7 h-7"
       aria-hidden
     >
