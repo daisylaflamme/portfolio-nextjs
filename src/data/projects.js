@@ -178,6 +178,72 @@ export const projects = [
     link: null,
   },
   {
+    id: "product-card-redesign",
+    title: "Pixel-Perfect Product Card Redesign (PLP)",
+    summary:
+      "Delivered a new, responsive product card system from Figma—implemented pixel-perfect across mobile, tablet, and desktop to modernize PLP browsing and improve shopping clarity.",
+    description:
+      "Partnered with a fellow UI engineer to implement a sleek new product card design directly from client Figma mockups, meeting a tight delivery timeline with a high-quality, pixel-accurate result. Built responsive layouts and interaction details across breakpoints (including pricing, badges, swatches, favorites, and merchandising cues) while maintaining clean, scalable front-end structure. Collaborated with a BFF engineer to align on API and data-shape updates needed to support the new UI, ensuring reliable rendering and consistent behavior across storefronts. The launch shipped with minimal iteration due to strong alignment with the mocks and careful execution, resulting in a polished browsing experience for customers.",
+    thumbnail: "/images/projects/thumbnails/plp-asi.jpg",
+    images: [
+      "/images/projects/product-card-design.jpg",
+      "/images/projects/plp-asi.png",
+    ],
+    imageAlt:
+      "Product listing page showing a redesigned product card layout with imagery, pricing, badges, and swatches, implemented responsively across devices.",
+    link: null,
+  },
+  {
+    id: "custom-input-controls",
+    title: "Reusable Checkbox & Radio Input Components (Multi-Brand)",
+    summary:
+      "Built shared Angular checkbox and radio components used across multiple storefronts and checkout flows, combining brand-configurable styling with strong accessibility and keyboard support.",
+    description:"Implemented a reusable input-control library (checkbox + radio) to standardize form interactions across brands and use cases (delivery options, protection plans, payment selection, etc.). Components are configurable via Angular inputs for IDs/names, ARIA labeling, tab order, custom CSS classes, SVG sizing, and behavior toggles (e.g., preventing checkbox state changes while still emitting events). Added layout flexibility so teams can place the label/content on the left or right and control whether the checkbox/radio appears on the left or right—supporting different brand patterns and dense checkout layouts. Both controls support keyboard interaction (space/enter) and expose a clean API via a value + valueChange emitter pattern, while allowing rich label composition through ng-content slots. This delivered consistent UI behavior across multi-tenant themes with a maintainable, accessible foundation.",
+    thumbnail: "/images/projects/thumbnails/checkbox-stn.jpg",
+    images: [
+      "/images/projects/input.jpg",
+      "/images/projects/input-asi.jpg",
+      "/images/projects/input-cardis.jpg",
+      "/images/projects/input-morris.jpg",
+      "/images/projects/input-stn.jpg",
+      "/images/projects/checkbox-stn.jpg"
+    ],
+    imageAlt:
+      "Reusable checkbox and radio input components used across checkout and product flows, styled for multiple furniture brands.",
+    link: null,
+  },
+  {
+    id: "cookie-consent-multi-brand",
+    title: "Cookie Consent & Preference Management",
+    summary: "Implemented a reusable, CMS-driven cookie consent experience across multiple brands, integrating Termly and Google Tag Manager to enforce user preferences and support compliant analytics/marketing behavior across devices.",
+    description: "Built a configurable cookie consent feature that can be deployed across multi-tenant storefronts via the CMS with consistent UX on mobile, tablet, and desktop. Implemented the UI with JavaScript, HTML, and CSS, supporting brand styling and flexible placement patterns. Integrated the Termly third-party consent banner and connected preference signals to site behavior so analytics, personalization, and marketing tags respect user choices. Configured Google Tag Manager to conditionally fire third-party JavaScript libraries based on consent state, aligning GTM triggers and tag settings with Termly categories to enable/disable cookies appropriately. Delivered a reliable consent workflow that improves compliance readiness while keeping the experience clear and unobtrusive for shoppers.",
+    thumbnail: "/images/projects/thumbnails/cookie-sm.jpg",
+    images: ["/images/projects/cookie.jpg", "/images/projects/cookie-tablet.jpg", "/images/projects/wired-cookie.jpg"],
+    imageAlt: "Cookie consent UI and banner variants across multiple furniture brands, including a Termly-integrated preferences flow.",
+    link: null,
+  },
+  {
+    id: "finance-messaging-integrations",
+    title: "Multi-Provider Financing Messages for PDP & Search",
+    summary:
+      "Integrated compliant third-party financing messages across product and search pages, enabling shoppers to understand payment options early and improving conversion into checkout across multiple brands.",
+    description:
+      "Implemented financing messaging integrations for Affirm, Unify, Charge After, Progressive Leasing, Acima, PayLater, and SetPay on high-traffic PDP and search/PLP experiences. Followed vendor documentation and legal display requirements to ensure accurate, compliant messaging (APR, term, eligibility language, and disclosure patterns). Wrapped vendor JavaScript SDKs and embed patterns into secure, standalone Angular library components that can be reused across multi-tenant brands via configuration-driven theming. Wired components to custom BFF APIs and client financing services to fetch the correct offer context (price, promos, location rules) and support interactive flows that guide users from browsing into financing qualification and checkout.",
+    thumbnail: "/images/projects/thumbnails/fm-desktop.jpg",
+    images: [
+      "/images/projects/finance-messages-mobile.png",
+      "/images/projects/fm-desktop.png",
+      "/images/projects/finance-messages-desktop.jpg",
+      "/images/projects/finance-messages-cardis-desktop.jpg",
+      "/images/projects/finance-messages-cardis.jpg",
+      "/images/projects/fm-morris.jpg",
+      "/images/projects/search-fm.png"
+    ],
+    imageAlt:
+      "Financing message components displayed on product and search pages across multiple furniture brands, including examples for Affirm and other payment providers.",
+    link: null,
+  },
+  {
     id: "product-configuration",
     title: "Product Configuration",
     summary:

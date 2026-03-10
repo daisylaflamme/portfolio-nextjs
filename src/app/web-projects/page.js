@@ -4,6 +4,7 @@ import { useState } from "react";
 import { projects } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
+import GoToTop from "../GoToTop";
 
 export default function Page() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -22,6 +23,7 @@ export default function Page() {
         </div>
       </div>
       <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <GoToTop />
     </main>
   );
 }

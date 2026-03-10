@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 /**
@@ -9,6 +9,11 @@ import Image from "next/image";
  */
 export default function ProjectModal({ project, onClose }) {
   const dialogRef = useRef(null);
+  const loadedCountRef = useRef(0);
+  const imageUrls = project
+    ? (Array.isArray(project.images) ? project.images : project.image ? [project.image] : [])
+    : [];
+  const [imagesLoading, setImagesLoading] = useState(imageUrls.length > 0);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -21,6 +26,14 @@ export default function ProjectModal({ project, onClose }) {
   }, [project]);
 
   useEffect(() => {
+    if (project) {
+      const urls = Array.isArray(project.images) ? project.images : project.image ? [project.image] : [];
+      setImagesLoading(urls.length > 0);
+      loadedCountRef.current = 0;
+    }
+  }, [project]);
+
+  useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
     const handleClose = () => onClose();
@@ -28,22 +41,36 @@ export default function ProjectModal({ project, onClose }) {
     return () => dialog.removeEventListener("close", handleClose);
   }, [onClose]);
 
+  const handleImageLoadOrError = () => {
+    loadedCountRef.current += 1;
+    if (loadedCountRef.current >= imageUrls.length) {
+      setImagesLoading(false);
+    }
+  };
+
   return (
     <dialog ref={dialogRef} className="modal">
       {project && (
       <div className="project-modal-box modal-box w-11/12 max-w-5xl">
         <h3 className="font-bold text-lg text-[var(--color-font-primary)]">{project.title}</h3>
         <p className="py-4 text-[var(--color-font-primary)] project-card__description">{project.description}</p>
-        <div className="space-y-4">
-          {(Array.isArray(project.images) ? project.images : project.image ? [project.image] : []).map((src, i) => (
+        <div className="space-y-4 flex flex-col items-center relative min-h-[120px]">
+          {imagesLoading && (
+            <div className="absolute inset-0 flex items-center justify-center z-10" aria-live="polite" aria-busy="true">
+              <span className="loading loading-ring loading-lg text-[var(--color-shadow-accent)]" aria-hidden />
+            </div>
+          )}
+          {imageUrls.map((src, i) => (
             <Image
               key={src + i}
               src={src}
               alt={project.imageAlt || project.title}
               width={800}
               height={500}
-              className="w-full h-auto max-w-full rounded-lg border border-[var(--color-petal-border)]"
+              className="w-auto max-w-full h-auto rounded-lg border border-[var(--color-petal-border)]"
               sizes="(max-width: 1024px) 90vw, 800px"
+              onLoad={handleImageLoadOrError}
+              onError={handleImageLoadOrError}
             />
           ))}
         </div>
