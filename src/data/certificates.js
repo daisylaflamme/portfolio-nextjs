@@ -22,13 +22,13 @@ export const diplomas = [
 export const programs = [
     {
         thumbnail: "/images/certificates/thumbnails/marketo.jpg",
-        image: "http://archive.daisylaflamme.net/images/certificates/marketo.png",
+        image: "/images/certificates/marketo.png",
         title: "Marketo Certified Expert",
         year: 2015
       },
     {
         thumbnail: "/images/certificates/thumbnails/lunametrics.jpg",
-        image: "http://archive.daisylaflamme.net/images/certificates/google-analytics-201-certificate.jpg",
+        image: "/images/certificates/google-analytics-201-certificate.jpg",
         title: "Google Analytics Intermediate 201",
         year: 2016,
     },
@@ -184,139 +184,139 @@ export const certificates = [
         provider: "linkedin"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/gh.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/gh.jpg",
+      thumbnail: "/images/certificates/thumbnails/gh.jpg",
+      image: "/images/certificates/gh.jpg",
       title: "Growth Hacking Fundamentals",
       year: 2015,
       provider: "lynda"
     },
     {
       thumbnail: "/images/certificates/thumbnails/udemy.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/UC-XDIFCEXI.jpg",
+      image: "/images/certificates/UC-XDIFCEXI.jpg",
       title: "Using MODX CMS to Build Websites: Intermediate",
       year: 2015,
     },
     {
       thumbnail: "/images/certificates/thumbnails/udemy.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/UC-FTYF6DNB.jpg",
+      image: "/images/certificates/UC-FTYF6DNB.jpg",
       title: "Using MODX CMS to Build Websites: A Begginer's Guide",
       year: 2015,
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/twd.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/twd.jpg",
+      thumbnail: "/images/certificates/thumbnails/twd.jpg",
+      image: "/images/certificates/twd.jpg",
       title: "Typography for Web Designers",
       year: 2014,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/vm.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/vm.jpg",
+      thumbnail: "/images/certificates/thumbnails/vm.jpg",
+      image: "/images/certificates/vm.jpg",
       title: "Viral Marketing: Crafting Shareable Content",
       year: 2014,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/bog.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/bog.jpg",
+      thumbnail: "/images/certificates/thumbnails/bog.jpg",
+      image: "/images/certificates/bog.jpg",
       title: "Building an Online Community",
       year: 2014,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/bootstrap.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/bootstrap.jpg",
+      thumbnail: "/images/certificates/thumbnails/bootstrap.jpg",
+      image: "/images/certificates/bootstrap.jpg",
       title: "Bootstrap 3",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/map.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/map.jpg",
+      thumbnail: "/images/certificates/thumbnails/map.jpg",
+      image: "/images/certificates/map.jpg",
       title: "Interactive Map with jQuery",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/animated-gif.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/animated-gif.jpg",
+      thumbnail: "/images/certificates/thumbnails/animated-gif.jpg",
+      image: "/images/certificates/animated-gif.jpg",
       title: "Animated GIFs",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/applied-interaction-design-2.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/applied-interaction-design-2.jpg",
+      thumbnail: "/images/certificates/thumbnails/applied-interaction-design-2.jpg",
+      image: "/images/certificates/applied-interaction-design-2.jpg",
       title: "Applied Interaction Design",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/interaction-design-fundamentals-1.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/interaction-design-fundamentals-1.jpg",
+      thumbnail: "/images/certificates/thumbnails/interaction-design-fundamentals-1.jpg",
+      image: "/images/certificates/interaction-design-fundamentals-1.jpg",
       title: "Interaction Design - Fundamentals",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/c12.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/c12.jpg",
+      thumbnail: "/images/certificates/thumbnails/c12.jpg",
+      image: "/images/certificates/c12.jpg",
       title: "WordPress 3: Creating and Editing Custom Themes",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/c11.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/c11.jpg",
+      thumbnail: "/images/certificates/thumbnails/c11.jpg",
+      image: "/images/certificates/c11.jpg",
       title: "Running a Design Business: Freelancing",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/cc.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/cc.jpg",
+      thumbnail: "/images/certificates/thumbnails/cc.jpg",
+      image: "/images/certificates/cc.jpg",
       title: "Foundations of UX: Content Strategy",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/c4.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/c4.jpg",
+      thumbnail: "/images/certificates/thumbnails/c4.jpg",
+      image: "/images/certificates/c4.jpg",
       title: "Responsive Design Certificate Of Completion",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/c0.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/c0.jpg",
+      thumbnail: "/images/certificates/thumbnails/c0.jpg",
+      image: "/images/certificates/c0.jpg",
       title: "User Experience for Web Design Certificate Of Completion",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/c3.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/c3.jpg",
+      thumbnail: "/images/certificates/thumbnails/c3.jpg",
+      image: "/images/certificates/c3.jpg",
       title: "Infographics Planning and Wireframing Certificate Of Completion",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/c2.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/c2.jpg",
+      thumbnail: "/images/certificates/thumbnails/c2.jpg",
+      image: "/images/certificates/c2.jpg",
       title: "Effective HTML Email and Newsletters Certificate Of Completion",
       year: 2013,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/seo.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/seo.jpg",
+      thumbnail: "/images/certificates/thumbnails/seo.jpg",
+      image: "/images/certificates/seo.jpg",
       title: "SEO Fundamentals",
       year: 2012,
       provider: "lynda"
     },
     {
-      thumbnail: "http://archive.daisylaflamme.net/images/certificates/thumbnails/c1.jpg",
-      image: "http://archive.daisylaflamme.net/images/certificates/c1.jpg",
+      thumbnail: "/images/certificates/thumbnails/c1.jpg",
+      image: "/images/certificates/c1.jpg",
       title: "Drupal 7 Reporting and Visualizing Data Certificate Of Completion",
       year: 2012,
       provider: "lynda"
