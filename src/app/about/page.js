@@ -88,7 +88,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-[var(--color-font-primary)] text-[15px] md:text-base leading-relaxed">
               <p>
-                I&apos;m a senior front-end engineer with over a decade of experience designing and building UI for large-scale e-commerce platforms. My happiest place is that intersection of visual design, interaction details, and production-ready code.
+                I&apos;m a senior front-end engineer with over a decade of experience designing and building UI for large-scale e-commerce platforms. My happiest place is that intersection of visual design, interaction details, and production-ready code. Continuous learning is central to my identity — it’s what keeps me curious, adaptable, and excited to take on new challenges in design and engineering.
               </p>
               <p>
               Over the years I've become the person teams call when something complex needs to be reliable, well-tested, and production-ready: checkout flows, third-party integrations, accessibility fixes, or an entire component system that behaves consistently across brands. I care deeply about the small details that make interfaces feel effortless.

@@ -2,12 +2,12 @@ import Link from "next/link";
 
 export default function Home() {
   const petals = [
-    { label: "Resume", href: "/resume" },
-    { label: "About Me", href: "/about" },
-    { label: "GitHub", href: "https://github.com/daisylaflamme/portfolio-nextjs", target: "_blank" },
-    { label: "Email", href: "mailto:laflammedaisy@gmail.com", title: "laflammedaisy@gmail.com" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/desislavalaflamme/", target: "_blank" },
     { label: "Web Projects", href: "/web-projects" },
+    { label: "Resume", href: "/resume" },
+    { label: "Certificates", href: "/certificates" },
+    { label: "GitHub", href: "https://github.com/daisylaflamme/portfolio-nextjs", target: "_blank" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/desislavalaflamme/", target: "_blank" },
+    { label: "About Me", href: "/about" },
   ];
 
   return (

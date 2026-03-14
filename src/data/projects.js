@@ -64,7 +64,7 @@ export const projects = [
     imageAlt:
       "Masonry collage of multi-brand e-commerce UI work: mobile navigation, PDPs, cart and checkout pages, search grids, content editor layouts, and marketing modules across multiple furniture storefronts.",
     link: null,
-    tags: ["angular", "javascript", "scss", "css", "bootstrap", "ecommerce", "cms"],
+    tags: ["html", "angular", "javascript", "scss", "css", "bootstrap", "ecommerce", "cms"],
   },
   {
     id: "checkout-multi-payments",
@@ -87,7 +87,7 @@ export const projects = [
     imageAlt:
       "Checkout payment step showing multiple payment methods (credit/debit, Affirm, financing, and lease-to-own) across desktop and mobile flows.",
     link: null,
-    tags: ["angular", "javascript", "ecommerce", "scss", "css"],
+    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css"],
   },
   {
     id: "store-details-maps",
@@ -106,7 +106,7 @@ export const projects = [
     imageAlt:
       "Store details pages showing an interactive map with a branded location pin, nearby store results, and a store-type legend across multiple furniture brands.",
     link: "https://www.morrisathome.com/store/furniture-store/OH/Reynoldsburg/2339-Taylor-Park-Drive",
-    tags: ["angular", "ecommerce", "scss", "css"],
+    tags: ["html", "angular", "ecommerce", "scss", "css"],
   },
   {
     id: "cms-hero-carousel",
@@ -124,7 +124,7 @@ export const projects = [
     imageAlt:
       "Homepage hero carousel displaying promotional banners across desktop, tablet, and mobile breakpoints.",
     link: "https://www.cardis.com/",
-    tags: ["javascript", "cms", "ecommerce", "scss", "css"],
+    tags: ["html", "javascript", "cms", "ecommerce", "scss", "css"],
   },
   {
     id: "angular-modal-system",
@@ -144,7 +144,7 @@ export const projects = [
     imageAlt:
       "Examples of reusable modal patterns, including full-page takeover, header-anchored, informational lightbox, and side-drawer modals.",
     link: null,
-    tags: ["angular", "ecommerce", "scss", "css","javascript"],
+    tags: ["html", "angular", "ecommerce", "scss", "css","javascript"],
   },
   {
     id: "gift-card-balance-widget",
@@ -163,7 +163,7 @@ export const projects = [
     imageAlt:
       "Gift card balance check page with a gift card number input and a branded visual, shown across desktop and mobile layouts for multiple furniture brands.",
     link: "https://www.cardis.com/gift-card-balance",
-    tags: ["angular", "ecommerce", "scss", "css","javascript"],
+    tags: ["html", "angular", "ecommerce", "scss", "css","javascript"],
   },
   {
     id: "cross-sell-addon-slider",
@@ -182,7 +182,7 @@ export const projects = [
     imageAlt:
       "Product detail page showing add-on sliders for mattress protectors, foundations, and frames with selectable options and price updates.",
     link: null,
-    tags: ["angular", "scss", "ecommerce", "css"],
+    tags: ["html", "angular", "scss", "ecommerce", "css"],
   },
   {
     id: "portfolio-redesign-nextjs",
@@ -199,7 +199,7 @@ export const projects = [
     imageAlt:
       "See before and after: legacy portfolio with two-flower navigation concept (before) and the updated portfolio navigation layout (after).",
     link: "https://github.com/daisylaflamme/portfolio-nextjs",
-    tags: ["nextjs", "react", "tailwind", "javascript", "ai", "css"],
+    tags: ["html", "nextjs", "react", "tailwind", "javascript", "ai", "css"],
   },
   {
     id: "product-card-redesign",
@@ -216,7 +216,7 @@ export const projects = [
     imageAlt:
       "Product listing page showing a redesigned product card layout with imagery, pricing, badges, and swatches, implemented responsively across devices.",
     link: null,
-    tags: ["ecommerce", "scss", "css", "angular"],
+    tags: ["html", "ecommerce", "scss", "css", "angular"],
   },
   {
     id: "custom-input-controls",
@@ -236,7 +236,7 @@ export const projects = [
     imageAlt:
       "Reusable checkbox and radio input components used across checkout and product flows, styled for multiple furniture brands.",
     link: null,
-    tags: ["angular", "ecommerce", "scss", "css","javascript"],
+    tags: ["html", "angular", "ecommerce", "scss", "css","javascript"],
   },
   {
     id: "cookie-consent-multi-brand",
@@ -247,7 +247,7 @@ export const projects = [
     images: ["/images/projects/cookie.jpg", "/images/projects/cookie-tablet.jpg", "/images/projects/wired-cookie.jpg"],
     imageAlt: "Cookie consent UI and banner variants across multiple furniture brands, including a Termly-integrated preferences flow.",
     link: null,
-    tags: ["javascript", "css", "cms", "ecommerce"],
+    tags: ["html", "javascript", "css", "cms", "ecommerce"],
   },
   {
     id: "finance-messaging-integrations",
@@ -269,7 +269,7 @@ export const projects = [
     imageAlt:
       "Financing message components displayed on product and search pages across multiple furniture brands, including examples for Affirm and other payment providers.",
     link: null,
-    tags: ["angular", "javascript", "ecommerce", "scss", "css"],
+    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css"],
   },
   {
     id: "pizzeria-prototype-lovable",
@@ -298,7 +298,7 @@ export const projects = [
       "Product configuration page showing a sofa with selectable color swatches and configuration options.",
     link:
       "https://www.americansignaturefurniture.com/product/group/living-room/seating/sectionals/campbell-cumulus-2-piece-sectional-with-right-facing-sofa-cement/2224589/2141781",
-    tags: ["angular", "css", "ecommerce", "scss"],
+    tags: ["html", "angular", "css", "ecommerce", "scss"],
   },
 
   {
@@ -315,7 +315,7 @@ export const projects = [
       "Furniture search results page with clickable color swatches on each product card.",
     link:
       "https://www.americansignaturefurniture.com/search/a/living-room/seating/sofas",
-    tags: ["angular", "ecommerce", "scss", "css"],
+    tags: ["html", "angular", "ecommerce", "scss", "css"],
   },
 
   {
@@ -330,7 +330,7 @@ export const projects = [
     imageAlt:
       "Product browse page showing fabric filter controls and large swatch grid.",
     link: "https://www.lovesac.com/search/fabric",
-    tags: ["ecommerce", "css", "scss"],
+    tags: ["html", "ecommerce", "css", "scss"],
   },
   {
     id: "levin-dropship-checkout-responsive",
@@ -349,7 +349,7 @@ export const projects = [
     imageAlt:
       "Responsive Levin Furniture cart and multi-step checkout flow showing delivery options and order summaries across mobile, tablet, and desktop layouts.",
     link: null,
-    tags: ["ecommerce", "css", "scss","javascript","angular"],
+    tags: ["html", "ecommerce", "css", "scss","javascript","angular"],
   },
 
   {
@@ -365,7 +365,7 @@ export const projects = [
     imageAlt:
       "Lovesac search results page showing sectional products and a floating chat widget.",
     link: "https://www.lovesac.com/search/modular-furniture/sectionals",
-    tags: ["ecommerce", "css", "scss","javascript"],
+    tags: ["html", "ecommerce", "css", "scss","javascript"],
   },
 
   {
@@ -380,7 +380,7 @@ export const projects = [
     imageAlt:
       "Lovesac customer sign-in page with email and password form fields.",
     link: "https://www.lovesac.com/account/sign-in",
-    tags: ["ecommerce", "css", "scss","javascript","angular"],
+    tags: ["html", "ecommerce", "css", "scss","javascript","angular"],
   },
 
   {
@@ -398,7 +398,7 @@ export const projects = [
     imageAlt:
       "Store locator pages for multiple brands showing responsive layouts with a map and a list of nearby store locations.",
     link: null,
-    tags: ["ecommerce", "javascript", "scss", "css"],
+    tags: ["html", "ecommerce", "javascript", "scss", "css"],
   },
 
   {
@@ -416,7 +416,7 @@ export const projects = [
     imageAlt:
       "Internal admin interfaces for managing shopping cart promotions, including promotion setup and rule configuration screens.",
     link: null,
-    tags: ["angular", "javascript", "ecommerce", "scss", "css"],
+    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css"],
   },
 
   {
@@ -431,7 +431,7 @@ export const projects = [
     imageAlt:
       "Custom page builder UI showing layout configuration and content blocks.",
     link: null,
-    tags: ["cms", "ecommerce", "scss", "css","javascript","angular"],
+    tags: ["html", "cms", "ecommerce", "scss", "css","javascript","angular"],
   },
 
   {
@@ -447,7 +447,7 @@ export const projects = [
     imageAlt:
       "Admin UI listing reusable page elements and content sections.",
     link: null,
-    tags: ["cms", "ecommerce", "scss", "css","javascript","angular"],
+    tags: ["html", "cms", "ecommerce", "scss", "css","javascript","angular"],
   },
 
   {
@@ -463,7 +463,7 @@ export const projects = [
     imageAlt:
       "Admin edit screen showing form fields for managing store information.",
     link: null,
-    tags: ["cms", "ecommerce", "scss", "css","javascript","angular"],
+    tags: ["html", "cms", "ecommerce", "scss", "css","javascript","angular"],
   },
 
   // --- Cambridge / Zoom / GlobalU / KL / GPHomestay era ---
@@ -481,7 +481,7 @@ export const projects = [
     imageAlt:
       "Custom-branded Zoom classroom login page for Sage Academics.",
     link: "https://thecambridgenetwork.zoom.us/",
-    tags: ["instructional-design", "css"],
+    tags: ["html", "instructional-design", "css"],
   },
 
   {
@@ -496,7 +496,7 @@ export const projects = [
     imageAlt:
       "WordPress site for TCIIE showing a student-focused layout.",
     link: null,
-    tags: ["cms", "javascript", "css", "bootstrap"],
+    tags: ["html", "cms", "javascript", "css", "bootstrap"],
   },
 
   {
@@ -516,7 +516,7 @@ export const projects = [
     imageAlt:
       "GlobalU travel site pages including tour listings, USA overview, and itinerary layouts built from PSD designs as responsive Bootstrap templates.",
     link: null,
-    tags: ["javascript", "css", "bootstrap"],
+    tags: ["html", "javascript", "css", "bootstrap"],
   },
 
   {
@@ -532,7 +532,7 @@ export const projects = [
     imageAlt:
       "Company career site listing open positions and search filters.",
     link: null,
-    tags: ["javascript", "css"],
+    tags: ["html", "javascript", "css"],
   },
 
   {
@@ -547,7 +547,7 @@ export const projects = [
     imageAlt:
       "Website home page for KL Education after HTTPS migration.",
     link: "https://www.kleducation.org/",
-    tags: ["javascript", "instructional-design"],
+    tags: ["html", "javascript", "instructional-design"],
   },
 
   {
@@ -563,7 +563,7 @@ export const projects = [
     imageAlt:
       "The Cambridge Network marketing home page.",
     link: null,
-    tags: ["javascript", "css", "bootstrap"],
+    tags: ["html", "javascript", "css", "bootstrap"],
   },
 
   {
@@ -581,7 +581,7 @@ export const projects = [
     imageAlt:
       "Mobile raffle game interface on a smartphone screen.",
     link: null,
-    tags: ["javascript", "css"],
+    tags: ["html", "javascript", "css"],
   },
 
   {
@@ -599,7 +599,7 @@ export const projects = [
     imageAlt:
       "Dragon Boat Festival campaign landing pages showing mobile-first layouts and a desktop microsite with hero imagery and event details.",
     link: null,
-    tags: ["javascript", "css"],
+    tags: ["html", "javascript", "css"],
   },
 
   {
@@ -617,7 +617,7 @@ export const projects = [
     imageAlt:
       "Registration form for Cambridge Orientation integrated with QuickBase.",
     link: null,
-    tags: ["javascript", "instructional-design", "css", "bootstrap"],
+    tags: ["html", "javascript", "instructional-design", "css", "bootstrap"],
   },
 
   {
@@ -632,7 +632,7 @@ export const projects = [
     imageAlt:
       "Orientation website homepage for international students.",
     link: null,
-    tags: ["cms", "instructional-design", "css", "bootstrap"],
+    tags: ["html", "cms", "instructional-design", "css", "bootstrap"],
   },
   {
     id: "gphomestay-digital-experiences",
@@ -652,7 +652,7 @@ export const projects = [
     imageAlt:
       "GPHomestay digital experiences including a mobile-optimized blog, AdWords landing page, testimonial stories, Salesforce-integrated lead form, main site homepage, and an interactive online quiz.",
     link: null,
-    tags: ["cms", "bootstrap", "javascript", "css"],
+    tags: ["html", "cms", "bootstrap", "javascript", "css"],
   },
 
   {
@@ -670,7 +670,7 @@ export const projects = [
     imageAlt:
       "Invite Education prototypes including a homepage concept and a student dashboard (“passport”) interface.",
     link: null,
-    tags: ["javascript", "css", "startup"],
+    tags: ["html", "javascript", "css", "startup"],
   },
 
   {
@@ -685,7 +685,7 @@ export const projects = [
     imageAlt:
       "Interactive Google Map module showing course-related markers used in an online learning experience.",
     link: null,//"http://www.daisylaflamme.net/umb-map/index.html",
-    tags: ["javascript", "instructional-design", "css", "bootstrap"],
+    tags: ["html", "javascript", "instructional-design", "css", "bootstrap"],
   },
 
   // 4) Casino Ballroom Support
@@ -700,7 +700,7 @@ export const projects = [
     images: ["/images/projects/cb.jpg"],
     imageAlt: "Casino Ballroom website interface",
     link: "http://www.casinoballroom.com/",
-    tags: ["small-business", "css", "javascript"],
+    tags: ["html", "small-business", "css", "javascript"],
   },
 
   // 5) ClariLegal HTML Prototype
@@ -715,7 +715,7 @@ export const projects = [
     images: ["/images/projects/cl-dashboard.jpg"],
     imageAlt: "ClariLegal HTML prototype dashboard",
     link: null,
-    tags: ["startup", "javascript", "css"],
+    tags: ["html", "startup", "javascript", "css"],
   },
 
   // 6) UMass Boston Wireframes
@@ -734,7 +734,7 @@ export const projects = [
     imageAlt:
       "UMass Boston Open Data Analytics wireframes and the implemented website UI showcasing research and analytical content.",
     link: "http://photography.daisylaflamme.net/wireframes.pdf",
-    tags: ["instructional-design", "javascript", "css", "bootstrap", "cms"],
+    tags: ["html", "instructional-design", "javascript", "css", "bootstrap", "cms"],
   },
 
   // 8) Boston Strategics
@@ -749,7 +749,7 @@ export const projects = [
     images: ["/images/projects/bs2.jpg", "/images/projects/bs.jpg"],
     imageAlt: "Boston Strategics WordPress website and supporting design concepts.",
     link: null,
-    tags: ["cms", "startup", "css", "bootstrap"],
+    tags: ["html", "cms", "startup", "css", "bootstrap"],
   },
 
   // 9) Bioarray Therapeutics
@@ -764,7 +764,7 @@ export const projects = [
     images: ["/images/projects/bioarray.jpg"],
     imageAlt: "Bioarray Therapeutics website layout",
     link: null,
-    tags: ["small-business", "css", "javascript","bootstrap","cms"],
+    tags: ["html", "small-business", "css", "javascript","bootstrap","cms"],
   },
 
   // 10) Refuge Place International
@@ -780,7 +780,7 @@ export const projects = [
     imageAlt:
       "Refuge Place International WordPress website with donation and mission-focused content.",
     link: null,
-    tags: ["cms", "volunteer", "css", "bootstrap","javascript"],
+    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript"],
   },
 
   // 11) GlobalPeace Aid
@@ -795,7 +795,7 @@ export const projects = [
     images: ["/images/projects/7.jpg"],
     imageAlt: "Global Peace Aid nonprofit WordPress website with donation and events information.",
     link: null,
-    tags: ["cms", "volunteer", "css", "bootstrap","javascript"],
+    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript"],
   },
   {
     id: "js-girls-platform",
@@ -809,7 +809,7 @@ export const projects = [
     imageAlt:
       "UI screens from a JavaScript learning platform for young female learners, featuring tutorials and concept modals.",
     link: null,
-    tags: ["javascript", "css", "instructional-design", "bootstrap"],
+    tags: ["html", "javascript", "css", "instructional-design", "bootstrap"],
   },
   {
     id: "photo-portfolio",
@@ -824,7 +824,7 @@ export const projects = [
       "Grid of photography thumbnails on a clean portfolio page.",
     link:
       "http://photography.daisylaflamme.net/portfolio.html",
-    tags: ["javascript", "css", "bootstrap"],
+    tags: ["html", "javascript", "css", "bootstrap"],
   },
   {
     id: "hci-mockup",
@@ -851,8 +851,8 @@ export const projects = [
     images: ["/images/projects/mariya.jpg"],
     imageAlt:
       "Small business website showcasing event flyer design services and sample flyer work.",
-    link: null,
-    tags: ["small-business", "javascript", "css", "bootstrap"],
+    link: "http://mariyaholbrook.daisylaflamme.net",
+    tags: ["html", "small-business", "javascript", "css", "bootstrap"],
   },
 
   // 2) Student Resume Portfolio
@@ -867,7 +867,7 @@ export const projects = [
     images: ["/images/projects/puhi.jpg"],
     imageAlt: "Student resume and project portfolio screenshot",
     link: null,
-    tags: ["javascript", "css", "bootstrap"],
+    tags: ["html", "javascript", "css", "bootstrap"],
   },
 
   // 3) Mobile Joomla Portfolio App
@@ -882,7 +882,7 @@ export const projects = [
     images: ["/images/projects/i2.jpg"],
     imageAlt: "Mobile Joomla portfolio interface",
     link: null,
-    tags: ["cms", "javascript", "css"],
+    tags: ["html", "cms", "javascript", "css"],
   },
 
   // 12) Scratch Game Development

@@ -16,6 +16,7 @@ const PROJECT_FILTER_CATEGORIES = [
       { id: "react", label: "React" },
       { id: "nextjs", label: "Next.js" },
       { id: "javascript", label: "JavaScript" },
+      { id: "html", label: "HTML" },
     ],
   },
   {
