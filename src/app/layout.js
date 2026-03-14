@@ -1,6 +1,14 @@
 import "./globals.css";
 import Header from "./Header";
 import NavMenu from "./NavMenu";
+import Dock from "./Dock";
+import Footer from "./Footer";
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata = {
   title: "Daisy Laflamme | Senior UI & Front-End Engineer Portfolio",
@@ -13,10 +21,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="font-inter">
+      <body className="font-inter pb-20 lg:pb-0 flex flex-col min-h-screen">
         <Header />
         <NavMenu />
-        {children}
+        <div className="flex-1 flex flex-col">
+          {children}
+        </div>
+        <Dock />
+        <Footer />
       </body>
     </html>
   );
