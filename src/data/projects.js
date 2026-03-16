@@ -189,8 +189,7 @@ export const projects = [
     title: "Portfolio Redesign: Bootstrap → Next.js + Tailwind",
     summary:
       "Redesigned my personal portfolio from a Bootstrap/HTML/CSS/JavaScript site into a modern Next.js + Tailwind codebase as a structured learning project for React fundamentals, reusable component architecture, and state management.",
-    description:
-      "Rebuilding my portfolio as a hands-on React learning initiative. The original site featured a content-heavy layout and a custom “two-flower” homepage navigation built with Bootstrap, HTML, CSS, and JavaScript. The new version is being rebuilt with Next.js and Tailwind to modernize the UI and improve maintainability while deepening my understanding of React concepts—component composition, props/state, hooks, and predictable UI state flows.\n\nThis project also helped me internalize how React/Next.js differs from Angular: less framework-driven structure out of the box, more explicit composition, and a stronger emphasis on reusable UI primitives and local state patterns. I documented the approach, decisions, and learnings in the repo.\n\nSee before and after in the images:",
+    description: "Rebuilt my portfolio as a hands-on React learning initiative. The original site featured a content-heavy layout and a custom two-flower homepage navigation built with Bootstrap, HTML, CSS, and JavaScript. The new version uses Next.js and Tailwind to modernize the UI, improve maintainability, and deepen my understanding of React concepts such as component composition, props and state, hooks, and predictable UI state flows. I also used an AI agent to crawl my original portfolio, collect project and image content, and convert it into a structured JSON data source used to power the React components. See the before-and-after images below:",
     thumbnail: "/images/projects/thumbnails/portfolio-red.jpg",
     images: [
       "/images/projects/old-portfolio.png",
