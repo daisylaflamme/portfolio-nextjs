@@ -57,7 +57,12 @@ export async function POST(request: Request) {
   const fromEmail = process.env.CONTACT_FROM_EMAIL;
 
   if (!apiKey || !toEmail || !fromEmail) {
-    console.error("Contact API: Missing RESEND_API_KEY, CONTACT_TO_EMAIL, or CONTACT_FROM_EMAIL");
+    const missing = [
+      !apiKey && "RESEND_API_KEY",
+      !toEmail && "CONTACT_TO_EMAIL",
+      !fromEmail && "CONTACT_FROM_EMAIL",
+    ].filter(Boolean);
+    console.error("Contact API: Missing env vars on Vercel:", missing.join(", "));
     return NextResponse.json(
       { error: "Contact form is not configured. Please try again later." },
       { status: 500 }
@@ -102,7 +107,7 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      console.error("Resend error:", error);
+      console.error("Contact API Resend error:", JSON.stringify(error));
       return NextResponse.json(
         { error: "Failed to send message. Please try again." },
         { status: 500 }
@@ -111,7 +116,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true, id: data?.id });
   } catch (err) {
-    console.error("Contact API error:", err);
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Contact API error:", message, err);
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
       { status: 500 }

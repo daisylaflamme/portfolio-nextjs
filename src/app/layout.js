@@ -3,6 +3,8 @@ import Header from "./Header";
 import NavMenu from "./NavMenu";
 import Dock from "./Dock";
 import Footer from "./Footer";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const viewport = {
   width: "device-width",
@@ -29,6 +31,8 @@ export default function RootLayout({ children }) {
         </div>
         <Dock />
         <Footer />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

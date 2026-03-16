@@ -87,15 +87,9 @@ export default function AboutPage() {
               Bio
             </h2>
             <div className="space-y-4 text-[var(--color-font-primary)] text-[15px] md:text-base leading-relaxed">
-              <p>
-                I&apos;m a senior front-end engineer with over a decade of experience designing and building UI for large-scale e-commerce platforms. My happiest place is that intersection of visual design, interaction details, and production-ready code. Continuous learning is central to my identity — it’s what keeps me curious, adaptable, and excited to take on new challenges in design and engineering.
-              </p>
-              <p>
-              Over the years I've become the person teams call when something complex needs to be reliable, well-tested, and production-ready: checkout flows, third-party integrations, accessibility fixes, or an entire component system that behaves consistently across brands. I care deeply about the small details that make interfaces feel effortless.
-              </p>
-              <p>
-                Earlier in my career I worked in UMass Boston&apos;s entrepreneurship incubator, helping startups like Boston Strategics, ODAI, CollegeMiner, Bioarray and ClariLegal shape their online presence. I partnered with founders to design wireframes and build their first websites.
-              </p>
+              <p>Senior front-end engineer with over a decade of experience designing and building UI for large-scale e-commerce platforms, startups, and small businesses. My best work lives at the intersection of visual design, interaction details, and production-ready code.</p>
+              <p>Over the years, I’ve become the person teams trust with complex UI challenges: checkout flows, third-party integrations, accessibility improvements, and scalable component systems that need to perform consistently across brands. I care deeply about building interfaces that look polished, work correctly, and are well-tested, maintainable, and ready for production.</p>
+              <p>Known for being reliable, calm under pressure, and effective in high-stakes projects, I bring clear communication, strong ownership, and a consistent focus on developer experience, productivity, and quality. Continuous learning is a core part of how I work, and I use every challenge as an opportunity to refine how I build, document, collaborate, and support others through strong documentation, knowledge sharing, and mentoring.</p>
             </div>
           </div>
           <div className="order-1 lg:order-2 flex flex-col items-center shrink-0">
