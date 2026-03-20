@@ -3,7 +3,7 @@
 // Reuse same links and icon paths as contact page
 const FOOTER_LINKS = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/desislavalaflamme/", icon: "/icons/contact-linkedin.svg" },
-  { label: "GitHub", href: "https://github.com/daisylaflamme", icon: "/icons/contact-github.svg" },
+  { label: "GitHub", href: "https://github.com/daisylaflamme/portfolio-nextjs", icon: "/icons/contact-github.svg" },
   { label: "Email", href: "mailto:laflammedaisy@gmail.com", icon: "/icons/contact-email.svg" },
 ];
 

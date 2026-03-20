@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 const DOCK_ITEMS = [
   { label: "Home", href: "/", external: false, icon: "home" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/desislavalaflamme/", external: true, icon: "/icons/contact-linkedin.svg" },
-  { label: "GitHub", href: "https://github.com/daisylaflamme", external: true, icon: "/icons/contact-github.svg" },
+  { label: "GitHub", href: "https://github.com/daisylaflamme/portfolio-nextjs", external: true, icon: "/icons/contact-github.svg" },
   { label: "Email", href: "mailto:laflammedaisy@gmail.com", external: true, icon: "/icons/contact-email.svg" },
 ];
 

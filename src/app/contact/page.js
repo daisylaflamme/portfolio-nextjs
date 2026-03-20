@@ -6,7 +6,7 @@ import ContactForm from "./ContactForm";
 const CONTACT_LINKS = {
   email: "mailto:daisy@daisylaflamme.net",
   linkedin: "https://www.linkedin.com/in/desislavalaflamme/",
-  github: "https://github.com/daisylaflamme",
+  github: "https://github.com/daisylaflamme/portfolio-nextjs",
 };
 
 export default function ContactPage() {
