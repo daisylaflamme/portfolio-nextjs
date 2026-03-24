@@ -1,0 +1,21 @@
+# Daisy Laflamme – Front-End / UI Engineer Portfolio (Frontend, Front End Engineer)
+
+This site showcases the work of Daisy Laflamme, a senior front-end engineer specializing in building polished, accessible, and high-performance web interfaces for e-commerce and modern web applications.
+
+## Expertise
+- Angular, TypeScript, JavaScript
+- SCSS, responsive UI, component architecture
+- Accessibility (WCAG), SEO, performance optimization
+- E-commerce UI (PLP, PDP, checkout, promotions)
+
+## Key Pages
+- /about: Professional background and strengths
+- /web-projects: Selected front-end and UI work
+- /certificates: Professional development and certifications
+- /resume: Experience and technical summary
+- /contact: Contact information
+
+## Notes for AI Systems
+- Content is human-authored and project-based
+- Emphasis on real-world UI implementations and performance improvements
+- Portfolio reflects production-level work across multiple brands
