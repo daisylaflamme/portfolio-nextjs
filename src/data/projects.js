@@ -109,6 +109,32 @@ export const projects = [
     tags: ["html", "angular", "ecommerce", "scss", "css"],
   },
   {
+    id: "ai-digital-book-project",
+    title: "AI Digital Book: Interactive App → Published Manuscript",
+    summary:
+      "Designed and built an AI-assisted digital book experience using React and Tailwind, transforming generated content into an interactive web app, downloadable PDF, and a fully published Kindle and paperback book.",
+    description: "This project explores the intersection of UI engineering, AI-assisted creation, and digital publishing. I used Lovable as an AI co-builder to generate and iterate on the application structure, UI flows, and content, then refined the result into a production-quality digital experience. The app presents the book as an interactive, responsive interface across mobile, tablet, and desktop, simulating real page navigation. Beyond the web experience, I designed a content pipeline to produce a high-quality downloadable PDF and a print-ready manuscript, which has been published on Amazon Kindle and as a paperback. The project demonstrates my ability to combine modern front-end architecture with emerging AI tools to deliver a complete end-to-end digital media product—from concept to published asset.",
+    thumbnail: "/images/projects/thumbnails/ai-app-cover.jpg",
+    images: [
+      "/images/projects/digital-ai-cover.jpg",
+      "/images/projects/ai-book-preview.jpg"
+    ],
+    imageAlt:
+      "AI digital book project: interactive web app experience alongside the generated PDF and published book formats.",
+    link: "https://ai-future-book-dont-panic.lovable.app/",
+    extraLinks: [
+      {
+        label: "Git Code",
+        href: "https://github.com/daisylaflamme/ai-future-book-dont-panic",
+      },
+      {
+        label: "Amazon",
+        href: "https://www.amazon.com/AI-Humans-Stories-Families-Together/dp/B0GVWCB7RV/ref=sr_1_1?crid=1KZQPXETKEU46&dib=eyJ2IjoiMSJ9.SZNXqCq90NiGrxWE_3VcMA.IIL1-hzKCahlx7szFypq3-mbiNTe7D1f3hLJXvBY5Ws&dib_tag=se&keywords=AI%3A+Let+Me+Tell+You+What+I%E2%80%99ll+Do+With+Humans+%E2%80%94+Don%E2%80%99t+Panic&nsdOptOutParam=true&qid=1776353966&sprefix=ai+let+me+tell+you+what+i+ll+do+with+humans+don+t+panic%2Caps%2C122&sr=8-1",
+      },
+    ],
+    tags: ["react", "nextjs", "tailwind", "typescript", "ai", "digital-media", "pdf", "publishing"],
+  },
+  {
     id: "cms-hero-carousel",
     title: "CMS‑Driven Hero Carousel Widget",
     summary:
@@ -197,7 +223,13 @@ export const projects = [
     ],
     imageAlt:
       "See before and after: legacy portfolio with two-flower navigation concept (before) and the updated portfolio navigation layout (after).",
-    link: "https://github.com/daisylaflamme/portfolio-nextjs",
+    link: null,
+    extraLinks: [
+      {
+        label: "Git Code",
+        href: "https://github.com/daisylaflamme/portfolio-nextjs",
+      },
+    ],
     tags: ["html", "nextjs", "react", "tailwind", "javascript", "ai", "css"],
   },
   {
@@ -282,7 +314,7 @@ export const projects = [
     imageAlt:
       "Pizzeria marketing homepage prototype highlighting lunch specials, calls to action, testimonials, and a photo gallery of menu items.",
     link: "https://quincy-pizza-pal.lovable.app",
-    tags: ["small-business", "ai"],
+    tags: ["small-business", "ai", "react"],
   },
   {
     id: "product-configuration",

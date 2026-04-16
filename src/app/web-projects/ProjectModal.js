@@ -74,18 +74,33 @@ export default function ProjectModal({ project, onClose }) {
             />
           ))}
         </div>
-        {project.link && (
-          <p className="pt-4">
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-[var(--color-shadow-accent)] font-medium underline hover:opacity-80 transition-opacity"
-            >
-              Visit Site
-              <span aria-hidden>↗</span>
-            </a>
-          </p>
+        {(project.link || (Array.isArray(project.extraLinks) && project.extraLinks.length > 0)) && (
+          <div className="pt-4 flex flex-wrap gap-x-6 gap-y-2">
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[var(--color-shadow-accent)] font-medium underline hover:opacity-80 transition-opacity"
+              >
+                Visit Site
+                <span aria-hidden>↗</span>
+              </a>
+            )}
+            {Array.isArray(project.extraLinks) &&
+              project.extraLinks.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-[var(--color-shadow-accent)] font-medium underline hover:opacity-80 transition-opacity"
+                >
+                  {item.label}
+                  <span aria-hidden>↗</span>
+                </a>
+              ))}
+          </div>
         )}
         <div className="modal-action">
           <form method="dialog">
