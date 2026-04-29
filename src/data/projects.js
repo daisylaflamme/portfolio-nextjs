@@ -64,7 +64,7 @@ export const projects = [
     imageAlt:
       "Masonry collage of multi-brand e-commerce UI work: mobile navigation, PDPs, cart and checkout pages, search grids, content editor layouts, and marketing modules across multiple furniture storefronts.",
     link: null,
-    tags: ["html", "angular", "javascript", "scss", "css", "bootstrap", "ecommerce", "cms"],
+    tags: ["html", "angular", "javascript", "scss", "css", "bootstrap", "ecommerce", "cms", "api-integrations"],
   },
   {
     id: "checkout-multi-payments",
@@ -87,7 +87,7 @@ export const projects = [
     imageAlt:
       "Checkout payment step showing multiple payment methods (credit/debit, Affirm, financing, and lease-to-own) across desktop and mobile flows.",
     link: null,
-    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css"],
+    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css", "api-integrations"],
   },
   {
     id: "store-details-maps",
@@ -106,7 +106,97 @@ export const projects = [
     imageAlt:
       "Store details pages showing an interactive map with a branded location pin, nearby store results, and a store-type legend across multiple furniture brands.",
     link: "https://www.morrisathome.com/store/furniture-store/OH/Reynoldsburg/2339-Taylor-Park-Drive",
-    tags: ["html", "angular", "ecommerce", "scss", "css"],
+    tags: ["html", "angular", "ecommerce", "scss", "css", "api-integrations"],
+  },
+  {
+    id: "gifspark-ai-greeting-app",
+    title: "GifSpark: AI Photo-to-GIF Greeting App",
+    summary:
+      "Created an AI-powered digital product that turns a single photo into a short animated greeting using Runway, React, TypeScript, Stripe payments, and a polished conversion-focused UX.",
+  
+    description:
+      "Built GifSpark as an AI-powered digital product from concept through launch planning, combining product discovery, UX strategy, prototyping, implementation, QA, and monetization. The app allows users to upload a photo, generate a personalized greeting, and export it as WebP, GIF, or MP4. I led the product experience end-to-end—defining user flows, refining UX details, improving responsive behavior, and optimizing performance for media-heavy processing workflows. The platform integrates Runway gen4_turbo for AI animation generation, Stripe for credit-based payments, and Supabase/Lovable Cloud for authentication, storage, database management, and Edge Functions. I also introduced in-app AI support chat and built safeguards around key flows such as generation, downloads, payments, and account usage.",
+  
+    thumbnail: "/images/projects/thumbnails/gst.jpg",
+    images: [
+      "/images/projects/gs.jpg",
+      "/images/projects/gs4.jpg",
+      "/images/projects/gs5.jpg",
+      "/images/projects/gs6.webp"
+    ],
+    imageAlt:
+      "GifSpark AI greeting app showing photo upload, AI animation generation, message overlay, and downloadable animated greeting formats.",
+  
+    link: null,
+  
+    extraLinks: [
+      {
+        label: "Live App",
+        href: "https://gifspark.lovable.app/",
+      }
+    ],
+  
+    tags: [
+      "react",
+      "typescript",
+      "vite",
+      "tailwind",
+      "shadcn-ui",
+      "runway-api",
+      "stripe",
+      "supabase",
+      "ai",
+      "product-design",
+      "ux",
+      "qa",
+      "seo",
+      "digital-product",
+      "api-integrations",
+    ],
+  },
+  {
+    id: "digital-product-lab",
+    title: "Digital Product Lab: AI Products, Digital Publishing & Monetization",
+    
+    summary:
+    "I build and sell independent digital products—from AI-powered tools to digital publications—using lightweight platforms to test demand, automate distribution, and streamline customer acquisition.",
+
+  description:
+    "Digital Product Lab where I launch and manage independent digital products, creative experiments, and service offerings. I use Pop.store as a lightweight distribution platform to validate product demand, automate marketing workflows, centralize social channels, and simplify digital delivery. The storefront currently includes AI-powered products like GifSpark, digital books, downloadable content, and creative services.",
+    thumbnail: "/images/projects/thumbnails/popst.jpg",
+  
+    images: [
+      "/images/projects/popstorehome.jpg",
+      "/images/projects/pst.jpg",
+    ],
+  
+    imageAlt:
+      "Digital Product Lab storefront showcasing AI products, digital books, downloadable content, and monetized digital experiences.",
+  
+    link: null,
+  
+    extraLinks: [
+      {
+        label: "Live Storefront",
+        href: "https://pop.store/daisylaflamme",
+      }
+    ],
+  
+    tags: [
+      "react",
+      "product-strategy",
+      "digital-commerce",
+      "monetization",
+      "ux-design",
+      "ai",
+      "digital-publishing",
+      "growth-experiments",
+      "payment-strategy",
+      "product-development",
+      "customer-experience",
+      "digital-distribution",
+      "api-integrations",
+    ],
   },
   {
     id: "ai-digital-book-project",
@@ -189,7 +279,7 @@ export const projects = [
     imageAlt:
       "Gift card balance check page with a gift card number input and a branded visual, shown across desktop and mobile layouts for multiple furniture brands.",
     link: "https://www.cardis.com/gift-card-balance",
-    tags: ["html", "angular", "ecommerce", "scss", "css","javascript"],
+    tags: ["html", "angular", "ecommerce", "scss", "css","javascript", "api-integrations"],
   },
   {
     id: "cross-sell-addon-slider",
@@ -208,7 +298,7 @@ export const projects = [
     imageAlt:
       "Product detail page showing add-on sliders for mattress protectors, foundations, and frames with selectable options and price updates.",
     link: null,
-    tags: ["html", "angular", "scss", "ecommerce", "css"],
+    tags: ["html", "angular", "scss", "ecommerce", "css", "api-integrations"],
   },
   {
     id: "portfolio-redesign-nextjs",
@@ -247,7 +337,7 @@ export const projects = [
     imageAlt:
       "Product listing page showing a redesigned product card layout with imagery, pricing, badges, and swatches, implemented responsively across devices.",
     link: null,
-    tags: ["html", "ecommerce", "scss", "css", "angular"],
+    tags: ["html", "ecommerce", "scss", "css", "angular", "api-integrations"],
   },
   {
     id: "custom-input-controls",
@@ -278,7 +368,7 @@ export const projects = [
     images: ["/images/projects/cookie.jpg", "/images/projects/cookie-tablet.jpg", "/images/projects/wired-cookie.jpg"],
     imageAlt: "Cookie consent UI and banner variants across multiple furniture brands, including a Termly-integrated preferences flow.",
     link: null,
-    tags: ["html", "javascript", "css", "cms", "ecommerce"],
+    tags: ["html", "javascript", "css", "cms", "ecommerce", "api-integrations"],
   },
   {
     id: "finance-messaging-integrations",
@@ -300,7 +390,7 @@ export const projects = [
     imageAlt:
       "Financing message components displayed on product and search pages across multiple furniture brands, including examples for Affirm and other payment providers.",
     link: null,
-    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css"],
+    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css", "api-integrations"],
   },
   {
     id: "pizzeria-prototype-lovable",
@@ -396,7 +486,7 @@ export const projects = [
     imageAlt:
       "Lovesac search results page showing sectional products and a floating chat widget.",
     link: "https://www.lovesac.com/search/modular-furniture/sectionals",
-    tags: ["html", "ecommerce", "css", "scss","javascript"],
+    tags: ["html", "ecommerce", "css", "scss","javascript", "api-integrations"],
   },
 
   {
@@ -429,7 +519,7 @@ export const projects = [
     imageAlt:
       "Store locator pages for multiple brands showing responsive layouts with a map and a list of nearby store locations.",
     link: null,
-    tags: ["html", "ecommerce", "javascript", "scss", "css"],
+    tags: ["html", "ecommerce", "javascript", "scss", "css", "api-integrations"],
   },
 
   {
@@ -447,7 +537,7 @@ export const projects = [
     imageAlt:
       "Internal admin interfaces for managing shopping cart promotions, including promotion setup and rule configuration screens.",
     link: null,
-    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css"],
+    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css", "api-integrations"],
   },
 
   {
@@ -512,7 +602,7 @@ export const projects = [
     imageAlt:
       "Custom-branded Zoom classroom login page for Sage Academics.",
     link: "https://thecambridgenetwork.zoom.us/",
-    tags: ["html", "instructional-design", "css"],
+    tags: ["html", "instructional-design", "css", "api-integrations"],
   },
 
   {
@@ -612,7 +702,7 @@ export const projects = [
     imageAlt:
       "Mobile raffle game interface on a smartphone screen.",
     link: null,
-    tags: ["html", "javascript", "css"],
+    tags: ["html", "javascript", "css", "api-integrations"],
   },
 
   {
@@ -648,7 +738,7 @@ export const projects = [
     imageAlt:
       "Registration form for Cambridge Orientation integrated with QuickBase.",
     link: null,
-    tags: ["html", "javascript", "instructional-design", "css", "bootstrap"],
+    tags: ["html", "javascript", "instructional-design", "css", "bootstrap", "api-integrations"],
   },
 
   {
@@ -683,7 +773,7 @@ export const projects = [
     imageAlt:
       "GPHomestay digital experiences including a mobile-optimized blog, AdWords landing page, testimonial stories, Salesforce-integrated lead form, main site homepage, and an interactive online quiz.",
     link: null,
-    tags: ["html", "cms", "bootstrap", "javascript", "css"],
+    tags: ["html", "cms", "bootstrap", "javascript", "css", "api-integrations"],
   },
 
   {
@@ -716,7 +806,7 @@ export const projects = [
     imageAlt:
       "Interactive Google Map module showing course-related markers used in an online learning experience.",
     link: null,//"http://www.daisylaflamme.net/umb-map/index.html",
-    tags: ["html", "javascript", "instructional-design", "css", "bootstrap"],
+    tags: ["html", "javascript", "instructional-design", "css", "bootstrap", "api-integrations"],
   },
 
   // 4) Casino Ballroom Support
@@ -811,7 +901,7 @@ export const projects = [
     imageAlt:
       "Refuge Place International WordPress website with donation and mission-focused content.",
     link: null,
-    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript"],
+    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript", "api-integrations"],
   },
 
   // 11) GlobalPeace Aid
@@ -826,7 +916,7 @@ export const projects = [
     images: ["/images/projects/7.jpg"],
     imageAlt: "Global Peace Aid nonprofit WordPress website with donation and events information.",
     link: null,
-    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript"],
+    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript", "api-integrations"],
   },
   {
     id: "js-girls-platform",

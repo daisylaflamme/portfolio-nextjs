@@ -12,6 +12,7 @@ const PROJECT_FILTER_CATEGORIES = [
     id: "frontend",
     label: "Frontend",
     options: [
+      { id: "api-integrations", label: "API Integrations" },
       { id: "angular", label: "Angular" },
       { id: "react", label: "React" },
       { id: "nextjs", label: "Next.js" },
