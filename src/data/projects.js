@@ -203,7 +203,7 @@ export const projects = [
     title: "AI Digital Book: Interactive App → Published Manuscript",
     summary:
       "Designed and built an AI-assisted digital book experience using React and Tailwind, transforming generated content into an interactive web app, downloadable PDF, and a fully published Kindle and paperback book.",
-    description: "This project explores the intersection of UI engineering, AI-assisted creation, and digital publishing. I used Lovable as an AI co-builder to generate and iterate on the application structure, UI flows, and content, then refined the result into a production-quality digital experience. The app presents the book as an interactive, responsive interface across mobile, tablet, and desktop, simulating real page navigation. Beyond the web experience, I designed a content pipeline to produce a high-quality downloadable PDF and a print-ready manuscript, which has been published on Amazon Kindle and as a paperback. The project demonstrates my ability to combine modern front-end architecture with emerging AI tools to deliver a complete end-to-end digital media product—from concept to published asset.",
+    description: "This project brings together UI engineering, AI-assisted creation, and digital publishing into a cohesive product experience. Using Lovable as an AI co-builder, I iterated on application structure, UI flows, and content, shaping them into a production-ready digital platform. The app presents the book as a fully responsive, interactive experience across mobile, tablet, and desktop, with subtle skeuomorphic motion to emulate real page transitions. In parallel, I established a content pipeline that generates both a high-quality downloadable PDF and a print-ready manuscript, published on Amazon Kindle and in paperback. The result is a complete digital-to-publishing workflow, combining modern front-end architecture with AI-driven tooling to deliver a polished, end-to-end product.",
     thumbnail: "/images/projects/thumbnails/ai-app-cover.jpg",
     images: [
       "/images/projects/digital-ai-cover.jpg",
@@ -223,6 +223,47 @@ export const projects = [
       },
     ],
     tags: ["react", "nextjs", "tailwind", "typescript", "ai", "digital-media", "pdf", "publishing"],
+  },
+  {
+    id: "ai-us-digital-book-project",
+    title: "AI & Us: Interactive Visual Book → Published Manuscript",
+    summary:
+      "Designed and built a premium AI-assisted digital book experience using React, TypeScript, Tailwind, and Framer Motion, combining cinematic visual storytelling, realistic page-turn motion, PDF export, and a published Kindle book.",
+  
+    description:
+      "AI & Us combines UI engineering, AI-assisted creation, and digital publishing into a refined visual reading experience. Built with Lovable as an AI co-builder, the application is structured as a responsive, editorial-style digital book featuring cinematic concept art, carefully tuned typography, and subtle skeuomorphic page-turn motion for a tactile, book-like feel. A streamlined publishing workflow enables client-side PDF export in a 6×9 KDP-ready format, extending the experience into a fully published Kindle release. The result is a cohesive digital product that blends modern front-end architecture, motion UI, and AI tooling with editorial-grade presentation.",
+  
+    thumbnail: "/images/projects/thumbnails/ai-us-cover.jpg",
+    images: [
+      "/images/projects/desktop-book2.jpg",
+      "/images/projects/desktop-book-2.jpg",
+      "/images/projects/ipad2.jpg"
+    ],
+    imageAlt:
+      "AI & Us digital book project showing the interactive web reading experience, cinematic chapter art, PDF export, and published book format.",
+  
+    link: "https://ai-us-canvas.lovable.app/",
+    extraLinks: [
+      {
+        label: "Git Code",
+        href: "https://github.com/daisylaflamme/human-futures-unveiled",
+      },
+      {
+        label: "Amazon",
+        href: "https://www.amazon.com/AI-Us-5-Minute-Future-Minutes-ebook/dp/B0GX31LTPP/ref=sr_1_2?crid=89KAYRV6NYGM&dib=eyJ2IjoiMSJ9.4xwsLAvC29CdryhUDO_pHeURU9TUBIrg6-T9LGeSA3M.TCDU8AhIuB_9INkGs03zMRTCJLwd3tpcHAC7JEtcLYs&dib_tag=se&keywords=daisy+laflamme&qid=1777559260&sbo=QS21L9be7oZFAGyl4IXR%2Bw%3D%3D&sprefix=daisy+laflamme%2Caps%2C145&sr=8-2",
+      },
+    ],
+    tags: [
+      "react",
+      "vite",
+      "tailwind",
+      "typescript",
+      "framer-motion",
+      "ai",
+      "digital-media",
+      "pdf",
+      "publishing"
+    ],
   },
   {
     id: "cms-hero-carousel",
