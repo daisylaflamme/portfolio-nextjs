@@ -59,13 +59,68 @@ function HeaderContent() {
     if (hasTrackedResumeVisit.current) return;
     if (utmSource !== "resume") return;
 
+    const notifyKey = [
+      "resume-visit-notified",
+      urlCompany || "",
+      urlRole || "",
+      utmCampaign || "",
+      utmMedium || "",
+    ].join(":");
+
+    try {
+      if (typeof window !== "undefined" && sessionStorage.getItem(notifyKey)) {
+        hasTrackedResumeVisit.current = true;
+        return;
+      }
+    } catch {
+      // sessionStorage may be unavailable; continue with ref-only guard.
+    }
+
     hasTrackedResumeVisit.current = true;
-    track("resume_portfolio_visit", {
+
+    try {
+      sessionStorage.setItem(notifyKey, "1");
+    } catch {
+      // Ignore storage failures.
+    }
+
+    const payload = {
+      source: "resume",
       company: urlCompany || "",
       role: urlRole || "",
       campaign: utmCampaign || "",
       medium: utmMedium || "",
+    };
+
+    track("resume_portfolio_visit", {
+      company: payload.company,
+      role: payload.role,
+      campaign: payload.campaign,
+      medium: payload.medium,
     });
+
+    void fetch("/api/resume-visit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          try {
+            sessionStorage.removeItem(notifyKey);
+          } catch {
+            // Ignore.
+          }
+        }
+      })
+      .catch(() => {
+        try {
+          sessionStorage.removeItem(notifyKey);
+        } catch {
+          // Ignore.
+        }
+      });
   }, [utmSource, urlCompany, urlRole, utmCampaign, utmMedium]);
 
   return (
