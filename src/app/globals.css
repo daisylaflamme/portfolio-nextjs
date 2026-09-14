@@ -15,7 +15,8 @@
   --color-petal-border: #D3CEC7;
   --color-center-circle: #C8BFAA;
   --color-shadow-accent: #BC7E68;
-  
+  /* Personalized resume-landing welcome accent */
+  --color-welcome-accent: #A4535C;
 }
 
 :root {
@@ -111,14 +112,139 @@
 }
 
 body {
-  background-color: var(--color-primary-bg);
+  --page-bg: #fcfaf8;
+  background-color: var(--page-bg);
+  background-image:
+    radial-gradient(circle at 8% 18%, rgba(164, 83, 92, 0.05), transparent 32%),
+    radial-gradient(circle at 92% 72%, rgba(190, 170, 160, 0.07), transparent 36%),
+    radial-gradient(ellipse 70% 45% at 50% -5%, rgba(200, 191, 170, 0.12), transparent 55%),
+    radial-gradient(ellipse 40% 30% at 100% 0%, rgba(164, 83, 92, 0.035), transparent 50%),
+    linear-gradient(180deg, #fcfaf8 0%, #faf7f4 55%, #f8f4f1 100%);
+  background-attachment: scroll;
   color: var(--color-font-primary);
   height: 100%;
   min-height: 100vh;
 }
 
+@media (min-width: 768px) {
+  body {
+    background-attachment: fixed;
+  }
+}
+
 .text-balance {
   text-wrap: balance;
+}
+
+/* Homepage composition — compact vertical rhythm, no stretched empty space */
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.flower_shell {
+  --flower-visual: clamp(260px, 78vw, 400px);
+  width: var(--flower-visual);
+  height: var(--flower-visual);
+  margin-block: clamp(1rem, 2.8vw, 1.75rem) 0;
+  margin-inline: auto;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .flower_shell {
+    --flower-visual: clamp(320px, 48vw, 400px);
+    margin-block-start: clamp(1.25rem, 2.5vw, 2.25rem);
+  }
+}
+
+/* Home brand statement under flower nav */
+.home-brand {
+  width: min(21.5rem, 92vw);
+  margin-inline: auto;
+  padding-inline: 1rem;
+  padding-block: clamp(1.75rem, 4vw, 2.75rem) clamp(1rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.home-brand__motto {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.home-brand__rule {
+  display: block;
+  flex: 1 1 auto;
+  height: 1px;
+  min-width: 1.5rem;
+  background-color: color-mix(in srgb, var(--color-petal-border) 90%, transparent);
+}
+
+.home-brand__eyebrow {
+  flex-shrink: 0;
+  margin: 0;
+  font-family: var(--font-inter);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-font-secondary);
+}
+
+.home-brand__tagline {
+  margin: 0.9rem auto 0;
+  max-width: 16.5rem;
+  font-family: var(--font-playfair-display);
+  font-size: 0.9375rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--color-font-secondary);
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .home-brand {
+    width: min(34rem, 86vw);
+  }
+
+  .home-brand__motto {
+    gap: 1rem;
+  }
+
+  .home-brand__eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+  }
+
+  .home-brand__tagline {
+    width: max-content;
+    max-width: 100%;
+    margin-top: 1rem;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-brand {
+    width: min(42rem, 62vw);
+  }
+
+  .home-brand__motto {
+    gap: 1.15rem;
+  }
+
+  .home-brand__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+  }
 }
 
 /* Flower Navigation Styles */
@@ -126,17 +252,19 @@ body {
   position: relative;
   width: 355px;
   height: 355px;
-  margin: 0 auto;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: scale(calc(var(--flower-visual, 355px) / 355px));
+  transform-origin: center center;
 }
 
 @media (min-width: 768px) {
   .flower_container {
     width: 400px;
     height: 400px;
-    margin: 3rem auto;
+    transform: scale(calc(var(--flower-visual, 400px) / 400px));
   }
 }
 
@@ -153,23 +281,58 @@ body {
   box-shadow: 0 4px 8px rgba(188, 126, 104, 0.3);
   font-family: var(--font-playfair-display);
   font-weight: 500;
-  /* color: var(--color-font-primary); */
   font-size: 0.875rem;
   text-decoration: none;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   color: var(--color-font-secondary);
+}
+
+.flower_center_content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  line-height: 1.1;
+}
+
+.flower_center_icon {
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  filter: none !important;
+}
+
+.flower_center_label {
+  font-size: inherit;
 }
 
 @media (min-width: 768px) {
   .flower_center {
     width: 110px;
     height: 110px;
-    font-size: 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .flower_center_icon {
+    width: 1.35rem !important;
+    height: 1.35rem !important;
+  }
+
+  .flower_center_label {
+    font-size: 0.85em;
   }
 }
 
-.flower_center:hover {
+.flower_center:hover,
+.flower_center:focus-visible {
   transform: scale(1.05);
+}
+
+.flower_center:focus-visible {
+  outline: 2px solid var(--color-shadow-accent);
+  outline-offset: 3px;
 }
 
 .flower_petal {
@@ -186,7 +349,7 @@ body {
   text-decoration: none;
   font-family: var(--font-inter);
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-font-secondary);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   top: 33%;
@@ -194,29 +357,50 @@ body {
   transform-origin: center center;
 }
 
-/* .flower_petal:after {
-  content: "";
+.flower_petal_content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  text-align: center;
+  line-height: 1.15;
+  max-width: 5.5rem;
+  padding: 0 0.25rem;
+}
+
+.flower_petal_icon {
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  flex-shrink: 0;
+  filter: none !important;
+  opacity: 0.9;
+}
+
+.flower_petal_label {
   display: block;
-  position: absolute;
-  top: 23px;
-  z-index: -1;
-  width: 95px;
-  height: 95px;
-  background: linear-gradient(#F3F1EE, #F3F1EE, #C8BFAA);
-  border-radius: 30% 30% 50% 50% / 60% 60% 40% 40%;
-} */
+}
 
 @media (min-width: 768px) {
   .flower_petal {
     width: 140px;
     height: 160px;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     top: 30%;
     left: 32.5%;
   }
-  .flower_petal:after {
-    height: 160px;
-}
+
+  .flower_petal_content {
+    gap: 0.4rem;
+    max-width: 7rem;
+  }
+
+  .flower_petal_icon {
+    width: 1.35rem !important;
+    height: 1.35rem !important;
+  }
 }
 
 /* Position 6 petals in a circle - using translate and rotate */
@@ -270,87 +454,178 @@ body {
   }
 }
 
-/* Rotate text back to be readable */
-.flower_petal span {
-  display: inline-block;
-}
-
-.flower_petal:nth-child(2) span {
+/* Rotate content back to be readable */
+.flower_petal:nth-child(2) .flower_petal_content {
   transform: rotate(0deg);
 }
 
-.flower_petal:nth-child(3) span {
+.flower_petal:nth-child(3) .flower_petal_content {
   transform: rotate(-60deg);
 }
 
-.flower_petal:nth-child(4) span {
+.flower_petal:nth-child(4) .flower_petal_content {
   transform: rotate(-120deg);
 }
 
-.flower_petal:nth-child(5) span {
+.flower_petal:nth-child(5) .flower_petal_content {
   transform: rotate(-180deg);
 }
 
-.flower_petal:nth-child(6) span {
+.flower_petal:nth-child(6) .flower_petal_content {
   transform: rotate(-240deg);
 }
 
-.flower_petal:nth-child(7) span {
+.flower_petal:nth-child(7) .flower_petal_content {
   transform: rotate(-300deg);
 }
 
-.flower_petal:hover {
+.flower_petal:hover,
+.flower_petal:focus-visible {
   box-shadow: 0 4px 12px rgba(188, 126, 104, 0.3);
   z-index: 5;
 }
 
-.flower_petal:nth-child(2):hover {
+.flower_petal:focus-visible {
+  outline: 2px solid var(--color-shadow-accent);
+  outline-offset: 2px;
+}
+
+.flower_petal:nth-child(2):hover,
+.flower_petal:nth-child(2):focus-visible {
   transform: translateY(-90px) rotate(0deg) scale(1.1);
 }
 
-.flower_petal:nth-child(3):hover {
+.flower_petal:nth-child(3):hover,
+.flower_petal:nth-child(3):focus-visible {
   transform: translateY(-45px) translateX(78px) rotate(60deg) scale(1.1);
 }
 
-.flower_petal:nth-child(4):hover {
+.flower_petal:nth-child(4):hover,
+.flower_petal:nth-child(4):focus-visible {
   transform: translateY(45px) translateX(78px) rotate(120deg) scale(1.1);
 }
 
-.flower_petal:nth-child(5):hover {
+.flower_petal:nth-child(5):hover,
+.flower_petal:nth-child(5):focus-visible {
   transform: translateY(90px) rotate(180deg) scale(1.1);
 }
 
-.flower_petal:nth-child(6):hover {
+.flower_petal:nth-child(6):hover,
+.flower_petal:nth-child(6):focus-visible {
   transform: translateY(45px) translateX(-78px) rotate(240deg) scale(1.1);
 }
 
-.flower_petal:nth-child(7):hover {
+.flower_petal:nth-child(7):hover,
+.flower_petal:nth-child(7):focus-visible {
   transform: translateY(-45px) translateX(-78px) rotate(300deg) scale(1.1);
 }
 
 @media (min-width: 768px) {
-  .flower_petal:nth-child(2):hover {
+  .flower_petal:nth-child(2):hover,
+  .flower_petal:nth-child(2):focus-visible {
     transform: translateY(-130px) rotate(0deg) scale(1.1);
   }
 
-  .flower_petal:nth-child(3):hover {
+  .flower_petal:nth-child(3):hover,
+  .flower_petal:nth-child(3):focus-visible {
     transform: translateY(-65px) translateX(113px) rotate(60deg) scale(1.1);
   }
 
-  .flower_petal:nth-child(4):hover {
+  .flower_petal:nth-child(4):hover,
+  .flower_petal:nth-child(4):focus-visible {
     transform: translateY(65px) translateX(113px) rotate(120deg) scale(1.1);
   }
 
-  .flower_petal:nth-child(5):hover {
+  .flower_petal:nth-child(5):hover,
+  .flower_petal:nth-child(5):focus-visible {
     transform: translateY(130px) rotate(180deg) scale(1.1);
   }
 
-  .flower_petal:nth-child(6):hover {
+  .flower_petal:nth-child(6):hover,
+  .flower_petal:nth-child(6):focus-visible {
     transform: translateY(65px) translateX(-113px) rotate(240deg) scale(1.1);
   }
 
-  .flower_petal:nth-child(7):hover {
+  .flower_petal:nth-child(7):hover,
+  .flower_petal:nth-child(7):focus-visible {
     transform: translateY(-65px) translateX(-113px) rotate(300deg) scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flower_center,
+  .flower_petal {
+    transition: none;
+  }
+
+  .flower_center:hover,
+  .flower_center:focus-visible,
+  .flower_petal:nth-child(2):hover,
+  .flower_petal:nth-child(2):focus-visible,
+  .flower_petal:nth-child(3):hover,
+  .flower_petal:nth-child(3):focus-visible,
+  .flower_petal:nth-child(4):hover,
+  .flower_petal:nth-child(4):focus-visible,
+  .flower_petal:nth-child(5):hover,
+  .flower_petal:nth-child(5):focus-visible,
+  .flower_petal:nth-child(6):hover,
+  .flower_petal:nth-child(6):focus-visible,
+  .flower_petal:nth-child(7):hover,
+  .flower_petal:nth-child(7):focus-visible {
+    transform: none;
+  }
+
+  /* Keep petal placement without scale for reduced motion */
+  .flower_petal:nth-child(2):hover,
+  .flower_petal:nth-child(2):focus-visible {
+    transform: translateY(-90px) rotate(0deg);
+  }
+  .flower_petal:nth-child(3):hover,
+  .flower_petal:nth-child(3):focus-visible {
+    transform: translateY(-45px) translateX(78px) rotate(60deg);
+  }
+  .flower_petal:nth-child(4):hover,
+  .flower_petal:nth-child(4):focus-visible {
+    transform: translateY(45px) translateX(78px) rotate(120deg);
+  }
+  .flower_petal:nth-child(5):hover,
+  .flower_petal:nth-child(5):focus-visible {
+    transform: translateY(90px) rotate(180deg);
+  }
+  .flower_petal:nth-child(6):hover,
+  .flower_petal:nth-child(6):focus-visible {
+    transform: translateY(45px) translateX(-78px) rotate(240deg);
+  }
+  .flower_petal:nth-child(7):hover,
+  .flower_petal:nth-child(7):focus-visible {
+    transform: translateY(-45px) translateX(-78px) rotate(300deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 768px) {
+  .flower_petal:nth-child(2):hover,
+  .flower_petal:nth-child(2):focus-visible {
+    transform: translateY(-130px) rotate(0deg);
+  }
+  .flower_petal:nth-child(3):hover,
+  .flower_petal:nth-child(3):focus-visible {
+    transform: translateY(-65px) translateX(113px) rotate(60deg);
+  }
+  .flower_petal:nth-child(4):hover,
+  .flower_petal:nth-child(4):focus-visible {
+    transform: translateY(65px) translateX(113px) rotate(120deg);
+  }
+  .flower_petal:nth-child(5):hover,
+  .flower_petal:nth-child(5):focus-visible {
+    transform: translateY(130px) rotate(180deg);
+  }
+  .flower_petal:nth-child(6):hover,
+  .flower_petal:nth-child(6):focus-visible {
+    transform: translateY(65px) translateX(-113px) rotate(240deg);
+  }
+  .flower_petal:nth-child(7):hover,
+  .flower_petal:nth-child(7):focus-visible {
+    transform: translateY(-65px) translateX(-113px) rotate(300deg);
   }
 }
 
