@@ -6,7 +6,6 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { track } from "@vercel/analytics";
 import BuildingIcon from "./BuildingIcon";
 import {
-  formatRoleSubtitle,
   formatWelcomeMessage,
   readPersonalizationSlugs,
   savePersonalizationSlugs,
@@ -18,7 +17,7 @@ function getSubtitle(pathname) {
   if (pathname === "/resume") return "Resume";
   if (pathname === "/certificates") return "Certificates";
   if (pathname === "/contact") return "Let's Connect!";
-  return "User Interface Portfolio";
+  return "User Interface / Frontend Portfolio";
 }
 
 function HeaderContent() {
@@ -47,13 +46,11 @@ function HeaderContent() {
   }, [urlCompany, urlRole]);
 
   const companySlug = urlCompany || persistedSlugs.company;
-  const roleSlug = urlRole || persistedSlugs.role;
 
   const isHome = pathname === "/";
   const welcomeMessage =
     isHome && companySlug ? formatWelcomeMessage(companySlug) : "";
-  const roleSubtitle = isHome && roleSlug ? formatRoleSubtitle(roleSlug) : "";
-  const subtitle = roleSubtitle || getSubtitle(pathname);
+  const subtitle = getSubtitle(pathname);
 
   useEffect(() => {
     if (hasTrackedResumeVisit.current) return;
