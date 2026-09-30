@@ -1,109 +1,116 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { projects } from "@/data/projects";
+import { projects, featuredProjectIds } from "@/data/projects";
+import { groupProjects } from "@/lib/projectSections";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
+import ProjectFilterBar from "./ProjectFilterBar";
+import { PROJECT_FILTERS } from "./projectFilters";
 import GoToTop from "../GoToTop";
-import FilterDropdown from "../FilterDropdown";
-
-const PROJECT_FILTER_CATEGORIES = [
-  {
-    id: "frontend",
-    label: "Frontend",
-    options: [
-      { id: "api-integrations", label: "API Integrations" },
-      { id: "angular", label: "Angular" },
-      { id: "react", label: "React" },
-      { id: "nextjs", label: "Next.js" },
-      { id: "javascript", label: "JavaScript" },
-      { id: "html", label: "HTML" },
-    ],
-  },
-  {
-    id: "styling",
-    label: "Styling",
-    options: [
-      { id: "css", label: "CSS" },
-      { id: "scss", label: "SCSS" },
-      { id: "tailwind", label: "Tailwind" },
-      { id: "bootstrap", label: "Bootstrap" },
-    ],
-  },
-  {
-    id: "project-type",
-    label: "Project Type",
-    options: [
-      { id: "ecommerce", label: "Ecommerce" },
-      { id: "startup", label: "Startup" },
-      { id: "volunteer", label: "Volunteer" },
-      { id: "small-business", label: "Small Business" },
-    ],
-  },
-  {
-    id: "other",
-    label: "Other",
-    options: [
-      { id: "ai", label: "AI" },
-      { id: "cms", label: "CMS" },
-      { id: "instructional-design", label: "Instructional Design" },
-    ],
-  },
-];
 
 export default function Page() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState(() => new Set());
 
-  const filteredProjects = useMemo(() => {
-    if (selectedFilters.size === 0) return projects;
-    return projects.filter((project) => {
-      const tags = project.tags || [];
-      return Array.from(selectedFilters).every((filterId) => tags.includes(filterId));
-    });
+  const { featured, earlier } = useMemo(() => {
+    const activeFilters = PROJECT_FILTERS.filter((filter) => selectedFilters.has(filter.id));
+    return groupProjects(projects, featuredProjectIds, activeFilters);
   }, [selectedFilters]);
+  const resultCount = featured.length + earlier.length;
+  const hasResults = resultCount > 0;
+
+  const toggleFilter = (filterId) => {
+    setSelectedFilters((prev) => {
+      const next = new Set(prev);
+      if (next.has(filterId)) next.delete(filterId);
+      else next.add(filterId);
+      return next;
+    });
+  };
+  const clearFilters = () => setSelectedFilters(new Set());
+
+  const renderGrid = (items) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {items.map((project) => (
+        <ProjectCard
+          key={project.id}
+          project={project}
+          onViewDetails={setSelectedProject}
+        />
+      ))}
+    </div>
+  );
 
   return (
     <main className="font-inter min-h-screen py-8 px-4 md:px-8">
       <div className="max-w-5xl mx-auto rounded-2xl p-6 md:p-8 shadow-md">
-        <div className="mb-6">
-          <FilterDropdown
-            label="Filter projects by"
-            categories={PROJECT_FILTER_CATEGORIES}
+        <div className="mb-8">
+          <ProjectFilterBar
             selected={selectedFilters}
-            onChange={setSelectedFilters}
+            onToggle={toggleFilter}
+            onClear={clearFilters}
           />
+          <p className="sr-only" aria-live="polite">
+            {selectedFilters.size === 0
+              ? `Showing all ${resultCount} projects`
+              : `Showing ${resultCount} matching ${resultCount === 1 ? "project" : "projects"}`}
+          </p>
         </div>
-        {selectedFilters.size > 0 && filteredProjects.length === 0 ? (
+        {!hasResults ? (
           <div
             className="rounded-xl border border-[var(--color-petal-border)] bg-[var(--color-petal-bg)] p-6 md:p-8 text-center"
             role="status"
-            aria-live="polite"
           >
             <p className="text-[var(--color-font-primary)] font-medium text-lg mb-2">
-              No projects match all of your selected filters.
+              No projects match these filters.
             </p>
             <p className="text-[var(--color-font-secondary)] text-sm max-w-md mx-auto mb-4">
-              Projects must have every selected filter. Try removing one or more filters to see more results—use the × on each chip above or open the filter menu and choose &ldquo;Unselect all&rdquo; to start over.
+              Try removing a filter, or show every project again.
             </p>
             <button
               type="button"
-              onClick={() => setSelectedFilters(new Set())}
+              onClick={clearFilters}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-[var(--color-petal-border)] bg-[var(--color-primary-bg)] text-[var(--color-font-primary)] font-medium text-sm hover:bg-[var(--color-center-circle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-shadow-accent)] focus:ring-offset-2 transition-colors"
             >
               Clear all filters
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onViewDetails={setSelectedProject}
-              />
-            ))}
-          </div>
+          <>
+            {featured.length > 0 ? (
+              <section aria-labelledby="featured-work-heading">
+                <h2
+                  id="featured-work-heading"
+                  className="font-playfair-display font-medium text-2xl text-[var(--color-font-primary)] mb-5"
+                >
+                  Featured Engineering Work
+                </h2>
+                {renderGrid(featured)}
+              </section>
+            ) : null}
+            {earlier.length > 0 ? (
+              <section
+                aria-labelledby="earlier-work-heading"
+                className={
+                  featured.length > 0
+                    ? "mt-14 pt-10 border-t border-[var(--color-petal-border)]"
+                    : undefined
+                }
+              >
+                <h2
+                  id="earlier-work-heading"
+                  className="font-playfair-display font-medium text-xl text-[var(--color-font-primary)] mb-1"
+                >
+                  Earlier Web &amp; UI Work
+                </h2>
+                <p className="text-sm text-[var(--color-font-secondary)] mb-5">
+                  Web development, UI/design, CMS, education, and volunteer projects from earlier in my career.
+                </p>
+                {renderGrid(earlier)}
+              </section>
+            ) : null}
+          </>
         )}
       </div>
       <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />

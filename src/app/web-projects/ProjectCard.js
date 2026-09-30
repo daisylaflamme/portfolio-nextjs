@@ -20,9 +20,9 @@ export default function ProjectCard({ project, onViewDetails }) {
         />
       </div>
       <div className="flex flex-col flex-1 p-4">
-        <h2 className="font-semibold text-[var(--color-font-primary)] text-base mb-2">
+        <h3 className="font-semibold text-[var(--color-font-primary)] text-base mb-2">
           {project.title}
-        </h2>
+        </h3>
         <p className="project-card__description text-sm flex-1 mb-4 leading-relaxed">
           {project.summary}
         </p>

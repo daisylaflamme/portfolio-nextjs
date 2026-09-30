@@ -64,7 +64,7 @@ export const projects = [
     imageAlt:
       "Masonry collage of multi-brand e-commerce UI work: mobile navigation, PDPs, cart and checkout pages, search grids, content editor layouts, and marketing modules across multiple furniture storefronts.",
     link: null,
-    tags: ["html", "angular", "javascript", "scss", "css", "bootstrap", "ecommerce", "cms", "api-integrations"],
+    tags: ["html", "angular", "javascript", "scss", "css", "bootstrap", "ecommerce", "cms", "api-integrations", "ui-components"],
   },
   {
     id: "checkout-multi-payments",
@@ -87,7 +87,7 @@ export const projects = [
     imageAlt:
       "Checkout payment step showing multiple payment methods (credit/debit, Affirm, financing, and lease-to-own) across desktop and mobile flows.",
     link: null,
-    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css", "api-integrations"],
+    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css", "api-integrations", "payments"],
   },
   {
     id: "store-details-maps",
@@ -106,7 +106,7 @@ export const projects = [
     imageAlt:
       "Store details pages showing an interactive map with a branded location pin, nearby store results, and a store-type legend across multiple furniture brands.",
     link: "https://www.morrisathome.com/store/furniture-store/OH/Reynoldsburg/2339-Taylor-Park-Drive",
-    tags: ["html", "angular", "ecommerce", "scss", "css", "api-integrations"],
+    tags: ["html", "angular", "ecommerce", "scss", "css", "api-integrations", "maps"],
   },
   {
     id: "gifspark-ai-greeting-app",
@@ -152,6 +152,7 @@ export const projects = [
       "seo",
       "digital-product",
       "api-integrations",
+      "payments",
     ],
   },
   {
@@ -204,9 +205,9 @@ export const projects = [
     summary:
       "Designed and built an AI-assisted digital book experience using React and Tailwind, transforming generated content into an interactive web app, downloadable PDF, and a fully published Kindle and paperback book.",
     description: "This project brings together UI engineering, AI-assisted creation, and digital publishing into a cohesive product experience. Using Lovable as an AI co-builder, I iterated on application structure, UI flows, and content, shaping them into a production-ready digital platform. The app presents the book as a fully responsive, interactive experience across mobile, tablet, and desktop, with subtle skeuomorphic motion to emulate real page transitions. In parallel, I established a content pipeline that generates both a high-quality downloadable PDF and a print-ready manuscript, published on Amazon Kindle and in paperback. The result is a complete digital-to-publishing workflow, combining modern front-end architecture with AI-driven tooling to deliver a polished, end-to-end product.",
-    thumbnail: "/images/projects/thumbnails/ai-app-cover.jpg",
+    thumbnail: "/images/projects/thumbnails/ai-app-cover-preview.webp",
     images: [
-      "/images/projects/digital-ai-cover.jpg",
+      "/images/projects/digital-ai-cover-full-view.webp",
       "/images/projects/ai-book-preview.jpg"
     ],
     imageAlt:
@@ -219,7 +220,7 @@ export const projects = [
       },
       {
         label: "Amazon",
-        href: "https://www.amazon.com/AI-Humans-Stories-Families-Together/dp/B0GVWCB7RV/ref=sr_1_1?crid=1KZQPXETKEU46&dib=eyJ2IjoiMSJ9.SZNXqCq90NiGrxWE_3VcMA.IIL1-hzKCahlx7szFypq3-mbiNTe7D1f3hLJXvBY5Ws&dib_tag=se&keywords=AI%3A+Let+Me+Tell+You+What+I%E2%80%99ll+Do+With+Humans+%E2%80%94+Don%E2%80%99t+Panic&nsdOptOutParam=true&qid=1776353966&sprefix=ai+let+me+tell+you+what+i+ll+do+with+humans+don+t+panic%2Caps%2C122&sr=8-1",
+        href: "https://www.amazon.com/Designing-Tomorrow-Milo-Families-Together/dp/B0HLH8S53G/ref=sr_1_1?crid=5WZQ62TJ60AC&dib=eyJ2IjoiMSJ9.HslFHmCKoGRTArHXN8r9-ewSwSWYapaJ5sI9Ypn9wGTGjHj071QN20LucGBJIEps.6f8qaUxJnFIQ0jWdMc7Pj753M9rcrVbDSo5Xy0aLzno&dib_tag=se&keywords=designing+tomorrow+with+milo&qid=1790783633&sprefix=designing+tomorrow+with+milo%2Caps%2C161&sr=8-1",
       },
     ],
     tags: ["react", "nextjs", "tailwind", "typescript", "ai", "digital-media", "pdf", "publishing"],
@@ -281,7 +282,7 @@ export const projects = [
     imageAlt:
       "Homepage hero carousel displaying promotional banners across desktop, tablet, and mobile breakpoints.",
     link: "https://www.cardis.com/",
-    tags: ["html", "javascript", "cms", "ecommerce", "scss", "css"],
+    tags: ["html", "javascript", "cms", "ecommerce", "scss", "css", "ui-components"],
   },
   {
     id: "angular-modal-system",
@@ -301,7 +302,7 @@ export const projects = [
     imageAlt:
       "Examples of reusable modal patterns, including full-page takeover, header-anchored, informational lightbox, and side-drawer modals.",
     link: null,
-    tags: ["html", "angular", "ecommerce", "scss", "css","javascript"],
+    tags: ["html", "angular", "ecommerce", "scss", "css","javascript", "ui-components", "accessibility"],
   },
   {
     id: "gift-card-balance-widget",
@@ -320,7 +321,7 @@ export const projects = [
     imageAlt:
       "Gift card balance check page with a gift card number input and a branded visual, shown across desktop and mobile layouts for multiple furniture brands.",
     link: "https://www.cardis.com/gift-card-balance",
-    tags: ["html", "angular", "ecommerce", "scss", "css","javascript", "api-integrations"],
+    tags: ["html", "angular", "ecommerce", "scss", "css","javascript", "api-integrations", "ui-components"],
   },
   {
     id: "cross-sell-addon-slider",
@@ -339,7 +340,7 @@ export const projects = [
     imageAlt:
       "Product detail page showing add-on sliders for mattress protectors, foundations, and frames with selectable options and price updates.",
     link: null,
-    tags: ["html", "angular", "scss", "ecommerce", "css", "api-integrations"],
+    tags: ["html", "angular", "scss", "ecommerce", "css", "api-integrations", "ui-components", "accessibility"],
   },
   {
     id: "portfolio-redesign-nextjs",
@@ -378,7 +379,7 @@ export const projects = [
     imageAlt:
       "Product listing page showing a redesigned product card layout with imagery, pricing, badges, and swatches, implemented responsively across devices.",
     link: null,
-    tags: ["html", "ecommerce", "scss", "css", "angular", "api-integrations"],
+    tags: ["html", "ecommerce", "scss", "css", "angular", "api-integrations", "ui-components"],
   },
   {
     id: "custom-input-controls",
@@ -398,7 +399,7 @@ export const projects = [
     imageAlt:
       "Reusable checkbox and radio input components used across checkout and product flows, styled for multiple furniture brands.",
     link: null,
-    tags: ["html", "angular", "ecommerce", "scss", "css","javascript"],
+    tags: ["html", "angular", "ecommerce", "scss", "css","javascript", "ui-components", "accessibility"],
   },
   {
     id: "cookie-consent-multi-brand",
@@ -431,7 +432,7 @@ export const projects = [
     imageAlt:
       "Financing message components displayed on product and search pages across multiple furniture brands, including examples for Affirm and other payment providers.",
     link: null,
-    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css", "api-integrations"],
+    tags: ["html", "angular", "javascript", "ecommerce", "scss", "css", "api-integrations", "payments"],
   },
   {
     id: "pizzeria-prototype-lovable",
@@ -560,7 +561,7 @@ export const projects = [
     imageAlt:
       "Store locator pages for multiple brands showing responsive layouts with a map and a list of nearby store locations.",
     link: null,
-    tags: ["html", "ecommerce", "javascript", "scss", "css", "api-integrations"],
+    tags: ["html", "ecommerce", "javascript", "scss", "css", "api-integrations", "maps"],
   },
 
   {
@@ -658,7 +659,7 @@ export const projects = [
     imageAlt:
       "WordPress site for TCIIE showing a student-focused layout.",
     link: null,
-    tags: ["html", "cms", "javascript", "css", "bootstrap"],
+    tags: ["html", "cms", "javascript", "css", "bootstrap", "wordpress"],
   },
 
   {
@@ -794,7 +795,7 @@ export const projects = [
     imageAlt:
       "Orientation website homepage for international students.",
     link: null,
-    tags: ["html", "cms", "instructional-design", "css", "bootstrap"],
+    tags: ["html", "cms", "instructional-design", "css", "bootstrap", "wordpress"],
   },
   {
     id: "gphomestay-digital-experiences",
@@ -814,7 +815,7 @@ export const projects = [
     imageAlt:
       "GPHomestay digital experiences including a mobile-optimized blog, AdWords landing page, testimonial stories, Salesforce-integrated lead form, main site homepage, and an interactive online quiz.",
     link: null,
-    tags: ["html", "cms", "bootstrap", "javascript", "css", "api-integrations"],
+    tags: ["html", "cms", "bootstrap", "javascript", "css", "api-integrations", "wordpress"],
   },
 
   {
@@ -847,7 +848,7 @@ export const projects = [
     imageAlt:
       "Interactive Google Map module showing course-related markers used in an online learning experience.",
     link: null,//"http://www.daisylaflamme.net/umb-map/index.html",
-    tags: ["html", "javascript", "instructional-design", "css", "bootstrap", "api-integrations"],
+    tags: ["html", "javascript", "instructional-design", "css", "bootstrap", "api-integrations", "maps"],
   },
 
   // 4) Casino Ballroom Support
@@ -877,7 +878,7 @@ export const projects = [
     images: ["/images/projects/cl-dashboard.jpg"],
     imageAlt: "ClariLegal HTML prototype dashboard",
     link: null,
-    tags: ["html", "startup", "javascript", "css"],
+    tags: ["html", "startup", "javascript", "css", "ux-design"],
   },
 
   // 6) UMass Boston Wireframes
@@ -896,7 +897,7 @@ export const projects = [
     imageAlt:
       "UMass Boston Open Data Analytics wireframes and the implemented website UI showcasing research and analytical content.",
     link: "http://photography.daisylaflamme.net/wireframes.pdf",
-    tags: ["html", "instructional-design", "javascript", "css", "bootstrap", "cms"],
+    tags: ["html", "instructional-design", "javascript", "css", "bootstrap", "cms", "accessibility", "ux-design"],
   },
 
   // 8) Boston Strategics
@@ -911,7 +912,7 @@ export const projects = [
     images: ["/images/projects/bs2.jpg", "/images/projects/bs.jpg"],
     imageAlt: "Boston Strategics WordPress website and supporting design concepts.",
     link: null,
-    tags: ["html", "cms", "startup", "css", "bootstrap"],
+    tags: ["html", "cms", "startup", "css", "bootstrap", "wordpress"],
   },
 
   // 9) Bioarray Therapeutics
@@ -942,7 +943,7 @@ export const projects = [
     imageAlt:
       "Refuge Place International WordPress website with donation and mission-focused content.",
     link: null,
-    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript", "api-integrations"],
+    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript", "api-integrations", "payments", "wordpress"],
   },
 
   // 11) GlobalPeace Aid
@@ -957,7 +958,7 @@ export const projects = [
     images: ["/images/projects/7.jpg"],
     imageAlt: "Global Peace Aid nonprofit WordPress website with donation and events information.",
     link: null,
-    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript", "api-integrations"],
+    tags: ["html", "cms", "volunteer", "css", "bootstrap","javascript", "api-integrations", "payments", "wordpress"],
   },
   {
     id: "js-girls-platform",
@@ -1000,7 +1001,7 @@ export const projects = [
     imageAlt:
       "Complex application mockup created for an HCI project.",
     link: null,
-    tags: ["instructional-design"],
+    tags: ["instructional-design", "ux-design"],
   },
    {
     id: "flyer-design",
@@ -1060,4 +1061,38 @@ export const projects = [
   //   imageAlt: "Scratch-based educational game with animated characters",
   //   link: "http://scratch.mit.edu/projects/desislava/2778494"
   // },
+];
+
+/**
+ * Display order for the "Featured Engineering Work" section on /web-projects.
+ * Any project whose id is not listed here appears under "Earlier Web & UI Work",
+ * in its order within `projects`.
+ */
+export const featuredProjectIds = [
+  "blueport-multisite-platform-ui",
+  "checkout-multi-payments",
+  "store-details-maps",
+  "gifspark-ai-greeting-app",
+  "angular-modal-system",
+  "gift-card-balance-widget",
+  "cms-hero-carousel",
+  "custom-input-controls",
+  "levin-dropship-checkout-responsive",
+  "promo-builder",
+  "cookie-consent-multi-brand",
+  "finance-messaging-integrations",
+  "product-card-redesign",
+  "multi-brand-store-locator",
+  "cross-sell-addon-slider",
+  "product-configuration",
+  "page-builder",
+  "content-sections",
+  "ai-us-digital-book-project",
+  "ai-digital-book-project",
+  "digital-product-lab",
+  "portfolio-redesign-nextjs",
+  "clickable-swatches",
+  "search-grid-chat",
+  "filter-restyling",
+  "login-page",
 ];
