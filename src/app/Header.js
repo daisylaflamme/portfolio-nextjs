@@ -11,6 +11,8 @@ import {
   savePersonalizationSlugs,
 } from "../lib/personalization";
 
+const SHOW_WELCOME_MESSAGE = false;
+
 function getSubtitle(pathname) {
   if (pathname === "/about") return "About Me";
   if (pathname === "/web-projects") return "Web Projects";
@@ -49,7 +51,9 @@ function HeaderContent() {
 
   const isHome = pathname === "/";
   const welcomeMessage =
-    isHome && companySlug ? formatWelcomeMessage(companySlug) : "";
+    SHOW_WELCOME_MESSAGE && isHome && companySlug
+      ? formatWelcomeMessage(companySlug)
+      : "";
   const subtitle = getSubtitle(pathname);
 
   useEffect(() => {
