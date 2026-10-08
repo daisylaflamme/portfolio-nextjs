@@ -212,7 +212,7 @@ export const projects = [
     ],
     imageAlt:
       "AI digital book project: interactive web app experience alongside the generated PDF and published book formats.",
-    link: "https://ai-future-book-dont-panic.lovable.app/",
+    link: "https://designing-tomorrow-with-milo.lovable.app/",
     extraLinks: [
       {
         label: "Git Code",
