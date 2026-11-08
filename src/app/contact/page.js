@@ -35,6 +35,7 @@ export default function ContactPage() {
                 rel="noopener noreferrer"
               >
                 <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-petal-bg)] border border-[var(--color-petal-border)] text-[var(--color-font-secondary)] shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- small sized SVG icon, nothing to optimize */}
                   <img src="/icons/contact-email.svg" alt="" width={22} height={22} className="shrink-0" />
                 </span>
                 <span>laflammedaisy@gmail.com</span>
@@ -42,6 +43,7 @@ export default function ContactPage() {
             </li>
             <li className="flex items-center gap-3 text-[var(--color-font-primary)]">
               <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-petal-bg)] border border-[var(--color-petal-border)] text-[var(--color-font-secondary)] shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element -- small sized SVG icon, nothing to optimize */}
                 <img src="/icons/contact-location.svg" alt="" width={22} height={22} className="shrink-0" />
               </span>
               <span>Braintree, MA | Remote</span>
@@ -54,6 +56,7 @@ export default function ContactPage() {
                 rel="noopener noreferrer"
               >
                 <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-petal-bg)] border border-[var(--color-petal-border)] text-[var(--color-font-secondary)] shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- small sized SVG icon, nothing to optimize */}
                   <img src="/icons/contact-linkedin.svg" alt="" width={22} height={22} className="shrink-0" />
                 </span>
                 <span>LinkedIn</span>
@@ -67,6 +70,7 @@ export default function ContactPage() {
                 rel="noopener noreferrer"
               >
                 <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-petal-bg)] border border-[var(--color-petal-border)] text-[var(--color-font-secondary)] shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- small sized SVG icon, nothing to optimize */}
                   <img src="/icons/contact-github.svg" alt="" width={22} height={22} className="shrink-0" />
                 </span>
                 <span>GitHub</span>

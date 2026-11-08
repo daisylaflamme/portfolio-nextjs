@@ -5,6 +5,10 @@ import { CONTACT_LINKS } from "@/components/SiteFooter";
 
 export const revalidate = 86400;
 
+export const metadata = {
+  alternates: { canonical: "/" },
+};
+
 const WORK_AREAS = [
   {
     path: "/web-engineering",

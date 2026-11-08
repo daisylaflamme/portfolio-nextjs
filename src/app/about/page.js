@@ -96,7 +96,7 @@ export default function AboutPage() {
           <div className="order-1 lg:order-2 flex flex-col items-center shrink-0">
             <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-[var(--color-petal-border)] bg-[var(--color-petal-bg)] shadow-md">
               <Image
-                src="/images/about/profile.png"
+                src="/images/about/profile.jpg"
                 alt="Daisy Laflamme, Senior UI and Front-End Engineer"
                 fill
                 className="object-cover"
@@ -114,6 +114,7 @@ export default function AboutPage() {
                     className="flex items-center justify-center w-9 h-9 rounded-lg bg-[var(--color-petal-bg)] border border-[var(--color-petal-border)] text-[var(--color-font-secondary)] mb-2"
                     aria-hidden
                   >
+                    {/* eslint-disable-next-line @next/next/no-img-element -- small sized SVG icon, nothing to optimize */}
                     <img
                       src={item.icon}
                       alt=""
@@ -152,6 +153,7 @@ export default function AboutPage() {
                     className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-petal-bg)] border border-[var(--color-petal-border)] text-[var(--color-font-secondary)] mb-3 shrink-0"
                     aria-hidden
                   >
+                    {/* eslint-disable-next-line @next/next/no-img-element -- small sized SVG icon, nothing to optimize */}
                     <img src={skill.icon} alt="" width={22} height={22} />
                   </span>
                   <h3 className="font-semibold text-[var(--color-font-primary)] mb-2">
@@ -217,7 +219,7 @@ export default function AboutPage() {
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-[var(--color-shadow-accent)] text-white font-medium text-sm hover:opacity-90 transition-opacity"
+              className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-[var(--color-shadow-accent)] text-on-accent font-medium text-sm hover:opacity-90 transition-opacity"
             >
               Contact Me
             </Link>

@@ -97,7 +97,7 @@ function Gallery({ project }) {
                   i === index ? "border-accent" : "border-transparent hover:border-field"
                 }`}
               >
-                <Image src={src} alt="" fill sizes="160px" className="object-cover object-top" />
+                <Image src={src} alt="" fill sizes="80px" className="object-cover object-top" />
               </button>
             </li>
           ))}

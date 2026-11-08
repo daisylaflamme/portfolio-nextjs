@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
+import Image from "next/image";
 import { diplomas, programs, certificates } from "@/data/certificates";
 import GoToTop from "../GoToTop";
 
@@ -34,7 +35,12 @@ function getThumbnailSrc(cert) {
   return cert.thumbnail;
 }
 
+// Full-size certificate images only load once their row has been opened; after that they
+// stay mounted so the collapse animation still shows the image.
 function CertificateAccordion({ items, openIndex, setOpenIndex, getThumbnailSrc: getSrc, sectionId = "", compact = false }) {
+  const openedRef = useRef(new Set());
+  if (openIndex >= 0) openedRef.current.add(openIndex);
+
   return (
     <div className="rounded-xl border border-[var(--color-petal-border)] overflow-hidden shadow-[0_2px_10px_rgba(46,46,46,0.08)] bg-[var(--color-primary-bg)]">
       {items.map((cert, index) => {
@@ -53,7 +59,7 @@ function CertificateAccordion({ items, openIndex, setOpenIndex, getThumbnailSrc:
               aria-expanded={isOpen}
               id={`${sectionId}-cert-toggle-${index}`}
             >
-              <img
+              <Image
                 src={thumbnailSrc}
                 alt=""
                 className={`object-cover rounded-lg border border-[var(--color-petal-border)] shrink-0 ${compact ? "w-10 h-10" : "w-14 h-14"}`}
@@ -80,11 +86,16 @@ function CertificateAccordion({ items, openIndex, setOpenIndex, getThumbnailSrc:
             >
               <div className="overflow-hidden">
                 <div className={`border-t border-[var(--color-petal-border)] bg-[var(--color-primary-bg)] ${compact ? "pt-1.5 pb-3 px-3" : "pt-2 pb-4 px-4"}`}>
-                  <img
-                    src={cert.image}
-                    alt={`${cert.title}, ${cert.year}`}
-                    className="w-full max-w-lg rounded-lg border border-[var(--color-petal-border)] shadow-sm object-contain bg-[var(--color-petal-bg)]"
-                  />
+                  {openedRef.current.has(index) ? (
+                    <Image
+                      src={cert.image}
+                      alt={`${cert.title}, ${cert.year}`}
+                      width={1024}
+                      height={768}
+                      sizes="(min-width: 576px) 512px, calc(100vw - 4rem)"
+                      className="h-auto w-full max-w-lg rounded-lg border border-[var(--color-petal-border)] shadow-sm object-contain bg-[var(--color-petal-bg)]"
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -123,11 +134,13 @@ export default function CertificatesPage() {
                 className="diploma-frame group text-left rounded-xl overflow-hidden border border-[var(--color-petal-border)] bg-[var(--color-petal-bg)] shadow-[0_4px_20px_rgba(140,126,104,0.15)] hover:shadow-[0_8px_28px_rgba(140,126,104,0.22)] focus:outline-none focus:ring-2 focus:ring-[var(--color-shadow-accent)] focus:ring-offset-2 transition-all duration-200"
               >
                 <div className="aspect-[4/3] max-h-44 relative bg-[var(--color-primary-bg)] p-3">
-                  <div className="absolute inset-3 flex items-center justify-center">
-                    <img
+                  <div className="absolute inset-3">
+                    <Image
                       src={d.thumbnail}
                       alt=""
-                      className="max-w-full max-h-full object-contain object-center"
+                      fill
+                      sizes="(min-width: 1024px) 270px, (min-width: 640px) 45vw, calc(100vw - 4rem)"
+                      className="object-contain object-center"
                     />
                   </div>
                   <div className="absolute inset-3 border-2 border-[var(--color-petal-border)] rounded pointer-events-none" aria-hidden />
@@ -204,10 +217,13 @@ export default function CertificatesPage() {
                 </svg>
               </button>
             </div>
-            <img
+            <Image
               src={diplomaModal.image}
               alt={`${diplomaModal.title}, ${diplomaModal.year}`}
-              className="w-full rounded-lg border border-[var(--color-petal-border)] shadow-sm object-contain bg-[var(--color-petal-bg)]"
+              width={1200}
+              height={900}
+              sizes="(min-width: 704px) 624px, calc(100vw - 5rem)"
+              className="h-auto w-full rounded-lg border border-[var(--color-petal-border)] shadow-sm object-contain bg-[var(--color-petal-bg)]"
             />
           </div>
         </div>

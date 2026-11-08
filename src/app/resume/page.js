@@ -1,3 +1,12 @@
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Résumé",
+  description:
+    "Résumé of Daisy Laflamme, senior front-end and UI engineer: experience, skills and education across e-commerce, payments, accessibility and design systems.",
+  path: "/resume",
+});
+
 export default function ResumePage() {
   const linkClass =
     "text-[var(--color-shadow-accent)] underline hover:opacity-80 transition-opacity";

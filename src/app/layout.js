@@ -32,7 +32,11 @@ export const metadata = {
   description:
     "Daisy Laflamme is a senior frontend and UI engineer building accessible, high-performance interfaces for multi-brand e-commerce, marketing, and product teams with React, Next.js, Angular, and TypeScript.",
   icons: {
-    icon: "/images/daisy.ico",
+    icon: [
+      { url: "/images/daisy.ico", sizes: "48x48" },
+      { url: "/images/icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: "/images/apple-touch-icon.png",
   },
   openGraph: {
     type: "website",

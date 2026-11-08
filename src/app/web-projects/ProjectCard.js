@@ -24,7 +24,7 @@ export default function ProjectCard({ project, onOpen, featured = false }) {
             alt={project.imageAlt || ""}
             fill
             priority
-            sizes="(min-width: 1152px) 600px, (min-width: 768px) 52vw, 100vw"
+            sizes="(min-width: 1152px) 600px, (min-width: 768px) 52vw, calc(100vw - 2rem)"
             className="object-cover object-top"
           />
         </div>
@@ -54,7 +54,7 @@ export default function ProjectCard({ project, onOpen, featured = false }) {
           src={src}
           alt={project.imageAlt || ""}
           fill
-          sizes="(min-width: 1152px) 360px, (min-width: 640px) 50vw, 100vw"
+          sizes="(min-width: 1152px) 360px, (min-width: 1024px) 31vw, (min-width: 640px) 48vw, calc(100vw - 2rem)"
           className="object-cover object-top"
         />
       </div>
