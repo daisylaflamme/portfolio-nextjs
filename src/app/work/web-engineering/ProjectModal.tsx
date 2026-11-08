@@ -79,7 +79,9 @@ function Gallery({ project }: { project: Project }) {
   const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
     const img = event.currentTarget;
     const src = current;
-    const frame = { width: img.clientWidth, height: img.clientHeight };
+    // Measure the gallery frame (the button), not the image's box, which may already be narrowed.
+    const frameEl = img.closest("button") ?? img;
+    const frame = { width: frameEl.clientWidth, height: frameEl.clientHeight };
     pixelSize(img)
       .then(({ width, height }) => {
         if (width > 0) setFits((prev) => ({ ...prev, [src]: fitFor(width, height, frame) }));
@@ -95,21 +97,22 @@ function Gallery({ project }: { project: Project }) {
         aria-label={`View full size: ${altFor(index)}`}
         className="group relative block aspect-[16/10] max-h-[min(62dvh,600px)] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-line bg-img"
       >
-        <Image
-          key={current}
-          src={current}
-          alt=""
-          fill
-          quality={90}
-          sizes="(min-width: 1088px) 976px, (min-width: 768px) 90vw, 100vw"
-          onLoad={handleLoad}
-          className={fit.kind === "top" || (fit.kind === "native" && fit.tall) ? "object-cover object-top" : "object-contain"}
-          style={
-            fit.kind === "native"
-              ? { width: `${fit.width}px`, maxWidth: "100%", left: "50%", right: "auto", transform: "translateX(-50%)" }
-              : undefined
-          }
-        />
+        {/* A `fill` image is always 100% of its box, so a small screenshot narrows the box. */}
+        <span
+          className="absolute inset-y-0 left-1/2 block w-full max-w-full -translate-x-1/2"
+          style={fit.kind === "native" ? { width: `${fit.width}px` } : undefined}
+        >
+          <Image
+            key={current}
+            src={current}
+            alt=""
+            fill
+            quality={90}
+            sizes="(min-width: 1088px) 976px, (min-width: 768px) 90vw, 100vw"
+            onLoad={handleLoad}
+            className={fit.kind === "top" || (fit.kind === "native" && fit.tall) ? "object-cover object-top" : "object-contain"}
+          />
+        </span>
         <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[13px] text-white transition-opacity [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-visible:opacity-100">
           <ExpandIcon /> view full size
         </span>
