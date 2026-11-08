@@ -6,8 +6,10 @@ import {
   getLanguageStats,
   GitHubApiError,
   GITHUB_LOGIN,
+  LANGUAGE_RANGES,
   LANGUAGES_QUERY,
-  recentCutoff,
+  languageRanges,
+  rangeCutoff,
   SAMPLE_LANGUAGES,
   type GraphQLResponse,
   type LanguagesQueryData,
@@ -15,7 +17,7 @@ import {
 
 const NOW = new Date("2026-11-08T00:00:00Z");
 
-/** Shaped like a real response: two recent repos, one 2013 repo that must not count, and the nulls the schema allows. */
+/** Shaped like a real response: two recent repos, one 2013 repo, and the nulls the schema allows. */
 const RESPONSE: GraphQLResponse<LanguagesQueryData> = {
   data: {
     user: {
@@ -66,9 +68,15 @@ function mockFetch(impl: () => Promise<Response>) {
   return mock.method(globalThis, "fetch", impl);
 }
 
+const LAST_12_MONTHS = rangeCutoff(12, NOW);
+const SAMPLE_STATS = {
+  ranges: [{ id: "all", label: "All time", languages: SAMPLE_LANGUAGES }],
+  isSample: true,
+};
+
 describe("aggregateLanguages", () => {
   it("sums bytes across recent repos and returns whole percentages, largest first", () => {
-    assert.deepEqual(aggregateLanguages(RESPONSE.data!, recentCutoff(NOW)), [
+    assert.deepEqual(aggregateLanguages(RESPONSE.data!, LAST_12_MONTHS), [
       { name: "TypeScript", pct: 80 },
       { name: "SCSS", pct: 8 },
       { name: "JavaScript", pct: 6 },
@@ -77,15 +85,38 @@ describe("aggregateLanguages", () => {
     ]);
   });
 
-  it("ignores repos last pushed before the cutoff", () => {
-    const all = aggregateLanguages(RESPONSE.data!, new Date(0));
-    assert.equal(all[0].name, "PHP");
-    assert.ok(!aggregateLanguages(RESPONSE.data!, recentCutoff(NOW)).some((l) => l.name === "PHP"));
+  it("counts every repo without a cutoff, and ignores older repos with one", () => {
+    assert.deepEqual(aggregateLanguages(RESPONSE.data!, null)[0], { name: "PHP", pct: 100 });
+    assert.ok(!aggregateLanguages(RESPONSE.data!, LAST_12_MONTHS).some((l) => l.name === "PHP"));
   });
 
   it("returns an empty list when there is nothing to count", () => {
-    assert.deepEqual(aggregateLanguages({ user: { repositories: { nodes: [] } } }, recentCutoff(NOW)), []);
-    assert.deepEqual(aggregateLanguages({ user: null }, recentCutoff(NOW)), []);
+    assert.deepEqual(aggregateLanguages({ user: { repositories: { nodes: [] } } }, null), []);
+    assert.deepEqual(aggregateLanguages({ user: null }, null), []);
+  });
+});
+
+describe("languageRanges", () => {
+  it("returns all time first, then the last 12 months", () => {
+    const ranges = languageRanges(RESPONSE.data!, NOW);
+    assert.deepEqual(
+      ranges.map((r) => [r.id, r.label]),
+      LANGUAGE_RANGES.map((r) => [r.id, r.label])
+    );
+    assert.equal(ranges[0].languages[0].name, "PHP");
+    assert.equal(ranges[1].languages[0].name, "TypeScript");
+  });
+
+  it("leaves out a range with no data", () => {
+    const oldOnly: LanguagesQueryData = {
+      user: { repositories: { nodes: [RESPONSE.data!.user!.repositories.nodes!.at(-1)!] } },
+    };
+    assert.deepEqual(languageRanges(oldOnly, NOW).map((r) => r.id), ["all"]);
+  });
+
+  it("puts the cutoff 12 months back, and none for all time", () => {
+    assert.equal(rangeCutoff(12, NOW)?.toISOString(), "2025-11-08T00:00:00.000Z");
+    assert.equal(rangeCutoff(null, NOW), null);
   });
 });
 
@@ -166,29 +197,31 @@ describe("getLanguageStats", () => {
     else process.env.GITHUB_TOKEN = savedToken;
   });
 
-  it("returns live data from a mocked response", async () => {
-    mockFetch(async () => jsonResponse(RESPONSE));
+  it("returns live data for every range from one mocked request", async () => {
+    const fetchMock = mockFetch(async () => jsonResponse(RESPONSE));
     const stats = await getLanguageStats(NOW);
     assert.equal(stats.isSample, false);
-    assert.deepEqual(stats.languages[0], { name: "TypeScript", pct: 80 });
+    assert.equal(fetchMock.mock.callCount(), 1);
+    assert.deepEqual(stats.ranges.map((r) => r.id), ["all", "12m"]);
+    assert.deepEqual(stats.ranges[1].languages[0], { name: "TypeScript", pct: 80 });
   });
 
   it("uses sample data without a token and doesn't call GitHub", async () => {
     delete process.env.GITHUB_TOKEN;
     const fetchMock = mockFetch(async () => jsonResponse(RESPONSE));
-    assert.deepEqual(await getLanguageStats(NOW), { languages: SAMPLE_LANGUAGES, isSample: true });
+    assert.deepEqual(await getLanguageStats(NOW), SAMPLE_STATS);
     assert.equal(fetchMock.mock.callCount(), 0);
   });
 
   it("falls back to sample data and logs the reason when GitHub fails", async () => {
     mockFetch(async () => jsonResponse({ message: "Bad credentials" }, { status: 401 }));
-    assert.deepEqual(await getLanguageStats(NOW), { languages: SAMPLE_LANGUAGES, isSample: true });
+    assert.deepEqual(await getLanguageStats(NOW), SAMPLE_STATS);
     const logged = (console.error as unknown as ReturnType<typeof mock.fn>).mock.calls[0].arguments[0];
     assert.match(String(logged), /\[github\] GitHub GraphQL HTTP 401/);
   });
 
-  it("falls back to sample data when no recent repo has language data", async () => {
+  it("falls back to sample data when no repo has language data", async () => {
     mockFetch(async () => jsonResponse({ data: { user: { repositories: { nodes: [] } } } }));
-    assert.deepEqual(await getLanguageStats(NOW), { languages: SAMPLE_LANGUAGES, isSample: true });
+    assert.deepEqual(await getLanguageStats(NOW), SAMPLE_STATS);
   });
 });

@@ -3,7 +3,8 @@
  *
  * With a GITHUB_TOKEN env var (a fine-grained token with public read-only access is
  * enough; see README), this queries the GitHub GraphQL API and aggregates language
- * bytes across my own public, non-fork repositories pushed in the last few years.
+ * bytes across my own public, non-fork repositories, for each range in LANGUAGE_RANGES
+ * (all time, and repos pushed in the last 12 months), from one request.
  * The home page is regenerated once a day (ISR), so this runs at most once a day.
  *
  * Without a token, or if anything goes wrong, it returns clearly labelled sample data
@@ -17,8 +18,13 @@ const ENDPOINT = "https://api.github.com/graphql";
 const REVALIDATE_SECONDS = 60 * 60 * 24;
 const TIMEOUT_MS = 8000;
 const TOP_N = 5;
-/** Older repos (2012–2014 coursework) aren't representative of what I write now. */
-export const RECENT_YEARS = 3;
+/** Ranges the chart can switch between; the first is the default. */
+export const LANGUAGE_RANGES = [
+  { id: "all", label: "All time", months: null },
+  { id: "12m", label: "Last 12 months", months: 12 },
+] as const satisfies ReadonlyArray<{ id: string; label: string; months: number | null }>;
+
+export type LanguageRangeId = (typeof LANGUAGE_RANGES)[number]["id"];
 
 export interface LanguageShare {
   name: string;
@@ -26,8 +32,15 @@ export interface LanguageShare {
   pct: number;
 }
 
-export interface LanguageStats {
+export interface LanguageRange {
+  id: LanguageRangeId;
+  label: string;
   languages: LanguageShare[];
+}
+
+export interface LanguageStats {
+  /** In LANGUAGE_RANGES order; ranges with no data are left out. Sample data has one range. */
+  ranges: LanguageRange[];
   isSample: boolean;
 }
 
@@ -171,13 +184,14 @@ export async function fetchRepoLanguages(token: string, login = GITHUB_LOGIN): P
 // ---------- Aggregation ----------
 
 /**
- * Top languages by bytes across repos pushed since `since`, as whole percentages.
- * Returns an empty list when there's nothing to count.
+ * Top languages by bytes, as whole percentages. With `since`, only repos pushed on or
+ * after that date count; null counts every repo. Returns an empty list when there's nothing to count.
  */
-export function aggregateLanguages(data: LanguagesQueryData, since: Date, topN = TOP_N): LanguageShare[] {
+export function aggregateLanguages(data: LanguagesQueryData, since: Date | null, topN = TOP_N): LanguageShare[] {
   const totals = new Map<string, number>();
   for (const repo of data.user?.repositories.nodes ?? []) {
-    if (!repo?.pushedAt || new Date(repo.pushedAt) < since) continue;
+    if (!repo) continue;
+    if (since && (!repo.pushedAt || new Date(repo.pushedAt) < since)) continue;
     for (const edge of repo.languages?.edges ?? []) {
       if (!edge) continue;
       totals.set(edge.node.name, (totals.get(edge.node.name) ?? 0) + edge.size);
@@ -193,27 +207,41 @@ export function aggregateLanguages(data: LanguagesQueryData, since: Date, topN =
     .map(([name, size]) => ({ name, pct: Math.max(1, Math.round((size / sum) * 100)) }));
 }
 
-/** The date RECENT_YEARS before `now`. */
-export function recentCutoff(now: Date = new Date()): Date {
+/** The date `months` before `now`, or null (no cutoff) when months is null. */
+export function rangeCutoff(months: number | null, now: Date = new Date()): Date | null {
+  if (months === null) return null;
   const cutoff = new Date(now);
-  cutoff.setUTCFullYear(cutoff.getUTCFullYear() - RECENT_YEARS);
+  cutoff.setUTCMonth(cutoff.getUTCMonth() - months);
   return cutoff;
 }
+
+/** Every range that has data, in LANGUAGE_RANGES order. */
+export function languageRanges(data: LanguagesQueryData, now: Date = new Date()): LanguageRange[] {
+  return LANGUAGE_RANGES.flatMap(({ id, label, months }) => {
+    const languages = aggregateLanguages(data, rangeCutoff(months, now));
+    return languages.length > 0 ? [{ id, label, languages }] : [];
+  });
+}
+
+const SAMPLE_STATS: LanguageStats = {
+  ranges: [{ id: LANGUAGE_RANGES[0].id, label: LANGUAGE_RANGES[0].label, languages: SAMPLE_LANGUAGES }],
+  isSample: true,
+};
 
 /** Never throws: falls back to labelled sample data and logs why. */
 export async function getLanguageStats(now: Date = new Date()): Promise<LanguageStats> {
   const token = process.env.GITHUB_TOKEN;
-  if (!token) return { languages: SAMPLE_LANGUAGES, isSample: true };
+  if (!token) return SAMPLE_STATS;
 
   try {
-    const languages = aggregateLanguages(await fetchRepoLanguages(token), recentCutoff(now));
-    if (languages.length === 0) {
-      console.warn("[github] No language data in recent repositories; showing sample data.");
-      return { languages: SAMPLE_LANGUAGES, isSample: true };
+    const ranges = languageRanges(await fetchRepoLanguages(token), now);
+    if (ranges.length === 0) {
+      console.warn("[github] No language data in any repository; showing sample data.");
+      return SAMPLE_STATS;
     }
-    return { languages, isSample: false };
+    return { ranges, isSample: false };
   } catch (error) {
     console.error(`[github] ${error instanceof Error ? error.message : String(error)}; showing sample data.`);
-    return { languages: SAMPLE_LANGUAGES, isSample: true };
+    return SAMPLE_STATS;
   }
 }

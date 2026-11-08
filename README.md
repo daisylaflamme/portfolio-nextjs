@@ -99,7 +99,7 @@ Images are WebP, at most 1600px wide, and originals are moved to the git-ignored
 
 ## Testing
 
-Unit tests run directly in Node 24 (TypeScript type stripping), with no extra test framework: `npm run test:unit`. `src/lib/github.test.ts` covers the GitHub query with a mocked `fetch`: aggregation, the recent-repo cutoff, and every failure path (bad token, rate limits, GraphQL errors, unknown user, network and timeout).
+Unit tests run directly in Node 24 (TypeScript type stripping), with no extra test framework: `npm run test:unit`. `src/lib/github.test.ts` covers the GitHub query with a mocked `fetch`: aggregation, the time ranges, and every failure path (bad token, rate limits, GraphQL errors, unknown user, network and timeout).
 
 The Playwright tests run against the production build, in Chromium, at 390px and 1280px wide:
 
@@ -113,6 +113,7 @@ npx playwright show-report         # HTML report from the last run
 | Spec | Covers |
 | --- | --- |
 | `smoke.spec.ts` | Every route returns 200 with its title, heading, header and footer; no horizontal overflow; no console errors; main navigation, including the mobile menu |
+| `home.spec.ts` | The language chart: a labelled sample without a token, or a working time-range switch with one |
 | `theme.spec.ts` | The theme choice survives reloads and carries across pages |
 | `project-modal.spec.ts` | Opens from a card; `?project=<id>` deep link; Escape closes and returns focus; unknown ids stay closed; Next updates the URL |
 | `filters.spec.ts` | The result count matches the data for single and combined filters and resets on clear |
@@ -138,7 +139,7 @@ Copy `.env.local.example` to `.env.local` for local use (it's git-ignored). On V
 
 ### GitHub token
 
-The home page sums language bytes across my public, non-fork repositories pushed in the last three years (`RECENT_YEARS` in `src/lib/github.ts`), with one GraphQL request. The page is regenerated at most once a day (ISR), so the token is used about once a day.
+The home page sums language bytes across my public, non-fork repositories with one GraphQL request, for each range in `LANGUAGE_RANGES` (`src/lib/github.ts`): **All time** (the default) and **Last 12 months** (repos pushed in that time). A switch on the card changes the range without another request. The page is regenerated at most once a day (ISR), so the token is used about once a day.
 
 1. GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → **Generate new token**.
 2. Name it `portfolio-nextjs (Vercel)`, set **Resource owner** to your account and pick an expiration (set a reminder to rotate it).

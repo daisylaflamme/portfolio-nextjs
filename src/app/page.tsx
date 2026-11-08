@@ -2,7 +2,8 @@ import Link from "next/link";
 import { projects } from "@/data/projects";
 import type { Metadata } from "next";
 import type { Project } from "@/data/types";
-import { getLanguageStats, type LanguageStats } from "@/lib/github";
+import { getLanguageStats } from "@/lib/github";
+import LanguagesCard from "@/components/LanguagesCard";
 import { CONTACT_LINKS } from "@/components/SiteFooter";
 import { PAGES } from "@/lib/seo";
 import { WORK_CATEGORIES } from "@/lib/work";
@@ -14,7 +15,6 @@ export const metadata: Metadata = {
   description: PAGES.home.description,
   alternates: { canonical: PAGES.home.path },
 };
-
 
 const SELECTED_CASES: ReadonlyArray<{ id: Project["id"]; note: string }> = [
   { id: "store-details-maps", note: "~80% lower annual mapping cost" },
@@ -32,36 +32,8 @@ function ArrowUpRight() {
   );
 }
 
-function LanguagesCard({ languages, isSample }: LanguageStats) {
-  const max = Math.max(...languages.map((l) => l.pct), 1);
-  const summary = languages.map((l) => `${l.name} ${l.pct}%`).join(", ");
-  return (
-    <figure className="m-0 flex flex-col gap-5 rounded-2xl border border-line bg-surface p-5 sm:p-6">
-      <figcaption className="font-mono text-sm text-muted">
-        {"// languages in my recent GitHub repos"}
-        {isSample ? " (sample)" : ""}
-      </figcaption>
-      <p className="sr-only">Languages by share of code: {summary}.</p>
-      <ul className="flex flex-col gap-3" aria-hidden="true">
-        {languages.map((lang) => (
-          <li key={lang.name} className="flex items-center gap-3">
-            <span className="w-24 shrink-0 text-right font-mono text-sm font-medium text-fg">{lang.name}</span>
-            <span className="flex min-w-0 flex-1 items-center gap-2.5">
-              <span
-                className="block h-7 rounded bg-accent"
-                style={{ width: `${Math.round((lang.pct / max) * 82)}%` }}
-              />
-              <span className="font-mono text-[13px] text-muted">{lang.pct}%</span>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </figure>
-  );
-}
-
 export default async function Home() {
-  const { languages, isSample } = await getLanguageStats();
+  const languageStats = await getLanguageStats();
   const byId = new Map(projects.map((p) => [p.id, p]));
   const cases = SELECTED_CASES.flatMap((c) => {
     const project = byId.get(c.id);
@@ -100,7 +72,7 @@ export default async function Home() {
             </a>
           </div>
         </div>
-        <LanguagesCard languages={languages} isSample={isSample} />
+        <LanguagesCard {...languageStats} />
       </section>
 
       {/* Work hub */}
