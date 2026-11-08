@@ -25,6 +25,7 @@ Before calling a task done: lint, typecheck, test:unit, build, test:e2e. CI (`.g
 - `src/app/` routes. Work categories under `src/app/work/` share `WorkHeader` (tabs are links with `aria-current`). `/web-projects` 308-redirects to `/work/web-engineering`, keeping `?project=`.
 - `src/data/` content: `projects.ts` (case studies, `featuredProjectIds`), `graphics.ts`, `dashboards.ts`, `presentations.ts`, `landingPages.ts` (derived from projects), `certificates.ts`. Every shape is in `types.ts`; add new tags to `PROJECT_TAGS` / `WORK_TAGS` there.
 - `src/lib/` helpers: `seo.ts` (`PAGES`, titles, sitemap), `work.ts` (category list), `github.ts` (GraphQL languages, typed, falls back to labelled sample data), `archive.ts` (hides items whose images are missing).
+- Résumé PDF: `public/resume/`, linked from `RESUME_PDF` in `src/lib/resume.ts` (home hero and /resume). To update it, replace the file and the `details` text.
 - `src/components/` shared UI, including `ImageLightbox` (the `<dialog>` pattern used everywhere).
 - `e2e/` Playwright specs. Expected titles, ids and counts come from `src/data` and `src/lib/seo.ts`, never hard-coded.
 

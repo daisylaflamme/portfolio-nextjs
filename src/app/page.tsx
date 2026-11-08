@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import type { Project } from "@/data/types";
 import { getLanguageStats } from "@/lib/github";
 import LanguagesCard from "@/components/LanguagesCard";
+import { RESUME_PDF } from "@/lib/resume";
 import { CONTACT_LINKS } from "@/components/SiteFooter";
 import { PAGES } from "@/lib/seo";
 import { WORK_CATEGORIES } from "@/lib/work";
@@ -69,6 +70,14 @@ export default async function Home() {
             >
               github <ArrowUpRight />
               <span className="sr-only">(opens in a new tab)</span>
+            </a>
+            <a
+              href={RESUME_PDF.href}
+              download
+              className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-line px-5 font-mono text-base text-fg no-underline transition-colors hover:border-field"
+            >
+              résumé <span className="text-[13px] text-muted">pdf</span>
+              <span className="sr-only">({RESUME_PDF.details})</span>
             </a>
           </div>
         </div>

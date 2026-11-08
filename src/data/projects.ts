@@ -980,7 +980,9 @@ export const featuredProjectIds: Project["id"][] = [
   "cms-hero-carousel",
   "cookie-consent-multi-brand",
   "product-card-redesign",
+  "cross-sell-addon-slider",
+  "finance-messaging-integrations",
+  "custom-input-controls",
   "gift-card-balance-widget",
   "gifspark-ai-greeting-app",
-  "gphomestay-digital-experiences",
 ];

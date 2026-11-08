@@ -1,6 +1,15 @@
 import { PAGES, pageMetadata } from "@/lib/seo";
+import { RESUME_PDF } from "@/lib/resume";
 
 export const metadata = pageMetadata(PAGES.resume);
+
+function DownloadIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+    </svg>
+  );
+}
 
 export default function ResumePage() {
   const linkClass =
@@ -42,6 +51,16 @@ export default function ResumePage() {
             www.linkedin.com/in/desislavalaflamme
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
+        </p>
+        <p className="mt-4 flex flex-wrap items-center gap-3">
+          <a
+            href={RESUME_PDF.href}
+            download
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-accent px-5 font-mono text-[15px] font-medium text-on-accent no-underline transition-opacity hover:opacity-90"
+          >
+            <DownloadIcon /> download résumé
+          </a>
+          <span className="font-mono text-[13px] text-muted">{RESUME_PDF.details}</span>
         </p>
       </header>
 
