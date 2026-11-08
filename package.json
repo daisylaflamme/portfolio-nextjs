@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "images:projects": "node scripts/convert-project-images.cjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

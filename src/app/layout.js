@@ -7,6 +7,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ResumeVisitTracker from "@/components/ResumeVisitTracker";
 import { themeInitScript } from "@/lib/theme";
+import { PAGES, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 // Self-hosted by next/font: no render-blocking Google Fonts request, no layout shift.
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter-var", display: "swap" });
@@ -24,13 +25,12 @@ export const viewport = {
 };
 
 export const metadata = {
-  metadataBase: new URL("https://www.daisylaflamme.net"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Daisy Laflamme | Senior Frontend & UI Engineer",
-    template: "%s | Daisy Laflamme",
+    default: PAGES.home.title,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Daisy Laflamme is a senior frontend and UI engineer building accessible, high-performance interfaces for multi-brand e-commerce, marketing, and product teams with React, Next.js, Angular, and TypeScript.",
+  description: PAGES.home.description,
   icons: {
     icon: [
       { url: "/images/daisy.ico", sizes: "48x48" },
@@ -40,8 +40,8 @@ export const metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Daisy Laflamme",
-    title: "Daisy Laflamme | Senior Frontend & UI Engineer",
+    siteName: SITE_NAME,
+    title: PAGES.home.title,
     description:
       "Design-minded engineer for commerce, marketing and product UI. Case studies in multi-brand e-commerce, payments, accessibility and design systems.",
     url: "/",

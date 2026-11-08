@@ -2,11 +2,14 @@ import Link from "next/link";
 import { projects } from "@/data/projects";
 import { getLanguageStats } from "@/lib/github";
 import { CONTACT_LINKS } from "@/components/SiteFooter";
+import { PAGES } from "@/lib/seo";
 
 export const revalidate = 86400;
 
 export const metadata = {
-  alternates: { canonical: "/" },
+  title: { absolute: PAGES.home.title },
+  description: PAGES.home.description,
+  alternates: { canonical: PAGES.home.path },
 };
 
 const WORK_AREAS = [

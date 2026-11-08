@@ -101,7 +101,7 @@ export default function AboutPage() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 160px, 192px"
-                priority
+                loading="eager"
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-md lg:max-w-xs mt-6">

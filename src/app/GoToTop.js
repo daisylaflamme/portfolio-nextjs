@@ -21,7 +21,9 @@ export default function GoToTop() {
   }, [checkScroll]);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // CSS scroll-behavior doesn't apply to JS scrolling, so honour reduced motion here.
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
   };
 
   if (!visible) return null;
@@ -30,7 +32,7 @@ export default function GoToTop() {
     <button
       type="button"
       onClick={scrollToTop}
-      className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-11 h-11 rounded-full bg-[var(--color-shadow-accent)] text-white shadow-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--color-shadow-accent)] focus:ring-offset-2 transition-opacity"
+      className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-11 h-11 rounded-full bg-[var(--color-shadow-accent)] text-on-accent shadow-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--color-shadow-accent)] focus:ring-offset-2 transition-opacity"
       aria-label="Scroll to top"
     >
       <svg

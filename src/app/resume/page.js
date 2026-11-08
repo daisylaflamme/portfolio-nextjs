@@ -1,11 +1,6 @@
-import { pageMetadata } from "@/lib/seo";
+import { PAGES, pageMetadata } from "@/lib/seo";
 
-export const metadata = pageMetadata({
-  title: "Résumé",
-  description:
-    "Résumé of Daisy Laflamme, senior front-end and UI engineer: experience, skills and education across e-commerce, payments, accessibility and design systems.",
-  path: "/resume",
-});
+export const metadata = pageMetadata(PAGES.resume);
 
 export default function ResumePage() {
   const linkClass =
@@ -35,6 +30,7 @@ export default function ResumePage() {
             className={linkClass}
           >
             daisylaflamme.net
+            <span className="sr-only"> (opens in a new tab)</span>
           </a>{" "}
           |{" "}
           <a
@@ -44,6 +40,7 @@ export default function ResumePage() {
             className={linkClass}
           >
             www.linkedin.com/in/desislavalaflamme
+            <span className="sr-only"> (opens in a new tab)</span>
           </a>
         </p>
       </header>

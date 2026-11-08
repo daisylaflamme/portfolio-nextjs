@@ -115,7 +115,8 @@ export default function ImageLightbox({ images, altFor, index, open, onClose, on
 
   const current = images[Math.min(index, count - 1)];
   const navButton =
-    "absolute top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20";
+    // Dark backing + ring keeps the arrow visible over light screenshots (non-text contrast).
+    "absolute top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white ring-1 ring-white/40 hover:bg-black/85";
 
   return (
     <dialog

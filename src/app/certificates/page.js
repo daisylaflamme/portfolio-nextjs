@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { diplomas, programs, certificates } from "@/data/certificates";
 import GoToTop from "../GoToTop";
@@ -106,10 +106,83 @@ function CertificateAccordion({ items, openIndex, setOpenIndex, getThumbnailSrc:
   );
 }
 
+/**
+ * Diploma viewer on a native <dialog>: focus moves in and returns to the card that
+ * opened it, Escape closes it, and the page behind is inert and doesn't scroll.
+ */
+function DiplomaDialog({ diploma, onClose }) {
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (diploma && !dialog.open) {
+      dialog.showModal();
+      document.documentElement.classList.add("has-open-dialog");
+    } else if (!diploma && dialog.open) {
+      dialog.close();
+    }
+  }, [diploma]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const handleClose = () => {
+      document.documentElement.classList.remove("has-open-dialog");
+      onClose();
+    };
+    dialog.addEventListener("close", handleClose);
+    return () => dialog.removeEventListener("close", handleClose);
+  }, [onClose]);
+
+  return (
+    <dialog
+      ref={dialogRef}
+      aria-labelledby="diploma-modal-title"
+      onClick={(event) => {
+        if (event.target === dialogRef.current) dialogRef.current.close();
+      }}
+      className="m-auto w-[calc(100%-2rem)] max-w-2xl bg-transparent p-0 text-fg backdrop:bg-black/50 backdrop:backdrop-blur-sm"
+    >
+      {diploma ? (
+        <div className="project-modal-box rounded-2xl max-h-[90vh] overflow-auto p-6">
+          <div className="flex justify-between items-start gap-4 mb-4">
+            <div>
+              <h2 id="diploma-modal-title" className="text-lg font-semibold text-[var(--color-font-primary)]">
+                {diploma.title}
+              </h2>
+              <p className="text-sm text-[var(--color-font-secondary)] mt-1">{diploma.year}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => dialogRef.current?.close()}
+              className="p-2 rounded-lg text-[var(--color-font-secondary)] hover:bg-[var(--color-center-circle)] hover:text-[var(--color-font-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-shadow-accent)]"
+              aria-label="Close"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5" aria-hidden="true">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <Image
+            src={diploma.image}
+            alt={`${diploma.title}, ${diploma.year}`}
+            width={1200}
+            height={900}
+            sizes="(min-width: 704px) 624px, calc(100vw - 5rem)"
+            className="h-auto w-full rounded-lg border border-[var(--color-petal-border)] shadow-sm object-contain bg-[var(--color-petal-bg)]"
+          />
+        </div>
+      ) : null}
+    </dialog>
+  );
+}
+
 export default function CertificatesPage() {
   const [diplomaModal, setDiplomaModal] = useState(null);
   const [programsOpenIndex, setProgramsOpenIndex] = useState(-1);
   const [certificatesOpenIndex, setCertificatesOpenIndex] = useState(-1);
+  const closeDiploma = useCallback(() => setDiplomaModal(null), []);
 
   const sortedCertificates = useMemo(
     () => [...certificates].sort((a, b) => (b.year ?? 0) - (a.year ?? 0)),
@@ -186,48 +259,7 @@ export default function CertificatesPage() {
         </section>
       </div>
 
-      {/* Diploma modal */}
-      {diplomaModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-          onClick={() => setDiplomaModal(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="diploma-modal-title"
-        >
-          <div
-            className="project-modal-box rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-auto p-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-between items-start gap-4 mb-4">
-              <div>
-                <h3 id="diploma-modal-title" className="text-lg font-semibold text-[var(--color-font-primary)]">
-                  {diplomaModal.title}
-                </h3>
-                <p className="text-sm text-[var(--color-font-secondary)] mt-1">{diplomaModal.year}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setDiplomaModal(null)}
-                className="p-2 rounded-lg text-[var(--color-font-secondary)] hover:bg-[var(--color-center-circle)] hover:text-[var(--color-font-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-shadow-accent)]"
-                aria-label="Close"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <Image
-              src={diplomaModal.image}
-              alt={`${diplomaModal.title}, ${diplomaModal.year}`}
-              width={1200}
-              height={900}
-              sizes="(min-width: 704px) 624px, calc(100vw - 5rem)"
-              className="h-auto w-full rounded-lg border border-[var(--color-petal-border)] shadow-sm object-contain bg-[var(--color-petal-bg)]"
-            />
-          </div>
-        </div>
-      )}
+      <DiplomaDialog diploma={diplomaModal} onClose={closeDiploma} />
 
       <GoToTop />
     </main>

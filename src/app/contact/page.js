@@ -31,8 +31,6 @@ export default function ContactPage() {
               <a
                 href={CONTACT_LINKS.email}
                 className="flex items-center gap-3 text-[var(--color-font-primary)] hover:text-[var(--color-shadow-accent)] transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-petal-bg)] border border-[var(--color-petal-border)] text-[var(--color-font-secondary)] shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element -- small sized SVG icon, nothing to optimize */}
@@ -60,6 +58,7 @@ export default function ContactPage() {
                   <img src="/icons/contact-linkedin.svg" alt="" width={22} height={22} className="shrink-0" />
                 </span>
                 <span>LinkedIn</span>
+                <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </li>
             <li>
@@ -74,6 +73,7 @@ export default function ContactPage() {
                   <img src="/icons/contact-github.svg" alt="" width={22} height={22} className="shrink-0" />
                 </span>
                 <span>GitHub</span>
+                <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </li>
           </ul>
