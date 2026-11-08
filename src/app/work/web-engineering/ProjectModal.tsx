@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNo
 import type { Project } from "@/data/types";
 import Image from "next/image";
 import { caseStudyContent, projectImages, stackLabels, topicLabels } from "@/lib/projectDisplay";
-import ImageLightbox, { CloseIcon } from "./ImageLightbox";
+import ImageLightbox, { CloseIcon } from "@/components/ImageLightbox";
 
 function ExpandIcon() {
   return (

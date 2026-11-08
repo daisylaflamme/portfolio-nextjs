@@ -9,13 +9,7 @@ import ProjectCard, { ProjectRow } from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
 import FilterChips from "./FilterChips";
 import { PROJECT_FILTERS } from "./projectFilters";
-
-const CATEGORIES: ReadonlyArray<{ label: string; current?: boolean }> = [
-  { label: "Web engineering", current: true },
-  { label: "Dashboards" },
-  { label: "Marketing and design" },
-  { label: "Presentations" },
-];
+import WorkHeader from "../WorkHeader";
 
 const PROJECT_PARAM = "project";
 
@@ -85,36 +79,10 @@ export default function WorkPage() {
 
   return (
     <main className="flex-1">
-      <section className="mx-auto max-w-6xl px-4 pb-6 pt-10 sm:px-6 sm:pt-14">
-        <h1 className="font-display text-[clamp(2.25rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">Work</h1>
-        <p className="mt-3 max-w-2xl text-[17px] leading-relaxed text-muted sm:text-lg">
-          Case studies from multi-brand e-commerce, marketing and product teams — the problem, what I built, and
-          what changed.
-        </p>
-      </section>
-
-      <nav aria-label="Work categories" className="mx-auto max-w-6xl px-4 sm:px-6">
-        <ul className="flex gap-6 overflow-x-auto border-b border-line text-[15px] font-semibold sm:gap-8 sm:text-base">
-          {CATEGORIES.map((cat) => (
-            <li key={cat.label} className="shrink-0">
-              {cat.current ? (
-                <a
-                  href="/web-projects"
-                  aria-current="page"
-                  className="inline-flex min-h-12 items-center border-b-[3px] border-accent text-fg no-underline"
-                >
-                  {cat.label}
-                </a>
-              ) : (
-                <span className="inline-flex min-h-12 items-center gap-2 text-muted" aria-disabled="true">
-                  {cat.label}
-                  <span className="rounded-full border border-line px-2 py-0.5 font-mono text-[11px] font-normal">soon</span>
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <WorkHeader
+        current="web-engineering"
+        intro="Case studies from multi-brand e-commerce, marketing and product teams — the problem, what I built, and what changed."
+      />
 
       <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
         <FilterChips selected={selectedFilters} onToggle={toggleFilter} onClear={clearFilters} />

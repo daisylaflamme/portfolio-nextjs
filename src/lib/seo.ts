@@ -15,7 +15,16 @@ export interface PageInfo {
   priority: number;
 }
 
-export type PageKey = "home" | "work" | "about" | "resume" | "certificates" | "contact";
+export type PageKey =
+  | "home"
+  | "work"
+  | "dashboards"
+  | "marketingDesign"
+  | "presentations"
+  | "about"
+  | "resume"
+  | "certificates"
+  | "contact";
 
 export const PAGES: Record<PageKey, PageInfo> = {
   home: {
@@ -26,11 +35,32 @@ export const PAGES: Record<PageKey, PageInfo> = {
     priority: 1,
   },
   work: {
-    path: "/web-projects",
-    title: "Work",
+    path: "/work/web-engineering",
+    title: "Web engineering",
     description:
       "Case studies by Daisy Laflamme: multi-brand e-commerce UI, checkout and payments, accessibility-first components, maps, CMS tools and AI products.",
     priority: 0.9,
+  },
+  dashboards: {
+    path: "/work/dashboards",
+    title: "Dashboards",
+    description:
+      "Dashboards by Daisy Laflamme: Tableau retail KPI and market basket analysis, customer segmentation, demographics maps and project tracking mockups.",
+    priority: 0.7,
+  },
+  marketingDesign: {
+    path: "/work/marketing-design",
+    title: "Marketing and design",
+    description:
+      "Marketing and graphic design by Daisy Laflamme: logos and identity concepts, campaign ads and web banners, flyers, posters and illustration.",
+    priority: 0.7,
+  },
+  presentations: {
+    path: "/work/presentations",
+    title: "Presentations",
+    description:
+      "Presentations by Daisy Laflamme: a JavaScript learning platform for women, a usability study and redesign, and a retail KPI dashboard.",
+    priority: 0.6,
   },
   about: {
     path: "/about",

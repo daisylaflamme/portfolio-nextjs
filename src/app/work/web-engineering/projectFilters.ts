@@ -1,4 +1,4 @@
-import { FileTextIcon, LayoutGridIcon, type IconProps } from "../FlowerIcons";
+import { FileTextIcon, LayoutGridIcon, type IconProps } from "../../FlowerIcons";
 import {
   AccessibilityIcon,
   AngularIcon,
@@ -32,7 +32,7 @@ export interface ProjectFilter extends TagFilter {
 export const ALL_PROJECTS_FILTER: Pick<ProjectFilter, "label" | "Icon"> = { label: "All Projects", Icon: LayoutGridIcon };
 
 /**
- * Filter chips for /web-projects, in display order.
+ * Filter chips for /work/web-engineering, in display order.
  * A project matches a filter when it has any of the filter's `tags` (see `tags` in data/projects.ts).
  */
 export const PROJECT_FILTERS: ProjectFilter[] = [

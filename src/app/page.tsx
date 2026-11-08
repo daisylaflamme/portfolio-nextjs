@@ -5,6 +5,7 @@ import type { Project } from "@/data/types";
 import { getLanguageStats, type LanguageStats } from "@/lib/github";
 import { CONTACT_LINKS } from "@/components/SiteFooter";
 import { PAGES } from "@/lib/seo";
+import { WORK_CATEGORIES } from "@/lib/work";
 
 export const revalidate = 86400;
 
@@ -14,29 +15,6 @@ export const metadata: Metadata = {
   alternates: { canonical: PAGES.home.path },
 };
 
-const WORK_AREAS = [
-  {
-    path: "/web-engineering",
-    title: "Web engineering",
-    description: "E-commerce, checkout and payments, maps, design systems, CMS widgets",
-    href: "/web-projects",
-  },
-  {
-    path: "/dashboards",
-    title: "Dashboards and data viz",
-    description: "Retail KPI and demographics dashboards, being rebuilt in D3",
-  },
-  {
-    path: "/marketing-design",
-    title: "Marketing and design",
-    description: "Ad banners, campaign landing pages, logos, flyers",
-  },
-  {
-    path: "/presentations",
-    title: "Presentations",
-    description: "UX research, HCI and learning platform proposals",
-  },
-];
 
 const SELECTED_CASES: ReadonlyArray<{ id: Project["id"]; note: string }> = [
   { id: "store-details-maps", note: "~80% lower annual mapping cost" },
@@ -106,7 +84,7 @@ export default async function Home() {
           </p>
           <div className="mt-1 flex flex-wrap gap-3">
             <Link
-              href="/web-projects"
+              href={PAGES.work.path}
               className="inline-flex min-h-12 items-center rounded-lg bg-accent px-6 font-mono text-base font-medium text-on-accent no-underline transition-opacity hover:opacity-90"
             >
               view work
@@ -131,34 +109,20 @@ export default async function Home() {
           {"// choose a body of work"}
         </h2>
         <ul className="grid gap-4 sm:grid-cols-2">
-          {WORK_AREAS.map((area) => {
-            const inner = (
-              <>
-                <span className="flex items-center justify-between gap-3 font-mono text-[13px] text-accent">
-                  {area.path}
-                  {!area.href ? (
-                    <span className="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">coming soon</span>
-                  ) : null}
-                </span>
+          {WORK_CATEGORIES.map((category) => (
+            <li key={category.id}>
+              <Link
+                href={category.path}
+                className="flex h-full min-h-44 flex-col justify-between gap-6 rounded-2xl border border-line bg-surface p-6 no-underline transition-colors hover:border-accent sm:p-7"
+              >
+                <span className="font-mono text-[13px] text-accent">{category.path}</span>
                 <span className="flex flex-col gap-2">
-                  <span className="font-display text-2xl font-semibold text-fg">{area.title}</span>
-                  <span className="text-base leading-relaxed text-muted">{area.description}</span>
+                  <span className="font-display text-2xl font-semibold text-fg">{category.label}</span>
+                  <span className="text-base leading-relaxed text-muted">{category.blurb}</span>
                 </span>
-              </>
-            );
-            const base = "flex h-full min-h-44 flex-col justify-between gap-6 rounded-2xl border border-line bg-surface p-6 sm:p-7";
-            return (
-              <li key={area.path}>
-                {area.href ? (
-                  <Link href={area.href} className={`${base} no-underline transition-colors hover:border-accent`}>
-                    {inner}
-                  </Link>
-                ) : (
-                  <div className={base}>{inner}</div>
-                )}
-              </li>
-            );
-          })}
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -171,7 +135,7 @@ export default async function Home() {
           {cases.map(({ id, note, project }) => (
             <li key={id} className="border-t border-line last:border-b">
               <Link
-                href={`/web-projects?project=${id}`}
+                href={`${PAGES.work.path}?project=${id}`}
                 className="group flex flex-col gap-1 py-5 text-fg no-underline sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
               >
                 <span className="font-display text-xl font-semibold group-hover:text-accent sm:text-[22px]">

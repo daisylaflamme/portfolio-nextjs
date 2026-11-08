@@ -21,7 +21,7 @@ for (const route of ROUTES) {
 }
 
 const NAV = [
-  { name: "Work", path: "/web-projects" },
+  { name: "Work", path: "/work/web-engineering" },
   { name: "About", path: "/about" },
   { name: "Résumé", path: "/resume" },
   { name: "Contact", path: "/contact" },

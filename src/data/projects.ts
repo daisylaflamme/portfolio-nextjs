@@ -900,7 +900,7 @@ export const projects: Project[] = [
 ];
 
 /**
- * Display order for the "Featured Engineering Work" section on /web-projects.
+ * Display order for the "Featured Engineering Work" section on /work/web-engineering.
  * Any project whose id is not listed here appears under "Earlier Web & UI Work",
  * in its order within `projects`.
  */

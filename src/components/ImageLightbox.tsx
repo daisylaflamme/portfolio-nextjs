@@ -65,10 +65,6 @@ function LightboxImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-/**
- * Full-screen image viewer on a native <dialog>, stacked above the case-study dialog.
- * Escape closes only this layer; the browser returns focus to the button that opened it.
- */
 export interface ImageLightboxProps {
   images: string[];
   altFor: (index: number) => string;
@@ -76,9 +72,27 @@ export interface ImageLightboxProps {
   open: boolean;
   onClose: () => void;
   onIndexChange: (index: number) => void;
+  /** Text under the image; defaults to the alt text. */
+  captionFor?: (index: number) => string;
+  /** Accessible name of the dialog. */
+  label?: string;
 }
 
-export default function ImageLightbox({ images, altFor, index, open, onClose, onIndexChange }: ImageLightboxProps) {
+/**
+ * Full-screen image viewer on a native <dialog>. Works on its own (gallery pages) or
+ * stacked above the case-study dialog, where Escape closes only this layer. Either way
+ * the browser returns focus to the button that opened it.
+ */
+export default function ImageLightbox({
+  images,
+  altFor,
+  index,
+  open,
+  onClose,
+  onIndexChange,
+  captionFor = altFor,
+  label = "Screenshot viewer",
+}: ImageLightboxProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
   const count = images.length;
@@ -86,15 +100,24 @@ export default function ImageLightbox({ images, altFor, index, open, onClose, on
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (open && !dialog.open) dialog.showModal();
-    else if (!open && dialog.open) dialog.close();
+    if (open && !dialog.open) {
+      dialog.showModal();
+      document.documentElement.classList.add("has-open-dialog");
+    } else if (!open && dialog.open) {
+      dialog.close();
+    }
   }, [open]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    dialog.addEventListener("close", onClose);
-    return () => dialog.removeEventListener("close", onClose);
+    const handleClose = () => {
+      // Keep the page locked while another dialog (the case study) is still open underneath.
+      if (!document.querySelector("dialog[open]")) document.documentElement.classList.remove("has-open-dialog");
+      onClose();
+    };
+    dialog.addEventListener("close", handleClose);
+    return () => dialog.removeEventListener("close", handleClose);
   }, [onClose]);
 
   const go = (step: number) => onIndexChange((index + step + count) % count);
@@ -139,7 +162,7 @@ export default function ImageLightbox({ images, altFor, index, open, onClose, on
     <dialog
       ref={dialogRef}
       className="lightbox-dialog"
-      aria-label="Screenshot viewer"
+      aria-label={label}
       onKeyDown={handleKeyDown}
       onClick={handleBackgroundClick}
     >
@@ -180,7 +203,7 @@ export default function ImageLightbox({ images, altFor, index, open, onClose, on
             ) : null}
           </div>
 
-          <p className="px-4 py-3 text-center text-[14px] text-white/70 sm:px-6">{altFor(index)}</p>
+          <p className="mx-auto max-w-3xl px-4 py-3 text-center text-[14px] text-white/80 sm:px-6">{captionFor(index)}</p>
         </div>
       ) : null}
     </dialog>

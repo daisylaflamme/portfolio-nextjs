@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
     "images:projects": "node scripts/convert-project-images.cjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "images:archive": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/images-archive.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
