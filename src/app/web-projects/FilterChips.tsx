@@ -1,9 +1,15 @@
 "use client";
 
 import { useId, useState } from "react";
-import { PROJECT_FILTERS } from "./projectFilters";
+import { PROJECT_FILTERS, type ProjectFilter } from "./projectFilters";
 
-function Chip({ filter, pressed, onToggle }) {
+interface ChipProps {
+  filter: ProjectFilter;
+  pressed: boolean;
+  onToggle: (id: string) => void;
+}
+
+function Chip({ filter, pressed, onToggle }: ChipProps) {
   return (
     <li>
       <button
@@ -24,7 +30,14 @@ function Chip({ filter, pressed, onToggle }) {
  * Toggle-button filters (OR logic). Primary filters are always visible;
  * the rest sit behind a disclosure so the row stays short on phones.
  */
-export default function FilterChips({ selected, onToggle, onClear }) {
+export interface FilterChipsProps {
+  /** Ids of the active filters. */
+  selected: ReadonlySet<string>;
+  onToggle: (id: string) => void;
+  onClear: () => void;
+}
+
+export default function FilterChips({ selected, onToggle, onClear }: FilterChipsProps) {
   const moreId = useId();
   const primary = PROJECT_FILTERS.filter((f) => f.placement === "primary");
   const more = PROJECT_FILTERS.filter((f) => f.placement !== "primary");

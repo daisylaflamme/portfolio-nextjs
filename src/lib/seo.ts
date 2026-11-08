@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 export const SITE_URL = "https://www.daisylaflamme.net";
 export const SITE_NAME = "Daisy Laflamme";
 
@@ -5,7 +7,17 @@ export const SITE_NAME = "Daisy Laflamme";
  * Every public page, in sitemap order. Layouts build their metadata from this and
  * src/app/sitemap.ts lists it, so adding a page here keeps both in sync.
  */
-export const PAGES = {
+export interface PageInfo {
+  path: string;
+  title: string;
+  description: string;
+  /** Sitemap priority, 0–1. */
+  priority: number;
+}
+
+export type PageKey = "home" | "work" | "about" | "resume" | "certificates" | "contact";
+
+export const PAGES: Record<PageKey, PageInfo> = {
   home: {
     path: "/",
     title: "Daisy Laflamme | Senior Frontend & UI Engineer",
@@ -55,7 +67,7 @@ export const PAGES = {
  * description, canonical URL and Open Graph tags that point at this page.
  * Next replaces openGraph wholesale in child segments, so every field is set here.
  */
-export function pageMetadata({ title, description, path }) {
+export function pageMetadata({ title, description, path }: PageInfo): Metadata {
   return {
     title,
     description,

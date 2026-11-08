@@ -5,18 +5,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 
-export const NAV_ITEMS = [
+export const NAV_ITEMS: ReadonlyArray<{ label: string; href: string }> = [
   { label: "Work", href: "/web-projects" },
   { label: "About", href: "/about" },
   { label: "Résumé", href: "/resume" },
   { label: "Contact", href: "/contact" },
 ];
 
-function isActive(pathname, href) {
+function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function Logo({ className = "" }) {
+export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link
       href="/"
@@ -31,15 +31,15 @@ export function Logo({ className = "" }) {
 export default function SiteHeader() {
   const pathname = usePathname() || "/";
   // Remember the path the mobile menu was opened on; navigating anywhere closes it.
-  const [openOnPath, setOpenOnPath] = useState(null);
+  const [openOnPath, setOpenOnPath] = useState<string | null>(null);
   const open = openOnPath === pathname;
-  const setOpen = (value) => setOpenOnPath(value ? pathname : null);
+  const setOpen = (value: boolean) => setOpenOnPath(value ? pathname : null);
   const menuId = useId();
 
   // Escape closes the mobile menu.
   useEffect(() => {
     if (!open) return;
-    const onKey = (event) => {
+    const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpenOnPath(null);
     };
     document.addEventListener("keydown", onKey);

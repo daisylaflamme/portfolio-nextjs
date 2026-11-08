@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { diplomas, programs, certificates } from "@/data/certificates";
+import type { Certificate, CertificateProvider } from "@/data/types";
 import GoToTop from "../GoToTop";
 
-function ChevronIcon({ open, compact = false }) {
+function ChevronIcon({ open, compact = false }: { open: boolean; compact?: boolean }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -23,24 +24,38 @@ function ChevronIcon({ open, compact = false }) {
   );
 }
 
-const PROVIDER_THUMBNAILS = {
+const PROVIDER_THUMBNAILS: Record<CertificateProvider, string> = {
   linkedin: "/images/certificates/thumbnails/linkedin.jpg",
   lynda: "/images/certificates/thumbnails/lynda.jpg",
 };
 
-function getThumbnailSrc(cert) {
-  if (cert.provider && PROVIDER_THUMBNAILS[cert.provider]) {
-    return PROVIDER_THUMBNAILS[cert.provider];
-  }
-  return cert.thumbnail;
+function getThumbnailSrc(cert: Certificate): string {
+  return cert.provider ? PROVIDER_THUMBNAILS[cert.provider] : cert.thumbnail;
 }
 
 // Full-size certificate images only load once their row has been opened; after that they
 // stay mounted so the collapse animation still shows the image.
-function CertificateAccordion({ items, openIndex, setOpenIndex, getThumbnailSrc: getSrc, sectionId = "", compact = false }) {
-  const [opened, setOpened] = useState(() => new Set());
-  const toggle = (index, isOpen) => {
-    if (!isOpen) setOpened((prev) => (prev.has(index) ? prev : new Set(prev).add(index)));
+interface CertificateAccordionProps {
+  items: Certificate[];
+  /** Index of the expanded row, or -1 when all are collapsed. */
+  openIndex: number;
+  setOpenIndex: (index: number) => void;
+  getThumbnailSrc?: (cert: Certificate) => string;
+  sectionId?: string;
+  compact?: boolean;
+}
+
+function CertificateAccordion({
+  items,
+  openIndex,
+  setOpenIndex,
+  getThumbnailSrc: getSrc,
+  sectionId = "",
+  compact = false,
+}: CertificateAccordionProps) {
+  const [opened, setOpened] = useState<ReadonlySet<number>>(() => new Set());
+  const toggle = (index: number, isOpen: boolean) => {
+    if (!isOpen) setOpened((prev) => (prev.has(index) ? prev : new Set([...prev, index])));
     setOpenIndex(isOpen ? -1 : index);
   };
 
@@ -113,8 +128,8 @@ function CertificateAccordion({ items, openIndex, setOpenIndex, getThumbnailSrc:
  * Diploma viewer on a native <dialog>: focus moves in and returns to the card that
  * opened it, Escape closes it, and the page behind is inert and doesn't scroll.
  */
-function DiplomaDialog({ diploma, onClose }) {
-  const dialogRef = useRef(null);
+function DiplomaDialog({ diploma, onClose }: { diploma: Certificate | null; onClose: () => void }) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -182,7 +197,7 @@ function DiplomaDialog({ diploma, onClose }) {
 }
 
 export default function CertificatesPage() {
-  const [diplomaModal, setDiplomaModal] = useState(null);
+  const [diplomaModal, setDiplomaModal] = useState<Certificate | null>(null);
   const [programsOpenIndex, setProgramsOpenIndex] = useState(-1);
   const [certificatesOpenIndex, setCertificatesOpenIndex] = useState(-1);
   const closeDiploma = useCallback(() => setDiplomaModal(null), []);

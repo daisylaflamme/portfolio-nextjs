@@ -1,17 +1,25 @@
 "use client";
 
 import Image from "next/image";
+import type { Project } from "@/data/types";
 import { projectImages, topicLabels } from "@/lib/projectDisplay";
 
 // The 250px files in /thumbnails look soft when stretched across a card, so cards use
 // the first full-size screenshot and fall back to the thumbnail only when there is none.
-const cardImage = (project) => projectImages(project)[0] || project.thumbnail;
+const cardImage = (project: Project): string => projectImages(project)[0] || project.thumbnail;
+
+interface ProjectCardProps {
+  project: Project;
+  onOpen: (project: Project) => void;
+  /** The large first card: wider layout and the page's LCP image (priority). */
+  featured?: boolean;
+}
 
 /**
  * Case-study card. The "View details" button opens the project dialog;
  * its accessible name includes the project title.
  */
-export default function ProjectCard({ project, onOpen, featured = false }) {
+export default function ProjectCard({ project, onOpen, featured = false }: ProjectCardProps) {
   const topics = topicLabels(project).join(" · ");
   const src = cardImage(project);
 
@@ -75,7 +83,7 @@ export default function ProjectCard({ project, onOpen, featured = false }) {
 }
 
 /** Compact row for "Earlier work". */
-export function ProjectRow({ project, onOpen }) {
+export function ProjectRow({ project, onOpen }: Omit<ProjectCardProps, "featured">) {
   return (
     <li className="border-t border-line first:border-t-0">
       <button

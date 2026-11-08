@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { projects } from "@/data/projects";
-import { getLanguageStats } from "@/lib/github";
+import type { Metadata } from "next";
+import type { Project } from "@/data/types";
+import { getLanguageStats, type LanguageStats } from "@/lib/github";
 import { CONTACT_LINKS } from "@/components/SiteFooter";
 import { PAGES } from "@/lib/seo";
 
 export const revalidate = 86400;
 
-export const metadata = {
+export const metadata: Metadata = {
   title: { absolute: PAGES.home.title },
   description: PAGES.home.description,
   alternates: { canonical: PAGES.home.path },
@@ -36,7 +38,7 @@ const WORK_AREAS = [
   },
 ];
 
-const SELECTED_CASES = [
+const SELECTED_CASES: ReadonlyArray<{ id: Project["id"]; note: string }> = [
   { id: "store-details-maps", note: "~80% lower annual mapping cost" },
   { id: "blueport-multisite-platform-ui", note: "20+ storefronts, one component set" },
   { id: "checkout-multi-payments", note: "Affirm, Acima, Progressive and more" },
@@ -52,7 +54,7 @@ function ArrowUpRight() {
   );
 }
 
-function LanguagesCard({ languages, isSample }) {
+function LanguagesCard({ languages, isSample }: LanguageStats) {
   const max = Math.max(...languages.map((l) => l.pct), 1);
   const summary = languages.map((l) => `${l.name} ${l.pct}%`).join(", ");
   return (
@@ -83,7 +85,10 @@ function LanguagesCard({ languages, isSample }) {
 export default async function Home() {
   const { languages, isSample } = await getLanguageStats();
   const byId = new Map(projects.map((p) => [p.id, p]));
-  const cases = SELECTED_CASES.map((c) => ({ ...c, project: byId.get(c.id) })).filter((c) => c.project);
+  const cases = SELECTED_CASES.flatMap((c) => {
+    const project = byId.get(c.id);
+    return project ? [{ ...c, project }] : [];
+  });
 
   return (
     <main className="flex-1">

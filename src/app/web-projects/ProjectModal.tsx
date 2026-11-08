@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode, type SyntheticEvent } from "react";
+import type { Project } from "@/data/types";
 import Image from "next/image";
 import { caseStudyContent, projectImages, stackLabels, topicLabels } from "@/lib/projectDisplay";
 import ImageLightbox, { CloseIcon } from "./ImageLightbox";
@@ -13,7 +14,7 @@ function ExpandIcon() {
   );
 }
 
-function ExternalLink({ href, children, primary = false }) {
+function ExternalLink({ href, children, primary = false }: { href: string; children: ReactNode; primary?: boolean }) {
   return (
     <a
       href={href}
@@ -31,7 +32,7 @@ function ExternalLink({ href, children, primary = false }) {
   );
 }
 
-function Gallery({ project }) {
+function Gallery({ project }: { project: Project }) {
   const images = projectImages(project);
   const [index, setIndex] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
@@ -41,10 +42,10 @@ function Gallery({ project }) {
 
   if (images.length === 0) return null;
   const current = images[Math.min(index, images.length - 1)];
-  const altFor = (i) =>
+  const altFor = (i: number): string =>
     i === 0 && project.imageAlt ? project.imageAlt : `${project.title}, screenshot ${i + 1} of ${images.length}`;
 
-  const handleLoad = (event) => {
+  const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
     const { naturalWidth, naturalHeight } = event.currentTarget;
     if (naturalWidth > 0) setTall(naturalHeight / naturalWidth > 1.2);
   };
@@ -106,10 +107,19 @@ function Gallery({ project }) {
  * Case-study dialog built on native <dialog>: focus is trapped and restored by the
  * browser, Escape closes it, and the backdrop is inert.
  */
-export default function ProjectModal({ project, onClose, prevProject, nextProject, onNavigate }) {
-  const dialogRef = useRef(null);
-  const scrollRef = useRef(null);
-  const titleRef = useRef(null);
+export interface ProjectModalProps {
+  /** The open case study, or null when the dialog is closed. */
+  project: Project | null;
+  onClose: () => void;
+  prevProject: Project | null;
+  nextProject: Project | null;
+  onNavigate: (project: Project) => void;
+}
+
+export default function ProjectModal({ project, onClose, prevProject, nextProject, onNavigate }: ProjectModalProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
   useEffect(() => {
@@ -142,31 +152,28 @@ export default function ProjectModal({ project, onClose, prevProject, nextProjec
     titleRef.current?.focus();
   }, [project]);
 
-  const go = (target) => {
+  const go = (target: Project) => {
     navigatedRef.current = true;
     onNavigate(target);
   };
 
-  const handleBackdropClick = (event) => {
-    if (event.target === dialogRef.current) dialogRef.current.close();
+  const handleBackdropClick = (event: MouseEvent<HTMLDialogElement>) => {
+    if (event.target === event.currentTarget) event.currentTarget.close();
   };
 
   const content = project ? caseStudyContent(project) : null;
   const topics = project ? topicLabels(project).join(" · ") : "";
   const stack = project ? stackLabels(project) : [];
-  const meta = project
+  const meta: Array<{ label: string; value: string }> = project
     ? [
-        project.role && { label: "Role", value: project.role },
-        project.team && { label: "Team", value: project.team },
-        project.dates && { label: "Dates", value: project.dates },
-        stack.length > 0 && { label: "Stack", value: stack.join(" · ") },
-      ].filter(Boolean)
+        { label: "Role", value: project.role ?? "" },
+        { label: "Team", value: project.team ?? "" },
+        { label: "Dates", value: project.dates ?? "" },
+        { label: "Stack", value: stack.join(" · ") },
+      ].filter((item) => item.value !== "")
     : [];
   const links = project
-    ? [
-        ...(project.link ? [{ label: "visit site", href: project.link }] : []),
-        ...(Array.isArray(project.extraLinks) ? project.extraLinks.map((l) => ({ label: l.label, href: l.href })) : []),
-      ]
+    ? [...(project.link ? [{ label: "visit site", href: project.link }] : []), ...(project.extraLinks ?? [])]
     : [];
 
   return (

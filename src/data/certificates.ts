@@ -1,4 +1,6 @@
-export const diplomas = [
+import type { Certificate } from "./types";
+
+export const diplomas: Certificate[] = [
     {
         thumbnail: "/images/certificates/thumbnails/harvarde.jpg",
         image: "/images/certificates/harvard-diploma.jpg",
@@ -19,7 +21,7 @@ export const diplomas = [
       },
 ]
 
-export const programs = [
+export const programs: Certificate[] = [
     {
         thumbnail: "/images/certificates/thumbnails/marketo.jpg",
         image: "/images/certificates/marketo.png",
@@ -34,7 +36,7 @@ export const programs = [
     },
 ]
 
-export const certificates = [
+export const certificates: Certificate[] = [
     {
       thumbnail: "",
       image: "/images/certificates/tailwind.jpg",

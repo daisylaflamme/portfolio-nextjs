@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, type FormEvent } from "react";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_MESSAGE_LENGTH = 10;
@@ -13,24 +13,28 @@ const labelClass = "block text-sm font-medium text-[var(--color-font-primary)] m
 const errorClass = "mt-1 text-sm text-red-600";
 const textareaClass = inputClass + " resize-y";
 
+type Field = "name" | "email" | "message";
+type FieldMessages = Partial<Record<Field, string>>;
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [honeypot, setHoneypot] = useState("");
-  const [errors, setErrors] = useState({});
-  const [touched, setTouched] = useState({});
-  const [status, setStatus] = useState("idle");
-  const [submitError, setSubmitError] = useState(null);
+  const [errors, setErrors] = useState<FieldMessages>({});
+  const [touched, setTouched] = useState<Partial<Record<Field, boolean>>>({});
+  const [status, setStatus] = useState<Status>("idle");
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const validateName = useCallback((val) => {
+  const validateName = useCallback((val: string): string | null => {
     const s = val.trim();
     if (!s) return "Name is required.";
     if (s.length > 100) return "Name must be under 100 characters.";
     return null;
   }, []);
 
-  const validateEmail = useCallback((val) => {
+  const validateEmail = useCallback((val: string): string | null => {
     const s = val.trim();
     if (!s) return "Email is required.";
     if (!EMAIL_REGEX.test(s)) return "Please enter a valid email address.";
@@ -38,7 +42,7 @@ export default function ContactForm() {
     return null;
   }, []);
 
-  const validateMessage = useCallback((val) => {
+  const validateMessage = useCallback((val: string): string | null => {
     const s = val.trim();
     if (!s) return "Message is required.";
     if (s.length < MIN_MESSAGE_LENGTH)
@@ -47,7 +51,7 @@ export default function ContactForm() {
     return null;
   }, []);
 
-  const handleBlur = (field) => () => {
+  const handleBlur = (field: Field) => () => {
     setTouched((prev) => ({ ...prev, [field]: true }));
     if (field === "name") setErrors((prev) => ({ ...prev, name: validateName(name) ?? "" }));
     if (field === "email") setErrors((prev) => ({ ...prev, email: validateEmail(email) ?? "" }));
@@ -55,7 +59,7 @@ export default function ContactForm() {
       setErrors((prev) => ({ ...prev, message: validateMessage(message) ?? "" }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError(null);
     setTouched({ name: true, email: true, message: true });
@@ -63,7 +67,7 @@ export default function ContactForm() {
     const nameErr = validateName(name);
     const emailErr = validateEmail(email);
     const messageErr = validateMessage(message);
-    const newErrors = {};
+    const newErrors: FieldMessages = {};
     if (nameErr) newErrors.name = nameErr;
     if (emailErr) newErrors.email = emailErr;
     if (messageErr) newErrors.message = messageErr;
@@ -88,7 +92,7 @@ export default function ContactForm() {
         }),
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as { error?: string };
 
       if (!res.ok) {
         setStatus("error");

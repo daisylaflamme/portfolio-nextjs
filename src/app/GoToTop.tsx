@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 
-function subscribeToScroll(onChange) {
+function subscribeToScroll(onChange: () => void): () => void {
   window.addEventListener("scroll", onChange, { passive: true });
   window.addEventListener("resize", onChange);
   return () => {

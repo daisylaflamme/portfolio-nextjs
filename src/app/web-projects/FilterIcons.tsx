@@ -1,6 +1,12 @@
 /** Outline icons for the Web Projects filter chips — no external icon package. */
 
-const iconProps = {
+import type { SVGProps } from "react";
+
+export interface IconProps {
+  className?: string;
+}
+
+const iconProps: SVGProps<SVGSVGElement> = {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   fill: "none",
@@ -12,7 +18,7 @@ const iconProps = {
   focusable: "false",
 };
 
-export function AngularIcon({ className }) {
+export function AngularIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="M12 2.5 3.5 5.5l1.3 11.2L12 21.5l7.2-4.8 1.3-11.2z" />
@@ -22,7 +28,7 @@ export function AngularIcon({ className }) {
   );
 }
 
-export function ReactIcon({ className }) {
+export function ReactIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} strokeWidth="1.5" className={className}>
       <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
@@ -33,7 +39,7 @@ export function ReactIcon({ className }) {
   );
 }
 
-export function ShoppingCartIcon({ className }) {
+export function ShoppingCartIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <circle cx="8" cy="21" r="1" />
@@ -43,7 +49,7 @@ export function ShoppingCartIcon({ className }) {
   );
 }
 
-export function CreditCardIcon({ className }) {
+export function CreditCardIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <rect width="20" height="14" x="2" y="5" rx="2" />
@@ -52,7 +58,7 @@ export function CreditCardIcon({ className }) {
   );
 }
 
-export function NetworkIcon({ className }) {
+export function NetworkIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <rect x="16" y="16" width="6" height="6" rx="1" />
@@ -64,7 +70,7 @@ export function NetworkIcon({ className }) {
   );
 }
 
-export function MapPinIcon({ className }) {
+export function MapPinIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
@@ -73,7 +79,7 @@ export function MapPinIcon({ className }) {
   );
 }
 
-export function BoxIcon({ className }) {
+export function BoxIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
@@ -83,7 +89,7 @@ export function BoxIcon({ className }) {
   );
 }
 
-export function AccessibilityIcon({ className }) {
+export function AccessibilityIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <circle cx="16" cy="4" r="1" />
@@ -95,7 +101,7 @@ export function AccessibilityIcon({ className }) {
   );
 }
 
-export function PaletteIcon({ className }) {
+export function PaletteIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
@@ -107,7 +113,7 @@ export function PaletteIcon({ className }) {
   );
 }
 
-export function CodeIcon({ className }) {
+export function CodeIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <polyline points="16 18 22 12 16 6" />
@@ -116,7 +122,7 @@ export function CodeIcon({ className }) {
   );
 }
 
-export function WordPressIcon({ className }) {
+export function WordPressIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <circle cx="12" cy="12" r="10" />
@@ -125,7 +131,7 @@ export function WordPressIcon({ className }) {
   );
 }
 
-export function PenToolIcon({ className }) {
+export function PenToolIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z" />
@@ -136,7 +142,7 @@ export function PenToolIcon({ className }) {
   );
 }
 
-export function SparklesIcon({ className }) {
+export function SparklesIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
@@ -146,7 +152,7 @@ export function SparklesIcon({ className }) {
   );
 }
 
-export function GraduationCapIcon({ className }) {
+export function GraduationCapIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
@@ -156,7 +162,7 @@ export function GraduationCapIcon({ className }) {
   );
 }
 
-export function StoreIcon({ className }) {
+export function StoreIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
@@ -168,7 +174,7 @@ export function StoreIcon({ className }) {
   );
 }
 
-export function EllipsisIcon({ className }) {
+export function EllipsisIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} strokeWidth="2.25" className={className}>
       <circle cx="5" cy="12" r="1" />
@@ -178,7 +184,7 @@ export function EllipsisIcon({ className }) {
   );
 }
 
-export function ChevronDownIcon({ className }) {
+export function ChevronDownIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="m6 9 6 6 6-6" />
@@ -186,7 +192,7 @@ export function ChevronDownIcon({ className }) {
   );
 }
 
-export function XIcon({ className }) {
+export function XIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} strokeWidth="2" className={className}>
       <path d="M18 6 6 18" />
@@ -195,7 +201,7 @@ export function XIcon({ className }) {
   );
 }
 
-export function CheckIcon({ className }) {
+export function CheckIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} strokeWidth="2" className={className}>
       <path d="M20 6 9 17l-5-5" />

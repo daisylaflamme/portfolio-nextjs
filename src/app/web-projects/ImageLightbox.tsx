@@ -1,6 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type MouseEvent,
+  type PointerEvent,
+  type SyntheticEvent,
+} from "react";
 
 export function CloseIcon() {
   return (
@@ -10,7 +18,7 @@ export function CloseIcon() {
   );
 }
 
-function Chevron({ dir }) {
+function Chevron({ dir }: { dir: "left" | "right" }) {
   return (
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d={dir === "left" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} />
@@ -26,10 +34,10 @@ const TALL_RATIO = 2;
  * One image in the lightbox. Keyed by src so scroll position and the
  * "tall" measurement reset when the image changes.
  */
-function LightboxImage({ src, alt }) {
+function LightboxImage({ src, alt }: { src: string; alt: string }) {
   const [tall, setTall] = useState(false);
 
-  const handleLoad = (event) => {
+  const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
     const { naturalWidth, naturalHeight } = event.currentTarget;
     if (naturalWidth > 0) setTall(naturalHeight / naturalWidth > TALL_RATIO);
   };
@@ -61,9 +69,18 @@ function LightboxImage({ src, alt }) {
  * Full-screen image viewer on a native <dialog>, stacked above the case-study dialog.
  * Escape closes only this layer; the browser returns focus to the button that opened it.
  */
-export default function ImageLightbox({ images, altFor, index, open, onClose, onIndexChange }) {
-  const dialogRef = useRef(null);
-  const pointerStart = useRef(null);
+export interface ImageLightboxProps {
+  images: string[];
+  altFor: (index: number) => string;
+  index: number;
+  open: boolean;
+  onClose: () => void;
+  onIndexChange: (index: number) => void;
+}
+
+export default function ImageLightbox({ images, altFor, index, open, onClose, onIndexChange }: ImageLightboxProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const pointerStart = useRef<{ x: number; y: number } | null>(null);
   const count = images.length;
 
   useEffect(() => {
@@ -80,10 +97,10 @@ export default function ImageLightbox({ images, altFor, index, open, onClose, on
     return () => dialog.removeEventListener("close", onClose);
   }, [onClose]);
 
-  const go = (step) => onIndexChange((index + step + count) % count);
+  const go = (step: number) => onIndexChange((index + step + count) % count);
   const close = () => dialogRef.current?.close();
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLDialogElement>) => {
     if (count < 2) return;
     if (event.key === "ArrowLeft") {
       event.preventDefault();
@@ -95,16 +112,16 @@ export default function ImageLightbox({ images, altFor, index, open, onClose, on
   };
 
   // Click on the dark area around the image closes the viewer.
-  const handleBackgroundClick = (event) => {
+  const handleBackgroundClick = (event: MouseEvent<HTMLElement>) => {
     if (event.target === event.currentTarget) close();
   };
 
   // Horizontal swipe on touch screens moves between images.
-  const handlePointerDown = (event) => {
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse") return;
     pointerStart.current = { x: event.clientX, y: event.clientY };
   };
-  const handlePointerUp = (event) => {
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
     const start = pointerStart.current;
     pointerStart.current = null;
     if (!start || count < 2) return;

@@ -1,6 +1,12 @@
 /** Outline icons for flower navigation — no external icon package. */
 
-const iconProps = {
+import type { SVGProps } from "react";
+
+export interface IconProps {
+  className?: string;
+}
+
+const iconProps: SVGProps<SVGSVGElement> = {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   fill: "none",
@@ -12,7 +18,7 @@ const iconProps = {
   focusable: "false",
 };
 
-export function LayoutGridIcon({ className }) {
+export function LayoutGridIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <rect width="7" height="7" x="3" y="3" rx="1" />
@@ -23,7 +29,7 @@ export function LayoutGridIcon({ className }) {
   );
 }
 
-export function FileTextIcon({ className }) {
+export function FileTextIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
@@ -35,7 +41,7 @@ export function FileTextIcon({ className }) {
   );
 }
 
-export function AwardIcon({ className }) {
+export function AwardIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <circle cx="12" cy="8" r="6" />
@@ -44,7 +50,7 @@ export function AwardIcon({ className }) {
   );
 }
 
-export function GithubIcon({ className }) {
+export function GithubIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +65,7 @@ export function GithubIcon({ className }) {
   );
 }
 
-export function LinkedInIcon({ className }) {
+export function LinkedInIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +80,7 @@ export function LinkedInIcon({ className }) {
   );
 }
 
-export function UserIcon({ className }) {
+export function UserIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
@@ -83,7 +89,7 @@ export function UserIcon({ className }) {
   );
 }
 
-export function UsersIcon({ className }) {
+export function UsersIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />

@@ -1,3 +1,5 @@
+import type { Project } from "./types";
+
 /**
  * Portfolio projects data.
  * Add new projects here. Place images in public/images/projects/
@@ -42,13 +44,13 @@
 //   },
 // ];
 
-// src/data/projects.js
+// src/data/projects.ts
 // Curated from http://daisylaflamme.net/ws2.html
 // Paths assume images are copied into:
 //   public/images/projects/thumbnails/
 //   public/images/projects/
 
-export const projects = [
+export const projects: Project[] = [
   // --- Modern e-commerce: American Signature / Levin / Lovesac / HUB ---
   {
     id: "blueport-multisite-platform-ui",
@@ -902,7 +904,7 @@ export const projects = [
  * Any project whose id is not listed here appears under "Earlier Web & UI Work",
  * in its order within `projects`.
  */
-export const featuredProjectIds = [
+export const featuredProjectIds: Project["id"][] = [
   "checkout-multi-payments",
   "store-details-maps",
   "blueport-multisite-platform-ui",

@@ -11,7 +11,31 @@ const GITHUB_LOGIN = "daisylaflamme";
 const REVALIDATE_SECONDS = 60 * 60 * 24;
 const TOP_N = 5;
 
-export const SAMPLE_LANGUAGES = [
+export interface LanguageShare {
+  name: string;
+  /** Whole-number percentage of bytes across repositories. */
+  pct: number;
+}
+
+export interface LanguageStats {
+  languages: LanguageShare[];
+  isSample: boolean;
+}
+
+/** The slice of the GraphQL response this module reads; every level may be missing. */
+interface LanguagesResponse {
+  data?: {
+    user?: {
+      repositories?: {
+        nodes?: Array<{
+          languages?: { edges?: Array<{ size?: number; node?: { name?: string } } | null> };
+        } | null>;
+      };
+    } | null;
+  };
+}
+
+export const SAMPLE_LANGUAGES: LanguageShare[] = [
   { name: "TypeScript", pct: 42 },
   { name: "JavaScript", pct: 28 },
   { name: "CSS", pct: 14 },
@@ -33,10 +57,7 @@ const QUERY = `
   }
 `;
 
-/**
- * @returns {Promise<{ languages: { name: string, pct: number }[], isSample: boolean }>}
- */
-export async function getLanguageStats() {
+export async function getLanguageStats(): Promise<LanguageStats> {
   const token = process.env.GITHUB_TOKEN;
   if (!token) return { languages: SAMPLE_LANGUAGES, isSample: true };
 
@@ -52,9 +73,9 @@ export async function getLanguageStats() {
     });
     if (!res.ok) throw new Error(`GitHub GraphQL ${res.status}`);
 
-    const json = await res.json();
+    const json = (await res.json()) as LanguagesResponse;
     const repos = json?.data?.user?.repositories?.nodes ?? [];
-    const totals = new Map();
+    const totals = new Map<string, number>();
     for (const repo of repos) {
       for (const edge of repo?.languages?.edges ?? []) {
         const name = edge?.node?.name;

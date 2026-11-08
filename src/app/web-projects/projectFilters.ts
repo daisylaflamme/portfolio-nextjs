@@ -1,4 +1,4 @@
-import { FileTextIcon, LayoutGridIcon } from "../FlowerIcons";
+import { FileTextIcon, LayoutGridIcon, type IconProps } from "../FlowerIcons";
 import {
   AccessibilityIcon,
   AngularIcon,
@@ -16,15 +16,26 @@ import {
   StoreIcon,
   WordPressIcon,
 } from "./FilterIcons";
+import type { ComponentType } from "react";
+import type { ProjectTag } from "@/data/types";
+import type { TagFilter } from "@/lib/projectSections";
 
-export const ALL_PROJECTS_FILTER = { label: "All Projects", Icon: LayoutGridIcon };
+export interface ProjectFilter extends TagFilter {
+  id: string;
+  label: string;
+  Icon: ComponentType<IconProps>;
+  /** "primary" renders in the visible row; "more" renders in the More menu. */
+  placement: "primary" | "more";
+  tags: readonly ProjectTag[];
+}
+
+export const ALL_PROJECTS_FILTER: Pick<ProjectFilter, "label" | "Icon"> = { label: "All Projects", Icon: LayoutGridIcon };
 
 /**
  * Filter chips for /web-projects, in display order.
- * A project matches a filter when it has any of the filter's `tags` (see `tags` in data/projects.js).
- * `placement: "primary"` renders in the visible row; `"more"` renders in the More menu.
+ * A project matches a filter when it has any of the filter's `tags` (see `tags` in data/projects.ts).
  */
-export const PROJECT_FILTERS = [
+export const PROJECT_FILTERS: ProjectFilter[] = [
   { id: "angular", label: "Angular", Icon: AngularIcon, tags: ["angular"], placement: "primary" },
   { id: "react", label: "React / Next.js", Icon: ReactIcon, tags: ["react", "nextjs"], placement: "primary" },
   { id: "ecommerce", label: "Ecommerce", Icon: ShoppingCartIcon, tags: ["ecommerce"], placement: "primary" },

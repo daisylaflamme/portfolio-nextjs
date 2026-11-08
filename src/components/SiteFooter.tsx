@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export const CONTACT_LINKS = {
+export const CONTACT_LINKS: Record<"email" | "linkedin" | "github", string> = {
   email: "mailto:laflammedaisy@gmail.com",
   linkedin: "https://www.linkedin.com/in/desislavalaflamme/",
   github: "https://github.com/daisylaflamme",

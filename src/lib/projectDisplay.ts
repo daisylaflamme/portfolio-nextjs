@@ -1,10 +1,12 @@
+import type { Project, ProjectTag } from "@/data/types";
+
 /**
- * Display helpers for project data (src/data/projects.js).
+ * Display helpers for project data (src/data/projects.ts).
  * Keeps the data file simple while giving cards and the case-study modal
  * readable labels and structure.
  */
 
-const TAG_LABELS = {
+const TAG_LABELS: Partial<Record<ProjectTag, string>> = {
   angular: "Angular",
   react: "React",
   nextjs: "Next.js",
@@ -13,7 +15,6 @@ const TAG_LABELS = {
   vite: "Vite",
   tailwind: "Tailwind",
   "shadcn-ui": "shadcn/ui",
-  "framer-motion": "Framer Motion",
   bootstrap: "Bootstrap",
   scss: "SCSS",
   css: "CSS",
@@ -37,13 +38,12 @@ const TAG_LABELS = {
   volunteer: "Volunteer",
   startup: "Startup",
   "small-business": "Small business",
-  "digital-publishing": "Digital publishing",
   publishing: "Publishing",
   pdf: "PDF",
 };
 
 /** Tags that describe the work (shown on cards), in priority order. */
-const TOPIC_TAGS = [
+const TOPIC_TAGS: ProjectTag[] = [
   "payments",
   "accessibility",
   "ai",
@@ -62,7 +62,7 @@ const TOPIC_TAGS = [
 ];
 
 /** Tags that describe the stack (shown in the modal), in priority order. */
-const STACK_TAGS = [
+const STACK_TAGS: ProjectTag[] = [
   "angular",
   "react",
   "nextjs",
@@ -71,7 +71,6 @@ const STACK_TAGS = [
   "vite",
   "tailwind",
   "shadcn-ui",
-  "framer-motion",
   "supabase",
   "stripe",
   "runway-api",
@@ -82,13 +81,13 @@ const STACK_TAGS = [
   "html",
 ];
 
-export function tagLabel(tag) {
+export function tagLabel(tag: ProjectTag): string {
   return TAG_LABELS[tag] ?? tag.replace(/-/g, " ");
 }
 
 /** Up to `max` short topic labels for a card eyebrow, e.g. "Payments · E-commerce". */
-export function topicLabels(project, max = 3) {
-  const tags = project.tags ?? [];
+export function topicLabels(project: Pick<Project, "tags">, max = 3): string[] {
+  const { tags } = project;
   const topics = TOPIC_TAGS.filter((tag) => tags.includes(tag)).map(tagLabel);
   if (topics.length < max) {
     const framework = STACK_TAGS.find((tag) => tags.includes(tag));
@@ -98,15 +97,14 @@ export function topicLabels(project, max = 3) {
 }
 
 /** Stack labels for the modal meta row. Uses `project.stack` when present. */
-export function stackLabels(project) {
-  if (Array.isArray(project.stack) && project.stack.length > 0) return project.stack;
-  const tags = project.tags ?? [];
+export function stackLabels(project: Pick<Project, "stack" | "tags">): string[] {
+  if (project.stack && project.stack.length > 0) return project.stack;
+  const { tags } = project;
   return STACK_TAGS.filter((tag) => tags.includes(tag)).map(tagLabel).slice(0, 6);
 }
 
-export function projectImages(project) {
-  if (Array.isArray(project.images) && project.images.length > 0) return project.images;
-  if (project.image) return [project.image];
+export function projectImages(project: Pick<Project, "images" | "thumbnail">): string[] {
+  if (project.images.length > 0) return project.images;
   if (project.thumbnail) return [project.thumbnail];
   return [];
 }
@@ -115,12 +113,10 @@ const NO_BREAK_BEFORE = /(?:\b(?:e\.g|i\.e|vs|etc|approx|Inc|Co)\.|\b[A-Z]\.)$/;
 
 /**
  * Split prose into sentences without breaking on "e.g.", "vs.", initials or decimals.
- * @param {string} text
- * @returns {string[]}
  */
-export function splitSentences(text) {
+export function splitSentences(text: string): string[] {
   if (!text) return [];
-  const parts = [];
+  const parts: string[] = [];
   let buffer = "";
   const chunks = text.split(/(?<=[.!?])\s+/);
   for (const chunk of chunks) {
@@ -136,25 +132,32 @@ export function splitSentences(text) {
 
 /**
  * Structured case-study content for the modal.
- * Prefers explicit fields (problem, whatIBuilt, impact, teamContribution);
+ * Prefers the explicit fields (problem, whatIBuilt, impact, teamContribution);
  * otherwise breaks the long description into a short overview + scannable highlights.
  */
-export function caseStudyContent(project) {
-  const built = project.whatIBuilt ?? project.built;
-  const hasStructured = Boolean(project.problem || (Array.isArray(built) && built.length));
+export interface CaseStudyContent {
+  overview: string;
+  overviewHeading: string;
+  highlights: string[];
+  highlightsHeading: string;
+  team: string;
+  impact: string[];
+}
 
-  if (hasStructured) {
+export function caseStudyContent(project: Project): CaseStudyContent {
+  const built = project.whatIBuilt ?? [];
+  if (project.problem || built.length > 0) {
     return {
       overview: project.problem ?? "",
       overviewHeading: "The problem",
-      highlights: Array.isArray(built) ? built : [],
+      highlights: built,
       highlightsHeading: "What I built",
       team: project.teamContribution ?? "",
-      impact: Array.isArray(project.impact) ? project.impact : [],
+      impact: project.impact ?? [],
     };
   }
 
-  const sentences = splitSentences(project.description ?? "");
+  const sentences = splitSentences(project.description);
   const [first = "", ...rest] = sentences;
   return {
     overview: first,
@@ -162,6 +165,6 @@ export function caseStudyContent(project) {
     highlights: rest,
     highlightsHeading: "Highlights",
     team: "",
-    impact: Array.isArray(project.impact) ? project.impact : [],
+    impact: project.impact ?? [],
   };
 }

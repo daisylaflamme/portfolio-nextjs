@@ -2,7 +2,7 @@
  * Display overrides for known company/role slugs.
  * Add new entries here when a slug needs custom capitalization or punctuation.
  */
-export const companyLabels = {
+export const companyLabels: Record<string, string> = {
   "vertex-pharmaceuticals": "Vertex Pharmaceuticals",
   "unitedhealth-group": "UnitedHealth Group",
   "united-health-group": "United Health Group",
@@ -10,7 +10,7 @@ export const companyLabels = {
   "centerwell-home-health": "Centerwell Home Health",
 };
 
-export const roleLabels = {
+export const roleLabels: Record<string, string> = {
   "principal-engineer-vaida-user-experience":
     "Principal Engineer, VaiDA User Experience",
   "senior-frontend-engineer": "Senior Frontend Engineer",
@@ -19,7 +19,7 @@ export const roleLabels = {
 };
 
 /** Word-level overrides applied during title-case fallback. */
-const wordOverrides = {
+const wordOverrides: Record<string, string> = {
   ui: "UI",
   ux: "UX",
   ai: "AI",
@@ -28,12 +28,10 @@ const wordOverrides = {
   typescript: "TypeScript",
 };
 
-/**
- * Decode, normalize separators, and title-case a URL slug.
- * @param {string | null | undefined} value
- * @returns {string}
- */
-function slugToTitleCase(value) {
+type Slug = string | null | undefined;
+
+/** Decode, normalize separators, and title-case a URL slug. */
+function slugToTitleCase(value: Slug): string {
   if (value == null || value === "") return "";
 
   let decoded = String(value);
@@ -57,11 +55,7 @@ function slugToTitleCase(value) {
     .join(" ");
 }
 
-/**
- * @param {string | null | undefined} slug
- * @returns {string}
- */
-export function formatCompanyName(slug) {
+export function formatCompanyName(slug: Slug): string {
   if (slug == null || slug === "") return "";
 
   let normalized = String(slug);
@@ -77,11 +71,7 @@ export function formatCompanyName(slug) {
   return slugToTitleCase(normalized);
 }
 
-/**
- * @param {string | null | undefined} slug
- * @returns {string}
- */
-export function formatRoleName(slug) {
+export function formatRoleName(slug: Slug): string {
   if (slug == null || slug === "") return "";
 
   let normalized = String(slug);
@@ -97,21 +87,13 @@ export function formatRoleName(slug) {
   return slugToTitleCase(normalized);
 }
 
-/**
- * @param {string | null | undefined} companySlug
- * @returns {string}
- */
-export function formatWelcomeMessage(companySlug) {
+export function formatWelcomeMessage(companySlug: Slug): string {
   const companyName = formatCompanyName(companySlug);
   if (!companyName) return "";
   return `Welcome, ${companyName} Team`;
 }
 
-/**
- * @param {string | null | undefined} roleSlug
- * @returns {string}
- */
-export function formatRoleSubtitle(roleSlug) {
+export function formatRoleSubtitle(roleSlug: Slug): string {
   const roleName = formatRoleName(roleSlug);
   if (!roleName) return "";
   return `${roleName} Portfolio`;
@@ -119,15 +101,13 @@ export function formatRoleSubtitle(roleSlug) {
 
 const PERSONALIZATION_STORAGE_KEY = "portfolio-personalization";
 
-/**
- * @typedef {{ company: string, role: string }} PersonalizationSlugs
- */
+export interface PersonalizationSlugs {
+  company: string;
+  role: string;
+}
 
-/**
- * Persist home-page company/role slugs for the browser tab session.
- * @param {{ company?: string | null, role?: string | null }} slugs
- */
-export function savePersonalizationSlugs(slugs) {
+/** Persist home-page company/role slugs for the browser tab session. */
+export function savePersonalizationSlugs(slugs: { company?: Slug; role?: Slug }): void {
   if (typeof window === "undefined") return;
 
   const company = slugs.company?.trim() || "";
@@ -146,19 +126,18 @@ export function savePersonalizationSlugs(slugs) {
   }
 }
 
-/**
- * @returns {PersonalizationSlugs}
- */
-export function readPersonalizationSlugs() {
+export function readPersonalizationSlugs(): PersonalizationSlugs {
   if (typeof window === "undefined") return { company: "", role: "" };
 
   try {
     const raw = sessionStorage.getItem(PERSONALIZATION_STORAGE_KEY);
     if (!raw) return { company: "", role: "" };
-    const parsed = JSON.parse(raw);
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== "object" || parsed === null) return { company: "", role: "" };
+    const { company, role } = parsed as Partial<Record<"company" | "role", unknown>>;
     return {
-      company: typeof parsed?.company === "string" ? parsed.company : "",
-      role: typeof parsed?.role === "string" ? parsed.role : "",
+      company: typeof company === "string" ? company : "",
+      role: typeof role === "string" ? role : "",
     };
   } catch {
     return { company: "", role: "" };

@@ -1,7 +1,7 @@
 // npm run images:projects
-// Converts PNG/JPG referenced by src/data/projects.js to WebP (max 1600px wide),
+// Converts PNG/JPG referenced by src/data/projects.ts to WebP (max 1600px wide),
 // moves every PNG/JPG out of public/ into assets/originals/ (not part of the build),
-// and rewrites the paths in projects.js. Safe to re-run: only PNG/JPG still in
+// and rewrites the paths in projects.ts. Safe to re-run: only PNG/JPG still in
 // public/images/projects are touched.
 const fs = require("fs");
 const path = require("path");
@@ -11,7 +11,7 @@ const sharp = require(require.resolve("sharp", { paths: [root] }));
 const MAX_WIDTH = 1600; // modal shows ~976 CSS px; lightbox shows the file 1:1 up to this
 const QUALITY = 85; // UI screenshots with small text need a bit more than the usual 75-80
 
-const dataFile = path.join(root, "src/data/projects.js");
+const dataFile = path.join(root, "src/data/projects.ts");
 let data = fs.readFileSync(dataFile, "utf8");
 const refs = new Set([...data.matchAll(/"(\/images\/projects\/[^"]+\.(?:png|jpe?g))"/gi)].map((m) => m[1]));
 

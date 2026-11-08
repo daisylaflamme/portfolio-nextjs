@@ -3,13 +3,14 @@
 import { Suspense, useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { projects, featuredProjectIds } from "@/data/projects";
+import type { Project } from "@/data/types";
 import { groupProjects } from "@/lib/projectSections";
 import ProjectCard, { ProjectRow } from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
 import FilterChips from "./FilterChips";
 import { PROJECT_FILTERS } from "./projectFilters";
 
-const CATEGORIES = [
+const CATEGORIES: ReadonlyArray<{ label: string; current?: boolean }> = [
   { label: "Web engineering", current: true },
   { label: "Dashboards" },
   { label: "Marketing and design" },
@@ -21,7 +22,7 @@ const PROJECT_PARAM = "project";
 // The open case study lives in the URL (?project=<id>), so deep links and reloads work.
 // Next.js syncs useSearchParams with history.replaceState; pass null (not the current
 // history.state, which Next marks as its own) so the update isn't skipped.
-function setProjectParam(id) {
+function setProjectParam(id: string | null) {
   const url = new URL(window.location.href);
   if (id) url.searchParams.set(PROJECT_PARAM, id);
   else url.searchParams.delete(PROJECT_PARAM);
@@ -29,7 +30,14 @@ function setProjectParam(id) {
 }
 
 // Reads ?project= — kept in its own Suspense boundary so the rest of the page still prerenders.
-function CaseStudyFromUrl({ visible, onOpen, onClose }) {
+interface CaseStudyFromUrlProps {
+  /** Projects on screen, in order, for prev/next. */
+  visible: Project[];
+  onOpen: (project: Project) => void;
+  onClose: () => void;
+}
+
+function CaseStudyFromUrl({ visible, onOpen, onClose }: CaseStudyFromUrlProps) {
   const id = useSearchParams().get(PROJECT_PARAM);
   const selectedProject = (id && projects.find((p) => p.id === id)) || null;
 
@@ -51,7 +59,7 @@ function CaseStudyFromUrl({ visible, onOpen, onClose }) {
 }
 
 export default function WorkPage() {
-  const [selectedFilters, setSelectedFilters] = useState(() => new Set());
+  const [selectedFilters, setSelectedFilters] = useState<ReadonlySet<string>>(() => new Set());
 
   const { featured, earlier } = useMemo(() => {
     const active = PROJECT_FILTERS.filter((f) => selectedFilters.has(f.id));
@@ -62,10 +70,10 @@ export default function WorkPage() {
   const visible = useMemo(() => [...featured, ...earlier], [featured, earlier]);
   const resultCount = visible.length;
 
-  const openProject = useCallback((project) => setProjectParam(project.id), []);
+  const openProject = useCallback((project: Project) => setProjectParam(project.id), []);
   const closeProject = useCallback(() => setProjectParam(null), []);
 
-  const toggleFilter = (id) => {
+  const toggleFilter = (id: string) => {
     setSelectedFilters((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
