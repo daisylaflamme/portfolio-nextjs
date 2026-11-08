@@ -156,7 +156,7 @@ test.describe("dashboards", () => {
 });
 
 test.describe("presentations", () => {
-  test("only the three decks, each with a cover and a link or PDF, no SlideShare iframes", async ({ page }) => {
+  test("only the chosen decks, each with a cover and a link or PDF, no SlideShare iframes", async ({ page }) => {
     const embeds = trackThirdPartyEmbeds(page);
     await page.goto(path("presentations"));
     await expect(page.locator("iframe")).toHaveCount(0);
@@ -164,6 +164,8 @@ test.describe("presentations", () => {
       "JavaScript Learning Platform",
       "Human Computer Interaction Project",
       "Retail KPI Dashboard",
+      "Smart TV and API Integration",
+      "JQSA Website Plan",
     ]);
 
     if (shownPresentations.length === 0) {

@@ -28,6 +28,6 @@ Left out on purpose: g18 ("Necked Women"), 2–5 and g25, g28 (photography), a8.
 
 **`presentations/`**: a cover per deck (the title slide, saved as PNG or JPG) and, optionally, a PDF:
 
-    javascript-learning-platform   hci-project   retail-kpi-dashboard
+    javascript-learning-platform   hci-project   retail-kpi-dashboard   smart-tv-apis   jqsa-website-plan
 
 The **Download PDF** button appears once `<name>.pdf` is in this folder.

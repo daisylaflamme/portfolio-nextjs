@@ -59,7 +59,7 @@ export const PAGES: Record<PageKey, PageInfo> = {
     path: "/work/presentations",
     title: "Presentations",
     description:
-      "Presentations by Daisy Laflamme: a JavaScript learning platform for women, a usability study and redesign, and a retail KPI dashboard.",
+      "Presentations by Daisy Laflamme: a JavaScript learning platform for women, a usability study and redesign, a retail KPI dashboard, Smart TV app research and a website plan.",
     priority: 0.6,
   },
   about: {

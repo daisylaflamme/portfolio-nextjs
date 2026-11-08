@@ -15,7 +15,7 @@ export default function PresentationsPage() {
     <main className="flex-1">
       <WorkHeader
         current="presentations"
-        intro="Research and proposal decks on learning platforms, usability and retail analytics."
+        intro="Research and proposal decks on learning platforms, usability, retail analytics, Smart TV apps and website planning."
       />
 
       {items.length === 0 ? <EmptyArchive /> : null}

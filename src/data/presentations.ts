@@ -49,4 +49,28 @@ export const presentations: WorkItem[] = [
     link: { label: "View slides", href: "https://www.slideshare.net/slideshow/dashboard-18693099/18693099" },
     pdf: `${dir}/retail-kpi-dashboard.pdf`,
   },
+  {
+    id: "smart-tv-apis",
+    title: "Smart TV and API Integration",
+    summary:
+      "Research on building Smart TV apps: Samsung’s HTML and JavaScript app platform, its device APIs and SDK, and how TV apps connect with phones and tablets.",
+    year: 2013,
+    images: [`${dir}/smart-tv-apis.webp`],
+    imageAlt: "Title slide of the Smart TV and APIs Integration presentation",
+    tags: ["javascript"],
+    link: { label: "View slides", href: "https://www.slideshare.net/slideshow/smart-tv-and-apis/18796485" },
+    pdf: `${dir}/smart-tv-apis.pdf`,
+  },
+  {
+    id: "jqsa-website-plan",
+    title: "JQSA Website Plan",
+    summary:
+      "Team plan for the JQSA website: site map, page structure, theme and layout, and a WordPress build with PayPal donations, slideshows and social links.",
+    year: 2013,
+    images: [`${dir}/jqsa-website-plan.webp`],
+    imageAlt: "Title slide of the JQSA Web Site Plan presentation by Johnie Orchanian, Daisy Laflamme and Runcong Chen",
+    tags: ["education", "nonprofit"],
+    link: { label: "View slides", href: "https://www.slideshare.net/slideshow/jqsa-website-plan/18796429" },
+    pdf: `${dir}/jqsa-website-plan.pdf`,
+  },
 ];
