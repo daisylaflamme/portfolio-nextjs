@@ -38,7 +38,7 @@ function LanguagesCard({ languages, isSample }: LanguageStats) {
   return (
     <figure className="m-0 flex flex-col gap-5 rounded-2xl border border-line bg-surface p-5 sm:p-6">
       <figcaption className="font-mono text-sm text-muted">
-        {"// languages across my GitHub repos"}
+        {"// languages in my recent GitHub repos"}
         {isSample ? " (sample)" : ""}
       </figcaption>
       <p className="sr-only">Languages by share of code: {summary}.</p>

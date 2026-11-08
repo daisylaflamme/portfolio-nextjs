@@ -37,9 +37,11 @@ npm run dev                        # http://localhost:3000
 | `npm run start` | Serve the production build |
 | `npm run lint` | ESLint 9 (flat config: `eslint.config.mjs`) |
 | `npm run typecheck` | Generates Next's route types, then `tsc --noEmit` |
+| `npm run test:unit` | Unit tests (Node's built-in test runner, `src/**/*.test.ts`) |
 | `npm run test:e2e` | Playwright tests against the production build |
 | `npm run images:projects` | Converts new project screenshots to WebP (see "Images") |
 | `npm run images:archive` | Converts archive images to WebP and lists any that are missing (see "Images") |
+| `npm run github:check` | Tests `GITHUB_TOKEN` against the home page query and prints the result (see "GitHub token") |
 
 ## Architecture
 
@@ -71,7 +73,7 @@ src/
     ├── archive.ts            Hides archive items whose images aren't in public/ yet
     ├── projectDisplay.ts     Labels, stack, case-study sections from a Project
     ├── projectSections.ts    Featured / earlier grouping and tag filtering
-    ├── github.ts             GitHub GraphQL language stats (sample data without a token)
+    ├── github.ts             GitHub GraphQL language stats, typed, with fallback (github.test.ts)
     ├── personalization.ts    ?company= / ?role= slugs for résumé links
     └── theme.ts              Inline script that applies the saved theme before first paint
 e2e/                          Playwright specs
@@ -97,6 +99,8 @@ Images are WebP, at most 1600px wide, and originals are moved to the git-ignored
 
 ## Testing
 
+Unit tests run directly in Node 24 (TypeScript type stripping), with no extra test framework: `npm run test:unit`. `src/lib/github.test.ts` covers the GitHub query with a mocked `fetch`: aggregation, the recent-repo cutoff, and every failure path (bad token, rate limits, GraphQL errors, unknown user, network and timeout).
+
 The Playwright tests run against the production build, in Chromium, at 390px and 1280px wide:
 
 ```bash
@@ -119,7 +123,7 @@ Expected titles, ids and counts are read from `src/lib/seo.ts` and `src/data`, s
 
 ## Continuous integration
 
-`.github/workflows/ci.yml` runs on every pull request (and on demand): `npm ci`, lint, typecheck, build, then the Playwright tests. Browsers are cached between runs. When a run fails, the HTML report and traces are uploaded as the `playwright-report` artifact.
+`.github/workflows/ci.yml` runs on every pull request (and on demand): `npm ci`, lint, typecheck, unit tests, build, then the Playwright tests. Browsers are cached between runs. When a run fails, the HTML report and traces are uploaded as the `playwright-report` artifact.
 
 ## Environment
 
@@ -128,6 +132,19 @@ Expected titles, ids and counts are read from `src/lib/seo.ts` and `src/data`, s
 | `RESEND_API_KEY` | Contact form, résumé-visit email | Server only |
 | `CONTACT_TO_EMAIL` | Same | Inbox that receives messages |
 | `CONTACT_FROM_EMAIL` | Same | A sender verified in Resend, or `onboarding@resend.dev` for testing |
-| `GITHUB_TOKEN` | Home page language chart | Optional. Without it the chart shows labelled sample data |
+| `GITHUB_TOKEN` | Home page language chart | Optional. A fine-grained, read-only token (below). Without it, or if GitHub fails, the chart shows labelled sample data and the reason is logged |
 
 Copy `.env.local.example` to `.env.local` for local use (it's git-ignored). On Vercel, set these under Project → Settings → Environment Variables. `CONTACT_SETUP.md` walks through the Resend setup.
+
+### GitHub token
+
+The home page sums language bytes across my public, non-fork repositories pushed in the last three years (`RECENT_YEARS` in `src/lib/github.ts`), with one GraphQL request. The page is regenerated at most once a day (ISR), so the token is used about once a day.
+
+1. GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → **Generate new token**.
+2. Name it `portfolio-nextjs (Vercel)`, set **Resource owner** to your account and pick an expiration (set a reminder to rotate it).
+3. **Repository access: Public repositories (read-only)**. Leave every permission at **No access**.
+4. Generate and copy the token (it starts with `github_pat_`).
+5. Locally: put `GITHUB_TOKEN=github_pat_…` in `.env.local` and run `npm run github:check`.
+6. Vercel: Project → Settings → Environment Variables → add `GITHUB_TOKEN`, mark it **Sensitive**, select **Production** and **Preview**, save, then redeploy (new variables only apply to new deployments).
+
+If the token expires or is revoked, the chart switches back to sample data and the Vercel function logs show `[github] GitHub GraphQL HTTP 401 …`.
