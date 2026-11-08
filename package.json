@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
-    "images:projects": "node scripts/convert-project-images.cjs"
+    "images:projects": "node scripts/convert-project-images.cjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
@@ -21,6 +22,8 @@
     "sharp": "^0.33.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "25.5.0",
     "@types/react": "^19.3.0",
