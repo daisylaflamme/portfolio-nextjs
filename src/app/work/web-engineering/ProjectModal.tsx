@@ -32,12 +32,40 @@ function ExternalLink({ href, children, primary = false }: { href: string; child
   );
 }
 
+/**
+ * How a screenshot sits in the gallery frame:
+ * - contain: the whole image, scaled to fit
+ * - top: full-page screenshots, cropped to their top instead of shrunk to a sliver
+ * - native: screenshots narrower than the frame, shown no wider than their own pixel
+ *   width so a small source isn't blown up into a blur (tall ones still crop to the top)
+ */
+type Fit = { kind: "contain" } | { kind: "top" } | { kind: "native"; width: number; tall: boolean };
+
+/**
+ * The file's real pixel size. `naturalWidth` on a srcset image is divided by the chosen
+ * candidate's density (an 804px file can report 383), so read it from a plain copy,
+ * which comes straight from the cache.
+ */
+async function pixelSize(img: HTMLImageElement): Promise<{ width: number; height: number }> {
+  const probe = new window.Image();
+  probe.src = img.currentSrc || img.src;
+  await probe.decode();
+  return { width: probe.naturalWidth, height: probe.naturalHeight };
+}
+
+function fitFor(width: number, height: number, frame: { width: number; height: number }): Fit {
+  const tall = height / width > 1.2;
+  // Crop to the top only when there's more image than frame; a short one is shown whole.
+  if (width < frame.width * 0.9) return { kind: "native", width, tall: tall && height > frame.height };
+  return tall ? { kind: "top" } : { kind: "contain" };
+}
+
 function Gallery({ project }: { project: Project }) {
   const images = projectImages(project);
   const [index, setIndex] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
-  // Full-page screenshots get cropped to their top instead of shrunk to a sliver.
-  const [tall, setTall] = useState(false);
+  // Measured per image, so switching screenshots never applies the previous one's fit.
+  const [fits, setFits] = useState<Record<string, Fit>>({});
   const closeViewer = useCallback(() => setViewerOpen(false), []);
 
   if (images.length === 0) return null;
@@ -46,9 +74,17 @@ function Gallery({ project }: { project: Project }) {
     project.imageAlts?.[i] ??
     (i === 0 && project.imageAlt ? project.imageAlt : `${project.title}, screenshot ${i + 1} of ${images.length}`);
 
+  const fit: Fit = fits[current] ?? { kind: "contain" };
+
   const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
-    const { naturalWidth, naturalHeight } = event.currentTarget;
-    if (naturalWidth > 0) setTall(naturalHeight / naturalWidth > 1.2);
+    const img = event.currentTarget;
+    const src = current;
+    const frame = { width: img.clientWidth, height: img.clientHeight };
+    pixelSize(img)
+      .then(({ width, height }) => {
+        if (width > 0) setFits((prev) => ({ ...prev, [src]: fitFor(width, height, frame) }));
+      })
+      .catch(() => {});
   };
 
   return (
@@ -67,7 +103,12 @@ function Gallery({ project }: { project: Project }) {
           quality={90}
           sizes="(min-width: 1088px) 976px, (min-width: 768px) 90vw, 100vw"
           onLoad={handleLoad}
-          className={tall ? "object-cover object-top" : "object-contain"}
+          className={fit.kind === "top" || (fit.kind === "native" && fit.tall) ? "object-cover object-top" : "object-contain"}
+          style={
+            fit.kind === "native"
+              ? { width: `${fit.width}px`, maxWidth: "100%", left: "50%", right: "auto", transform: "translateX(-50%)" }
+              : undefined
+          }
         />
         <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[13px] text-white transition-opacity [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-visible:opacity-100">
           <ExpandIcon /> view full size

@@ -412,8 +412,8 @@ export const projects: Project[] = [
     impact: ["Shipped on a tight timeline with minimal iteration","Consistent behavior across storefronts"],
     thumbnail: "/images/projects/thumbnails/plp-asi.webp",
     images: [
-      "/images/projects/product-card-design.webp",
       "/images/projects/plp-asi.webp",
+      "/images/projects/product-card-design.webp"
     ],
     imageAlt:
       "Product listing page showing a redesigned product card layout with imagery, pricing, badges, and swatches, implemented responsively across devices.",
