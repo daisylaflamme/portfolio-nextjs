@@ -44,7 +44,7 @@ export default function ContactPage() {
               <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-petal-bg)] border border-[var(--color-petal-border)] text-[var(--color-font-secondary)] shrink-0">
                 <img src="/icons/contact-location.svg" alt="" width={22} height={22} className="shrink-0" />
               </span>
-              <span>Boston, MA | Remote</span>
+              <span>Braintree, MA | Remote</span>
             </li>
             <li>
               <a

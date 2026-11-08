@@ -1,7 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { topicLabels } from "@/lib/projectDisplay";
+import { projectImages, topicLabels } from "@/lib/projectDisplay";
+
+// The 250px files in /thumbnails look soft when stretched across a card, so cards use
+// the first full-size screenshot and fall back to the thumbnail only when there is none.
+const cardImage = (project) => projectImages(project)[0] || project.thumbnail;
 
 /**
  * Case-study card. The "View details" button opens the project dialog;
@@ -9,18 +13,19 @@ import { topicLabels } from "@/lib/projectDisplay";
  */
 export default function ProjectCard({ project, onOpen, featured = false }) {
   const topics = topicLabels(project).join(" · ");
+  const src = cardImage(project);
 
   if (featured) {
     return (
       <article className="overflow-hidden rounded-3xl border border-line bg-surface md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         <div className="relative aspect-[16/10] bg-img md:aspect-auto md:min-h-80">
           <Image
-            src={project.thumbnail}
+            src={src}
             alt={project.imageAlt || ""}
             fill
             priority
             sizes="(min-width: 1152px) 600px, (min-width: 768px) 52vw, 100vw"
-            className="object-cover"
+            className="object-cover object-top"
           />
         </div>
         <div className="flex flex-col gap-4 p-6 sm:p-8">
@@ -46,11 +51,11 @@ export default function ProjectCard({ project, onOpen, featured = false }) {
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface">
       <div className="relative aspect-[16/10] bg-img">
         <Image
-          src={project.thumbnail}
+          src={src}
           alt={project.imageAlt || ""}
           fill
           sizes="(min-width: 1152px) 360px, (min-width: 640px) 50vw, 100vw"
-          className="object-cover"
+          className="object-cover object-top"
         />
       </div>
       <div className="flex flex-1 flex-col gap-2.5 p-5 sm:p-6">

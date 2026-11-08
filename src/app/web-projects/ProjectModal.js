@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { caseStudyContent, projectImages, stackLabels, topicLabels } from "@/lib/projectDisplay";
+import ImageLightbox, { CloseIcon } from "./ImageLightbox";
 
-function CloseIcon() {
+function ExpandIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-      <path d="M6 6l12 12M18 6L6 18" />
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7" />
     </svg>
   );
 }
@@ -33,26 +34,56 @@ function ExternalLink({ href, children, primary = false }) {
 function Gallery({ project }) {
   const images = projectImages(project);
   const [index, setIndex] = useState(0);
+  const [viewerOpen, setViewerOpen] = useState(false);
+  // Full-page screenshots get cropped to their top instead of shrunk to a sliver.
+  const [tall, setTall] = useState(false);
+  const closeViewer = useCallback(() => setViewerOpen(false), []);
 
-  useEffect(() => setIndex(0), [project.id]);
+  useEffect(() => {
+    setIndex(0);
+    setViewerOpen(false);
+  }, [project.id]);
 
   if (images.length === 0) return null;
   const current = images[Math.min(index, images.length - 1)];
   const altFor = (i) =>
     i === 0 && project.imageAlt ? project.imageAlt : `${project.title}, screenshot ${i + 1} of ${images.length}`;
 
+  const handleLoad = (event) => {
+    const { naturalWidth, naturalHeight } = event.currentTarget;
+    if (naturalWidth > 0) setTall(naturalHeight / naturalWidth > 1.2);
+  };
+
   return (
     <div className="flex flex-col gap-3">
-      <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-line bg-img">
+      <button
+        type="button"
+        onClick={() => setViewerOpen(true)}
+        aria-label={`View full size: ${altFor(index)}`}
+        className="group relative block aspect-[16/10] max-h-[min(62dvh,600px)] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-line bg-img"
+      >
         <Image
           key={current}
           src={current}
-          alt={altFor(index)}
+          alt=""
           fill
-          sizes="(min-width: 1024px) 420px, (min-width: 768px) 40vw, 100vw"
-          className="object-contain"
+          quality={90}
+          sizes="(min-width: 1088px) 976px, (min-width: 768px) 90vw, 100vw"
+          onLoad={handleLoad}
+          className={tall ? "object-cover object-top" : "object-contain"}
         />
-      </div>
+        <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[13px] text-white transition-opacity [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-visible:opacity-100">
+          <ExpandIcon /> view full size
+        </span>
+      </button>
+      <ImageLightbox
+        images={images}
+        altFor={altFor}
+        index={index}
+        open={viewerOpen}
+        onClose={closeViewer}
+        onIndexChange={setIndex}
+      />
       {images.length > 1 ? (
         <ul className="flex gap-2 overflow-x-auto pb-1" aria-label="Screenshots">
           {images.map((src, i) => (
@@ -66,7 +97,7 @@ function Gallery({ project }) {
                   i === index ? "border-accent" : "border-transparent hover:border-field"
                 }`}
               >
-                <Image src={src} alt="" fill sizes="80px" className="object-cover" />
+                <Image src={src} alt="" fill sizes="160px" className="object-cover object-top" />
               </button>
             </li>
           ))}
@@ -190,8 +221,21 @@ export default function ProjectModal({ project, onClose, prevProject, nextProjec
               </dl>
             ) : null}
 
-            <div className="grid grid-cols-[minmax(0,1fr)] gap-8 px-5 py-7 sm:px-8 md:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] md:gap-10">
-              <div className="flex min-w-0 max-w-[65ch] flex-col gap-7">
+            <div className="flex flex-col gap-4 px-5 pt-7 sm:px-8">
+              <Gallery project={project} />
+              {links.length > 0 ? (
+                <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                  {links.map((link, i) => (
+                    <ExternalLink key={link.href} href={link.href} primary={i === 0}>
+                      {link.label}
+                    </ExternalLink>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+
+            <div className="px-5 py-7 sm:px-8">
+              <div className="flex min-w-0 max-w-[70ch] flex-col gap-7">
                 {content.overview ? (
                   <section className="flex flex-col gap-2.5">
                     <h3 className="font-display text-lg font-semibold">{content.overviewHeading}</h3>
@@ -231,19 +275,6 @@ export default function ProjectModal({ project, onClose, prevProject, nextProjec
                       ))}
                     </ul>
                   </section>
-                ) : null}
-              </div>
-
-              <div className="flex flex-col gap-4">
-                <Gallery project={project} />
-                {links.length > 0 ? (
-                  <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap md:flex-col">
-                    {links.map((link, i) => (
-                      <ExternalLink key={link.href} href={link.href} primary={i === 0}>
-                        {link.label}
-                      </ExternalLink>
-                    ))}
-                  </div>
                 ) : null}
               </div>
             </div>
