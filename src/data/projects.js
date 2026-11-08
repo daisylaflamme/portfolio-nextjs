@@ -57,6 +57,12 @@ export const projects = [
       "Implemented scalable, polished UI components and interactions that delivered consistent shopping experiences across 20+ furniture e-commerce sites on Blueport’s platform.",
     description:
       "Contributed to a multi-tenant e-commerce platform powering furniture retailers by translating hundreds of design mocks into production-ready, responsive front-end experiences. Implemented and enhanced a shared library of brand-configurable UI patterns—including custom pages, carousels, sliders, tabs, modals, forms, filters, and site configuration—so multiple clients could adopt consistent UX while preserving unique visual identity. Delivered core shopping surfaces such as mobile/desktop navigation and menus, global footers, search results grids, masonry galleries, product cards, PDP layouts, and cart pages with order summaries and sticky interactive CTAs. Collaborated cross-functionally to lead checkout UI flow initiatives, improving usability and consistency across brands while maintaining a high bar for semantic markup, maintainable styling, and scalable component architecture. Built and maintained features in a mixed legacy + modern stack (Angular, JavaScript, HTML,SCSS, CSS, C#, AngularJS, jQuery, LESS, Bootstrap) integrated with platform services.",
+    role: "Front-end engineer; led checkout UI initiatives",
+    team: "Cross-functional",
+    stack: ["Angular","AngularJS","JavaScript","SCSS","LESS","Bootstrap"],
+    problem: "20+ furniture retailers shared one e-commerce platform but each needed its own brand identity.",
+    whatIBuilt: ["Translated hundreds of design mocks into responsive, production-ready front-end experiences.","Shared library of brand-configurable patterns: carousels, sliders, tabs, modals, forms, filters.","Core shopping surfaces: navigation, footers, search grids, product cards, PDPs, and cart.","Led checkout UI flow initiatives for usability and consistency across brands."],
+    impact: ["Consistent shopping UX across 20+ storefronts","Each brand kept its own visual identity"],
     thumbnail: "/images/projects/thumbnails/masonry-collage.jpg",
     images: [
       "/images/projects/masonry-collage.jpg"
@@ -73,6 +79,11 @@ export const projects = [
       "Enabled enterprise furniture eCommerce brands to offer flexible checkout options by integrating multiple payment providers end‑to‑end.",
     description:
       "Led front‑end integration of a multi‑provider payment ecosystem across checkout (Payment → Review → Thank You pages) for multiple client storefronts. Implemented and standardized integrations for Acima, Affirm, PayLater, Progressive Leasing, SetPay, ChargeAfter, credit/debit cards, and gift cards—expanding customer choice and improving conversion potential. Wrapped complex vendor JavaScript SDKs / npm packages into secure, reusable Angular library components with configuration‑driven feature flags so the same codebase could be safely shared across brands. Coordinated UI state, validation, and async payment authorization flows, wiring components to BFF endpoints (tokenization, order totals, promotions, financing eligibility, and payment capture) to keep sensitive logic server‑side while delivering a seamless, responsive, cross‑browser experience across mobile, tablet, and desktop.",
+    role: "Front-end integration lead",
+    stack: ["Angular","JavaScript","SCSS","Vendor SDKs","BFF APIs"],
+    problem: "Multiple furniture brands needed many payment and financing options in checkout, all running on one shared codebase.",
+    whatIBuilt: ["Integrated Acima, Affirm, PayLater, Progressive Leasing, SetPay, ChargeAfter, cards, and gift cards.","Wrapped vendor SDKs and npm packages into reusable Angular library components.","Configuration-driven feature flags so each brand enables only its providers.","Validation and async authorization flows across Payment, Review, and Thank You pages.","Wired components to BFF endpoints so sensitive payment logic stays server-side."],
+    impact: ["6 financing and leasing providers, plus card and gift-card payments","One checkout codebase shared safely across brands","Sensitive payment logic kept server-side"],
     thumbnail: "/images/projects/thumbnails/payment-morris.jpg",
     images: [
       "/images/projects/payment.png",
@@ -96,6 +107,12 @@ export const projects = [
       "Owned a full end‑to‑end migration of store‑locator maps across multiple brands—reducing annual mapping costs by ~80% while improving UX and brand consistency.",
     description:
       "Drove the initiative from discovery to delivery: evaluated map platform options, created a clear decision matrix for leadership, and aligned stakeholders on the recommended approach. Implemented a shared Angular base component that supports Mapbox and OpenStreetMap, with secure, configuration‑driven branding (custom pin colors, styles, and per‑brand toggles) reusable across all storefronts. Added a custom store‑type legend (e.g., Furniture Store vs Mattress Store) and ensured accessible, responsive behavior across devices. Partnered with QA and UX to validate interactions, edge cases, and performance, and delivered a production‑ready rollout with thorough testing and release support.",
+    role: "Owner, discovery through rollout",
+    team: "UX, QA, and leadership stakeholders",
+    stack: ["Angular","Mapbox","OpenStreetMap","SCSS"],
+    problem: "Store-locator maps across several brands were costly, and each brand needed its own look on a shared platform.",
+    whatIBuilt: ["Evaluated map platforms and wrote a decision matrix for leadership.","Shared Angular base component supporting both Mapbox and OpenStreetMap.","Per-brand pin colors, styles, and toggles driven by secure configuration.","Custom store-type legend, such as Furniture Store versus Mattress Store.","Validated accessibility, responsiveness, and performance with QA and UX before rollout."],
+    impact: ["~80% lower annual mapping costs","One map component reused across all storefronts","Production rollout with full testing and release support"],
     thumbnail: "/images/projects/thumbnails/store-details.jpg",
     images: [
       "/images/projects/store-details.png",
@@ -117,6 +134,11 @@ export const projects = [
     description:
       "Built GifSpark as an AI-powered digital product from concept through launch planning, combining product discovery, UX strategy, prototyping, implementation, QA, and monetization. The app allows users to upload a photo, generate a personalized greeting, and export it as WebP, GIF, or MP4. I led the product experience end-to-end—defining user flows, refining UX details, improving responsive behavior, and optimizing performance for media-heavy processing workflows. The platform integrates Runway gen4_turbo for AI animation generation, Stripe for credit-based payments, and Supabase/Lovable Cloud for authentication, storage, database management, and Edge Functions. I also introduced in-app AI support chat and built safeguards around key flows such as generation, downloads, payments, and account usage.",
   
+    role: "Product lead, designer, and developer",
+    stack: ["React","TypeScript","Vite","Tailwind","Supabase","Stripe","Runway API"],
+    problem: "Turn a single photo into a personalized animated greeting people can pay for and download.",
+    whatIBuilt: ["Upload, generate, and export flow producing WebP, GIF, or MP4 greetings.","Runway gen4_turbo integration for AI animation generation.","Credit-based Stripe payments with Supabase auth, storage, database, and Edge Functions.","In-app AI support chat and safeguards around generation, downloads, and payments."],
+    impact: ["Live app with paid, credit-based generation","Three export formats: WebP, GIF, and MP4"],
     thumbnail: "/images/projects/thumbnails/gst.jpg",
     images: [
       "/images/projects/gs.jpg",
@@ -156,50 +178,6 @@ export const projects = [
     ],
   },
   {
-    id: "digital-product-lab",
-    title: "Digital Product Lab: AI Products, Digital Publishing & Monetization",
-    
-    summary:
-    "I build and sell independent digital products—from AI-powered tools to digital publications—using lightweight platforms to test demand, automate distribution, and streamline customer acquisition.",
-
-  description:
-    "Digital Product Lab where I launch and manage independent digital products, creative experiments, and service offerings. I use Pop.store as a lightweight distribution platform to validate product demand, automate marketing workflows, centralize social channels, and simplify digital delivery. The storefront currently includes AI-powered products like GifSpark, digital books, downloadable content, and creative services.",
-    thumbnail: "/images/projects/thumbnails/popst.jpg",
-  
-    images: [
-      "/images/projects/popstorehome.jpg",
-      "/images/projects/pst.jpg",
-    ],
-  
-    imageAlt:
-      "Digital Product Lab storefront showcasing AI products, digital books, downloadable content, and monetized digital experiences.",
-  
-    link: null,
-  
-    extraLinks: [
-      {
-        label: "Live Storefront",
-        href: "https://pop.store/daisylaflamme",
-      }
-    ],
-  
-    tags: [
-      "react",
-      "product-strategy",
-      "digital-commerce",
-      "monetization",
-      "ux-design",
-      "ai",
-      "digital-publishing",
-      "growth-experiments",
-      "payment-strategy",
-      "product-development",
-      "customer-experience",
-      "digital-distribution",
-      "api-integrations",
-    ],
-  },
-  {
     id: "ai-digital-book-project",
     title: "AI Digital Book: Interactive App → Published Manuscript",
     summary:
@@ -223,48 +201,7 @@ export const projects = [
         href: "https://www.amazon.com/Designing-Tomorrow-Milo-Families-Together/dp/B0HLH8S53G/ref=sr_1_1?crid=5WZQ62TJ60AC&dib=eyJ2IjoiMSJ9.HslFHmCKoGRTArHXN8r9-ewSwSWYapaJ5sI9Ypn9wGTGjHj071QN20LucGBJIEps.6f8qaUxJnFIQ0jWdMc7Pj753M9rcrVbDSo5Xy0aLzno&dib_tag=se&keywords=designing+tomorrow+with+milo&qid=1790783633&sprefix=designing+tomorrow+with+milo%2Caps%2C161&sr=8-1",
       },
     ],
-    tags: ["react", "nextjs", "tailwind", "typescript", "ai", "digital-media", "pdf", "publishing"],
-  },
-  {
-    id: "ai-us-digital-book-project",
-    title: "AI & Us: Interactive Visual Book → Published Manuscript",
-    summary:
-      "Designed and built a premium AI-assisted digital book experience using React, TypeScript, Tailwind, and Framer Motion, combining cinematic visual storytelling, realistic page-turn motion, PDF export, and a published Kindle book.",
-  
-    description:
-      "AI & Us combines UI engineering, AI-assisted creation, and digital publishing into a refined visual reading experience. Built with Lovable as an AI co-builder, the application is structured as a responsive, editorial-style digital book featuring cinematic concept art, carefully tuned typography, and subtle skeuomorphic page-turn motion for a tactile, book-like feel. A streamlined publishing workflow enables client-side PDF export in a 6×9 KDP-ready format, extending the experience into a fully published Kindle release. The result is a cohesive digital product that blends modern front-end architecture, motion UI, and AI tooling with editorial-grade presentation.",
-  
-    thumbnail: "/images/projects/thumbnails/ai-us-cover.jpg",
-    images: [
-      "/images/projects/desktop-book2.jpg",
-      "/images/projects/desktop-book-2.jpg",
-      "/images/projects/ipad2.jpg"
-    ],
-    imageAlt:
-      "AI & Us digital book project showing the interactive web reading experience, cinematic chapter art, PDF export, and published book format.",
-  
-    link: "https://ai-us-canvas.lovable.app/",
-    extraLinks: [
-      {
-        label: "Git Code",
-        href: "https://github.com/daisylaflamme/human-futures-unveiled",
-      },
-      {
-        label: "Amazon",
-        href: "https://www.amazon.com/AI-Us-5-Minute-Future-Minutes-ebook/dp/B0GX31LTPP/ref=sr_1_2?crid=89KAYRV6NYGM&dib=eyJ2IjoiMSJ9.4xwsLAvC29CdryhUDO_pHeURU9TUBIrg6-T9LGeSA3M.TCDU8AhIuB_9INkGs03zMRTCJLwd3tpcHAC7JEtcLYs&dib_tag=se&keywords=daisy+laflamme&qid=1777559260&sbo=QS21L9be7oZFAGyl4IXR%2Bw%3D%3D&sprefix=daisy+laflamme%2Caps%2C145&sr=8-2",
-      },
-    ],
-    tags: [
-      "react",
-      "vite",
-      "tailwind",
-      "typescript",
-      "framer-motion",
-      "ai",
-      "digital-media",
-      "pdf",
-      "publishing"
-    ],
+    tags: ["react", "vite", "tailwind", "typescript", "ai", "digital-media", "pdf", "publishing"],
   },
   {
     id: "cms-hero-carousel",
@@ -273,6 +210,11 @@ export const projects = [
       "Built a reusable, plug‑and‑play hero carousel that lets non‑technical teams publish and manage homepage marketing content through the CMS—without code changes.",
     description:
       "Architected and delivered a configurable carousel widget that can be dropped into any client landing page or custom homepage layout. Integrated the Tiny‑Slider JavaScript library and wrapped it in a maintainable component pattern with CMS‑controlled content (images, slide order, links, and placement) so marketing teams could self‑serve updates. Optimized layout, touch interactions, and loading behavior for mobile, tablet, and desktop, and validated quality through cross‑browser and responsive testing. This unlocked faster campaign launches and improved homepage engagement by keeping featured promotions fresh across multiple brands.",
+    role: "Architect and front-end engineer",
+    stack: ["JavaScript","Tiny-Slider","SCSS","CMS"],
+    problem: "Marketing teams needed to update homepage promotions without waiting on engineering.",
+    whatIBuilt: ["Configurable carousel widget that drops into any landing page or custom homepage.","Tiny-Slider wrapped in a maintainable component with CMS-controlled images, order, and links.","Optimized touch interactions, layout, and loading for mobile, tablet, and desktop."],
+    impact: ["Marketing self-serves homepage promotions without code changes","Faster campaign launches across multiple brands"],
     thumbnail: "/images/projects/thumbnails/carousel-desktop.jpg",
     images: [
       "/images/projects/carousel-desktop.jpg",
@@ -291,6 +233,11 @@ export const projects = [
       "Built a reusable, accessibility‑first modal system with multiple interaction patterns, enabling teams to standardize UX while meeting brand and ADA requirements.",
     description:
       "Architected a shared modal library in Angular to support common client interaction needs across high‑traffic eCommerce flows. Delivered multiple modal variants—including a lightweight info/lightbox modal for gated selections, a full‑width takeover modal for maximum focus, a header‑anchored modal with precise positioning and partial overlay, and a slide‑in side modal for smooth, non‑blocking experiences. Implemented configurable behavior via Angular inputs (layout, size, overlay, focus handling, and close rules) and validated keyboard navigation, focus trapping, screen‑reader semantics, and responsive behavior to align with ADA/WCAG expectations. This standardized UI patterns across brands while keeping implementations consistent, configurable, and easy to adopt.",
+    role: "Architect and front-end engineer",
+    stack: ["Angular","SCSS","ARIA"],
+    problem: "High-traffic checkout and UX flows needed consistent modals that met brand and ADA requirements.",
+    whatIBuilt: ["Info/lightbox, full-width takeover, header-anchored, and slide-in side modal variants.","Angular inputs for layout, size, overlay, focus handling, and close rules.","Keyboard navigation, focus trapping, and screen-reader semantics validated against WCAG."],
+    impact: ["One modal library standardizing UX patterns across brands","Keyboard, focus, and screen-reader behavior validated against WCAG"],
     thumbnail: "/images/projects/thumbnails/header-modal.jpg",
     images: [
       "/images/projects/full-modal.png",
@@ -311,6 +258,11 @@ export const projects = [
       "Built a plug‑and‑play gift card balance checker as a reusable web component, enabling multiple brands to add the feature anywhere on their websites with consistent UX across devices.",
     description:
       "Architected and implemented a standalone Angular library component packaged as a web component so client teams could embed a gift card balance check on any custom page without bespoke development. Integrated secure, configuration‑driven theming for brand consistency and delivered a seamless mobile, tablet, and desktop experience. Wired the front end to BFF endpoints that broker requests to the Loft API, keeping sensitive integrations server‑side while providing fast, reliable balance lookups. Supported multi‑brand reuse through shared configuration, robust validation, and thorough cross‑browser and responsive testing.",
+    role: "Architect and front-end engineer",
+    stack: ["Angular","Web Components","BFF APIs","Loft API"],
+    problem: "Brands wanted a gift card balance check on any page without custom development each time.",
+    whatIBuilt: ["Standalone Angular library component packaged as an embeddable web component.","Secure, configuration-driven theming for each brand.","Wired to BFF endpoints that broker Loft API requests server-side."],
+    impact: ["Embeddable anywhere without bespoke development","Reused across brands through shared configuration"],
     thumbnail: "/images/projects/thumbnails/gift-card-desktop.jpg",
     images: [
       "/images/projects/gift-card-balance.png",
@@ -371,6 +323,12 @@ export const projects = [
       "Delivered a new, responsive product card system from Figma—implemented pixel-perfect across mobile, tablet, and desktop to modernize PLP browsing and improve shopping clarity.",
     description:
       "Partnered with a fellow UI engineer to implement a sleek new product card design directly from client Figma mockups, meeting a tight delivery timeline with a high-quality, pixel-accurate result. Built responsive layouts and interaction details across breakpoints (including pricing, badges, swatches, favorites, and merchandising cues) while maintaining clean, scalable front-end structure. Collaborated with a BFF engineer to align on API and data-shape updates needed to support the new UI, ensuring reliable rendering and consistent behavior across storefronts. The launch shipped with minimal iteration due to strong alignment with the mocks and careful execution, resulting in a polished browsing experience for customers.",
+    role: "UI engineer",
+    team: "Paired with a UI engineer; coordinated with a BFF engineer",
+    stack: ["Angular","SCSS","Figma","BFF APIs"],
+    problem: "The product listing pages needed a new product card from client Figma mockups on a tight timeline.",
+    whatIBuilt: ["Pixel-accurate product cards from Figma across mobile, tablet, and desktop.","Pricing, badges, swatches, favorites, and merchandising cues in a scalable structure.","Aligned API and data-shape updates with the BFF engineer for reliable rendering."],
+    impact: ["Shipped on a tight timeline with minimal iteration","Consistent behavior across storefronts"],
     thumbnail: "/images/projects/thumbnails/plp-asi.jpg",
     images: [
       "/images/projects/product-card-design.jpg",
@@ -406,6 +364,11 @@ export const projects = [
     title: "Cookie Consent & Preference Management",
     summary: "Implemented a reusable, CMS-driven cookie consent experience across multiple brands, integrating Termly and Google Tag Manager to enforce user preferences and support compliant analytics/marketing behavior across devices.",
     description: "Built a configurable cookie consent feature that can be deployed across multi-tenant storefronts via the CMS with consistent UX on mobile, tablet, and desktop. Implemented the UI with JavaScript, HTML, and CSS, supporting brand styling and flexible placement patterns. Integrated the Termly third-party consent banner and connected preference signals to site behavior so analytics, personalization, and marketing tags respect user choices. Configured Google Tag Manager to conditionally fire third-party JavaScript libraries based on consent state, aligning GTM triggers and tag settings with Termly categories to enable/disable cookies appropriately. Delivered a reliable consent workflow that improves compliance readiness while keeping the experience clear and unobtrusive for shoppers.",
+    role: "Front-end engineer",
+    stack: ["JavaScript","Termly","Google Tag Manager","CMS"],
+    problem: "Every brand needed a consent experience that actually controls which analytics and marketing tags run.",
+    whatIBuilt: ["CMS-deployable cookie consent UI with brand styling and flexible placement.","Integrated the Termly consent banner with site behavior and user preferences.","GTM triggers and tag settings aligned with Termly categories to fire tags by consent."],
+    impact: ["Analytics and marketing tags respect user consent","One consent setup deployable to every brand through the CMS"],
     thumbnail: "/images/projects/thumbnails/cookie-sm.jpg",
     images: ["/images/projects/cookie.jpg", "/images/projects/cookie-tablet.jpg", "/images/projects/wired-cookie.jpg"],
     imageAlt: "Cookie consent UI and banner variants across multiple furniture brands, including a Termly-integrated preferences flow.",
@@ -465,36 +428,21 @@ export const projects = [
   },
 
   {
-    id: "clickable-swatches",
-    title: "Clickable Swatches",
-    summary:
-      "Implemented clickable color swatches on search results to make browsing variants faster and more visual.",
-    description:
-      "Worked in a team to add interactive functionality to color swatches on the search page. Enhanced the product grid so shoppers can preview and switch product colors inline, while also improving how search results are presented.",
-    thumbnail:
-      "/images/projects/thumbnails/asi-search-page-clickable-swatches-angular6.png",
-    images: ["/images/projects/asi-search-page-clickable-swatches-angular6.png"],
-    imageAlt:
-      "Furniture search results page with clickable color swatches on each product card.",
-    link:
-      "https://www.americansignaturefurniture.com/search/a/living-room/seating/sofas",
-    tags: ["html", "angular", "ecommerce", "scss", "css"],
+    id: "lovesac-asf-storefront-ui",
+    title: "Lovesac & American Signature Storefront UI",
+    summary: "Built and restyled key shopping surfaces for two furniture brands: search grids, swatches, filters, sign-in, and third-party widgets made to feel native.",
+    description: "Worked in a team on Lovesac and American Signature Furniture storefronts. Added clickable color swatches to American Signature search results so shoppers can preview and switch product colors inline. Re-styled a third-party filter extension to match Lovesac's design system. Developed a responsive product grid used for Lovesac product lists, search pages, and landing pages, and re-styled and debugged a third-party chat widget so it matched the brand and worked reliably alongside the grid. Implemented a responsive Lovesac sign-in page from precise desktop and mobile mockups.",
+    role: "Front-End Developer",
+    dates: "Oct 2016 – Oct 2019",
+    whatIBuilt: ["Clickable color swatches on search results so shoppers preview and switch colors inline.","Restyled a third-party filter extension to match Lovesac's design system.","Responsive product grid for Lovesac product lists, search, and landing pages.","Restyled and debugged a third-party chat widget to work alongside the grid.","Responsive sign-in page built from precise desktop and mobile mockups."],
+    thumbnail: "/images/projects/thumbnails/lovesac-search-page-with-chat.png",
+    images: ["/images/projects/lovesac-search-page-with-chat.png","/images/projects/asi-search-page-clickable-swatches-angular6.png","/images/projects/lovesac-swatch-page.png","/images/projects/lovesac-log-in-page.png"],
+    imageAlt: "Lovesac search results with a chat widget, American Signature search results with clickable swatches, Lovesac fabric filters, and the Lovesac sign-in page.",
+    link: null,
+    extraLinks: [{"label":"Lovesac search","href":"https://www.lovesac.com/search/modular-furniture/sectionals"},{"label":"Lovesac fabric filters","href":"https://www.lovesac.com/search/fabric"},{"label":"Lovesac sign-in","href":"https://www.lovesac.com/account/sign-in"},{"label":"American Signature search","href":"https://www.americansignaturefurniture.com/search/a/living-room/seating/sofas"}],
+    tags: ["html","angular","javascript","ecommerce","scss","css","api-integrations"],
   },
 
-  {
-    id: "filter-restyling",
-    title: "Filter Restyling",
-    summary:
-      "Re-styled a third-party filter experience to align with Lovesac branding and improve usability.",
-    description:
-      "Re-styled a third-party filter extension for Lovesac so it matched the brand’s design system and felt native to the site. Focused on clearer filter states, typography, and layout to make product discovery smoother for shoppers.",
-    thumbnail: "/images/projects/thumbnails/lovesac-swatch-page.png",
-    images: ["/images/projects/lovesac-swatch-page.png"],
-    imageAlt:
-      "Product browse page showing fabric filter controls and large swatch grid.",
-    link: "https://www.lovesac.com/search/fabric",
-    tags: ["html", "ecommerce", "css", "scss"],
-  },
   {
     id: "levin-dropship-checkout-responsive",
     title: "Responsive Multi-Step Checkout & Cart Experience",
@@ -515,36 +463,7 @@ export const projects = [
     tags: ["html", "ecommerce", "css", "scss","javascript","angular"],
   },
 
-  {
-    id: "search-grid-chat",
-    title: "Search Grid Chat",
-    summary:
-      "Developed a responsive product grid and integrated a third-party chat widget on Lovesac search pages.",
-    description:
-      "Developed and styled a responsive product grid used for product lists, search pages, and landing pages at Lovesac. Re-styled and debugged a third-party chat widget to match the site’s branding and ensure it worked reliably alongside the product layout.",
-    thumbnail:
-      "/images/projects/thumbnails/lovesac-search-page-with-chat.png",
-    images: ["/images/projects/lovesac-search-page-with-chat.png"],
-    imageAlt:
-      "Lovesac search results page showing sectional products and a floating chat widget.",
-    link: "https://www.lovesac.com/search/modular-furniture/sectionals",
-    tags: ["html", "ecommerce", "css", "scss","javascript", "api-integrations"],
-  },
 
-  {
-    id: "login-page",
-    title: "Login Page",
-    summary:
-      "Implemented a responsive, brand-aligned account login page from precise desktop and mobile mockups.",
-    description:
-      "Given very specific desktop and mobile mockups, implemented and styled a responsive user login page for Lovesac. Focused on clear hierarchy, accessible form controls, and a layout that feels consistent across devices.",
-    thumbnail: "/images/projects/thumbnails/lovesac-log-in-page.png",
-    images: ["/images/projects/lovesac-log-in-page.png"],
-    imageAlt:
-      "Lovesac customer sign-in page with email and password form fields.",
-    link: "https://www.lovesac.com/account/sign-in",
-    tags: ["html", "ecommerce", "css", "scss","javascript","angular"],
-  },
 
   {
     id: "multi-brand-store-locator",
@@ -583,84 +502,39 @@ export const projects = [
   },
 
   {
-    id: "page-builder",
-    title: "Page Builder",
-    summary:
-      "Built page-builder tools that let non-technical users create and localize landing pages.",
-    description:
-      "Worked in a team to deliver a UI for non-technical users that enables them to create web pages, landing pages, and region-based home pages. The tool abstracts layout and content blocks so marketing teams can publish pages without direct developer involvement.",
+    id: "cms-admin-tools",
+    title: "CMS & Store Admin Tools for Non-Technical Teams",
+    summary: "Built admin interfaces that let non-technical teams create landing pages, assemble reusable content sections, and maintain store location pages without developers.",
+    description: "Worked in a team on the platform's admin tools for non-technical users. Delivered a page-builder UI for creating web pages, landing pages, and region-based home pages from layout and content blocks. Implemented a widget management interface that organizes reusable content sections so editors can assemble rich layouts without editing code. Enhanced the store admin used to add and edit store information, making location details, operating hours, and region-specific content easier to manage across a large store network.",
+    whatIBuilt: ["Page builder for web pages, landing pages, and region-based home pages.","Widget manager listing reusable content sections editors assemble without code.","Store admin improvements for location details, hours, and region-specific content."],
     thumbnail: "/images/projects/thumbnails/hub-custom-page.png",
-    images: ["/images/projects/hub-custom-page.png"],
-    imageAlt:
-      "Custom page builder UI showing layout configuration and content blocks.",
+    images: ["/images/projects/hub-custom-page.png","/images/projects/hub-page-element-list-page.png","/images/projects/hub-store-edit-page.png"],
+    imageAlt: "Admin screens: custom page builder, reusable page-element list, and store information editor.",
     link: null,
-    tags: ["html", "cms", "ecommerce", "scss", "css","javascript","angular"],
+    tags: ["html","cms","ecommerce","scss","css","javascript","angular"],
   },
 
-  {
-    id: "content-sections",
-    title: "Widget Management Dashboard",
-    summary:
-      "Created interfaces for managing reusable widgets across CMS-driven web pages.",
-    description:
-      "Worked in a team that implemented a UI for non-technical users to add custom content sections to web pages. The interface organizes reusable elements into a list so editors can assemble rich layouts without editing code.",
-    thumbnail:
-      "/images/projects/thumbnails/hub-page-element-list-page.png",
-    images: ["/images/projects/hub-page-element-list-page.png"],
-    imageAlt:
-      "Admin UI listing reusable page elements and content sections.",
-    link: null,
-    tags: ["html", "cms", "ecommerce", "scss", "css","javascript","angular"],
-  },
 
-  {
-    id: "store-content-admin",
-    title: "Store Admin",
-    summary:
-      "Improved store content management so editors can maintain location pages more efficiently.",
-    description:
-      "Enhanced the content management UI used to add and edit store information on store web pages. The updates make it easier for editors to manage location details, operating hours, and region-specific content across a large store network.",
-    thumbnail:
-      "/images/projects/thumbnails/hub-store-edit-page.png",
-    images: ["/images/projects/hub-store-edit-page.png"],
-    imageAlt:
-      "Admin edit screen showing form fields for managing store information.",
-    link: null,
-    tags: ["html", "cms", "ecommerce", "scss", "css","javascript","angular"],
-  },
 
   // --- Cambridge / Zoom / GlobalU / KL / GPHomestay era ---
 
   {
-    id: "zoom-branding",
-    title: "Zoom Integration",
-    summary:
-      "Aligned Zoom’s hosted classroom login with company brand guidelines for a consistent experience.",
-    description:
-      "Integrated Zoom’s online classroom login with the company’s branding style guides. Customized the look and feel so students experience a seamless transition between marketing sites and the hosted Zoom environment.",
-    thumbnail:
-      "/images/projects/thumbnails/sage-academics-online-classroom-login-page.jpg",
-    images: ["/images/projects/sage-academics-online-classroom-login-page.jpg"],
-    imageAlt:
-      "Custom-branded Zoom classroom login page for Sage Academics.",
-    link: "https://thecambridgenetwork.zoom.us/",
-    tags: ["html", "instructional-design", "css", "api-integrations"],
+    id: "cambridge-institute-web-properties",
+    title: "Educational Websites & Integrations (Cambridge Institute)",
+    summary: "As Web Content Manager, maintained and extended a network of up to 18 educational websites, including a WordPress migration, branded third-party portals, and a QuickBase-integrated registration form.",
+    description: "Managed, updated, and optimized up to 18 educational websites for The Cambridge Institute of International Education. Maintained and evolved TheCambridgeNetwork.com marketing site with new content sections, refined navigation, and updated branding. Migrated a PHP-coded website into WordPress so non-developers could make updates, and maintained a WordPress orientation site for international students and their families. Built a registration form that posts directly into a QuickBase database, reducing manual data entry. Customized a Cornerstone-powered career site and the hosted Zoom classroom login to match company brand guidelines.",
+    role: "Web Content Manager",
+    team: "IT, Marketing, and HR teams",
+    dates: "Feb 2016 – Sep 2016",
+    stack: ["WordPress","PHP","JavaScript","jQuery","Bootstrap","QuickBase"],
+    whatIBuilt: ["Maintained TheCambridgeNetwork.com: new content sections, refined navigation, updated branding.","Migrated a PHP-coded site to WordPress so non-developers could update it.","Maintained a WordPress orientation site for international students and families.","Registration form posting directly into QuickBase, reducing manual data entry.","Branded the Cornerstone career site and Zoom classroom login to company guidelines."],
+    thumbnail: "/images/projects/thumbnails/thecambridgenetwork-home-page.jpg",
+    images: ["/images/projects/thecambridgenetwork-home-page.jpg","/images/projects/tciie-for-students.jpg","/images/projects/cambridge-orientation-en.jpg","/images/projects/cambridge-orientation-registration-cn-and-database-integration-api.jpg","/images/projects/the-cambridge-network-career-site.jpg","/images/projects/sage-academics-online-classroom-login-page.jpg"],
+    imageAlt: "Cambridge Network marketing site, TCIIE WordPress site, orientation site, QuickBase registration form, career site, and branded Zoom classroom login.",
+    link: null,
+    tags: ["html","css","javascript","bootstrap","cms","wordpress","instructional-design","api-integrations"],
   },
 
-  {
-    id: "tciie-migration",
-    title: "WordPress Migration",
-    summary:
-      "Migrated a legacy PHP site into WordPress while preserving content and improving maintainability.",
-    description:
-      "Handled the migration of a PHP-coded website into a modern WordPress implementation. Recreated page layouts, moved content, and configured themes so future updates could be done more easily by non-developers.",
-    thumbnail: "/images/projects/thumbnails/tciie-for-students.jpg",
-    images: ["/images/projects/tciie-for-students.jpg"],
-    imageAlt:
-      "WordPress site for TCIIE showing a student-focused layout.",
-    link: null,
-    tags: ["html", "cms", "javascript", "css", "bootstrap", "wordpress"],
-  },
 
   {
     id: "globalu-site-pages",
@@ -682,21 +556,6 @@ export const projects = [
     tags: ["html", "javascript", "css", "bootstrap"],
   },
 
-  {
-    id: "cornerstone-careers",
-    title: "Cornerstone Career Website",
-    summary:
-      "Implemented a branded Cornerstone career site that matches the company’s main web presence.",
-    description:
-      "Delivered front-end development and branding integration for a Cornerstone-powered career site. Customized templates and styles so the job-search experience feels fully aligned with the main company website.",
-    thumbnail:
-      "/images/projects/thumbnails/the-cambridge-network-career-site.jpg",
-    images: ["/images/projects/the-cambridge-network-career-site.jpg"],
-    imageAlt:
-      "Company career site listing open positions and search filters.",
-    link: null,
-    tags: ["html", "javascript", "css"],
-  },
 
   {
     id: "https-migration-kl",
@@ -713,21 +572,6 @@ export const projects = [
     tags: ["html", "javascript", "instructional-design"],
   },
 
-  {
-    id: "cambridge-network-site",
-    title: "Cambridge Network Marketing Website",
-    summary:
-      "Maintained and evolved the main Cambridge Network marketing site.",
-    description:
-      "Handled website development, maintenance, and updates for TheCambridgeNetwork.com. Added new content sections, refined navigation, and ensured the site stayed aligned with evolving branding.",
-    thumbnail:
-      "/images/projects/thumbnails/thecambridgenetwork-home-page.jpg",
-    images: ["/images/projects/thecambridgenetwork-home-page.jpg"],
-    imageAlt:
-      "The Cambridge Network marketing home page.",
-    link: null,
-    tags: ["html", "javascript", "css", "bootstrap"],
-  },
 
   {
     id: "wechat-raffle-game",
@@ -765,38 +609,7 @@ export const projects = [
     tags: ["html", "javascript", "css"],
   },
 
-  {
-    id: "quickbase-integration",
-    title: "QuickBase Form",
-    summary:
-      "Integrated a web registration form directly with QuickBase to streamline data capture.",
-    description:
-      "Built and integrated a web registration form that posts data into a QuickBase database. The solution reduces manual data entry and keeps orientation registrations synchronized with internal systems.",
-    thumbnail:
-      "/images/projects/thumbnails/cambridge-orientation-registration-cn-and-database-integration-api.jpg",
-    images: [
-      "/images/projects/cambridge-orientation-registration-cn-and-database-integration-api.jpg",
-    ],
-    imageAlt:
-      "Registration form for Cambridge Orientation integrated with QuickBase.",
-    link: null,
-    tags: ["html", "javascript", "instructional-design", "css", "bootstrap", "api-integrations"],
-  },
 
-  {
-    id: "cambridge-orientation-site",
-    title: "WordPress Orientation Site for International Students",
-    summary:
-      "Developed and maintained a WordPress orientation site that helps international students and families quickly find program information and resources.",
-    description:
-      "Delivered ongoing website development, maintenance, and content updates for a WordPress-based orientation site serving international students. Ensured program details, registration links, schedules, and key resources stayed accurate, well-organized, and easy to navigate—supporting a smooth onboarding experience for students and their families.",
-    thumbnail: "/images/projects/thumbnails/cambridge-orientation-en.jpg",
-    images: ["/images/projects/cambridge-orientation-en.jpg"],
-    imageAlt:
-      "Orientation website homepage for international students.",
-    link: null,
-    tags: ["html", "cms", "instructional-design", "css", "bootstrap", "wordpress"],
-  },
   {
     id: "gphomestay-digital-experiences",
     title: "GPHomestay Marketing, Content, and Lead Capture Experiences",
@@ -804,6 +617,13 @@ export const projects = [
       "Delivered responsive, conversion-focused web experiences for GPHomestay—spanning mobile content UX, paid-campaign landing pages, testimonial storytelling, CRM-integrated lead capture, and interactive customer quizzes.",
     description:
       "Contributed to the build and ongoing enhancement of GPHomestay.com by implementing key templates and interactive features that supported both marketing and program growth. Optimized a content-heavy blog for mobile readability with Bootstrap 3, created streamlined AdWords landing pages aligned with campaign messaging, and integrated a “Host Stories” testimonial layout into a custom WordPress theme for long-form content. Implemented a lead-generation form integrated with Salesforce and supporting database APIs to route inquiries into the CRM pipeline, and built a lightweight online quiz experience to collect user responses through an intuitive, guided UI. Supported site maintenance and iterative improvements to keep templates cohesive and performant.",
+    role: "Web Content Manager",
+    team: "IT, Marketing, and HR teams",
+    dates: "Feb 2016 – Sep 2016",
+    stack: ["WordPress","Bootstrap 3","JavaScript","Salesforce"],
+    problem: "GPHomestay needed marketing pages and lead capture that fed inquiries straight into its CRM.",
+    whatIBuilt: ["Mobile-readable content-heavy blog with Bootstrap 3.","AdWords landing pages aligned with campaign messaging.","“Host Stories” testimonial layout in a custom WordPress theme.","Lead form integrated with Salesforce to route inquiries into the CRM.","Guided online quiz collecting user responses."],
+    impact: ["Inquiries routed directly into Salesforce","Landing pages matched to paid-campaign messaging"],
     thumbnail: "/images/projects/thumbnails/dev-gphomestay-home-page-july28-2016.jpg",
     images: [
       "/images/projects/monetary-landing-page-a.jpg",
@@ -1069,30 +889,14 @@ export const projects = [
  * in its order within `projects`.
  */
 export const featuredProjectIds = [
-  "blueport-multisite-platform-ui",
   "checkout-multi-payments",
   "store-details-maps",
-  "gifspark-ai-greeting-app",
+  "blueport-multisite-platform-ui",
   "angular-modal-system",
-  "gift-card-balance-widget",
   "cms-hero-carousel",
-  "custom-input-controls",
-  "levin-dropship-checkout-responsive",
-  "promo-builder",
   "cookie-consent-multi-brand",
-  "finance-messaging-integrations",
   "product-card-redesign",
-  "multi-brand-store-locator",
-  "cross-sell-addon-slider",
-  "product-configuration",
-  "page-builder",
-  "content-sections",
-  "ai-us-digital-book-project",
-  "ai-digital-book-project",
-  "digital-product-lab",
-  "portfolio-redesign-nextjs",
-  "clickable-swatches",
-  "search-grid-chat",
-  "filter-restyling",
-  "login-page",
+  "gift-card-balance-widget",
+  "gifspark-ai-greeting-app",
+  "gphomestay-digital-experiences",
 ];
