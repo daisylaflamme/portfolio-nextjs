@@ -38,8 +38,11 @@ function getThumbnailSrc(cert) {
 // Full-size certificate images only load once their row has been opened; after that they
 // stay mounted so the collapse animation still shows the image.
 function CertificateAccordion({ items, openIndex, setOpenIndex, getThumbnailSrc: getSrc, sectionId = "", compact = false }) {
-  const openedRef = useRef(new Set());
-  if (openIndex >= 0) openedRef.current.add(openIndex);
+  const [opened, setOpened] = useState(() => new Set());
+  const toggle = (index, isOpen) => {
+    if (!isOpen) setOpened((prev) => (prev.has(index) ? prev : new Set(prev).add(index)));
+    setOpenIndex(isOpen ? -1 : index);
+  };
 
   return (
     <div className="rounded-xl border border-[var(--color-petal-border)] overflow-hidden shadow-[0_2px_10px_rgba(46,46,46,0.08)] bg-[var(--color-primary-bg)]">
@@ -53,7 +56,7 @@ function CertificateAccordion({ items, openIndex, setOpenIndex, getThumbnailSrc:
           >
             <button
               type="button"
-              onClick={() => setOpenIndex(isOpen ? -1 : index)}
+              onClick={() => toggle(index, isOpen)}
               className={`w-full flex items-center text-left bg-[var(--color-petal-bg)] hover:bg-[var(--color-center-circle)]/30 focus:outline-none focus:ring-2 focus:ring-[var(--color-shadow-accent)] focus:ring-inset transition-colors ${compact ? "gap-2 px-3 py-2.5" : "gap-3 px-4 py-4"}`}
               aria-controls={`${sectionId}-cert-content-${index}`}
               aria-expanded={isOpen}
@@ -86,7 +89,7 @@ function CertificateAccordion({ items, openIndex, setOpenIndex, getThumbnailSrc:
             >
               <div className="overflow-hidden">
                 <div className={`border-t border-[var(--color-petal-border)] bg-[var(--color-primary-bg)] ${compact ? "pt-1.5 pb-3 px-3" : "pt-2 pb-4 px-4"}`}>
-                  {openedRef.current.has(index) ? (
+                  {opened.has(index) ? (
                     <Image
                       src={cert.image}
                       alt={`${cert.title}, ${cert.year}`}

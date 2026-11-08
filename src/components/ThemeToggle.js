@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 import { THEME_STORAGE_KEY } from "@/lib/theme";
 
@@ -21,16 +21,22 @@ function MoonIcon(props) {
   );
 }
 
+// The toggle (and the inline init script) write <html data-theme>; watch it for changes.
+function subscribeToTheme(onChange) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  return () => observer.disconnect();
+}
+
+const readIsDark = () => document.documentElement.getAttribute("data-theme") !== "light";
+
 /**
  * Dark mode switch. Icons are swapped with CSS (driven by <html data-theme>) so the
  * server-rendered markup is already correct before hydration.
  */
 export default function ThemeToggle({ className = "" }) {
-  const [isDark, setIsDark] = useState(null);
-
-  useEffect(() => {
-    setIsDark(document.documentElement.getAttribute("data-theme") !== "light");
-  }, []);
+  // null on the server, so aria-pressed is left off until the real theme is known.
+  const isDark = useSyncExternalStore(subscribeToTheme, readIsDark, () => null);
 
   const toggle = () => {
     const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
@@ -40,7 +46,6 @@ export default function ThemeToggle({ className = "" }) {
     } catch {
       // Storage can be unavailable (private mode); the theme still applies for this page.
     }
-    setIsDark(next === "dark");
   };
 
   return (

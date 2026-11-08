@@ -39,11 +39,6 @@ function Gallery({ project }) {
   const [tall, setTall] = useState(false);
   const closeViewer = useCallback(() => setViewerOpen(false), []);
 
-  useEffect(() => {
-    setIndex(0);
-    setViewerOpen(false);
-  }, [project.id]);
-
   if (images.length === 0) return null;
   const current = images[Math.min(index, images.length - 1)];
   const altFor = (i) =>
@@ -222,7 +217,8 @@ export default function ProjectModal({ project, onClose, prevProject, nextProjec
             ) : null}
 
             <div className="flex flex-col gap-4 px-5 pt-7 sm:px-8">
-              <Gallery project={project} />
+              {/* Keyed so prev/next starts each case study at its first screenshot. */}
+              <Gallery key={project.id} project={project} />
               {links.length > 0 ? (
                 <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                   {links.map((link, i) => (

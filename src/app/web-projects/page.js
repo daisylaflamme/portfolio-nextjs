@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, useCallback, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { projects, featuredProjectIds } from "@/data/projects";
 import { groupProjects } from "@/lib/projectSections";
 import ProjectCard, { ProjectRow } from "./ProjectCard";
@@ -17,15 +18,39 @@ const CATEGORIES = [
 
 const PROJECT_PARAM = "project";
 
+// The open case study lives in the URL (?project=<id>), so deep links and reloads work.
+// Next.js syncs useSearchParams with history.replaceState; pass null (not the current
+// history.state, which Next marks as its own) so the update isn't skipped.
 function setProjectParam(id) {
   const url = new URL(window.location.href);
   if (id) url.searchParams.set(PROJECT_PARAM, id);
   else url.searchParams.delete(PROJECT_PARAM);
-  window.history.replaceState(window.history.state, "", url);
+  window.history.replaceState(null, "", url);
+}
+
+// Reads ?project= — kept in its own Suspense boundary so the rest of the page still prerenders.
+function CaseStudyFromUrl({ visible, onOpen, onClose }) {
+  const id = useSearchParams().get(PROJECT_PARAM);
+  const selectedProject = (id && projects.find((p) => p.id === id)) || null;
+
+  // Prev/next follow the order currently on screen (or the full list for deep links).
+  const sequence = selectedProject && visible.some((p) => p.id === selectedProject.id) ? visible : projects;
+  const position = selectedProject ? sequence.findIndex((p) => p.id === selectedProject.id) : -1;
+  const prevProject = position > 0 ? sequence[position - 1] : null;
+  const nextProject = position >= 0 && position < sequence.length - 1 ? sequence[position + 1] : null;
+
+  return (
+    <ProjectModal
+      project={selectedProject}
+      onClose={onClose}
+      prevProject={prevProject}
+      nextProject={nextProject}
+      onNavigate={onOpen}
+    />
+  );
 }
 
 export default function WorkPage() {
-  const [selectedProject, setSelectedProject] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState(() => new Set());
 
   const { featured, earlier } = useMemo(() => {
@@ -37,23 +62,8 @@ export default function WorkPage() {
   const visible = useMemo(() => [...featured, ...earlier], [featured, earlier]);
   const resultCount = visible.length;
 
-  // Deep link: /web-projects?project=<id> opens that case study.
-  useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get(PROJECT_PARAM);
-    if (!id) return;
-    const match = projects.find((p) => p.id === id);
-    if (match) setSelectedProject(match);
-  }, []);
-
-  const openProject = useCallback((project) => {
-    setSelectedProject(project);
-    setProjectParam(project.id);
-  }, []);
-
-  const closeProject = useCallback(() => {
-    setSelectedProject(null);
-    setProjectParam(null);
-  }, []);
+  const openProject = useCallback((project) => setProjectParam(project.id), []);
+  const closeProject = useCallback(() => setProjectParam(null), []);
 
   const toggleFilter = (id) => {
     setSelectedFilters((prev) => {
@@ -64,12 +74,6 @@ export default function WorkPage() {
     });
   };
   const clearFilters = () => setSelectedFilters(new Set());
-
-  // Prev/next follow the order currently on screen (or the full list for deep links).
-  const sequence = selectedProject && visible.some((p) => p.id === selectedProject.id) ? visible : projects;
-  const position = selectedProject ? sequence.findIndex((p) => p.id === selectedProject.id) : -1;
-  const prevProject = position > 0 ? sequence[position - 1] : null;
-  const nextProject = position >= 0 && position < sequence.length - 1 ? sequence[position + 1] : null;
 
   return (
     <main className="flex-1">
@@ -175,13 +179,9 @@ export default function WorkPage() {
         <div className="pb-16" />
       )}
 
-      <ProjectModal
-        project={selectedProject}
-        onClose={closeProject}
-        prevProject={prevProject}
-        nextProject={nextProject}
-        onNavigate={openProject}
-      />
+      <Suspense fallback={null}>
+        <CaseStudyFromUrl visible={visible} onOpen={openProject} onClose={closeProject} />
+      </Suspense>
     </main>
   );
 }

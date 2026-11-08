@@ -30,19 +30,17 @@ export function Logo({ className = "" }) {
 
 export default function SiteHeader() {
   const pathname = usePathname() || "/";
-  const [open, setOpen] = useState(false);
+  // Remember the path the mobile menu was opened on; navigating anywhere closes it.
+  const [openOnPath, setOpenOnPath] = useState(null);
+  const open = openOnPath === pathname;
+  const setOpen = (value) => setOpenOnPath(value ? pathname : null);
   const menuId = useId();
-
-  // Close the mobile menu after navigation.
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   // Escape closes the mobile menu.
   useEffect(() => {
     if (!open) return;
     const onKey = (event) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") setOpenOnPath(null);
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -83,7 +81,7 @@ export default function SiteHeader() {
             aria-expanded={open}
             aria-controls={menuId}
             aria-label="Menu"
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => setOpen(!open)}
           >
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
               {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}

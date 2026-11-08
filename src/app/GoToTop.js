@@ -1,6 +1,17 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useSyncExternalStore } from "react";
+
+function subscribeToScroll(onChange) {
+  window.addEventListener("scroll", onChange, { passive: true });
+  window.addEventListener("resize", onChange);
+  return () => {
+    window.removeEventListener("scroll", onChange);
+    window.removeEventListener("resize", onChange);
+  };
+}
+
+const isPastFold = () => window.scrollY > window.innerHeight;
 
 /**
  * Reusable "scroll to top" button. Fixed at bottom-right, visible only after
@@ -8,17 +19,7 @@ import { useState, useEffect, useCallback } from "react";
  * Use on any long page (e.g. web-projects, resume, about).
  */
 export default function GoToTop() {
-  const [visible, setVisible] = useState(false);
-
-  const checkScroll = useCallback(() => {
-    setVisible(typeof window !== "undefined" && window.scrollY > window.innerHeight);
-  }, []);
-
-  useEffect(() => {
-    checkScroll();
-    window.addEventListener("scroll", checkScroll, { passive: true });
-    return () => window.removeEventListener("scroll", checkScroll);
-  }, [checkScroll]);
+  const visible = useSyncExternalStore(subscribeToScroll, isPastFold, () => false);
 
   const scrollToTop = () => {
     // CSS scroll-behavior doesn't apply to JS scrolling, so honour reduced motion here.
