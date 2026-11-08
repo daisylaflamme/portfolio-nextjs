@@ -134,9 +134,9 @@ export const graphics: WorkItem[] = [
   {
     id: "presentation-banners",
     title: "Presentation title banners",
-    summary: "Title artwork for presentations on fashion, classic New York films and more.",
+    summary: "Title artwork for presentations on fashion, classic New York films and nature.",
     year: 2013,
-    images: [img("g13"), img("g17"), img("g3"), img("g26")],
+    images: [img("g13"), img("g17"), img("g3")],
     imageAlt: "Collaged title banners for presentations, including a fashion collage and a vintage New York film poster",
     tags: ["advertising", "photoshop"],
   },
@@ -208,21 +208,12 @@ export const graphics: WorkItem[] = [
 
   // --- Illustration and retouching ---
   {
-    id: "portrait-illustrations",
-    title: "Portrait illustrations",
-    summary: "Stylized portraits exploring color, texture and abstraction.",
-    year: 2013,
-    images: [img("g15"), img("g16"), img("g14"), img("g8"), img("g10"), img("g12"), img("g19")],
-    imageAlt: "Stylized portraits in leaf textures, cool blues, teal and red, warm orange and soft pink line work",
-    tags: ["illustration", "photoshop"],
-  },
-  {
     id: "texture-studies",
     title: "Texture and pattern studies",
     summary: "Pattern, brush and texture experiments.",
     year: 2013,
-    images: [img("g11"), img("g20"), img("g33"), img("g35")],
-    imageAlt: "Texture studies: seashells on dark sand, a yellow flower, a lace border pattern and a custom brush stroke",
+    images: [img("g11"), img("g33"), img("g35")],
+    imageAlt: "Texture studies: seashells on dark sand, a lace border pattern and a custom brush stroke",
     tags: ["illustration", "photoshop"],
   },
   {
