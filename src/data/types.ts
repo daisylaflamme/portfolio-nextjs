@@ -65,6 +65,8 @@ export interface Project {
   images: string[];
   /** Alt text for the first image. */
   imageAlt: string;
+  /** Optional alt text for every image, in `images` order (the case-study gallery and lightbox use it). */
+  imageAlts?: string[];
   /** Live site, or null when the work isn't public any more. */
   link: string | null;
   extraLinks?: ProjectLink[];

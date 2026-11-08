@@ -57,3 +57,22 @@ test("next moves to the following case study and updates the URL", async ({ page
   await expect(page.getByRole("dialog", { name: second.title })).toBeVisible();
   await expect(page).toHaveURL(projectInUrl(second.id));
 });
+
+test("JavaScript in Colors: featured card opens a case study with live links and described screens", async ({ page }) => {
+  const app = byId("js-in-colors");
+  expect(featuredProjectIds).toContain(app.id);
+  await page.goto(WORK);
+
+  const card = page.getByRole("article").filter({ has: page.getByRole("heading", { name: app.title }) });
+  await card.getByRole("button", { name: /view details/i }).click();
+  const dialog = page.getByRole("dialog", { name: app.title });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("link", { name: /visit site/ })).toHaveAttribute("href", app.link ?? "");
+  await expect(dialog.getByRole("link", { name: /Git Code/ })).toHaveAttribute("href", app.extraLinks?.[0]?.href ?? "");
+
+  const screens = dialog.getByRole("list", { name: "Screenshots" }).getByRole("button");
+  await expect(screens).toHaveCount(app.images.length);
+  // Every screen has its own alt text, not "screenshot n of m".
+  await screens.nth(3).click();
+  await expect(dialog.getByRole("button", { name: `View full size: ${app.imageAlts?.[3]}` })).toBeVisible();
+});

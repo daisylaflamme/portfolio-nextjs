@@ -37,5 +37,11 @@ for (const theme of THEMES) {
       await expect(page.getByRole("dialog")).toBeVisible();
       expect(await blockingViolations(page)).toEqual([]);
     });
+
+    test("the JavaScript in Colors case study has no serious or critical axe violations", async ({ page }) => {
+      await page.goto("/work/web-engineering?project=js-in-colors");
+      await expect(page.getByRole("dialog")).toBeVisible();
+      expect(await blockingViolations(page)).toEqual([]);
+    });
   });
 }

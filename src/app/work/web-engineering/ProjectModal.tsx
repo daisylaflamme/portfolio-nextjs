@@ -43,7 +43,8 @@ function Gallery({ project }: { project: Project }) {
   if (images.length === 0) return null;
   const current = images[Math.min(index, images.length - 1)];
   const altFor = (i: number): string =>
-    i === 0 && project.imageAlt ? project.imageAlt : `${project.title}, screenshot ${i + 1} of ${images.length}`;
+    project.imageAlts?.[i] ??
+    (i === 0 && project.imageAlt ? project.imageAlt : `${project.title}, screenshot ${i + 1} of ${images.length}`);
 
   const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
     const { naturalWidth, naturalHeight } = event.currentTarget;
