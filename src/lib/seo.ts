@@ -52,7 +52,7 @@ export const PAGES: Record<PageKey, PageInfo> = {
     path: "/work/marketing-design",
     title: "Marketing and design",
     description:
-      "Marketing and graphic design by Daisy Laflamme: logos and identity concepts, campaign ads and web banners, flyers, posters and illustration.",
+      "Marketing and graphic design by Daisy Laflamme: campaign landing pages, logos and identity concepts, campaign ads and web banners, flyers, posters and illustration.",
     priority: 0.7,
   },
   presentations: {

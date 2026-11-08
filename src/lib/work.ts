@@ -27,7 +27,7 @@ export const WORK_CATEGORIES: readonly WorkCategory[] = [
     id: "marketing-design",
     label: "Marketing and design",
     path: "/work/marketing-design",
-    blurb: "Logos, ad banners, flyers and illustration",
+    blurb: "Landing pages, logos, ad banners and flyers",
   },
   {
     id: "presentations",

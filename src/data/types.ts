@@ -97,6 +97,7 @@ export interface Certificate {
 /** Tags for the archive categories (graphics, dashboards, presentations). */
 export const WORK_TAGS = [
   // Marketing & design sections, in display order
+  "landing-pages",
   "branding",
   "advertising",
   "print",

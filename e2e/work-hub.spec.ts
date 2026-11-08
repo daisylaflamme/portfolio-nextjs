@@ -2,6 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { dashboards } from "../src/data/dashboards";
 import { graphics } from "../src/data/graphics";
+import { landingPages } from "../src/data/landingPages";
 import { presentations } from "../src/data/presentations";
 import { featuredProjectIds, projects } from "../src/data/projects";
 import { withAvailableFiles } from "../src/lib/archive";
@@ -10,7 +11,7 @@ import { useSavedTheme, type Theme } from "./helpers";
 
 // What the pages can show depends on which archive images are in public/ (they're
 // added separately), so expectations are computed the same way the pages do it.
-const shownGraphics = withAvailableFiles(graphics);
+const shownGraphics = withAvailableFiles([...landingPages, ...graphics]);
 const shownDashboards = withAvailableFiles(dashboards);
 const shownPresentations = withAvailableFiles(presentations);
 const EMPTY_MESSAGE = /being moved over from my old portfolio/;
@@ -80,6 +81,22 @@ test.describe("marketing and design", () => {
       await expect(page.getByRole("button", { name: new RegExp(`^View ${escapeRegExp(item.title)} full size`) })).toBeVisible();
     }
     expect(embeds).toEqual([]);
+  });
+
+  test("landing pages link to their case studies, which stay in web engineering", async ({ page }) => {
+    expect(landingPages.map((item) => item.id).every((id) => projects.some((p) => p.id === id))).toBe(true);
+    await page.goto(path("marketing-design"));
+    const section = page.getByRole("region", { name: "Landing pages" });
+    for (const item of withAvailableFiles(landingPages)) {
+      await expect(section.getByRole("link", { name: `Read the case study: ${item.title}` })).toHaveAttribute(
+        "href",
+        `/work/web-engineering?project=${item.id}`
+      );
+    }
+
+    const first = landingPages[0];
+    await section.getByRole("link", { name: `Read the case study: ${first.title}` }).click();
+    await expect(page.getByRole("dialog", { name: first.title })).toBeVisible();
   });
 
   test("lightbox opens from a tile, pages with arrow keys, closes with Escape and returns focus", async ({ page }) => {

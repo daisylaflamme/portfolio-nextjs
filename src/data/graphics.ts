@@ -75,24 +75,6 @@ export const graphics: WorkItem[] = [
     imageAlt: "Black and white high-contrast illustrated portrait of a woman",
     tags: ["branding", "photoshop"],
   },
-  {
-    id: "portfolio-logotype",
-    title: "Portfolio logotype",
-    summary: "Hand-lettered logotype for an earlier version of this portfolio.",
-    year: 2013,
-    images: [img("g32")],
-    imageAlt: "The word DAISY in orange letters with a red flower replacing the I",
-    tags: ["branding"],
-  },
-  {
-    id: "business-cards",
-    title: "Business cards",
-    summary: "Personal business card layouts in four color treatments.",
-    year: 2013,
-    images: [img("g36")],
-    imageAlt: "Four business card designs with a portrait photo and contact details on pastel gradients",
-    tags: ["branding", "print"],
-  },
 
   // --- Advertising and banners ---
   {
