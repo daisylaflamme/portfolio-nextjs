@@ -108,6 +108,7 @@ export default function CertificatesPage() {
   return (
     <main className="font-inter min-h-screen py-8 px-4 md:px-8" id="main-content">
       <div className="max-w-4xl mx-auto space-y-12">
+        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] font-bold tracking-tight text-fg">Education and certificates</h1>
         {/* Degrees */}
         <section aria-labelledby="degrees-heading">
           <h2 id="degrees-heading" className="text-xl font-semibold text-[var(--color-font-primary)] mb-6">

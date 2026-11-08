@@ -73,6 +73,7 @@ export default function AboutPage() {
     <main className="font-inter min-h-screen py-8 px-4 md:px-8" id="main-content">
       <article className="max-w-4xl mx-auto">
         <header className="text-center mb-10 md:mb-12">
+          <h1 className="font-display text-[clamp(2rem,5vw,3rem)] font-bold tracking-tight text-fg mb-3">About</h1>
           <p className="text-base md:text-lg text-[var(--color-font-secondary)] max-w-xl mx-auto">
             Senior UI / Front-End Engineer crafting clean interfaces for complex systems.
           </p>

@@ -1,36 +1,71 @@
 import "./globals.css";
-import Header from "./Header";
-import NavMenu from "./NavMenu";
-import Dock from "./Dock";
-import Footer from "./Footer";
+import { Suspense } from "react";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import ResumeVisitTracker from "@/components/ResumeVisitTracker";
+import { themeInitScript } from "@/lib/theme";
+
+// Self-hosted by next/font: no render-blocking Google Fonts request, no layout shift.
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter-var", display: "swap" });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-var", display: "swap" });
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono-var", display: "swap" });
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e14" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f7f5" },
+  ],
 };
 
 export const metadata = {
-  title: "Daisy Laflamme | Senior UI & Front-End Engineer Portfolio",
-  description: "Portfolio of Daisy Laflamme, Senior UI and Front-End Engineer specializing in modern UI architecture, Angular and React development, e-commerce interfaces, design systems, and high-quality user experience engineering.",
+  metadataBase: new URL("https://www.daisylaflamme.net"),
+  title: {
+    default: "Daisy Laflamme | Senior Frontend & UI Engineer",
+    template: "%s | Daisy Laflamme",
+  },
+  description:
+    "Daisy Laflamme is a senior frontend and UI engineer building accessible, high-performance interfaces for multi-brand e-commerce, marketing, and product teams with React, Next.js, Angular, and TypeScript.",
   icons: {
     icon: "/images/daisy.ico",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Daisy Laflamme",
+    title: "Daisy Laflamme | Senior Frontend & UI Engineer",
+    description:
+      "Design-minded engineer for commerce, marketing and product UI. Case studies in multi-brand e-commerce, payments, accessibility and design systems.",
+    url: "/",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="font-inter pb-20 lg:pb-0 flex flex-col min-h-screen">
-        <Header />
-        <NavMenu />
-        <div className="flex-1 flex flex-col">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="flex min-h-screen flex-col bg-bg font-sans text-fg">
+        <a href="#content" className="skip-link">
+          Skip to content
+        </a>
+        <SiteHeader />
+        <div id="content" tabIndex={-1} className="flex flex-1 flex-col outline-none">
           {children}
         </div>
-        <Dock />
-        <Footer />
+        <SiteFooter />
+        <Suspense fallback={null}>
+          <ResumeVisitTracker />
+        </Suspense>
         <Analytics />
         <SpeedInsights />
       </body>

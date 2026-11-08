@@ -1,120 +1,187 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { projects, featuredProjectIds } from "@/data/projects";
 import { groupProjects } from "@/lib/projectSections";
-import ProjectCard from "./ProjectCard";
+import ProjectCard, { ProjectRow } from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
-import ProjectFilterBar from "./ProjectFilterBar";
+import FilterChips from "./FilterChips";
 import { PROJECT_FILTERS } from "./projectFilters";
-import GoToTop from "../GoToTop";
 
-export default function Page() {
+const CATEGORIES = [
+  { label: "Web engineering", current: true },
+  { label: "Dashboards" },
+  { label: "Marketing and design" },
+  { label: "Presentations" },
+];
+
+const PROJECT_PARAM = "project";
+
+function setProjectParam(id) {
+  const url = new URL(window.location.href);
+  if (id) url.searchParams.set(PROJECT_PARAM, id);
+  else url.searchParams.delete(PROJECT_PARAM);
+  window.history.replaceState(window.history.state, "", url);
+}
+
+export default function WorkPage() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState(() => new Set());
 
   const { featured, earlier } = useMemo(() => {
-    const activeFilters = PROJECT_FILTERS.filter((filter) => selectedFilters.has(filter.id));
-    return groupProjects(projects, featuredProjectIds, activeFilters);
+    const active = PROJECT_FILTERS.filter((f) => selectedFilters.has(f.id));
+    return groupProjects(projects, featuredProjectIds, active);
   }, [selectedFilters]);
-  const resultCount = featured.length + earlier.length;
-  const hasResults = resultCount > 0;
 
-  const toggleFilter = (filterId) => {
+  const [hero, ...grid] = featured;
+  const visible = useMemo(() => [...featured, ...earlier], [featured, earlier]);
+  const resultCount = visible.length;
+
+  // Deep link: /web-projects?project=<id> opens that case study.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get(PROJECT_PARAM);
+    if (!id) return;
+    const match = projects.find((p) => p.id === id);
+    if (match) setSelectedProject(match);
+  }, []);
+
+  const openProject = useCallback((project) => {
+    setSelectedProject(project);
+    setProjectParam(project.id);
+  }, []);
+
+  const closeProject = useCallback(() => {
+    setSelectedProject(null);
+    setProjectParam(null);
+  }, []);
+
+  const toggleFilter = (id) => {
     setSelectedFilters((prev) => {
       const next = new Set(prev);
-      if (next.has(filterId)) next.delete(filterId);
-      else next.add(filterId);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
   const clearFilters = () => setSelectedFilters(new Set());
 
-  const renderGrid = (items) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {items.map((project) => (
-        <ProjectCard
-          key={project.id}
-          project={project}
-          onViewDetails={setSelectedProject}
-        />
-      ))}
-    </div>
-  );
+  // Prev/next follow the order currently on screen (or the full list for deep links).
+  const sequence = selectedProject && visible.some((p) => p.id === selectedProject.id) ? visible : projects;
+  const position = selectedProject ? sequence.findIndex((p) => p.id === selectedProject.id) : -1;
+  const prevProject = position > 0 ? sequence[position - 1] : null;
+  const nextProject = position >= 0 && position < sequence.length - 1 ? sequence[position + 1] : null;
 
   return (
-    <main className="font-inter min-h-screen py-8 px-4 md:px-8">
-      <div className="max-w-5xl mx-auto rounded-2xl p-6 md:p-8 shadow-md">
-        <div className="mb-8">
-          <ProjectFilterBar
-            selected={selectedFilters}
-            onToggle={toggleFilter}
-            onClear={clearFilters}
-          />
-          <p className="sr-only" aria-live="polite">
-            {selectedFilters.size === 0
-              ? `Showing all ${resultCount} projects`
-              : `Showing ${resultCount} matching ${resultCount === 1 ? "project" : "projects"}`}
-          </p>
-        </div>
-        {!hasResults ? (
-          <div
-            className="rounded-xl border border-[var(--color-petal-border)] bg-[var(--color-petal-bg)] p-6 md:p-8 text-center"
-            role="status"
-          >
-            <p className="text-[var(--color-font-primary)] font-medium text-lg mb-2">
-              No projects match these filters.
-            </p>
-            <p className="text-[var(--color-font-secondary)] text-sm max-w-md mx-auto mb-4">
-              Try removing a filter, or show every project again.
-            </p>
+    <main className="flex-1">
+      <section className="mx-auto max-w-6xl px-4 pb-6 pt-10 sm:px-6 sm:pt-14">
+        <h1 className="font-display text-[clamp(2.25rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">Work</h1>
+        <p className="mt-3 max-w-2xl text-[17px] leading-relaxed text-muted sm:text-lg">
+          Case studies from multi-brand e-commerce, marketing and product teams — the problem, what I built, and
+          what changed.
+        </p>
+      </section>
+
+      <nav aria-label="Work categories" className="mx-auto max-w-6xl px-4 sm:px-6">
+        <ul className="flex gap-6 overflow-x-auto border-b border-line text-[15px] font-semibold sm:gap-8 sm:text-base">
+          {CATEGORIES.map((cat) => (
+            <li key={cat.label} className="shrink-0">
+              {cat.current ? (
+                <a
+                  href="/web-projects"
+                  aria-current="page"
+                  className="inline-flex min-h-12 items-center border-b-[3px] border-accent text-fg no-underline"
+                >
+                  {cat.label}
+                </a>
+              ) : (
+                <span className="inline-flex min-h-12 items-center gap-2 text-muted" aria-disabled="true">
+                  {cat.label}
+                  <span className="rounded-full border border-line px-2 py-0.5 font-mono text-[11px] font-normal">soon</span>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
+        <FilterChips selected={selectedFilters} onToggle={toggleFilter} onClear={clearFilters} />
+        <p className="mt-3 text-sm text-muted" role="status" aria-live="polite">
+          {selectedFilters.size === 0
+            ? `${resultCount} projects`
+            : `${resultCount} matching ${resultCount === 1 ? "project" : "projects"}`}
+        </p>
+      </div>
+
+      {resultCount === 0 ? (
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+          <div className="rounded-2xl border border-line bg-surface p-8 text-center">
+            <p className="text-lg font-semibold text-fg">No projects match these filters.</p>
+            <p className="mx-auto mt-2 max-w-md text-muted">Try removing a filter, or show every project again.</p>
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-[var(--color-petal-border)] bg-[var(--color-primary-bg)] text-[var(--color-font-primary)] font-medium text-sm hover:bg-[var(--color-center-circle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-shadow-accent)] focus:ring-offset-2 transition-colors"
+              className="mt-5 inline-flex min-h-11 items-center rounded-lg border border-field px-5 font-semibold text-fg hover:border-fg"
             >
               Clear all filters
             </button>
           </div>
-        ) : (
-          <>
-            {featured.length > 0 ? (
-              <section aria-labelledby="featured-work-heading">
-                <h2
-                  id="featured-work-heading"
-                  className="font-playfair-display font-medium text-2xl text-[var(--color-font-primary)] mb-5"
-                >
-                  Featured Engineering Work
-                </h2>
-                {renderGrid(featured)}
-              </section>
-            ) : null}
-            {earlier.length > 0 ? (
-              <section
-                aria-labelledby="earlier-work-heading"
-                className={
-                  featured.length > 0
-                    ? "mt-14 pt-10 border-t border-[var(--color-petal-border)]"
-                    : undefined
-                }
-              >
-                <h2
-                  id="earlier-work-heading"
-                  className="font-playfair-display font-medium text-xl text-[var(--color-font-primary)] mb-1"
-                >
-                  Earlier Web &amp; UI Work
-                </h2>
-                <p className="text-sm text-[var(--color-font-secondary)] mb-5">
-                  Web development, UI/design, CMS, education, and volunteer projects from earlier in my career.
-                </p>
-                {renderGrid(earlier)}
-              </section>
-            ) : null}
-          </>
-        )}
-      </div>
-      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
-      <GoToTop />
+        </div>
+      ) : null}
+
+      {hero ? (
+        <section aria-labelledby="featured-heading" className="mx-auto max-w-6xl px-4 pt-8 sm:px-6">
+          <h2 id="featured-heading" className="sr-only">
+            Featured case studies
+          </h2>
+          <ProjectCard project={hero} onOpen={openProject} featured />
+          {grid.length > 0 ? (
+            <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {grid.map((project) => (
+                <li key={project.id}>
+                  <ProjectCard project={project} onOpen={openProject} />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </section>
+      ) : null}
+
+      {earlier.length > 0 ? (
+        <section aria-labelledby="earlier-heading" className="mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6">
+          <h2 id="earlier-heading" className="sr-only">
+            Earlier web and UI work
+          </h2>
+          <details className="group rounded-2xl border border-line bg-surface px-5 sm:px-6" open={featured.length === 0}>
+            <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
+              <span className="flex flex-col gap-1">
+                <span className="font-display text-lg font-semibold text-fg sm:text-xl">Earlier web and UI work</span>
+                <span className="text-sm text-muted">
+                  {earlier.length} projects · WordPress, campaigns, prototypes, education and volunteer work
+                </span>
+              </span>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className="shrink-0 text-muted transition-transform group-open:rotate-180">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <ul className="pb-2">
+              {earlier.map((project) => (
+                <ProjectRow key={project.id} project={project} onOpen={openProject} />
+              ))}
+            </ul>
+          </details>
+        </section>
+      ) : (
+        <div className="pb-16" />
+      )}
+
+      <ProjectModal
+        project={selectedProject}
+        onClose={closeProject}
+        prevProject={prevProject}
+        nextProject={nextProject}
+        onNavigate={openProject}
+      />
     </main>
   );
 }

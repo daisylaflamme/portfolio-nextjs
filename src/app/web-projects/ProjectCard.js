@@ -1,41 +1,92 @@
 "use client";
 
 import Image from "next/image";
+import { topicLabels } from "@/lib/projectDisplay";
 
 /**
- * Renders a single project card (no dialog). Thumbnail 250×150px.
- * Calls onViewDetails(project) when "View Details" is clicked.
+ * Case-study card. The "View details" button opens the project dialog;
+ * its accessible name includes the project title.
  */
-export default function ProjectCard({ project, onViewDetails }) {
-  return (
-    <div className="project-card flex flex-col rounded-xl overflow-hidden">
-      <div className="w-full shrink-0 flex justify-center bg-[var(--color-petal-bg)] py-2">
-        <Image
-          src={project.thumbnail}
-          alt={project.imageAlt || project.title}
-          width={250}
-          height={150}
-          className="w-[250px] h-[150px] object-cover object-center shrink-0 rounded-lg border border-[var(--color-petal-border)]"
-          sizes="250px"
-        />
-      </div>
-      <div className="flex flex-col flex-1 p-4">
-        <h3 className="font-semibold text-[var(--color-font-primary)] text-base mb-2">
-          {project.title}
-        </h3>
-        <p className="project-card__description text-sm flex-1 mb-4 leading-relaxed">
-          {project.summary}
-        </p>
-        <div className="flex justify-end">
+export default function ProjectCard({ project, onOpen, featured = false }) {
+  const topics = topicLabels(project).join(" · ");
+
+  if (featured) {
+    return (
+      <article className="overflow-hidden rounded-3xl border border-line bg-surface md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+        <div className="relative aspect-[16/10] bg-img md:aspect-auto md:min-h-80">
+          <Image
+            src={project.thumbnail}
+            alt={project.imageAlt || ""}
+            fill
+            priority
+            sizes="(min-width: 1152px) 600px, (min-width: 768px) 52vw, 100vw"
+            className="object-cover"
+          />
+        </div>
+        <div className="flex flex-col gap-4 p-6 sm:p-8">
+          <p className="font-mono text-[13px] text-accent">{"// featured"}</p>
+          <h3 className="font-display text-[clamp(1.6rem,3.5vw,2.1rem)] font-semibold leading-tight text-fg">
+            {project.title}
+          </h3>
+          <p className="text-base leading-relaxed text-body sm:text-[17px]">{project.summary}</p>
+          {topics ? <p className="font-mono text-[13px] text-muted">{topics}</p> : null}
           <button
             type="button"
-            className="text-sm font-medium text-[var(--color-font-primary)] px-3 py-2 rounded-md border border-[var(--color-petal-border)] hover:bg-[var(--color-petal-bg)] transition-colors"
-            onClick={() => onViewDetails(project)}
+            onClick={() => onOpen(project)}
+            className="mt-1 inline-flex min-h-12 items-center self-start rounded-lg bg-accent px-6 font-mono text-[15px] font-medium text-on-accent transition-opacity hover:opacity-90"
           >
-            View Details &rarr;
+            read case study<span className="sr-only">: {project.title}</span>
           </button>
         </div>
+      </article>
+    );
+  }
+
+  return (
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface">
+      <div className="relative aspect-[16/10] bg-img">
+        <Image
+          src={project.thumbnail}
+          alt={project.imageAlt || ""}
+          fill
+          sizes="(min-width: 1152px) 360px, (min-width: 640px) 50vw, 100vw"
+          className="object-cover"
+        />
       </div>
-    </div>
+      <div className="flex flex-1 flex-col gap-2.5 p-5 sm:p-6">
+        {topics ? <p className="font-mono text-xs text-accent">{topics}</p> : null}
+        <h3 className="font-display text-xl font-semibold leading-snug text-fg">{project.title}</h3>
+        <p className="flex-1 text-[15px] leading-relaxed text-muted">{project.summary}</p>
+        <button
+          type="button"
+          onClick={() => onOpen(project)}
+          className="mt-1 inline-flex min-h-11 items-center self-start font-semibold text-fg underline-offset-4 hover:text-accent hover:underline"
+        >
+          View details<span className="sr-only">: {project.title}</span> <span aria-hidden="true">&nbsp;→</span>
+        </button>
+      </div>
+    </article>
+  );
+}
+
+/** Compact row for "Earlier work". */
+export function ProjectRow({ project, onOpen }) {
+  return (
+    <li className="border-t border-line first:border-t-0">
+      <button
+        type="button"
+        onClick={() => onOpen(project)}
+        className="group flex w-full items-center gap-4 py-4 text-left"
+      >
+        <span className="relative hidden h-16 w-24 shrink-0 overflow-hidden rounded-lg bg-img sm:block">
+          <Image src={project.thumbnail} alt="" fill sizes="96px" className="object-cover" />
+        </span>
+        <span className="flex min-w-0 flex-1 flex-col gap-1">
+          <span className="font-semibold text-fg group-hover:text-accent">{project.title}</span>
+          <span className="line-clamp-2 text-sm leading-relaxed text-muted">{project.summary}</span>
+        </span>
+        <span aria-hidden="true" className="text-muted group-hover:text-accent">→</span>
+      </button>
+    </li>
   );
 }

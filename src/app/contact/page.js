@@ -12,6 +12,9 @@ const CONTACT_LINKS = {
 export default function ContactPage() {
   return (
     <main className="font-inter min-h-screen py-8 px-4 md:px-8">
+      <div className="max-w-5xl mx-auto mb-6 md:mb-8">
+        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] font-bold tracking-tight text-fg ">Let’s connect</h1>
+      </div>
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
         <section
           className="contact-section rounded-2xl p-6 md:p-8 shadow-md"
