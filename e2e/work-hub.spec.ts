@@ -3,7 +3,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { dashboards } from "../src/data/dashboards";
 import { graphics } from "../src/data/graphics";
 import { landingPages } from "../src/data/landingPages";
-import { presentations } from "../src/data/presentations";
+import { presentations, SLIDESHARE_PROFILE } from "../src/data/presentations";
 import { featuredProjectIds, projects } from "../src/data/projects";
 import { withAvailableFiles } from "../src/lib/archive";
 import { WORK_CATEGORIES } from "../src/lib/work";
@@ -185,6 +185,9 @@ test.describe("presentations", () => {
       await expect(article.getByRole("link", { name: /download pdf/ })).toHaveCount(item.pdf ? 1 : 0);
       expect(item.link || item.pdf).toBeTruthy();
     }
+    const all = page.getByRole("link", { name: /see all presentations on SlideShare/ });
+    await expect(all).toHaveAttribute("href", SLIDESHARE_PROFILE);
+    await expect(all).toHaveAttribute("target", "_blank");
     expect(embeds).toEqual([]);
   });
 });

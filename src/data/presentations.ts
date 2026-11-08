@@ -10,6 +10,9 @@ import type { WorkItem } from "./types";
  */
 const dir = "/images/archive/presentations";
 
+/** Every deck, including ones not shown here. */
+export const SLIDESHARE_PROFILE = "https://www.slideshare.net/DesiPink";
+
 export const presentations: WorkItem[] = [
   {
     id: "javascript-learning-platform",

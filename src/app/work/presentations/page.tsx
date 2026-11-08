@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { presentations } from "@/data/presentations";
+import { presentations, SLIDESHARE_PROFILE } from "@/data/presentations";
 import { withAvailableFiles } from "@/lib/archive";
 import { PAGES, pageMetadata } from "@/lib/seo";
 import WorkHeader from "../WorkHeader";
@@ -20,7 +20,7 @@ export default function PresentationsPage() {
 
       {items.length === 0 ? <EmptyArchive /> : null}
 
-      <ul className="mx-auto grid max-w-6xl gap-6 px-4 pb-16 pt-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
+      <ul className="mx-auto grid max-w-6xl gap-6 px-4 pb-10 pt-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
         {items.map((item, i) => (
           <li key={item.id} id={item.id} className="scroll-mt-24">
             <article aria-labelledby={`${item.id}-title`} className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface">
@@ -67,6 +67,18 @@ export default function PresentationsPage() {
           </li>
         ))}
       </ul>
+
+      <p className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <a
+          href={SLIDESHARE_PROFILE}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-11 items-center gap-2 font-mono text-[15px] text-accent underline decoration-1 underline-offset-4 hover:decoration-2"
+        >
+          see all presentations on SlideShare <span aria-hidden="true">↗</span>
+          <span className="sr-only">(opens in a new tab)</span>
+        </a>
+      </p>
     </main>
   );
 }
