@@ -57,12 +57,13 @@ export const projects = [
       "Implemented scalable, polished UI components and interactions that delivered consistent shopping experiences across 20+ furniture e-commerce sites on Blueport’s platform.",
     description:
       "Contributed to a multi-tenant e-commerce platform powering furniture retailers by translating hundreds of design mocks into production-ready, responsive front-end experiences. Implemented and enhanced a shared library of brand-configurable UI patterns—including custom pages, carousels, sliders, tabs, modals, forms, filters, and site configuration—so multiple clients could adopt consistent UX while preserving unique visual identity. Delivered core shopping surfaces such as mobile/desktop navigation and menus, global footers, search results grids, masonry galleries, product cards, PDP layouts, and cart pages with order summaries and sticky interactive CTAs. Collaborated cross-functionally to lead checkout UI flow initiatives, improving usability and consistency across brands while maintaining a high bar for semantic markup, maintainable styling, and scalable component architecture. Built and maintained features in a mixed legacy + modern stack (Angular, JavaScript, HTML,SCSS, CSS, C#, AngularJS, jQuery, LESS, Bootstrap) integrated with platform services.",
-    role: "Front-end engineer; led checkout UI initiatives",
-    team: "Cross-functional",
+    role: "Front-End Developer → Senior Front-End Engineer",
+    team: "Cross-functional; led checkout UI initiatives",
+    dates: "2016 – 2025",
     stack: ["Angular","AngularJS","JavaScript","SCSS","LESS","Bootstrap"],
     problem: "20+ furniture retailers shared one e-commerce platform but each needed its own brand identity.",
     whatIBuilt: ["Translated hundreds of design mocks into responsive, production-ready front-end experiences.","Shared library of brand-configurable patterns: carousels, sliders, tabs, modals, forms, filters.","Core shopping surfaces: navigation, footers, search grids, product cards, PDPs, and cart.","Led checkout UI flow initiatives for usability and consistency across brands."],
-    impact: ["Consistent shopping UX across 20+ storefronts","Each brand kept its own visual identity"],
+    impact: ["20+ storefronts running on one shared UI library","Hundreds of design mocks shipped as production UI","Each brand kept its own visual identity"],
     thumbnail: "/images/projects/thumbnails/masonry-collage.jpg",
     images: [
       "/images/projects/masonry-collage.jpg"
@@ -79,11 +80,13 @@ export const projects = [
       "Enabled enterprise furniture eCommerce brands to offer flexible checkout options by integrating multiple payment providers end‑to‑end.",
     description:
       "Led front‑end integration of a multi‑provider payment ecosystem across checkout (Payment → Review → Thank You pages) for multiple client storefronts. Implemented and standardized integrations for Acima, Affirm, PayLater, Progressive Leasing, SetPay, ChargeAfter, credit/debit cards, and gift cards—expanding customer choice and improving conversion potential. Wrapped complex vendor JavaScript SDKs / npm packages into secure, reusable Angular library components with configuration‑driven feature flags so the same codebase could be safely shared across brands. Coordinated UI state, validation, and async payment authorization flows, wiring components to BFF endpoints (tokenization, order totals, promotions, financing eligibility, and payment capture) to keep sensitive logic server‑side while delivering a seamless, responsive, cross‑browser experience across mobile, tablet, and desktop.",
-    role: "Front-end integration lead",
+    role: "Senior Front-End Engineer · integration lead",
+    team: "Owned it; worked with UX, product, payment vendors, and back-end",
+    dates: "2019 – 2025",
     stack: ["Angular","JavaScript","SCSS","Vendor SDKs","BFF APIs"],
     problem: "Multiple furniture brands needed many payment and financing options in checkout, all running on one shared codebase.",
     whatIBuilt: ["Integrated Acima, Affirm, PayLater, Progressive Leasing, SetPay, ChargeAfter, cards, and gift cards.","Wrapped vendor SDKs and npm packages into reusable Angular library components.","Configuration-driven feature flags so each brand enables only its providers.","Validation and async authorization flows across Payment, Review, and Thank You pages.","Wired components to BFF endpoints so sensitive payment logic stays server-side."],
-    impact: ["6 financing and leasing providers, plus card and gift-card payments","One checkout codebase shared safely across brands","Sensitive payment logic kept server-side"],
+    impact: ["8 payment methods: 6 financing and leasing providers, plus cards and gift cards","One checkout codebase shared across brands via feature flags","Sensitive payment logic kept server-side"],
     thumbnail: "/images/projects/thumbnails/payment-morris.jpg",
     images: [
       "/images/projects/payment.png",
@@ -107,8 +110,9 @@ export const projects = [
       "Owned a full end‑to‑end migration of store‑locator maps across multiple brands—reducing annual mapping costs by ~80% while improving UX and brand consistency.",
     description:
       "Drove the initiative from discovery to delivery: evaluated map platform options, created a clear decision matrix for leadership, and aligned stakeholders on the recommended approach. Implemented a shared Angular base component that supports Mapbox and OpenStreetMap, with secure, configuration‑driven branding (custom pin colors, styles, and per‑brand toggles) reusable across all storefronts. Added a custom store‑type legend (e.g., Furniture Store vs Mattress Store) and ensured accessible, responsive behavior across devices. Partnered with QA and UX to validate interactions, edge cases, and performance, and delivered a production‑ready rollout with thorough testing and release support.",
-    role: "Owner, discovery through rollout",
+    role: "Senior Front-End Engineer · initiative owner",
     team: "UX, QA, and leadership stakeholders",
+    dates: "2019 – 2025",
     stack: ["Angular","Mapbox","OpenStreetMap","SCSS"],
     problem: "Store-locator maps across several brands were costly, and each brand needed its own look on a shared platform.",
     whatIBuilt: ["Evaluated map platforms and wrote a decision matrix for leadership.","Shared Angular base component supporting both Mapbox and OpenStreetMap.","Per-brand pin colors, styles, and toggles driven by secure configuration.","Custom store-type legend, such as Furniture Store versus Mattress Store.","Validated accessibility, responsiveness, and performance with QA and UX before rollout."],
@@ -134,11 +138,12 @@ export const projects = [
     description:
       "Built GifSpark as an AI-powered digital product from concept through launch planning, combining product discovery, UX strategy, prototyping, implementation, QA, and monetization. The app allows users to upload a photo, generate a personalized greeting, and export it as WebP, GIF, or MP4. I led the product experience end-to-end—defining user flows, refining UX details, improving responsive behavior, and optimizing performance for media-heavy processing workflows. The platform integrates Runway gen4_turbo for AI animation generation, Stripe for credit-based payments, and Supabase/Lovable Cloud for authentication, storage, database management, and Edge Functions. I also introduced in-app AI support chat and built safeguards around key flows such as generation, downloads, payments, and account usage.",
   
-    role: "Product lead, designer, and developer",
+    role: "Founder, designer, and developer",
+    team: "Solo project",
     stack: ["React","TypeScript","Vite","Tailwind","Supabase","Stripe","Runway API"],
     problem: "Turn a single photo into a personalized animated greeting people can pay for and download.",
     whatIBuilt: ["Upload, generate, and export flow producing WebP, GIF, or MP4 greetings.","Runway gen4_turbo integration for AI animation generation.","Credit-based Stripe payments with Supabase auth, storage, database, and Edge Functions.","In-app AI support chat and safeguards around generation, downloads, and payments."],
-    impact: ["Live app with paid, credit-based generation","Three export formats: WebP, GIF, and MP4"],
+    impact: ["Live with paying users through Stripe","Designed, built, and launched solo","3 export formats: WebP, GIF, and MP4"],
     thumbnail: "/images/projects/thumbnails/gst.jpg",
     images: [
       "/images/projects/gs.jpg",
@@ -210,7 +215,9 @@ export const projects = [
       "Built a reusable, plug‑and‑play hero carousel that lets non‑technical teams publish and manage homepage marketing content through the CMS—without code changes.",
     description:
       "Architected and delivered a configurable carousel widget that can be dropped into any client landing page or custom homepage layout. Integrated the Tiny‑Slider JavaScript library and wrapped it in a maintainable component pattern with CMS‑controlled content (images, slide order, links, and placement) so marketing teams could self‑serve updates. Optimized layout, touch interactions, and loading behavior for mobile, tablet, and desktop, and validated quality through cross‑browser and responsive testing. This unlocked faster campaign launches and improved homepage engagement by keeping featured promotions fresh across multiple brands.",
-    role: "Architect and front-end engineer",
+    role: "Front-End Developer · owner",
+    team: "Owned it; worked with UX, product, and back-end",
+    dates: "2016 – 2019",
     stack: ["JavaScript","Tiny-Slider","SCSS","CMS"],
     problem: "Marketing teams needed to update homepage promotions without waiting on engineering.",
     whatIBuilt: ["Configurable carousel widget that drops into any landing page or custom homepage.","Tiny-Slider wrapped in a maintainable component with CMS-controlled images, order, and links.","Optimized touch interactions, layout, and loading for mobile, tablet, and desktop."],
@@ -233,11 +240,13 @@ export const projects = [
       "Built a reusable, accessibility‑first modal system with multiple interaction patterns, enabling teams to standardize UX while meeting brand and ADA requirements.",
     description:
       "Architected a shared modal library in Angular to support common client interaction needs across high‑traffic eCommerce flows. Delivered multiple modal variants—including a lightweight info/lightbox modal for gated selections, a full‑width takeover modal for maximum focus, a header‑anchored modal with precise positioning and partial overlay, and a slide‑in side modal for smooth, non‑blocking experiences. Implemented configurable behavior via Angular inputs (layout, size, overlay, focus handling, and close rules) and validated keyboard navigation, focus trapping, screen‑reader semantics, and responsive behavior to align with ADA/WCAG expectations. This standardized UI patterns across brands while keeping implementations consistent, configurable, and easy to adopt.",
-    role: "Architect and front-end engineer",
+    role: "Senior Front-End Engineer · owner",
+    team: "Owned it; worked with UX, product, and back-end",
+    dates: "2019 – 2025",
     stack: ["Angular","SCSS","ARIA"],
     problem: "High-traffic checkout and UX flows needed consistent modals that met brand and ADA requirements.",
     whatIBuilt: ["Info/lightbox, full-width takeover, header-anchored, and slide-in side modal variants.","Angular inputs for layout, size, overlay, focus handling, and close rules.","Keyboard navigation, focus trapping, and screen-reader semantics validated against WCAG."],
-    impact: ["One modal library standardizing UX patterns across brands","Keyboard, focus, and screen-reader behavior validated against WCAG"],
+    impact: ["4 modal variants from one configurable library","Keyboard, focus, and screen-reader behavior validated against WCAG"],
     thumbnail: "/images/projects/thumbnails/header-modal.jpg",
     images: [
       "/images/projects/full-modal.png",
@@ -258,7 +267,9 @@ export const projects = [
       "Built a plug‑and‑play gift card balance checker as a reusable web component, enabling multiple brands to add the feature anywhere on their websites with consistent UX across devices.",
     description:
       "Architected and implemented a standalone Angular library component packaged as a web component so client teams could embed a gift card balance check on any custom page without bespoke development. Integrated secure, configuration‑driven theming for brand consistency and delivered a seamless mobile, tablet, and desktop experience. Wired the front end to BFF endpoints that broker requests to the Loft API, keeping sensitive integrations server‑side while providing fast, reliable balance lookups. Supported multi‑brand reuse through shared configuration, robust validation, and thorough cross‑browser and responsive testing.",
-    role: "Architect and front-end engineer",
+    role: "Senior Front-End Engineer · owner",
+    team: "Owned it; worked with UX, product, Loft API vendor, and back-end",
+    dates: "2019 – 2025",
     stack: ["Angular","Web Components","BFF APIs","Loft API"],
     problem: "Brands wanted a gift card balance check on any page without custom development each time.",
     whatIBuilt: ["Standalone Angular library component packaged as an embeddable web component.","Secure, configuration-driven theming for each brand.","Wired to BFF endpoints that broker Loft API requests server-side."],
@@ -323,8 +334,9 @@ export const projects = [
       "Delivered a new, responsive product card system from Figma—implemented pixel-perfect across mobile, tablet, and desktop to modernize PLP browsing and improve shopping clarity.",
     description:
       "Partnered with a fellow UI engineer to implement a sleek new product card design directly from client Figma mockups, meeting a tight delivery timeline with a high-quality, pixel-accurate result. Built responsive layouts and interaction details across breakpoints (including pricing, badges, swatches, favorites, and merchandising cues) while maintaining clean, scalable front-end structure. Collaborated with a BFF engineer to align on API and data-shape updates needed to support the new UI, ensuring reliable rendering and consistent behavior across storefronts. The launch shipped with minimal iteration due to strong alignment with the mocks and careful execution, resulting in a polished browsing experience for customers.",
-    role: "UI engineer",
+    role: "Senior Front-End Engineer",
     team: "Paired with a UI engineer; coordinated with a BFF engineer",
+    dates: "2019 – 2025",
     stack: ["Angular","SCSS","Figma","BFF APIs"],
     problem: "The product listing pages needed a new product card from client Figma mockups on a tight timeline.",
     whatIBuilt: ["Pixel-accurate product cards from Figma across mobile, tablet, and desktop.","Pricing, badges, swatches, favorites, and merchandising cues in a scalable structure.","Aligned API and data-shape updates with the BFF engineer for reliable rendering."],
@@ -364,7 +376,9 @@ export const projects = [
     title: "Cookie Consent & Preference Management",
     summary: "Implemented a reusable, CMS-driven cookie consent experience across multiple brands, integrating Termly and Google Tag Manager to enforce user preferences and support compliant analytics/marketing behavior across devices.",
     description: "Built a configurable cookie consent feature that can be deployed across multi-tenant storefronts via the CMS with consistent UX on mobile, tablet, and desktop. Implemented the UI with JavaScript, HTML, and CSS, supporting brand styling and flexible placement patterns. Integrated the Termly third-party consent banner and connected preference signals to site behavior so analytics, personalization, and marketing tags respect user choices. Configured Google Tag Manager to conditionally fire third-party JavaScript libraries based on consent state, aligning GTM triggers and tag settings with Termly categories to enable/disable cookies appropriately. Delivered a reliable consent workflow that improves compliance readiness while keeping the experience clear and unobtrusive for shoppers.",
-    role: "Front-end engineer",
+    role: "Senior Front-End Engineer · owner",
+    team: "Owned it; worked with UX, product, Termly, and back-end",
+    dates: "2019 – 2025",
     stack: ["JavaScript","Termly","Google Tag Manager","CMS"],
     problem: "Every brand needed a consent experience that actually controls which analytics and marketing tags run.",
     whatIBuilt: ["CMS-deployable cookie consent UI with brand styling and flexible placement.","Integrated the Termly consent banner with site behavior and user preferences.","GTM triggers and tag settings aligned with Termly categories to fire tags by consent."],
