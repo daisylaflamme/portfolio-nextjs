@@ -16,6 +16,9 @@
 # production
 /build
 
+# full-size image originals (kept locally; the site ships WebP from public/)
+/assets/originals/
+
 # misc
 .DS_Store
 *.pem

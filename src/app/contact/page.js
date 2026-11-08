@@ -2,12 +2,8 @@
 
 import Link from "next/link";
 import ContactForm from "./ContactForm";
-
-const CONTACT_LINKS = {
-  email: "mailto:daisy@daisylaflamme.net",
-  linkedin: "https://www.linkedin.com/in/desislavalaflamme/",
-  github: "https://github.com/daisylaflamme/portfolio-nextjs",
-};
+// One source for contact links, shared with the footer and home page.
+import { CONTACT_LINKS } from "@/components/SiteFooter";
 
 export default function ContactPage() {
   return (

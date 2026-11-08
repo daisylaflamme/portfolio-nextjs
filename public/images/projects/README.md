@@ -11,5 +11,6 @@ reference it in `src/data/projects.js`, then run:
 
     npm run images:projects
 
-That converts it to WebP, updates the path in `projects.js`, and moves the original out. The full-size PNG/JPG originals live in `assets/originals/images/projects/`, outside
-`public/`, so they are kept in the repo but never shipped with the site.
+That converts it to WebP, updates the path in `projects.js`, and moves the original out. The full-size PNG/JPG originals go to `assets/originals/images/projects/`, outside
+`public/` and git-ignored: they stay on your machine but are never committed or shipped.
+Back that folder up separately if you want to keep the originals.

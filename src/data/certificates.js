@@ -8,7 +8,7 @@ export const diplomas = [
     {
         thumbnail: "/images/certificates/thumbnails/umass.jpg",
         image: "/images/certificates/umass-diploma.jpg",
-        title: "UMass Boston Bachelor of Science - Information Architecture - Iformation Technology",
+        title: "UMass Boston Bachelor of Science - Information Architecture - Information Technology",
         year: 2012
       },
       {
