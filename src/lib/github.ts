@@ -4,7 +4,7 @@
  * With a GITHUB_TOKEN env var (a fine-grained token with public read-only access is
  * enough; see README), this queries the GitHub GraphQL API and aggregates language
  * bytes across my own public, non-fork repositories, for each range in LANGUAGE_RANGES
- * (all time, and repos pushed in the last 12 months), from one request.
+ * (repos pushed in the last 12 months, and all time), from one request.
  * The home page is regenerated once a day (ISR), so this runs at most once a day.
  *
  * Without a token, or if anything goes wrong, it returns clearly labelled sample data
@@ -18,10 +18,10 @@ const ENDPOINT = "https://api.github.com/graphql";
 const REVALIDATE_SECONDS = 60 * 60 * 24;
 const TIMEOUT_MS = 8000;
 const TOP_N = 5;
-/** Ranges the chart can switch between; the first is the default. */
+/** Ranges the chart can switch between, in display order; the first one with data is the default. */
 export const LANGUAGE_RANGES = [
-  { id: "all", label: "All time", months: null },
   { id: "12m", label: "Last 12 months", months: 12 },
+  { id: "all", label: "All time", months: null },
 ] as const satisfies ReadonlyArray<{ id: string; label: string; months: number | null }>;
 
 export type LanguageRangeId = (typeof LANGUAGE_RANGES)[number]["id"];
@@ -224,7 +224,8 @@ export function languageRanges(data: LanguagesQueryData, now: Date = new Date())
 }
 
 const SAMPLE_STATS: LanguageStats = {
-  ranges: [{ id: LANGUAGE_RANGES[0].id, label: LANGUAGE_RANGES[0].label, languages: SAMPLE_LANGUAGES }],
+  // Sample data isn't tied to a time range, so it's labelled as all time.
+  ranges: [{ id: "all", label: "All time", languages: SAMPLE_LANGUAGES }],
   isSample: true,
 };
 

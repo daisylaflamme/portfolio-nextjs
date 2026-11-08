@@ -97,14 +97,14 @@ describe("aggregateLanguages", () => {
 });
 
 describe("languageRanges", () => {
-  it("returns all time first, then the last 12 months", () => {
+  it("returns the last 12 months first (the default), then all time", () => {
     const ranges = languageRanges(RESPONSE.data!, NOW);
     assert.deepEqual(
       ranges.map((r) => [r.id, r.label]),
       LANGUAGE_RANGES.map((r) => [r.id, r.label])
     );
-    assert.equal(ranges[0].languages[0].name, "PHP");
-    assert.equal(ranges[1].languages[0].name, "TypeScript");
+    assert.equal(ranges[0].languages[0].name, "TypeScript");
+    assert.equal(ranges[1].languages[0].name, "PHP");
   });
 
   it("leaves out a range with no data", () => {
@@ -202,8 +202,8 @@ describe("getLanguageStats", () => {
     const stats = await getLanguageStats(NOW);
     assert.equal(stats.isSample, false);
     assert.equal(fetchMock.mock.callCount(), 1);
-    assert.deepEqual(stats.ranges.map((r) => r.id), ["all", "12m"]);
-    assert.deepEqual(stats.ranges[1].languages[0], { name: "TypeScript", pct: 80 });
+    assert.deepEqual(stats.ranges.map((r) => r.id), ["12m", "all"]);
+    assert.deepEqual(stats.ranges[0].languages[0], { name: "TypeScript", pct: 80 });
   });
 
   it("uses sample data without a token and doesn't call GitHub", async () => {

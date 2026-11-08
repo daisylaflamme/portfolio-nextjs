@@ -139,7 +139,7 @@ Copy `.env.local.example` to `.env.local` for local use (it's git-ignored). On V
 
 ### GitHub token
 
-The home page sums language bytes across my public, non-fork repositories with one GraphQL request, for each range in `LANGUAGE_RANGES` (`src/lib/github.ts`): **All time** (the default) and **Last 12 months** (repos pushed in that time). A switch on the card changes the range without another request. The page is regenerated at most once a day (ISR), so the token is used about once a day.
+The home page sums language bytes across my public, non-fork repositories with one GraphQL request, for each range in `LANGUAGE_RANGES` (`src/lib/github.ts`): **Last 12 months** (the default: repos pushed in that time) and **All time**. If no repo was pushed in the last 12 months, All time is shown instead. A switch on the card changes the range without another request. The page is regenerated at most once a day (ISR), so the token is used about once a day.
 
 1. GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → **Generate new token**.
 2. Name it `portfolio-nextjs (Vercel)`, set **Resource owner** to your account and pick an expiration (set a reminder to rotate it).

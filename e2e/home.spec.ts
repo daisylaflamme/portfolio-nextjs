@@ -14,15 +14,16 @@ test("language chart: labelled sample, or a working time-range switch", async ({
     return;
   }
 
-  const [all, recent] = LANGUAGE_RANGES;
-  const allButton = ranges.getByRole("button", { name: all.label });
-  const recentButton = ranges.getByRole("button", { name: recent.label });
-  await expect(allButton).toHaveAttribute("aria-pressed", "true");
+  // The first range is the default; the other one is a click away.
+  const [first, second] = LANGUAGE_RANGES;
+  const firstButton = ranges.getByRole("button", { name: first.label });
+  const secondButton = ranges.getByRole("button", { name: second.label });
+  await expect(firstButton).toHaveAttribute("aria-pressed", "true");
   const summary = chart.locator(".sr-only");
-  await expect(summary).toContainText(all.label.toLowerCase());
+  await expect(summary).toContainText(first.label.toLowerCase());
 
-  await recentButton.click();
-  await expect(recentButton).toHaveAttribute("aria-pressed", "true");
-  await expect(allButton).toHaveAttribute("aria-pressed", "false");
-  await expect(summary).toContainText(recent.label.toLowerCase());
+  await secondButton.click();
+  await expect(secondButton).toHaveAttribute("aria-pressed", "true");
+  await expect(firstButton).toHaveAttribute("aria-pressed", "false");
+  await expect(summary).toContainText(second.label.toLowerCase());
 });
