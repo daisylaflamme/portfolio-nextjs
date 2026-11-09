@@ -1,6 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode, type SyntheticEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent,
+  type ReactNode,
+  type SyntheticEvent,
+} from "react";
 import type { Project } from "@/data/types";
 import Image from "next/image";
 import { caseStudyContent, projectImages, stackLabels, topicLabels } from "@/lib/projectDisplay";
@@ -39,7 +48,13 @@ function ExternalLink({ href, children, primary = false }: { href: string; child
  * - native: screenshots narrower than the frame, shown no wider than their own pixel
  *   width so a small source isn't blown up into a blur (tall ones still crop to the top)
  */
-type Fit = { kind: "contain" } | { kind: "top" } | { kind: "native"; width: number; tall: boolean };
+type Fit =
+  /** `wide`: width ÷ height of an image wider than the 16:10 frame (a component close-up). */
+  | { kind: "contain"; wide?: number }
+  | { kind: "top" }
+  | { kind: "native"; width: number; tall: boolean };
+
+const FRAME_RATIO = 16 / 10;
 
 /**
  * The file's real pixel size. `naturalWidth` on a srcset image is divided by the chosen
@@ -111,11 +126,16 @@ function Gallery({ project }: { project: Project }) {
     const src = current;
     // Measure the gallery frame (the button), not the image's box, which may already be narrowed.
     const frameEl = img.closest("button") ?? img;
-    const frame = { width: frameEl.clientWidth, height: frameEl.clientHeight };
+    // The 16:10 height, not clientHeight: on phones a previous wide image may have reshaped the frame.
+    const frame = {
+      width: frameEl.clientWidth,
+      height: Math.min(frameEl.clientWidth / FRAME_RATIO, window.innerHeight * 0.62, 600),
+    };
     pixelSize(img)
       .then(({ width, height, framed }) => {
         if (width > 0) {
-          const next: Fit = framed ? { kind: "contain" } : fitFor(width, height, frame);
+          let next: Fit = framed ? { kind: "contain" } : fitFor(width, height, frame);
+          if (next.kind === "contain" && width / height > FRAME_RATIO) next = { kind: "contain", wide: width / height };
           setFits((prev) => ({ ...prev, [src]: next }));
         }
       })
@@ -128,7 +148,12 @@ function Gallery({ project }: { project: Project }) {
         type="button"
         onClick={() => setViewerOpen(true)}
         aria-label={`View full size: ${altFor(index)}`}
-        className="group relative block aspect-[16/10] max-h-[min(62dvh,600px)] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-line bg-img"
+        // On phones a wide, short image sets the frame's shape, so it isn't a strip between empty bands.
+        // Larger screens keep 16:10 so the thumbnails below don't jump under the pointer.
+        style={fit.kind === "contain" && fit.wide ? ({ "--gallery-ratio": String(fit.wide) } as CSSProperties) : undefined}
+        className={`group relative block aspect-[16/10] max-h-[min(62dvh,600px)] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-line bg-img ${
+          fit.kind === "contain" && fit.wide ? "max-sm:aspect-(--gallery-ratio)" : ""
+        }`}
       >
         {/* A `fill` image is always 100% of its box, so a small screenshot narrows the box. */}
         <span
