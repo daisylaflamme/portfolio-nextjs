@@ -62,7 +62,7 @@ export interface Project {
   description: string;
   thumbnail: string;
   /**
-   * Optional composite (e.g. devices on a transparent background) for the featured card.
+   * Optional composite (e.g. devices on a transparent background) for the project cards.
    * Shown whole with object-contain, so its frames are never cropped.
    */
   heroImage?: string;

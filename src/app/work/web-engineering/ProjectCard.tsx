@@ -73,13 +73,26 @@ export default function ProjectCard({ project, onOpen, featured = false }: Proje
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface">
       <div className="relative aspect-[16/10] bg-img">
-        <Image
-          src={src}
-          alt={project.imageAlt || ""}
-          fill
-          sizes="(min-width: 1152px) 360px, (min-width: 1024px) 31vw, (min-width: 640px) 48vw, calc(100vw - 2rem)"
-          className="object-cover object-top"
-        />
+        {project.heroImage ? (
+          // Device frames: shown whole, never cropped.
+          <div className="absolute inset-3 sm:inset-4">
+            <Image
+              src={project.heroImage}
+              alt={project.imageAlt || ""}
+              fill
+              sizes="(min-width: 1152px) 330px, (min-width: 1024px) 29vw, (min-width: 640px) 45vw, calc(100vw - 3.5rem)"
+              className="object-contain"
+            />
+          </div>
+        ) : (
+          <Image
+            src={src}
+            alt={project.imageAlt || ""}
+            fill
+            sizes="(min-width: 1152px) 360px, (min-width: 1024px) 31vw, (min-width: 640px) 48vw, calc(100vw - 2rem)"
+            className="object-cover object-top"
+          />
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-2.5 p-5 sm:p-6">
         {topics ? <p className="font-mono text-xs text-accent">{topics}</p> : null}
