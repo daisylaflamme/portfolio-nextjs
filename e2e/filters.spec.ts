@@ -41,3 +41,23 @@ test("filters update the result count", async ({ page }) => {
   await expect(status).toHaveText(`${projects.length} projects`);
   await expect(payments).toHaveAttribute("aria-pressed", "false");
 });
+
+test("earlier work opens while filters are active and closes when they are cleared", async ({ page }) => {
+  // The first filter whose matches include earlier (non-featured) projects, from the data.
+  const filter = PROJECT_FILTERS.find((f) => groupProjects(projects, featuredProjectIds, [f]).earlier.length > 0);
+  if (!filter) throw new Error("No filter matches an earlier project");
+  const [firstEarlier] = groupProjects(projects, featuredProjectIds, [filter]).earlier;
+
+  await page.goto("/work/web-engineering");
+  const earlier = page.locator("section[aria-labelledby='earlier-heading'] details");
+  await expect(earlier).not.toHaveAttribute("open");
+
+  const chip = page.getByRole("button", { name: filter.label, exact: true });
+  if (!(await chip.isVisible())) await page.getByRole("button", { name: "More", exact: true }).click();
+  await chip.click();
+  await expect(earlier).toHaveAttribute("open");
+  await expect(earlier.getByRole("button", { name: firstEarlier.title })).toBeVisible();
+
+  await page.getByRole("button", { name: /^Clear filters/ }).click();
+  await expect(earlier).not.toHaveAttribute("open");
+});

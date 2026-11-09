@@ -132,12 +132,12 @@ export default function WorkPage() {
           <h2 id="earlier-heading" className="sr-only">
             Earlier web and UI work
           </h2>
-          <details className="group rounded-2xl border border-line bg-surface px-5 sm:px-6" open={featured.length === 0}>
+          <details className="group rounded-2xl border border-line bg-surface px-5 sm:px-6" open={selectedFilters.size > 0 || featured.length === 0}>
             <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
               <span className="flex flex-col gap-1">
                 <span className="font-display text-lg font-semibold text-fg sm:text-xl">Earlier web and UI work</span>
                 <span className="text-sm text-muted">
-                  {earlier.length} projects · WordPress, campaigns, prototypes, education and volunteer work
+                  {earlier.length} {earlier.length === 1 ? "project" : "projects"} · WordPress, campaigns, prototypes, education and volunteer work
                 </span>
               </span>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className="shrink-0 text-muted transition-transform group-open:rotate-180">
