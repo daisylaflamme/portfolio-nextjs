@@ -16,6 +16,9 @@
 # production
 /build
 
+# full-size image originals (kept locally; the site ships WebP from public/)
+/assets/originals/
+
 # misc
 .DS_Store
 *.pem
@@ -34,3 +37,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
