@@ -24,6 +24,7 @@ Before calling a task done: lint, typecheck, test:unit, build, test:e2e. CI (`.g
 
 - `src/app/` routes. Work categories under `src/app/work/` share `WorkHeader` (tabs are links with `aria-current`). `/web-projects` 308-redirects to `/work/web-engineering`, keeping `?project=`.
 - `src/data/` content: `projects.ts` (case studies, `featuredProjectIds`), `graphics.ts`, `dashboards.ts`, `presentations.ts`, `landingPages.ts` (derived from projects), `certificates.ts`. Every shape is in `types.ts`; add new tags to `PROJECT_TAGS` / `WORK_TAGS` there.
+  - Project images: `images[0]` is the card image (object-cover) and the first gallery image; `imageAlts` (optional, same order as `images`) gives per-image alt text, falling back to `imageAlt`. Optional `heroImage` is a device composite (transparent background): every card shows it whole with object-contain and padding instead of the cover image (only the featured card is `priority`). In the gallery, images with a transparent corner (device mockups) are always shown whole; plain screenshots may top-crop when tall.
 - `src/lib/` helpers: `seo.ts` (`PAGES`, titles, sitemap), `work.ts` (category list), `github.ts` (GraphQL languages, typed, falls back to labelled sample data), `archive.ts` (hides items whose images are missing).
 - Résumé PDF: `public/resume/`, linked from `RESUME_PDF` in `src/lib/resume.ts` (home hero and /resume). To update it, replace the file and the `details` text.
 - `src/components/` shared UI, including `ImageLightbox` (the `<dialog>` pattern used everywhere).

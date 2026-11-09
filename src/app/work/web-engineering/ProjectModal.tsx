@@ -46,18 +46,48 @@ type Fit = { kind: "contain" } | { kind: "top" } | { kind: "native"; width: numb
  * candidate's density (an 804px file can report 383), so read it from a plain copy,
  * which comes straight from the cache.
  */
-async function pixelSize(img: HTMLImageElement): Promise<{ width: number; height: number }> {
+async function pixelSize(img: HTMLImageElement): Promise<{ width: number; height: number; framed: boolean }> {
   const probe = new window.Image();
   probe.src = img.currentSrc || img.src;
   await probe.decode();
-  return { width: probe.naturalWidth, height: probe.naturalHeight };
+  return { width: probe.naturalWidth, height: probe.naturalHeight, framed: transparentCorner(probe) };
 }
+
+/**
+ * Device mockups (a phone or browser frame on a transparent background) have a see-through
+ * corner; plain screenshots don't. A mockup is always shown whole: cropping cuts the frame.
+ */
+function transparentCorner(image: HTMLImageElement): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 1;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return false;
+    ctx.drawImage(image, 0, 0, 1, 1, 0, 0, 1, 1);
+    return ctx.getImageData(0, 0, 1, 1).data[3] < 255;
+  } catch {
+    return false;
+  }
+}
+
+/** Below this share of the image visible, a top crop hides the point of the screenshot… */
+const MIN_VISIBLE_WHEN_CROPPED = 0.6;
+/** …unless showing it whole would shrink it past readable (phones): then keep the crop. */
+const MIN_SCALE_WHEN_WHOLE = 0.4;
 
 function fitFor(width: number, height: number, frame: { width: number; height: number }): Fit {
   const tall = height / width > 1.2;
-  // Crop to the top only when there's more image than frame; a short one is shown whole.
-  if (width < frame.width * 0.9) return { kind: "native", width, tall: tall && height > frame.height };
-  return tall ? { kind: "top" } : { kind: "contain" };
+  const native = width < frame.width * 0.9;
+  // Crop to the top only when there's more image than frame and most of it still shows;
+  // a very tall screenshot (a long checkout page) is shown whole instead.
+  const shownWidth = native ? width : frame.width;
+  const visible = frame.height / (height * (shownWidth / width));
+  const crop = tall && visible < 1;
+  if (crop && visible < MIN_VISIBLE_WHEN_CROPPED && frame.height / height >= MIN_SCALE_WHEN_WHOLE) {
+    return { kind: "contain" };
+  }
+  if (native) return { kind: "native", width, tall: crop };
+  return crop ? { kind: "top" } : { kind: "contain" };
 }
 
 function Gallery({ project }: { project: Project }) {
@@ -83,8 +113,11 @@ function Gallery({ project }: { project: Project }) {
     const frameEl = img.closest("button") ?? img;
     const frame = { width: frameEl.clientWidth, height: frameEl.clientHeight };
     pixelSize(img)
-      .then(({ width, height }) => {
-        if (width > 0) setFits((prev) => ({ ...prev, [src]: fitFor(width, height, frame) }));
+      .then(({ width, height, framed }) => {
+        if (width > 0) {
+          const next: Fit = framed ? { kind: "contain" } : fitFor(width, height, frame);
+          setFits((prev) => ({ ...prev, [src]: next }));
+        }
       })
       .catch(() => {});
   };
@@ -126,9 +159,10 @@ function Gallery({ project }: { project: Project }) {
         onIndexChange={setIndex}
       />
       {images.length > 1 ? (
-        <ul className="flex gap-2 overflow-x-auto pb-1" aria-label="Screenshots">
+        // Scrolls sideways on phones; thumbnails stay 80×56 (above the 44px target size).
+        <ul className="-mx-1 flex snap-x gap-2 overflow-x-auto overscroll-x-contain px-1 pb-1" aria-label="Screenshots">
           {images.map((src, i) => (
-            <li key={src} className="shrink-0">
+            <li key={src} className="shrink-0 snap-start">
               <button
                 type="button"
                 onClick={() => setIndex(i)}
@@ -138,7 +172,14 @@ function Gallery({ project }: { project: Project }) {
                   i === index ? "border-accent" : "border-transparent hover:border-field"
                 }`}
               >
-                <Image src={src} alt="" fill sizes="80px" className="object-cover object-top" />
+                <Image
+                  src={src}
+                  alt=""
+                  fill
+                  sizes="80px"
+                  // A device mockup set: show each frame whole rather than its top corner.
+                  className={project.heroImage ? "object-contain p-0.5" : "object-cover object-top"}
+                />
               </button>
             </li>
           ))}
