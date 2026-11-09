@@ -213,15 +213,27 @@ export const projects: Project[] = [
     problem: "Turn a single photo into a personalized animated greeting people can pay for and download.",
     whatIBuilt: ["Upload, generate, and export flow producing WebP, GIF, or MP4 greetings.","Runway gen4_turbo integration for AI animation generation.","Credit-based Stripe payments with Supabase auth, storage, database, and Edge Functions.","In-app AI support chat and safeguards around generation, downloads, and payments."],
     impact: ["Live with paying users through Stripe","Designed, built, and launched solo","3 export formats: WebP, GIF, and MP4"],
-    thumbnail: "/images/projects/thumbnails/gst.webp",
+    thumbnail: "/images/projects/gifspark/thumbnails/devices.webp",
     images: [
-      "/images/projects/gs.webp",
-      "/images/projects/gs4.webp",
-      "/images/projects/gs5.webp",
-      "/images/projects/gs6.webp"
+      "/images/projects/gifspark/devices.webp",
+      "/images/projects/gifspark/create-tablet.webp",
+      "/images/projects/gifspark/result.webp",
+      "/images/projects/gifspark/greeting.webp",
+      "/images/projects/gifspark/customize-phone.webp",
+      "/images/projects/gifspark/phone-screens.webp",
+      "/images/projects/gifspark/buy-credits.webp",
     ],
     imageAlt:
       "GifSpark AI greeting app showing photo upload, AI animation generation, message overlay, and downloadable animated greeting formats.",
+    imageAlts: [
+      "GifSpark screens on desktop, tablet and phone: a finished animated greeting with download buttons, the upload and customize form, and a photo added on mobile.",
+      "Tablet create screen: step 1 drag-and-drop photo upload, step 2 an optional short message, six motion styles and frame vibes, and the Animate Photo button.",
+      "Result screen: the AI-generated animation of a woman waving, with Download Animated WebP, GIF and MP4 buttons and share options.",
+      "An animated greeting made with GifSpark: a woman waves from a window seat with the message Hello, Good morning.",
+      "Mobile customize screen: uploaded photo with Adjust, a typed message, Wave selected, and a checkbox confirming permission to use the image.",
+      "Two phone screens: a photo uploaded with credits shown in the header, and the Redeem a promo code dialog.",
+      "Buy Credits dialog: 1, 3 and 10 credit packs with per-credit prices, the current balance, and Stripe secure checkout.",
+    ],
   
     link: null,
   
