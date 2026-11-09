@@ -53,11 +53,24 @@ async function pixelSize(img: HTMLImageElement): Promise<{ width: number; height
   return { width: probe.naturalWidth, height: probe.naturalHeight };
 }
 
+/** Below this share of the image visible, a top crop hides the point of the screenshot… */
+const MIN_VISIBLE_WHEN_CROPPED = 0.6;
+/** …unless showing it whole would shrink it past readable (phones): then keep the crop. */
+const MIN_SCALE_WHEN_WHOLE = 0.4;
+
 function fitFor(width: number, height: number, frame: { width: number; height: number }): Fit {
   const tall = height / width > 1.2;
-  // Crop to the top only when there's more image than frame; a short one is shown whole.
-  if (width < frame.width * 0.9) return { kind: "native", width, tall: tall && height > frame.height };
-  return tall ? { kind: "top" } : { kind: "contain" };
+  const native = width < frame.width * 0.9;
+  // Crop to the top only when there's more image than frame and most of it still shows;
+  // a very tall screenshot (a long checkout page) is shown whole instead.
+  const shownWidth = native ? width : frame.width;
+  const visible = frame.height / (height * (shownWidth / width));
+  const crop = tall && visible < 1;
+  if (crop && visible < MIN_VISIBLE_WHEN_CROPPED && frame.height / height >= MIN_SCALE_WHEN_WHOLE) {
+    return { kind: "contain" };
+  }
+  if (native) return { kind: "native", width, tall: crop };
+  return crop ? { kind: "top" } : { kind: "contain" };
 }
 
 function Gallery({ project }: { project: Project }) {

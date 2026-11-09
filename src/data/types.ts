@@ -61,6 +61,11 @@ export interface Project {
   /** Long form; split into an overview and highlights when `problem`/`whatIBuilt` are absent. */
   description: string;
   thumbnail: string;
+  /**
+   * Optional composite (e.g. devices on a transparent background) for the featured card.
+   * Shown whole with object-contain, so its frames are never cropped.
+   */
+  heroImage?: string;
   /** Full-size images for the case-study gallery; the first one is also the card image. */
   images: string[];
   /** Alt text for the first image. */

@@ -24,17 +24,32 @@ export default function ProjectCard({ project, onOpen, featured = false }: Proje
   const src = cardImage(project);
 
   if (featured) {
+    const hero = project.heroImage;
     return (
       <article className="overflow-hidden rounded-3xl border border-line bg-surface md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         <div className="relative aspect-[16/10] bg-img md:aspect-auto md:min-h-80">
-          <Image
-            src={src}
-            alt={project.imageAlt || ""}
-            fill
-            priority
-            sizes="(min-width: 1152px) 600px, (min-width: 768px) 52vw, calc(100vw - 2rem)"
-            className="object-cover object-top"
-          />
+          {hero ? (
+            // A composite with device frames: show it whole, inset from the edges.
+            <div className="absolute inset-4 sm:inset-6 lg:inset-8">
+              <Image
+                src={hero}
+                alt={project.imageAlt || ""}
+                fill
+                priority
+                sizes="(min-width: 1152px) 540px, (min-width: 1024px) 47vw, (min-width: 768px) 48vw, calc(100vw - 4rem)"
+                className="object-contain"
+              />
+            </div>
+          ) : (
+            <Image
+              src={src}
+              alt={project.imageAlt || ""}
+              fill
+              priority
+              sizes="(min-width: 1152px) 600px, (min-width: 768px) 52vw, calc(100vw - 2rem)"
+              className="object-cover object-top"
+            />
+          )}
         </div>
         <div className="flex flex-col gap-4 p-6 sm:p-8">
           <p className="font-mono text-[13px] text-accent">{"// featured"}</p>
