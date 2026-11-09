@@ -184,14 +184,16 @@ a {
   margin: 0;
   padding: 0;
   border: 0;
-  background: transparent;
+  /* The dark layer is on the dialog itself (not ::backdrop) so the white controls and
+     caption sit on a real background that contrast checkers can see. */
+  background: rgb(0 0 0 / 0.92);
   width: 100vw;
   height: 100dvh;
   max-width: 100vw;
   max-height: 100dvh;
 }
 .lightbox-dialog::backdrop {
-  background: rgb(0 0 0 / 0.92);
+  background: transparent;
 }
 
 html.has-open-dialog {

@@ -132,6 +132,73 @@ export const projects: Project[] = [
     tags: ["html", "angular", "ecommerce", "scss", "css", "api-integrations", "maps"],
   },
   {
+    id: "js-in-colors",
+    title: "JavaScript in Colors: Learning App for Kids",
+    summary:
+      "An Angular 22 app that teaches JavaScript ideas to children aged 6 to 12 through color, shape and tiny interactions. Built to WCAG 2.2 AA and private by design: no accounts, no tracking.",
+    description:
+      "JavaScript in Colors introduces young children to programming ideas with almost no typing. Every concept has its own color, shape and word: numbers are blue circles, words are green pills, yes-or-no is a purple diamond, and a variable is a jar with a name on it. Ten lessons run on a data-driven lesson engine, Home shows the lessons as a color path, and finishing all ten earns a certificate made entirely in the browser. Ask Dot, the mascot, answers JavaScript questions in a safe demo mode, with an optional live AI mode behind a small server. I made the product and design calls and built it with Claude Code in four days, working from official mockups and recording each decision in an architecture decision record.",
+    role: "Product owner, designer and developer",
+    team: "Solo, built with Claude Code",
+    dates: "Nov 2026",
+    stack: ["Angular 22", "TypeScript", "Nx", "NgRx SignalStore", "SCSS", "Hono", "Vitest", "Storybook", "Cypress"],
+    problem:
+      "Teach children aged 6 to 12 what code does without asking them to type it, and do it without collecting anything about them.",
+    whatIBuilt: [
+      "Lesson engine that renders ten lessons from YAML, validated and compiled to typed, lazy-loaded modules at build time.",
+      "Design system where every concept pairs a color with a shape and a word, in light, dark and high-contrast themes.",
+      "Responsive lesson screen from phone to desktop: overlay menu, bottom tab bar and bottom sheet on phones; side tabs and drawer on larger screens.",
+      "Ask Dot chat: reviewed demo answers by default, and a live AI mode through a Hono server with layered child-safety checks.",
+      "Progress kept only on the device under a random resume code, and a certificate drawn and downloaded in the browser.",
+    ],
+    impact: [
+      "Lighthouse mobile 99 on Home and lessons, 100 for accessibility",
+      "0 axe violations at phone, tablet and desktop, in all 3 themes",
+      "101 kB gzipped initial JavaScript and CSS",
+      "32 of 32 child-safety chat checks passed against the live AI",
+    ],
+    thumbnail: "/images/projects/js-in-colors/thumbnails/devices.webp",
+    images: [
+      "/images/projects/js-in-colors/devices.webp",
+      "/images/projects/js-in-colors/lesson-desktop.webp",
+      "/images/projects/js-in-colors/lesson-tablet.webp",
+      "/images/projects/js-in-colors/phone-screens.webp",
+      "/images/projects/js-in-colors/home-color-path.webp",
+      "/images/projects/js-in-colors/code-peek.webp",
+      "/images/projects/js-in-colors/ask-dot.webp",
+      "/images/projects/js-in-colors/certificate.webp",
+      "/images/projects/js-in-colors/design-tokens.webp",
+    ],
+    imageAlt:
+      "JavaScript in Colors lesson screen mockups on desktop, tablet and phone: Dot the mascot beside a jar labelled favorite holding the number 7.",
+    imageAlts: [
+      "JavaScript in Colors lesson screen mockups on desktop, tablet and phone: Dot the mascot beside a jar labelled favorite holding the number 7.",
+      "Desktop lesson mockup: the lesson menu with the color path, the Variables lesson, concept chips, and choices to put in the jar.",
+      "Tablet lesson mockup: menu closed, with Tip, Library and Read to me tabs on the right edge.",
+      "Four phone mockups: the lesson, the menu as an overlay, the Library as a bottom sheet, and a tip above the tab bar.",
+      "Home mockup: the color path of ten lessons as concept shapes, with a Continue button and a legend.",
+      "Lesson mockup with Peek at the code open: one line of real JavaScript explained in plain words.",
+      "Ask Dot chat mockup in demo mode, with suggested questions and Dot's safe chat rules.",
+      "Certificate of Discovery mockup with a typed name, Download and Print buttons, and the concept shapes.",
+      "Design token mockup: each concept's color, shape and word, with measured contrast ratios.",
+    ],
+    link: "https://daisylaflamme.github.io/js-in-colors/",
+    extraLinks: [{ label: "Git Code", href: "https://github.com/daisylaflamme/js-in-colors" }],
+    tags: [
+      "angular",
+      "typescript",
+      "scss",
+      "accessibility",
+      "ai",
+      "ui-components",
+      "ux-design",
+      "product-design",
+      "instructional-design",
+      "qa",
+      "digital-product",
+    ],
+  },
+  {
     id: "gifspark-ai-greeting-app",
     title: "GifSpark: AI Photo-to-GIF Greeting App",
     summary:
@@ -146,15 +213,27 @@ export const projects: Project[] = [
     problem: "Turn a single photo into a personalized animated greeting people can pay for and download.",
     whatIBuilt: ["Upload, generate, and export flow producing WebP, GIF, or MP4 greetings.","Runway gen4_turbo integration for AI animation generation.","Credit-based Stripe payments with Supabase auth, storage, database, and Edge Functions.","In-app AI support chat and safeguards around generation, downloads, and payments."],
     impact: ["Live with paying users through Stripe","Designed, built, and launched solo","3 export formats: WebP, GIF, and MP4"],
-    thumbnail: "/images/projects/thumbnails/gst.webp",
+    thumbnail: "/images/projects/gifspark/thumbnails/devices.webp",
     images: [
-      "/images/projects/gs.webp",
-      "/images/projects/gs4.webp",
-      "/images/projects/gs5.webp",
-      "/images/projects/gs6.webp"
+      "/images/projects/gifspark/devices.webp",
+      "/images/projects/gifspark/create-tablet.webp",
+      "/images/projects/gifspark/result.webp",
+      "/images/projects/gifspark/greeting.webp",
+      "/images/projects/gifspark/customize-phone.webp",
+      "/images/projects/gifspark/phone-screens.webp",
+      "/images/projects/gifspark/buy-credits.webp",
     ],
     imageAlt:
       "GifSpark AI greeting app showing photo upload, AI animation generation, message overlay, and downloadable animated greeting formats.",
+    imageAlts: [
+      "GifSpark screens on desktop, tablet and phone: a finished animated greeting with download buttons, the upload and customize form, and a photo added on mobile.",
+      "Tablet create screen: step 1 drag-and-drop photo upload, step 2 an optional short message, six motion styles and frame vibes, and the Animate Photo button.",
+      "Result screen: the AI-generated animation of a woman waving, with Download Animated WebP, GIF and MP4 buttons and share options.",
+      "An animated greeting made with GifSpark: a woman waves from a window seat with the message Hello, Good morning.",
+      "Mobile customize screen: uploaded photo with Adjust, a typed message, Wave selected, and a checkbox confirming permission to use the image.",
+      "Two phone screens: a photo uploaded with credits shown in the header, and the Redeem a promo code dialog.",
+      "Buy Credits dialog: 1, 3 and 10 credit packs with per-credit prices, the current balance, and Stripe secure checkout.",
+    ],
   
     link: null,
   
@@ -345,8 +424,8 @@ export const projects: Project[] = [
     impact: ["Shipped on a tight timeline with minimal iteration","Consistent behavior across storefronts"],
     thumbnail: "/images/projects/thumbnails/plp-asi.webp",
     images: [
-      "/images/projects/product-card-design.webp",
       "/images/projects/plp-asi.webp",
+      "/images/projects/product-card-design.webp"
     ],
     imageAlt:
       "Product listing page showing a redesigned product card layout with imagery, pricing, badges, and swatches, implemented responsively across devices.",
@@ -900,19 +979,22 @@ export const projects: Project[] = [
 ];
 
 /**
- * Display order for the "Featured Engineering Work" section on /web-projects.
+ * Display order for the "Featured Engineering Work" section on /work/web-engineering.
  * Any project whose id is not listed here appears under "Earlier Web & UI Work",
  * in its order within `projects`.
  */
 export const featuredProjectIds: Project["id"][] = [
   "checkout-multi-payments",
+  "js-in-colors",
   "store-details-maps",
   "blueport-multisite-platform-ui",
   "angular-modal-system",
   "cms-hero-carousel",
   "cookie-consent-multi-brand",
   "product-card-redesign",
+  "cross-sell-addon-slider",
+  "finance-messaging-integrations",
+  "custom-input-controls",
   "gift-card-balance-widget",
   "gifspark-ai-greeting-app",
-  "gphomestay-digital-experiences",
 ];

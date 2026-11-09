@@ -59,7 +59,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="flex min-h-screen flex-col bg-bg font-sans text-fg">
+      {/* Extensions such as ColorZilla (cz-shortcut-listen) and Grammarly add attributes to
+          <body> before React hydrates. This ignores attribute differences on <body> only. */}
+      <body suppressHydrationWarning className="flex min-h-screen flex-col bg-bg font-sans text-fg">
         <a href="#content" className="skip-link">
           Skip to content
         </a>

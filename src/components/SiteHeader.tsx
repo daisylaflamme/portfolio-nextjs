@@ -5,15 +5,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 
-export const NAV_ITEMS: ReadonlyArray<{ label: string; href: string }> = [
-  { label: "Work", href: "/web-projects" },
+export const NAV_ITEMS: ReadonlyArray<{ label: string; href: string; section?: string }> = [
+  // "Work" stays current on every /work/* category page.
+  { label: "Work", href: "/work/web-engineering", section: "/work" },
   { label: "About", href: "/about" },
   { label: "Résumé", href: "/resume" },
   { label: "Contact", href: "/contact" },
 ];
 
-function isActive(pathname: string, href: string): boolean {
-  return pathname === href || pathname.startsWith(`${href}/`);
+function isActive(pathname: string, item: { href: string; section?: string }): boolean {
+  const base = item.section ?? item.href;
+  return pathname === base || pathname === item.href || pathname.startsWith(`${base}/`);
 }
 
 export function Logo({ className = "" }: { className?: string }) {
@@ -55,7 +57,7 @@ export default function SiteHeader() {
           <nav aria-label="Main" className="hidden md:block">
             <ul className="flex items-center gap-1 font-mono text-[15px]">
               {NAV_ITEMS.map((item) => {
-                const active = isActive(pathname, item.href);
+                const active = isActive(pathname, item);
                 return (
                   <li key={item.href}>
                     <Link
@@ -98,7 +100,7 @@ export default function SiteHeader() {
       >
         <ul className="mx-auto flex max-w-6xl flex-col px-4 py-2 font-mono text-base">
           {NAV_ITEMS.map((item) => {
-            const active = isActive(pathname, item.href);
+            const active = isActive(pathname, item);
             return (
               <li key={item.href}>
                 <Link

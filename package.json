@@ -8,8 +8,11 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
+    "test:unit": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning --test \"src/**/*.test.ts\"",
     "images:projects": "node scripts/convert-project-images.cjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "images:archive": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/images-archive.mjs",
+    "github:check": "node --env-file-if-exists=.env.local --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/check-github.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

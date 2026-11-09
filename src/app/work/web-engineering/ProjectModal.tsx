@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNo
 import type { Project } from "@/data/types";
 import Image from "next/image";
 import { caseStudyContent, projectImages, stackLabels, topicLabels } from "@/lib/projectDisplay";
-import ImageLightbox, { CloseIcon } from "./ImageLightbox";
+import ImageLightbox, { CloseIcon } from "@/components/ImageLightbox";
 
 function ExpandIcon() {
   return (
@@ -32,22 +32,61 @@ function ExternalLink({ href, children, primary = false }: { href: string; child
   );
 }
 
+/**
+ * How a screenshot sits in the gallery frame:
+ * - contain: the whole image, scaled to fit
+ * - top: full-page screenshots, cropped to their top instead of shrunk to a sliver
+ * - native: screenshots narrower than the frame, shown no wider than their own pixel
+ *   width so a small source isn't blown up into a blur (tall ones still crop to the top)
+ */
+type Fit = { kind: "contain" } | { kind: "top" } | { kind: "native"; width: number; tall: boolean };
+
+/**
+ * The file's real pixel size. `naturalWidth` on a srcset image is divided by the chosen
+ * candidate's density (an 804px file can report 383), so read it from a plain copy,
+ * which comes straight from the cache.
+ */
+async function pixelSize(img: HTMLImageElement): Promise<{ width: number; height: number }> {
+  const probe = new window.Image();
+  probe.src = img.currentSrc || img.src;
+  await probe.decode();
+  return { width: probe.naturalWidth, height: probe.naturalHeight };
+}
+
+function fitFor(width: number, height: number, frame: { width: number; height: number }): Fit {
+  const tall = height / width > 1.2;
+  // Crop to the top only when there's more image than frame; a short one is shown whole.
+  if (width < frame.width * 0.9) return { kind: "native", width, tall: tall && height > frame.height };
+  return tall ? { kind: "top" } : { kind: "contain" };
+}
+
 function Gallery({ project }: { project: Project }) {
   const images = projectImages(project);
   const [index, setIndex] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
-  // Full-page screenshots get cropped to their top instead of shrunk to a sliver.
-  const [tall, setTall] = useState(false);
+  // Measured per image, so switching screenshots never applies the previous one's fit.
+  const [fits, setFits] = useState<Record<string, Fit>>({});
   const closeViewer = useCallback(() => setViewerOpen(false), []);
 
   if (images.length === 0) return null;
   const current = images[Math.min(index, images.length - 1)];
   const altFor = (i: number): string =>
-    i === 0 && project.imageAlt ? project.imageAlt : `${project.title}, screenshot ${i + 1} of ${images.length}`;
+    project.imageAlts?.[i] ??
+    (i === 0 && project.imageAlt ? project.imageAlt : `${project.title}, screenshot ${i + 1} of ${images.length}`);
+
+  const fit: Fit = fits[current] ?? { kind: "contain" };
 
   const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
-    const { naturalWidth, naturalHeight } = event.currentTarget;
-    if (naturalWidth > 0) setTall(naturalHeight / naturalWidth > 1.2);
+    const img = event.currentTarget;
+    const src = current;
+    // Measure the gallery frame (the button), not the image's box, which may already be narrowed.
+    const frameEl = img.closest("button") ?? img;
+    const frame = { width: frameEl.clientWidth, height: frameEl.clientHeight };
+    pixelSize(img)
+      .then(({ width, height }) => {
+        if (width > 0) setFits((prev) => ({ ...prev, [src]: fitFor(width, height, frame) }));
+      })
+      .catch(() => {});
   };
 
   return (
@@ -58,16 +97,22 @@ function Gallery({ project }: { project: Project }) {
         aria-label={`View full size: ${altFor(index)}`}
         className="group relative block aspect-[16/10] max-h-[min(62dvh,600px)] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-line bg-img"
       >
-        <Image
-          key={current}
-          src={current}
-          alt=""
-          fill
-          quality={90}
-          sizes="(min-width: 1088px) 976px, (min-width: 768px) 90vw, 100vw"
-          onLoad={handleLoad}
-          className={tall ? "object-cover object-top" : "object-contain"}
-        />
+        {/* A `fill` image is always 100% of its box, so a small screenshot narrows the box. */}
+        <span
+          className="absolute inset-y-0 left-1/2 block w-full max-w-full -translate-x-1/2"
+          style={fit.kind === "native" ? { width: `${fit.width}px` } : undefined}
+        >
+          <Image
+            key={current}
+            src={current}
+            alt=""
+            fill
+            quality={90}
+            sizes="(min-width: 1088px) 976px, (min-width: 768px) 90vw, 100vw"
+            onLoad={handleLoad}
+            className={fit.kind === "top" || (fit.kind === "native" && fit.tall) ? "object-cover object-top" : "object-contain"}
+          />
+        </span>
         <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[13px] text-white transition-opacity [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-visible:opacity-100">
           <ExpandIcon /> view full size
         </span>

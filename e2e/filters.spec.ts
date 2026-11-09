@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { featuredProjectIds, projects } from "../src/data/projects";
 import { groupProjects } from "../src/lib/projectSections";
-import { PROJECT_FILTERS } from "../src/app/web-projects/projectFilters";
+import { PROJECT_FILTERS } from "../src/app/work/web-engineering/projectFilters";
 
 /** The count the page should report for a set of filter ids, computed from the data. */
 function expectedCount(ids: string[]): number {
@@ -19,7 +19,7 @@ function filterLabel(id: string): string {
 const matching = (n: number) => `${n} matching ${n === 1 ? "project" : "projects"}`;
 
 test("filters update the result count", async ({ page }) => {
-  await page.goto("/web-projects");
+  await page.goto("/work/web-engineering");
   const status = page.getByRole("status");
   await expect(status).toHaveText(`${projects.length} projects`);
 

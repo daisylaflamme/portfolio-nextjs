@@ -16,7 +16,7 @@ const isPastFold = () => window.scrollY > window.innerHeight;
 /**
  * Reusable "scroll to top" button. Fixed at bottom-right, visible only after
  * the user has scrolled below the fold (past one viewport height).
- * Use on any long page (e.g. web-projects, resume, about).
+ * Use on any long page (e.g. work, resume, about).
  */
 export default function GoToTop() {
   const visible = useSyncExternalStore(subscribeToScroll, isPastFold, () => false);

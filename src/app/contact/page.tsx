@@ -81,7 +81,7 @@ export default function ContactPage() {
             <ul className="space-y-2" role="list">
               <li>
                 <Link
-                  href="/web-projects"
+                  href="/work/web-engineering"
                   className="text-[var(--color-font-primary)] hover:text-[var(--color-shadow-accent)] transition-colors"
                 >
                   Web Projects
