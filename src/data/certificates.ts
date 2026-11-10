@@ -1,5 +1,6 @@
-import type { Certificate } from "./types";
+import type { Certificate, CertificateProvider } from "./types";
 
+/** Degrees, newest first. */
 export const diplomas: Certificate[] = [
     {
         thumbnail: "/images/certificates/thumbnails/harvarde.jpg",
@@ -21,7 +22,8 @@ export const diplomas: Certificate[] = [
       },
 ]
 
-export const programs: Certificate[] = [
+/** Professional certifications, shown under "Certifications". */
+export const certifications: Certificate[] = [
     {
         thumbnail: "/images/certificates/thumbnails/marketo.jpg",
         image: "/images/certificates/marketo.png",
@@ -36,6 +38,7 @@ export const programs: Certificate[] = [
     },
 ]
 
+/** Every course certificate. `recentLearning` picks a few; the rest make up the course history. */
 export const certificates: Certificate[] = [
     {
       thumbnail: "",
@@ -324,3 +327,42 @@ export const certificates: Certificate[] = [
       provider: "lynda"
     }
   ];
+
+export const CERTIFICATE_PROVIDER_LABELS: Record<CertificateProvider, string> = {
+  linkedin: "LinkedIn Learning",
+  lynda: "Lynda.com",
+};
+
+/** Courses listed under "Recent learning", in display order. Each must match a title in `certificates`. */
+export const RECENT_LEARNING_TITLES = [
+  "React Essential Training",
+  "Tailwind CSS 4 Essential Training",
+  "Generative Development with Artificial Intelligence and Cursor",
+  "Artificial Intelligence Foundations: Machine Learning",
+  "Python Essential Training",
+] as const;
+
+const recentTitles: ReadonlySet<string> = new Set(RECENT_LEARNING_TITLES);
+
+export const recentLearning: Certificate[] = RECENT_LEARNING_TITLES.flatMap((title) =>
+  certificates.filter((cert) => cert.title === title)
+);
+
+export interface CourseYear {
+  year: number;
+  courses: Certificate[];
+}
+
+/** Every course not in "Recent learning", grouped by year, newest year first. */
+export const courseHistory: CourseYear[] = (() => {
+  const byYear = new Map<number, Certificate[]>();
+  for (const cert of certificates) {
+    if (recentTitles.has(cert.title)) continue;
+    byYear.set(cert.year, [...(byYear.get(cert.year) ?? []), cert]);
+  }
+  return [...byYear.entries()]
+    .sort(([a], [b]) => b - a)
+    .map(([year, courses]) => ({ year, courses }));
+})();
+
+export const courseHistoryCount = courseHistory.reduce((sum, group) => sum + group.courses.length, 0);
