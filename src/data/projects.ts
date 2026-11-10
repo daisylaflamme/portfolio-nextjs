@@ -100,6 +100,62 @@ export const projects: Project[] = [
     tags: ["html", "angular", "javascript", "scss", "css", "bootstrap", "ecommerce", "cms", "api-integrations", "ui-components"],
   },
   {
+    id: "asi-header-redesign",
+    title: "Responsive Header Redesign for American Signature & Value City",
+    summary:
+      "Redesigned the shared storefront header for American Signature and Value City Furniture on Blueport's multi-tenant Angular platform, with separate mobile, tablet and desktop navigation and keyboard-accessible, click-to-open menus.",
+    description:
+      "Worked on the shared, versioned header for American Signature and Value City Furniture on Blueport's multi-tenant Angular platform. The header combined CMS-driven navigation, search suggestions, cart status, Auth0 sign-in states, store location and promotional content, and new Figma designs called for different navigation and information architecture on mobile, tablet and desktop. The BFF supplied nested menu nodes with different behaviors, and RxJS streams supplied menu variants, search, cart, store and postal code, and sign-in state. The redesign separated navigation triggers from dropdown rendering, replaced hover with click-to-open, and reused dropdown layouts for desktop mega menus and mobile flyouts. It shipped as a configurable 2025 header path alongside the existing header variations, keeping each brand's styling and behavior through shared CSS tokens.",
+    role: "Senior Front-End Engineer",
+    team: "Platform team; worked from new Figma designs",
+    dates: "2025",
+    stack: ["Angular", "RxJS", "Auth0", "BFF APIs", "CMS"],
+    problem:
+      "New Figma designs called for different navigation and information architecture on mobile, tablet and desktop, in a header that already combined CMS navigation, search suggestions, cart status, Auth0 sign-in states, store location and promotions.",
+    whatIBuilt: [
+      "Separated top-level navigation triggers from dropdown rendering and replaced hover with click-to-open.",
+      "Reusable dropdown layouts for desktop mega menus and mobile flyouts, driven by nested BFF menu nodes and RxJS streams for menus, search, cart, store and sign-in state.",
+      "Distinct mobile, tablet and desktop structures instead of one desktop layout compressed with CSS, plus a sticky minified header and CMS promo zones.",
+      "Keyboard traversal, visible focus and focus restoration through menus and dropdowns, labelled controls and hidden decorative SVGs.",
+      "Debounced search requests, conditional results, priority loading for the brand logo and attention to layout stability (CLS).",
+    ],
+    impact: [
+      "Shipped behind a config flag alongside the existing header variations",
+      "One shared, versioned header; each brand keeps its own branding through shared CSS tokens",
+      "Keyboard-accessible, click-to-open menus at every breakpoint",
+    ],
+    teamContribution:
+      "The header is a shared, versioned platform component built by the team. I worked on the design and refactor decisions above, starting with the config-flagged 2025 header path in May 2025, then header modals, close-all behavior and the favorites modal in June–July 2025.",
+    thumbnail: "/images/projects/asi-header/asi-header-hero.webp",
+    heroImage: "/images/projects/asi-header/asi-header-hero.webp",
+    images: [
+      "/images/projects/asi-header/asi-header-hero.webp",
+      "/images/projects/asi-header/asi-header-account-menu.webp",
+      "/images/projects/asi-header/asi-header-order-lookup-validation.webp",
+      "/images/projects/asi-header/asi-header-location-modal.webp",
+      "/images/projects/asi-header/asi-header-favorites-flyout.webp",
+      "/images/projects/asi-header/asi-header-mobile-menu.webp",
+      "/images/projects/asi-header/vcf-header-mobile-home.webp",
+      "/images/projects/asi-header/vcf-header-desktop-home.webp",
+      "/images/projects/asi-header/asi-header-pdp.webp",
+    ],
+    imageAlt:
+      "Redesigned American Signature Furniture header on desktop, tablet and phone: the account menu with order lookup, the location modal with closest store details, and the mobile navigation menu.",
+    imageAlts: [
+      "Redesigned American Signature Furniture header on desktop, tablet and phone: the account menu with order lookup, the location modal with closest store details, and the mobile navigation menu.",
+      "American Signature desktop header with the signed-in account menu open, showing order lookup, account links and a Continue Shopping button.",
+      "Account menu order lookup with an inline \"Order number is required\" validation message and a close button.",
+      "Header location modal with a zip code field, delivery and pick-up availability, closest store address, phone and showroom hours.",
+      "Header favorites flyout showing saved product thumbnails and a View Your Favorites button.",
+      "American Signature mobile navigation menu with favorites, stores, financing, order and help shortcuts above expandable category links.",
+      "Value City Furniture mobile header on the homepage, sharing the redesigned header with brand-specific styling.",
+      "Value City Furniture desktop homepage with the shared redesigned header, utility links and category navigation.",
+      "American Signature product page with the redesigned header, utility bar, category navigation and cart count.",
+    ],
+    link: null,
+    tags: ["html", "css", "angular", "ecommerce", "cms", "api-integrations", "ui-components", "accessibility"],
+  },
+  {
     id: "checkout-multi-payments",
     title: "Multi‑Payment Checkout Enablement",
     summary:
@@ -1092,6 +1148,7 @@ export const projects: Project[] = [
  */
 export const featuredProjectIds: Project["id"][] = [
   "checkout-multi-payments",
+  "asi-header-redesign",
   "js-in-colors",
   "store-details-maps",
   "blueport-multisite-platform-ui",
