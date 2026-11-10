@@ -153,7 +153,7 @@ export default function ResumePage() {
               <div className="mt-2 space-y-3">
                 <div>
                   <p className="text-[var(--color-font-primary)] text-sm font-bold">
-                    Senior Front-End Engineer and Team Lead | Aug 2025 – Present
+                    Senior Front-End Engineer and Team Lead | Aug 2025 – Mar 2026
                   </p>
                   <ul className="list-disc list-inside text-[var(--color-font-primary)] text-sm space-y-1 mt-1 ml-2">
                     <li>
