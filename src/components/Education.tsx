@@ -7,12 +7,35 @@ import {
   diplomas,
   recentLearning,
 } from "@/data/certificates";
-import type { Certificate } from "@/data/types";
+import type { Certificate, Degree } from "@/data/types";
+import { publicFileExists } from "@/lib/archive";
 import CertificateImageButton from "./CertificateImageButton";
 
 /** A comma only screen readers and text extraction see, so stacked lines don't run together ("…2012016"). */
 function Pause() {
   return <span className="sr-only">, </span>;
+}
+
+const logoTile = "flex size-12 shrink-0 items-center justify-center rounded-lg border border-line";
+
+/**
+ * 48px school logo on a white tile, so logos keep their own colors in both themes.
+ * Until the logo file is in public/, the school's initials stand in (decorative: the name is in the text).
+ */
+function SchoolLogo({ degree }: { degree: Degree }) {
+  if (degree.logo && publicFileExists(degree.logo)) {
+    return (
+      <span className={`${logoTile} bg-white p-1.5`}>
+        <Image src={degree.logo} alt="" width={36} height={36} className="size-9 object-contain" />
+      </span>
+    );
+  }
+  return (
+    // Theme surface rather than white: the dark theme's accent has too little contrast on white.
+    <span className={`${logoTile} bg-surface-2 font-mono text-sm font-semibold text-accent`} aria-hidden="true">
+      {degree.initials}
+    </span>
+  );
 }
 
 function providerLabel(cert: Certificate): string | null {
@@ -39,30 +62,21 @@ export default function Education() {
           <h3 id="degrees-heading" className={h3Class}>
             Degrees
           </h3>
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3" role="list">
+          <ul className={`${panelClass} space-y-5`} role="list">
             {diplomas.map((degree) => (
-              <li key={degree.title} className="flex h-full flex-col overflow-hidden rounded-xl border border-[var(--color-petal-border)] bg-[var(--color-petal-bg)] shadow-[0_4px_20px_rgba(140,126,104,0.15)]">
-                {/* The thumbnail opens the diploma; the visible title and year sit below it as text. */}
-                <CertificateImageButton
-                  image={degree.image}
-                  alt={`${degree.title} diploma, ${degree.year}`}
-                  label={`${degree.title} diploma`}
-                  ariaLabel={`View ${degree.title} diploma`}
-                  className="relative block h-28 w-full cursor-zoom-in bg-white focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-shadow-accent)]"
-                >
-                  <Image
-                    src={degree.thumbnail}
-                    alt=""
-                    fill
-                    // Box width: one column under sm, three columns in a max-w-4xl page above it.
-                    sizes="(min-width: 1024px) 270px, (min-width: 640px) calc((100vw - 6rem) / 3), calc(100vw - 2rem)"
-                    className="object-contain p-3"
-                  />
-                </CertificateImageButton>
-                <p className="flex flex-1 flex-col gap-1 border-t border-[var(--color-petal-border)] px-4 py-3 text-sm">
-                  <span className="block font-medium text-[var(--color-font-primary)]">{degree.title}</span>
+              <li key={degree.school} className="flex items-start gap-4">
+                <SchoolLogo degree={degree} />
+                <p className="min-w-0 flex-1 pt-0.5">
+                  <span className="block font-semibold text-fg">
+                    {degree.degree}, {degree.field}
+                  </span>
                   <Pause />
-                  <span className="block text-[var(--color-font-secondary)]">{degree.year}</span>
+                  <span className="block text-sm text-muted">
+                    {degree.school}
+                    <span aria-hidden="true"> · </span>
+                    <Pause />
+                    {degree.year}
+                  </span>
                 </p>
               </li>
             ))}

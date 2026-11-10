@@ -39,8 +39,18 @@ describe("education content", () => {
     }
   });
 
-  it("degree and certification images exist under public/", () => {
-    const paths = [...diplomas, ...certifications].flatMap((cert) => [cert.thumbnail, cert.image]);
+  it("certification images exist under public/", () => {
+    const paths = certifications.flatMap((cert) => [cert.thumbnail, cert.image]);
     assert.deepEqual(paths.filter((src) => !existsSync(PUBLIC_DIR + src)), []);
+  });
+
+  it("degree logos exist under /images/education/ and every degree has initials", () => {
+    for (const degree of diplomas) {
+      if (degree.logo) {
+        assert.match(degree.logo, /^\/images\/education\/[a-z0-9-]+\.(svg|webp|png)$/, degree.school);
+        assert.ok(existsSync(PUBLIC_DIR + degree.logo), degree.logo);
+      }
+      assert.ok(degree.initials.trim().length > 0, degree.school);
+    }
   });
 });

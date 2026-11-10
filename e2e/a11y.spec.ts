@@ -51,9 +51,9 @@ for (const theme of THEMES) {
       expect(await blockingViolations(page)).toEqual([]);
     });
 
-    test("the open diploma viewer has no serious or critical axe violations", async ({ page }) => {
+    test("the open certificate viewer has no serious or critical axe violations", async ({ page }) => {
       await page.goto("/about#education");
-      await page.locator("#education").getByRole("button").first().click();
+      await page.locator("#education").getByRole("button", { name: /^View certificate/ }).first().click();
       await expect(page.getByRole("dialog")).toBeVisible();
       expect(await blockingViolations(page)).toEqual([]);
     });

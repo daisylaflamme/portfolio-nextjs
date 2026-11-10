@@ -204,7 +204,6 @@ html.has-open-dialog {
 
 .project-card,
 .contact-section,
-.diploma-frame,
 .project-modal-box {
   background: var(--surface);
   border: 1px solid var(--border);
