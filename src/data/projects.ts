@@ -354,7 +354,7 @@ export const projects: Project[] = [
       "Morris Home tablet homepage carousel showing the anniversary sale with a Shop MH Studio call to action.",
       "Morris Home mobile homepage carousel with an anniversary mattress sale slide and slide arrows.",
     ],
-    link: "https://www.cardis.com/",
+    link: null,
     tags: ["html", "javascript", "cms", "ecommerce", "scss", "css", "ui-components"],
   },
   {
@@ -426,7 +426,7 @@ export const projects: Project[] = [
       "Cardi's desktop gift card balance page with a card number field and a Cardi's and Ashley gift card image.",
       "August Haven desktop gift card balance page using the default card graphic, showing per-brand theming.",
     ],
-    link: "https://www.cardis.com/gift-card-balance",
+    link: null,
     tags: ["html", "angular", "ecommerce", "scss", "css","javascript", "api-integrations", "ui-components"],
   },
   {
