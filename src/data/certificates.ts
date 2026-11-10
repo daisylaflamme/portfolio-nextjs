@@ -7,7 +7,7 @@ export const diplomas: Degree[] = [
     degree: "Master's Degree",
     field: "Digital Media and Instructional Design",
     year: 2015,
-    logo: "/images/education/harvard.svg",
+    logo: "/images/education/harvard.webp",
     initials: "H",
   },
   {
@@ -15,7 +15,7 @@ export const diplomas: Degree[] = [
     degree: "Bachelor of Science",
     field: "Information Architecture (Information Technology)",
     year: 2012,
-    logo: "/images/education/umass-boston.svg",
+    logo: "/images/education/umass-boston.webp",
     initials: "UMB",
   },
   {
