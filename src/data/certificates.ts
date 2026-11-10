@@ -201,7 +201,7 @@ export const certificates: Certificate[] = [
     {
       thumbnail: "/images/certificates/thumbnails/udemy.jpg",
       image: "/images/certificates/UC-FTYF6DNB.jpg",
-      title: "Using MODX CMS to Build Websites: A Begginer's Guide",
+      title: "Using MODX CMS to Build Websites: A Beginner's Guide",
       year: 2015,
     },
     {
