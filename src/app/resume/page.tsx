@@ -148,7 +148,8 @@ export default function ResumePage() {
             <div className="mb-5 pb-6 border-b border-dashed border-[var(--color-petal-border)]">
               <p className="font-semibold text-[var(--color-font-primary)] text-sm">
                 Blueport Commerce{" "}
-                <span className={locationClass}>- Boston, MA</span>
+                <span className={locationClass}>- Boston, MA</span>{" "}
+                <span className="font-normal text-[var(--color-font-secondary)]">| Oct 2016 – Mar 2026</span>
               </p>
               <div className="mt-2 space-y-3">
                 <div>
@@ -172,7 +173,7 @@ export default function ResumePage() {
                 </div>
                 <div>
                   <p className="text-[var(--color-font-primary)] text-sm font-bold">
-                    Senior Front-End Engineer | Nov 2019 – Sep 2025
+                    Senior Front-End Engineer | Nov 2019 – Jul 2025
                   </p>
                   <ul className="list-disc list-inside text-[var(--color-font-primary)] text-sm space-y-1 mt-1 ml-2">
                     <li>
