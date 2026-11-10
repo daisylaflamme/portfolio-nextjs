@@ -684,6 +684,42 @@ export const projects: Project[] = [
       "https://www.americansignaturefurniture.com/product/group/living-room/seating/sectionals/campbell-cumulus-2-piece-sectional-with-right-facing-sofa-cement/2224589/2141781",
     tags: ["html", "angular", "css", "ecommerce", "scss"],
   },
+  {
+    id: "mvc-to-angular-migration",
+    title: "ASP.NET MVC to Angular Storefront Migration",
+    summary:
+      "Helped move multi-brand furniture storefronts from ASP.NET MVC Razor views, jQuery and AngularJS to Angular components, keeping each brand's look while modernizing the front end.",
+    description:
+      "Blueport's storefronts started as ASP.NET MVC with Razor views, brand SCSS and LESS, jQuery and AngularJS. Tenant pages for product, cart, checkout and custom content moved into Angular, backed by REST/BFF contracts and shared Angular libraries. I scoped existing C# Razor views, planned how each would split into Angular parent and child components, and migrated pages client by client while keeping each brand's visual design.",
+    role: "Front-End Developer",
+    dates: "2018 – 2019",
+    stack: ["ASP.NET MVC", "Razor", "AngularJS", "jQuery", "Angular", "SCSS", "LESS"],
+    problem:
+      "Storefronts ran on ASP.NET MVC Razor views with brand SCSS/LESS, jQuery and AngularJS, and needed to move to Angular pages backed by REST/BFF contracts and shared Angular libraries.",
+    whatIBuilt: [
+      "Scoped existing C# Razor views and planned how each would split into Angular parent and child components.",
+      "Migrated product (PDP), shopping cart, checkout and custom pages to Angular, client by client.",
+      "Tenant Angular page and brand SCSS work for American Signature, Steinhafels, Cardi's, Levin and Morris Home.",
+      "Moved the product configurator into core Angular.",
+    ],
+    impact: [
+      "Storefronts looked the same to shoppers, now on modern Angular",
+      "Pages built on shared Angular libraries and REST/BFF contracts",
+    ],
+    thumbnail: "/images/projects/thumbnails/asi-variant-pdp.webp",
+    images: [
+      "/images/projects/asi-variant-pdp.webp",
+      "/images/projects/asi-search-page-clickable-swatches-angular6.webp",
+    ],
+    imageAlt:
+      "American Signature Furniture product page on Angular for the Brittney Sofa, with color swatches, pricing and financing, pick-up details and an add-to-cart button.",
+    imageAlts: [
+      "American Signature Furniture product page on Angular for the Brittney Sofa, with color swatches, pricing and financing, pick-up details and an add-to-cart button.",
+      "American Signature Furniture sofa results page from the same period, with category filters and clickable color swatches on product cards.",
+    ],
+    link: null,
+    tags: ["html", "css", "scss", "javascript", "angular", "ecommerce"],
+  },
 
   {
     id: "lovesac-asf-storefront-ui",
