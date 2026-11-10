@@ -10,9 +10,9 @@ import {
 import type { Certificate } from "@/data/types";
 import CertificateImageButton from "./CertificateImageButton";
 
-/** Text that only screen readers hear, so separate visual lines don't run together ("…201 2016"). */
-function Pause({ text = ", " }: { text?: string }) {
-  return <span className="sr-only">{text}</span>;
+/** A comma only screen readers and text extraction see, so stacked lines don't run together ("…2012016"). */
+function Pause() {
+  return <span className="sr-only">, </span>;
 }
 
 function providerLabel(cert: Certificate): string | null {
@@ -41,30 +41,29 @@ export default function Education() {
           </h3>
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3" role="list">
             {diplomas.map((degree) => (
-              <li key={degree.title}>
+              <li key={degree.title} className="flex h-full flex-col overflow-hidden rounded-xl border border-[var(--color-petal-border)] bg-[var(--color-petal-bg)] shadow-[0_4px_20px_rgba(140,126,104,0.15)]">
+                {/* The thumbnail opens the diploma; the visible title and year sit below it as text. */}
                 <CertificateImageButton
                   image={degree.image}
                   alt={`${degree.title} diploma, ${degree.year}`}
                   label={`${degree.title} diploma`}
-                  className="group flex h-full w-full cursor-zoom-in flex-col overflow-hidden rounded-xl border border-[var(--color-petal-border)] bg-[var(--color-petal-bg)] text-left shadow-[0_4px_20px_rgba(140,126,104,0.15)] transition-shadow hover:shadow-[0_8px_28px_rgba(140,126,104,0.22)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-shadow-accent)]"
+                  ariaLabel={`View ${degree.title} diploma`}
+                  className="relative block h-28 w-full cursor-zoom-in bg-white focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-shadow-accent)]"
                 >
-                  <span className="relative block h-28 bg-white">
-                    <Image
-                      src={degree.thumbnail}
-                      alt=""
-                      fill
-                      // Box width: one column under sm, three columns in a max-w-4xl page above it.
-                      sizes="(min-width: 1024px) 270px, (min-width: 640px) calc((100vw - 6rem) / 3), calc(100vw - 2.5rem)"
-                      className="object-contain p-3"
-                    />
-                  </span>
-                  <span className="flex flex-1 flex-col gap-1 border-t border-[var(--color-petal-border)] px-4 py-3">
-                    <span className="block text-sm font-medium text-[var(--color-font-primary)]">{degree.title}</span>
-                    <Pause />
-                    <span className="block text-sm text-[var(--color-font-secondary)]">{degree.year}</span>
-                    <Pause text=", view diploma" />
-                  </span>
+                  <Image
+                    src={degree.thumbnail}
+                    alt=""
+                    fill
+                    // Box width: one column under sm, three columns in a max-w-4xl page above it.
+                    sizes="(min-width: 1024px) 270px, (min-width: 640px) calc((100vw - 6rem) / 3), calc(100vw - 2rem)"
+                    className="object-contain p-3"
+                  />
                 </CertificateImageButton>
+                <p className="flex flex-1 flex-col gap-1 border-t border-[var(--color-petal-border)] px-4 py-3 text-sm">
+                  <span className="block font-medium text-[var(--color-font-primary)]">{degree.title}</span>
+                  <Pause />
+                  <span className="block text-[var(--color-font-secondary)]">{degree.year}</span>
+                </p>
               </li>
             ))}
           </ul>
@@ -86,9 +85,10 @@ export default function Education() {
                   image={cert.image}
                   alt={`${cert.title} certificate, ${cert.year}`}
                   label={`${cert.title} certificate`}
+                  ariaLabel={`View certificate: ${cert.title}`}
                   className="inline-flex min-h-11 items-center rounded-lg border border-[var(--color-petal-border)] bg-[var(--color-petal-bg)] px-4 text-sm font-medium text-[var(--color-font-primary)] hover:bg-[var(--color-center-circle)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-shadow-accent)]"
                 >
-                  View certificate<span className="sr-only">: {cert.title}</span>
+                  View certificate
                 </CertificateImageButton>
               </li>
             ))}
