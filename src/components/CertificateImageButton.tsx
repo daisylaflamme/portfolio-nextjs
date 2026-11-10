@@ -17,7 +17,7 @@ interface CertificateImageButtonProps {
   children: ReactNode;
 }
 
-/** A button that opens one diploma or certificate in the shared image lightbox. */
+/** A button that opens one certificate in the shared image lightbox. */
 export default function CertificateImageButton({ image, alt, label, ariaLabel, className, children }: CertificateImageButtonProps) {
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);

@@ -1,26 +1,32 @@
-import type { Certificate, CertificateProvider } from "./types";
+import type { Certificate, CertificateProvider, Degree } from "./types";
 
 /** Degrees, newest first. */
-export const diplomas: Certificate[] = [
-    {
-        thumbnail: "/images/certificates/thumbnails/harvarde.jpg",
-        image: "/images/certificates/harvard-diploma.jpg",
-        title: "Harvard University Master's Degree - Digital Media and Instructional Design",
-        year: 2015
-    },
-    {
-        thumbnail: "/images/certificates/thumbnails/umass.jpg",
-        image: "/images/certificates/umass-diploma.jpg",
-        title: "UMass Boston Bachelor of Science - Information Architecture - Information Technology",
-        year: 2012
-      },
-      {
-        thumbnail: "/images/certificates/thumbnails/cccc.jpg",
-        image: "/images/certificates/cccc-diploma.jpg",
-        title: "Cape Cod Community College Associate in Science - Web Development",
-        year: 2010
-      },
-]
+export const diplomas: Degree[] = [
+  {
+    school: "Harvard University Extension School",
+    degree: "Master's Degree",
+    field: "Digital Media and Instructional Design",
+    year: 2015,
+    logo: "/images/education/harvard.svg",
+    initials: "H",
+  },
+  {
+    school: "University of Massachusetts Boston",
+    degree: "Bachelor of Science",
+    field: "Information Architecture (Information Technology)",
+    year: 2012,
+    logo: "/images/education/umass-boston.svg",
+    initials: "UMB",
+  },
+  {
+    school: "Cape Cod Community College",
+    degree: "Associate in Science",
+    field: "Web Development",
+    year: 2010,
+    logo: "/images/education/cape-cod-cc.svg",
+    initials: "CC",
+  },
+];
 
 /** Professional certifications, shown under "Certifications". */
 export const certifications: Certificate[] = [

@@ -31,12 +31,23 @@ test("Education shows degrees, certifications, recent learning and the course hi
   }
 
   // Title and year read as separate words ("…201, 2016"), not "…2012016".
-  for (const cert of [...diplomas, ...certifications]) {
+  for (const cert of certifications) {
     await expect(section.getByText(`${cert.title}, ${cert.year}`, { exact: false })).toHaveCount(1);
   }
+
+  // Degrees: a text list (logo or initials tile + text), with no buttons, links or images of diplomas.
+  const degrees = section.getByRole("region", { name: "Degrees" });
+  await expect(degrees.getByRole("listitem")).toHaveCount(diplomas.length);
   for (const degree of diplomas) {
-    await expect(section.getByRole("button", { name: `View ${degree.title} diploma`, exact: true })).toBeVisible();
+    const item = degrees.getByRole("listitem").filter({ hasText: degree.school });
+    await expect(item).toContainText(`${degree.degree}, ${degree.field}`);
+    await expect(item).toContainText(`${degree.school}`);
+    await expect(item).toContainText(String(degree.year));
   }
+  await expect(degrees.getByRole("button")).toHaveCount(0);
+  await expect(degrees.getByRole("link")).toHaveCount(0);
+  // Logos are decorative: the school name is in the text.
+  await expect(degrees.getByRole("img")).toHaveCount(0);
 
   const recent = section.getByRole("region", { name: "Recent learning" }).getByRole("listitem");
   await expect(recent).toHaveCount(recentLearning.length);
@@ -52,11 +63,11 @@ test("Education shows degrees, certifications, recent learning and the course hi
   await expect(details.locator("img")).toHaveCount(0);
 });
 
-test("a diploma opens in the lightbox and focus returns to its button", async ({ page }) => {
+test("a certificate opens in the lightbox and focus returns to its button", async ({ page }) => {
   await page.goto(EDUCATION);
-  const trigger = page.getByRole("button", { name: `View ${diplomas[0].title} diploma`, exact: true });
+  const trigger = page.getByRole("button", { name: `View certificate: ${certifications[0].title}`, exact: true });
   await trigger.click();
-  const dialog = page.getByRole("dialog", { name: `${diplomas[0].title} diploma` });
+  const dialog = page.getByRole("dialog", { name: `${certifications[0].title} certificate` });
   await expect(dialog).toBeVisible();
   await expect(page.locator("html")).toHaveClass(/has-open-dialog/);
   await page.keyboard.press("Escape");
