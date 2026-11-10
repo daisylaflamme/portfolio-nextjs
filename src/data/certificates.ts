@@ -200,12 +200,14 @@ export const certificates: Certificate[] = [
       image: "/images/certificates/UC-XDIFCEXI.jpg",
       title: "Using MODX CMS to Build Websites: Intermediate",
       year: 2015,
+      provider: "udemy",
     },
     {
       thumbnail: "/images/certificates/thumbnails/udemy.jpg",
       image: "/images/certificates/UC-FTYF6DNB.jpg",
       title: "Using MODX CMS to Build Websites: A Beginner's Guide",
       year: 2015,
+      provider: "udemy",
     },
     {
       thumbnail: "/images/certificates/thumbnails/twd.jpg",
@@ -331,6 +333,7 @@ export const certificates: Certificate[] = [
 export const CERTIFICATE_PROVIDER_LABELS: Record<CertificateProvider, string> = {
   linkedin: "LinkedIn Learning",
   lynda: "Lynda.com",
+  udemy: "Udemy",
 };
 
 /** Courses listed under "Recent learning", in display order. Each must match a title in `certificates`. */
