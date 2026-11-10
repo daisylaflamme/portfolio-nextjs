@@ -1,6 +1,6 @@
 # Daisy Laflamme — portfolio
 
-Portfolio site for Daisy Laflamme, senior front-end and UI engineer: case studies, résumé, certificates and a contact form.
+Portfolio site for Daisy Laflamme, senior front-end and UI engineer: case studies, résumé, education and a contact form.
 
 **Production:** [www.daisylaflamme.net](https://www.daisylaflamme.net/), deployed on [Vercel](https://vercel.com).
 
@@ -56,12 +56,12 @@ src/
 │   │   ├── dashboards/       Dashboard screenshots and write-ups
 │   │   ├── marketing-design/ Design gallery with lightbox
 │   │   └── presentations/    Deck covers with slide links and PDFs
-│   ├── about/  resume/  certificates/  contact/
+│   ├── about/  resume/  contact/          About includes Education (/certificates redirects there)
 │   ├── api/contact/          POST: contact form → Resend
 │   ├── api/resume-visit/     POST: email when the site is opened from a résumé link
 │   ├── sitemap.ts  robots.ts
 │   └── globals.css           Design tokens (both themes), dialog styles, reduced motion
-├── components/               SiteHeader, SiteFooter, ThemeToggle, ResumeVisitTracker, ImageLightbox, ImageSetButton
+├── components/               SiteHeader, SiteFooter, ThemeToggle, ResumeVisitTracker, ImageLightbox, ImageSetButton, Education
 ├── data/
 │   ├── types.ts              Project, ProjectTag, WorkItem, WorkTag, Certificate
 │   ├── projects.ts           Case studies + featuredProjectIds

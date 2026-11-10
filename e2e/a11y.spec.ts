@@ -43,5 +43,19 @@ for (const theme of THEMES) {
       await expect(page.getByRole("dialog")).toBeVisible();
       expect(await blockingViolations(page)).toEqual([]);
     });
+
+    test("the open course history on About has no serious or critical axe violations", async ({ page }) => {
+      await page.goto("/about#education");
+      await page.locator("#education details summary").click();
+      await expect(page.locator("#education details")).toHaveAttribute("open", "");
+      expect(await blockingViolations(page)).toEqual([]);
+    });
+
+    test("the open diploma viewer has no serious or critical axe violations", async ({ page }) => {
+      await page.goto("/about#education");
+      await page.locator("#education").getByRole("button").first().click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+      expect(await blockingViolations(page)).toEqual([]);
+    });
   });
 }

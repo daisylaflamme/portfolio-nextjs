@@ -27,8 +27,8 @@ export default function SiteFooter() {
             </a>
           </li>
           <li>
-            <Link href="/certificates" className="inline-flex min-h-11 items-center text-fg hover:text-accent">
-              certificates
+            <Link href="/about#education" className="inline-flex min-h-11 items-center text-fg hover:text-accent">
+              education
             </Link>
           </li>
         </ul>
