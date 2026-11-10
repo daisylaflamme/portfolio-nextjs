@@ -23,7 +23,6 @@ export type PageKey =
   | "presentations"
   | "about"
   | "resume"
-  | "certificates"
   | "contact";
 
 export const PAGES: Record<PageKey, PageInfo> = {
@@ -75,13 +74,6 @@ export const PAGES: Record<PageKey, PageInfo> = {
     description:
       "Résumé of Daisy Laflamme, senior front-end and UI engineer: experience, skills and education across e-commerce, payments, accessibility and design systems.",
     priority: 0.8,
-  },
-  certificates: {
-    path: "/certificates",
-    title: "Education and Certificates",
-    description:
-      "Daisy Laflamme's degrees, training programs and certificates in front-end engineering, UX, accessibility, analytics and AI.",
-    priority: 0.6,
   },
   contact: {
     path: "/contact",

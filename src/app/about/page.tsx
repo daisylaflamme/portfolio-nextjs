@@ -1,7 +1,6 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
+import Education from "@/components/Education";
 
 const QUICK_FACTS = [
   {
@@ -205,6 +204,8 @@ export default function AboutPage() {
             ))}
           </ul>
         </section>
+
+        <Education />
 
         <footer className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-[var(--color-petal-border)]">
           <p className="text-sm text-[var(--color-font-secondary)]">

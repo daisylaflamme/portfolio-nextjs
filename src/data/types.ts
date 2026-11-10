@@ -90,7 +90,7 @@ export interface Project {
   teamContribution?: string;
 }
 
-export type CertificateProvider = "linkedin" | "lynda";
+export type CertificateProvider = "linkedin" | "lynda" | "udemy";
 
 export interface Certificate {
   /** Empty string when the provider's logo is used instead (see `provider`). */

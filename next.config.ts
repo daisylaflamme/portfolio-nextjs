@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
       // The Work page moved under /work; old links (including ?project=<id>) keep working.
       { source: "/web-projects", destination: "/work/web-engineering", permanent: true },
       { source: "/work", destination: "/work/web-engineering", permanent: false },
+      // Education moved into the About page.
+      { source: "/certificates", destination: "/about#education", permanent: true },
     ];
   },
 };
