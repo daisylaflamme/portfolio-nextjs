@@ -96,8 +96,8 @@ export interface Degree {
   degree: string;
   field: string;
   year: number;
-  /** Path under public/. Until the file exists, the initials tile is shown instead. */
-  logo: string;
+  /** Path under public/. Without one (or until the file exists), the initials tile is shown. */
+  logo?: string;
   initials: string;
 }
 

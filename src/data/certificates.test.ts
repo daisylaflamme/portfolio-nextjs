@@ -44,10 +44,12 @@ describe("education content", () => {
     assert.deepEqual(paths.filter((src) => !existsSync(PUBLIC_DIR + src)), []);
   });
 
-  // Logo files may arrive later (the initials tile stands in), so only their shape is checked.
-  it("every degree has a logo path under /images/education/ and initials", () => {
+  it("degree logos exist under /images/education/ and every degree has initials", () => {
     for (const degree of diplomas) {
-      assert.match(degree.logo, /^\/images\/education\/[a-z0-9-]+\.(svg|webp|png)$/, degree.school);
+      if (degree.logo) {
+        assert.match(degree.logo, /^\/images\/education\/[a-z0-9-]+\.(svg|webp|png)$/, degree.school);
+        assert.ok(existsSync(PUBLIC_DIR + degree.logo), degree.logo);
+      }
       assert.ok(degree.initials.trim().length > 0, degree.school);
     }
   });

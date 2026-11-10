@@ -23,7 +23,7 @@ const logoTile = "flex size-12 shrink-0 items-center justify-center rounded-lg b
  * Until the logo file is in public/, the school's initials stand in (decorative: the name is in the text).
  */
 function SchoolLogo({ degree }: { degree: Degree }) {
-  if (publicFileExists(degree.logo)) {
+  if (degree.logo && publicFileExists(degree.logo)) {
     return (
       <span className={`${logoTile} bg-white p-1.5`}>
         <Image src={degree.logo} alt="" width={36} height={36} className="size-9 object-contain" />

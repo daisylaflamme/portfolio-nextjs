@@ -23,7 +23,6 @@ export const diplomas: Degree[] = [
     degree: "Associate in Science",
     field: "Web Development",
     year: 2010,
-    logo: "/images/education/cape-cod-cc.svg",
     initials: "CC",
   },
 ];
