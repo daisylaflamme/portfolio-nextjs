@@ -707,16 +707,9 @@ export const projects: Project[] = [
       "Pages built on shared Angular libraries and REST/BFF contracts",
     ],
     thumbnail: "/images/projects/thumbnails/asi-variant-pdp.webp",
-    images: [
-      "/images/projects/asi-variant-pdp.webp",
-      "/images/projects/asi-search-page-clickable-swatches-angular6.webp",
-    ],
+    images: ["/images/projects/asi-variant-pdp.webp"],
     imageAlt:
       "American Signature Furniture product page on Angular for the Brittney Sofa, with color swatches, pricing and financing, pick-up details and an add-to-cart button.",
-    imageAlts: [
-      "American Signature Furniture product page on Angular for the Brittney Sofa, with color swatches, pricing and financing, pick-up details and an add-to-cart button.",
-      "American Signature Furniture sofa results page from the same period, with category filters and clickable color swatches on product cards.",
-    ],
     link: null,
     tags: ["html", "css", "scss", "javascript", "angular", "ecommerce"],
   },
