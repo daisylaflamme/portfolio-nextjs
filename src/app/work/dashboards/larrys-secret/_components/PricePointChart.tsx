@@ -79,7 +79,7 @@ export default function PricePointChart({ className }: { className?: string }) {
         rows: buckets.map((b) => [`${price(b.price)}${b.isFullPrice ? " (full price)" : ""}`, count(b.units), money(b.revenue)]),
       }}
     >
-      <div ref={ref} className="relative" style={{ height: HEIGHT }} data-chart-ready={measured ? "true" : undefined}>
+      <div ref={ref} className="relative" style={{ height: HEIGHT }} data-chart data-chart-ready={measured ? "true" : undefined}>
         <svg role="img" aria-label={summary} viewBox={`0 0 ${width} ${HEIGHT}`} className="block h-full w-full overflow-visible">
           <line x1={M.left} x2={width - M.right} y1={y(0)} y2={y(0)} className="stroke-line" />
           {buckets.map((b) => {

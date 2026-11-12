@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 function Placeholder({ height, label }: { height: number; label: string }) {
   return (
     <div
+      data-chart-loading
       className="flex items-center justify-center rounded-2xl border border-line bg-surface text-sm text-muted"
       style={{ minHeight: height }}
     >

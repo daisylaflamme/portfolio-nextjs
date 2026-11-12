@@ -69,7 +69,7 @@ export default function DailyRevenueChart({ className }: { className?: string })
         rows: days.map((d) => [shortDate(d.date), money(d.revenue), count(d.transactions)]),
       }}
     >
-      <div ref={ref} className="relative" data-chart-ready={measured ? "true" : undefined} style={{ height: HEIGHT }}>
+      <div ref={ref} className="relative" data-chart data-chart-ready={measured ? "true" : undefined} style={{ height: HEIGHT }}>
         <svg role="img" aria-label={summary} viewBox={`0 0 ${width} ${HEIGHT}`} className="block h-full w-full overflow-visible">
           {yTicks.map((t) => (
             <g key={t}>

@@ -53,7 +53,7 @@ export default function BarList({ rows, summary, marksLabel, maxValue }: BarList
   }));
 
   return (
-    <div ref={ref} className="relative" data-chart-ready={measured ? "true" : undefined}>
+    <div ref={ref} className="relative" data-chart data-chart-ready={measured ? "true" : undefined}>
       <div role="img" aria-label={summary}>
         {rows.map((r) => (
           <div key={r.key} className="flex flex-col justify-center gap-1.5" style={{ height: ROW }}>

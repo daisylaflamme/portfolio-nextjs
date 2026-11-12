@@ -24,7 +24,7 @@ export default function MapMarks({ marks, viewWidth, label }: MapMarksProps) {
     anchorY: m.anchorY === undefined ? undefined : m.anchorY * k,
   }));
   return (
-    <div ref={ref} className="absolute inset-0" data-chart-ready={measured ? "true" : undefined}>
+    <div ref={ref} className="absolute inset-0" data-chart data-chart-ready={measured ? "true" : undefined}>
       {measured ? <MarkLayer marks={scaled} label={label} width={width} /> : null}
     </div>
   );
