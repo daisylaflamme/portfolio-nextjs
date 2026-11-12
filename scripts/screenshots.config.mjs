@@ -11,7 +11,7 @@
  * - scrollTo:  optional { desktop?: selector, phone?: selector } to capture from that
  *              element (placed just below the site header) instead of the page top
  */
-export default [
+const entries = [
   {
     route: "/work/dashboards/larrys-secret",
     name: "retail-dashboard",
@@ -23,3 +23,5 @@ export default [
     scrollTo: { desktop: '[aria-label="Filter by store"]' },
   },
 ];
+
+export default entries;
