@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { dashboards } from "../src/data/dashboards";
+import { dashboards, retailDashboard } from "../src/data/dashboards";
 import { graphics } from "../src/data/graphics";
 import { landingPages } from "../src/data/landingPages";
 import { presentations, SLIDESHARE_PROFILE } from "../src/data/presentations";
@@ -139,11 +139,30 @@ test.describe("dashboards", () => {
       await expect(page.getByText(EMPTY_MESSAGE)).toBeVisible();
       return;
     }
-    await expect(page.getByRole("article")).toHaveCount(shownDashboards.length);
+    // The featured live dashboard, then the archive under its own heading.
+    await expect(page.getByRole("article")).toHaveCount(shownDashboards.length + 1);
+    const featured = page.getByRole("article", { name: retailDashboard.title });
+    await expect(featured.getByText(retailDashboard.eyebrow)).toBeVisible();
+    await expect(featured.getByText(retailDashboard.stack.join(" · "))).toBeVisible();
+    // Chrome puts a space before the sr-only ": title" span, so allow either.
+    const openName = new RegExp(`^open dashboard ?: ${escapeRegExp(retailDashboard.title)}`);
+    await expect(featured.getByRole("link", { name: openName })).toHaveAttribute(
+      "href",
+      retailDashboard.href,
+    );
+    const earlier = page.getByRole("region", { name: "Earlier dashboards (2013–2014)" });
     for (const item of shownDashboards) {
-      const article = page.getByRole("article", { name: item.title });
-      await expect(article.getByRole("heading", { level: 2 })).toHaveText(item.title);
+      const article = earlier.getByRole("article", { name: item.title });
+      await expect(article.getByRole("heading", { level: 3 })).toHaveText(item.title);
       for (const point of item.highlights ?? []) await expect(article.getByText(point)).toBeVisible();
+    }
+    if (retailDashboard.before) {
+      const before = shownDashboards.find((d) => d.id === retailDashboard.before);
+      if (before) {
+        await expect(
+          earlier.getByRole("article", { name: before.title }).getByRole("link", { name: "retail sales dashboard" }),
+        ).toHaveAttribute("href", retailDashboard.href);
+      }
     }
 
     // Screenshots open full size.
