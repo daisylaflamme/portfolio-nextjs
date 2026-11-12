@@ -118,6 +118,11 @@ export const WORK_TAGS = [
   "retail",
   "demographics",
   "ux-research",
+  "react",
+  "typescript",
+  "d3",
+  "nextjs",
+  "accessibility",
   "usability",
   "education",
   "nonprofit",
@@ -149,4 +154,27 @@ export interface WorkItem {
   highlights?: string[];
   /** Tools used, as display names. */
   tools?: string[];
+}
+
+/**
+ * A live, built project shown as the featured card on an archive page, with the same
+ * case-study fields as a Project. Its page lives at `href`.
+ */
+export interface FeaturedWorkItem extends WorkItem {
+  href: string;
+  /** Small label above the title, e.g. "// featured · live dashboard". */
+  eyebrow: string;
+  /** Display names for the stack line, e.g. ["React", "TypeScript", "D3"]. */
+  stack: string[];
+  role: string;
+  dates: string;
+  problem: string;
+  /** 3–5 bullets. */
+  whatIBuilt: string[];
+  /** Where the data comes from; shown on the card and the page. */
+  source: string;
+  /** Optional device composite on a transparent background, shown whole (object-contain). */
+  heroImage?: string;
+  /** id of the archive item this rebuilds (shown as its "before"). */
+  before?: string;
 }

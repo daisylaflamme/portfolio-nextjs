@@ -1,4 +1,10 @@
-import type { WorkItem } from "./types";
+import type { FeaturedWorkItem, WorkItem } from "./types";
+import {
+  RETAIL_DASHBOARD_PATH,
+  RETAIL_DASHBOARD_SOURCE,
+  RETAIL_DASHBOARD_STACK,
+  RETAIL_DASHBOARD_SUMMARY,
+} from "../lib/dashboards/larrys/content.ts";
 
 /**
  * Dashboards for /work/dashboards: screenshots and short write-ups. The original
@@ -8,6 +14,34 @@ import type { WorkItem } from "./types";
  * `npm run images:archive`.
  */
 const img = (name: string) => `/images/archive/dashboards/${name}.webp`;
+
+/** The live React + D3 rebuild, shown as the featured card above the archive. */
+export const retailDashboard: FeaturedWorkItem = {
+  id: "retail-sales-dashboard",
+  title: "Retail sales dashboard",
+  eyebrow: "// featured · live dashboard",
+  summary: RETAIL_DASHBOARD_SUMMARY,
+  year: 2026,
+  href: RETAIL_DASHBOARD_PATH,
+  // Card and gallery images are added once the framed screenshots are approved.
+  images: [],
+  imageAlt: "Retail sales dashboard in dark theme on a laptop and a phone: store filters, KPI tiles and charts",
+  tags: ["react", "typescript", "d3", "nextjs", "accessibility", "data-visualization", "retail"],
+  stack: RETAIL_DASHBOARD_STACK,
+  role: "Designer and engineer (solo)",
+  dates: "2013 original (UMass Boston, IT 478); 2026 rebuild",
+  problem:
+    "My 2013 Tableau workbook answered the course questions (how each store sells, which products to discount, which loyalty customers get a discount), but it was a set of static sheets that no longer exist online and could not be used with a keyboard or a screen reader.",
+  whatIBuilt: [
+    "A typed data layer over anonymized, aggregated course data, with pure, unit-tested selectors for every number on the page.",
+    "Charts drawn as SVG by React, with D3 used only for scales, shapes and the map projection; heavier panels load as separate chunks.",
+    "A what-if simulator for my 2013 loyalty discount rule, with both original presets and live tier counts.",
+    "Accessible by design: a summary and a data table for every chart, keyboard tooltips, a real table for the basket matrix, and shareable URL state.",
+    "A server-rendered map of where loyalty customers live, drawn from MassGIS town boundaries.",
+  ],
+  source: RETAIL_DASHBOARD_SOURCE,
+  before: "retail-kpi-dashboard",
+};
 
 export const dashboards: WorkItem[] = [
   {
