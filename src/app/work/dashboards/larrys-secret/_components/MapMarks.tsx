@@ -1,7 +1,7 @@
 "use client";
 
-import { useElementWidth } from "./useElementWidth";
-import MarkLayer, { type Mark } from "./MarkLayer";
+import { useElementWidth } from "@/components/charts/useElementWidth";
+import MarkLayer, { type Mark } from "@/components/charts/MarkLayer";
 
 interface MapMarksProps {
   /** Marks in the map's viewBox units. */

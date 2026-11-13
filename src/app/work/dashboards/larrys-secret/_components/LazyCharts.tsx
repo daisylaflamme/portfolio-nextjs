@@ -1,6 +1,6 @@
 "use client";
 
-import { hydrateWhenVisible } from "./hydrateWhenVisible";
+import { hydrateWhenVisible } from "@/components/charts/hydrateWhenVisible";
 
 /**
  * Below-the-fold charts. Their HTML is server-rendered like the rest of the page;

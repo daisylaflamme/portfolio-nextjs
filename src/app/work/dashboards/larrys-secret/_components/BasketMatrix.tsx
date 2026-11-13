@@ -4,7 +4,7 @@ import { useMemo, useSyncExternalStore } from "react";
 
 const noopSubscribe = () => () => {};
 import { useDashboard } from "./DashboardProvider";
-import ChartCard from "./ChartCard";
+import ChartCard from "@/components/charts/ChartCard";
 import { selectBasketMatrix } from "@/lib/dashboards/larrys/selectors";
 import { count } from "@/lib/dashboards/larrys/format";
 

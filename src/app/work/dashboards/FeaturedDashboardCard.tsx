@@ -1,46 +1,19 @@
+import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { FeaturedWorkItem } from "@/data/types";
 import { publicFileExists } from "@/lib/archive";
-import { larrysData } from "@/lib/dashboards/larrys/data";
-import { selectDailyRevenue, selectKpis } from "@/lib/dashboards/larrys/selectors";
-import { money, moneyShort, percent } from "@/lib/dashboards/larrys/format";
 
-/**
- * Preview drawn from the real numbers, used until the framed screenshot exists.
- * Decorative: the card's text and link carry the meaning.
- */
-function LivePreview() {
-  const k = selectKpis(larrysData, { store: "all" });
-  const days = selectDailyRevenue(larrysData, { store: "all" });
-  const max = Math.max(...days.map((d) => d.revenue));
-  const tiles = [
-    ["Revenue", moneyShort(k.revenue)],
-    ["Gross margin", percent(k.grossMargin)],
-    ["Avg basket", money(k.avgBasket)],
-  ];
-  return (
-    <div aria-hidden="true" className="flex h-full flex-col gap-3 p-4 sm:p-6">
-      <div className="grid grid-cols-3 gap-2">
-        {tiles.map(([label, value]) => (
-          <div key={label} className="rounded-lg border border-line bg-surface px-3 py-2">
-            <div className="text-[11px] text-muted">{label}</div>
-            <div className="font-display text-lg font-bold text-fg sm:text-xl">{value}</div>
-          </div>
-        ))}
-      </div>
-      <svg viewBox={`0 0 ${days.length * 10} 100`} preserveAspectRatio="none" className="min-h-28 w-full flex-1 rounded-lg border border-line bg-surface">
-        {days.map((d, i) => {
-          const h = (d.revenue / max) * 86;
-          return <rect key={d.date} x={i * 10 + 2} y={96 - h} width={6} height={h} rx={1.5} className="fill-accent" />;
-        })}
-      </svg>
-    </div>
-  );
+interface FeaturedDashboardCardProps {
+  item: FeaturedWorkItem;
+  /** Shown instead of the hero image until the framed screenshot exists. */
+  preview: ReactNode;
+  /** Only the first card on the page is the LCP image. */
+  priority?: boolean;
 }
 
-/** Large card at the top of /work/dashboards linking to the live dashboard. */
-export default function FeaturedDashboardCard({ item }: { item: FeaturedWorkItem }) {
+/** Large card on /work/dashboards linking to a live dashboard. */
+export default function FeaturedDashboardCard({ item, preview, priority = false }: FeaturedDashboardCardProps) {
   const hero = item.heroImage && publicFileExists(item.heroImage) ? item.heroImage : null;
 
   return (
@@ -54,12 +27,12 @@ export default function FeaturedDashboardCard({ item }: { item: FeaturedWorkItem
             src={hero}
             alt={item.imageAlt}
             fill
-            priority
+            priority={priority}
             sizes="(min-width: 1152px) 640px, (min-width: 1024px) 55vw, calc(100vw - 2rem)"
             className="object-contain p-3 sm:p-5"
           />
         ) : (
-          <LivePreview />
+          preview
         )}
       </div>
       <div className="flex flex-col gap-3.5 p-5 sm:p-7">

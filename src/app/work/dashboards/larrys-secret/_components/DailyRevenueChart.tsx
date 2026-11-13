@@ -5,9 +5,9 @@ import { scaleLinear, scaleUtc } from "d3-scale";
 import { area, line, curveMonotoneX } from "d3-shape";
 import { max } from "d3-array";
 import { useDashboard } from "./DashboardProvider";
-import { useElementWidth } from "./useElementWidth";
-import ChartCard from "./ChartCard";
-import MarkLayer, { type Mark } from "./MarkLayer";
+import { useElementWidth } from "@/components/charts/useElementWidth";
+import ChartCard from "@/components/charts/ChartCard";
+import MarkLayer, { type Mark } from "@/components/charts/MarkLayer";
 import { selectDailyRevenue } from "@/lib/dashboards/larrys/selectors";
 import { count, longDate, money, moneyShort, shortDate } from "@/lib/dashboards/larrys/format";
 
