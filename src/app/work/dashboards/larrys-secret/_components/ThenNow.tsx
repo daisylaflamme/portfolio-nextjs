@@ -9,7 +9,7 @@ const CHANGES = [
   "Customer data anonymized and aggregated before publishing",
 ];
 
-/** The 2013 Tableau screenshot next to what the rebuild changed. */
+/** The first (Tableau) version next to what this version changed. */
 export default function ThenNow() {
   const before = dashboards.find((d) => d.id === "retail-kpi-dashboard");
 
@@ -20,7 +20,12 @@ export default function ThenNow() {
     >
       {before ? (
         <ImageSetButton
-          item={{ ...before, title: "2013 Tableau retail KPI dashboard" }}
+          item={{
+            ...before,
+            // Feeds the button label, the lightbox caption and the dialog name.
+            title: "First version of the Larry’s Secret dashboard",
+            imageAlt: "First version of the Larry’s Secret dashboard, built in Tableau",
+          }}
           aspectClass="aspect-[16/10]"
           sizes="(min-width: 1152px) 520px, (min-width: 1024px) 45vw, calc(100vw - 4rem)"
         />
@@ -28,7 +33,7 @@ export default function ThenNow() {
       <div className="flex flex-col gap-3">
         <p className="font-mono text-[13px] text-accent">{"// then → now"}</p>
         <h2 id="then-now-title" className="font-display text-xl font-semibold text-fg sm:text-2xl">
-          What changed since 2013
+          From the first version to this one
         </h2>
         <ul className="flex flex-col gap-2">
           {CHANGES.map((c) => (

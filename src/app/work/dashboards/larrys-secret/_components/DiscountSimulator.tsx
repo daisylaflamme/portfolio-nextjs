@@ -32,9 +32,11 @@ export default function DiscountSimulator() {
     (storeName ? ` at ${storeName}` : "") +
     `: ${tiers.counts[1]} at 10%, ${tiers.counts[2]} at 20%, ${tiers.counts[3]} at 40%.`;
 
+  // "1×", "1.6×": the preset labels drop a trailing ".0" (the sliders keep one decimal).
+  const multipliers = (values: readonly number[]) => values.map((v) => `${Number(v.toFixed(1))}×`).join(" / ");
   const presets = [
-    { label: "2013 rule A", detail: workbook1.map(times).join(" / "), value: workbook1 },
-    { label: "2013 rule B", detail: workbook2.map(times).join(" / "), value: workbook2 },
+    { label: "Rule A", detail: multipliers(workbook1), value: workbook1 },
+    { label: "Rule B", detail: multipliers(workbook2), value: workbook2 },
   ];
 
   return (
@@ -48,9 +50,9 @@ export default function DiscountSimulator() {
           Loyalty discount simulator
         </h2>
         <p className="text-[15px] leading-relaxed text-muted">
-          My 2013 rule: compare each loyalty customer’s average line amount with the overall average (
-          {`$${data.meta.overallAvgLine.toFixed(2)}`}), then assign a 10%, 20% or 40% discount tier. Move the thresholds to
-          see who qualifies.
+          Larry wanted to reward his best customers without eroding margin. Each loyalty customer’s average purchase is
+          compared with the store-wide average, then assigned a 10%, 20% or 40% tier. Move the thresholds to see who
+          qualifies.
         </p>
         <div role="group" aria-label="Presets" className="flex flex-wrap gap-2">
           {presets.map((p) => (
