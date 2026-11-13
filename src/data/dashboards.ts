@@ -55,7 +55,7 @@ export const retailDashboard: FeaturedWorkItem = {
   before: "retail-kpi-dashboard",
 };
 
-/** The second live dashboard, below Larry's Secret. No screenshots yet: the card draws a preview from the data. */
+/** The second live dashboard, below Larry's Secret. */
 export const onlineRetailDashboard: FeaturedWorkItem = {
   id: "online-retail-dashboard",
   title: ONLINE_RETAIL_TITLE,
@@ -63,8 +63,14 @@ export const onlineRetailDashboard: FeaturedWorkItem = {
   summary: ONLINE_RETAIL_SUMMARY,
   year: 2026,
   href: ONLINE_RETAIL_PATH,
-  images: [],
-  imageAlt: "Online retail dashboard in dark theme: KPI tiles, monthly revenue line and revenue by country",
+  // Framed captures from `npm run screenshots` (scripts/screenshots.config.mjs).
+  heroImage: "/images/projects/online-retail-dashboard/online-retail-dashboard-hero.webp",
+  images: [
+    "/images/projects/online-retail-dashboard/online-retail-dashboard-desktop.webp",
+    "/images/projects/online-retail-dashboard/online-retail-dashboard-phone.webp",
+  ],
+  imageAlt:
+    "Online retail dashboard in dark theme on a laptop and a phone: section tabs, filters, KPI tiles, a monthly revenue line and a world map of revenue by country",
   tags: ["react", "typescript", "d3", "nextjs", "accessibility", "data-visualization", "retail"],
   stack: ONLINE_RETAIL_STACK,
   role: "Designer and engineer (solo)",
@@ -72,10 +78,11 @@ export const onlineRetailDashboard: FeaturedWorkItem = {
   problem:
     "Two years of a UK online gift retailer’s orders, about a million invoice lines, are too much to ship to a browser. The dashboard needed to stay fast with every filter while answering where revenue comes from, which products and baskets matter, whether customers come back, and where returns are high.",
   whatIBuilt: [
-    "A Python cleaning script with documented rules (cancellations kept as returns, guest orders out of customer metrics) that turns 1.07M lines into a 1.3 MB aggregated snapshot.",
-    "A typed DataSource interface with a snapshot-backed implementation, so the pages can later switch to a database without changes; pure, unit-tested selectors for every number.",
-    "Five server-rendered tabs that share filters through the URL: KPIs against the previous period, a drag-to-select monthly line, a world map, an 80/20 Pareto view, a basket matrix, cohort retention, RFM segments and return rates.",
+    "A Python cleaning script with documented rules (cancellations kept as returns, guest orders kept out of customer metrics) that turns 1.07M invoice lines into a 1.3 MB aggregated snapshot, plus CSVs for a database load.",
+    "Five server-rendered tabs that share filters through the URL. After the first render, a filter change is one GraphQL request in which each chart asks for exactly its fields, with depth and complexity limits and CDN caching.",
+    "A typed DataSource behind every number: the committed snapshot by default, or Postgres through a read-only role and parameterized queries. An AI “Summarize this view” panel (Claude API) sends only server-computed totals, behind validation, rate limits, a daily cap and a cache. Both are built and tested, and switched off on the live site for now.",
     "Accessible by design: a summary and a data table for every chart, keyboard paths for every interaction, real tables for the matrix and heatmap, and notes wherever a filter doesn’t apply.",
+    "Built with Claude Code as my coding partner. I owned the architecture and the decisions (snapshot vs Postgres vs in-browser data, why GraphQL, the guard rails, all recorded in an ADR) and directed and checked the work.",
   ],
   source: ONLINE_RETAIL_DATA_NOTE,
 };

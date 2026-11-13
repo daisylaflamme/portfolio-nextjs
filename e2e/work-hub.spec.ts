@@ -143,6 +143,13 @@ test.describe("dashboards", () => {
     await expect(page.getByRole("article")).toHaveCount(shownDashboards.length + 2);
     const second = page.getByRole("article", { name: onlineRetailDashboard.title });
     await expect(second.getByText(onlineRetailDashboard.eyebrow)).toBeVisible();
+    await expect(second.getByText(onlineRetailDashboard.stack.join(" · "))).toBeVisible();
+    if (onlineRetailDashboard.heroImage) {
+      const hero = second.getByRole("img", { name: onlineRetailDashboard.imageAlt });
+      await hero.scrollIntoViewIfNeeded();
+      await expect(hero).toBeVisible();
+      await expect.poll(() => hero.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+    }
     const featured = page.getByRole("article", { name: retailDashboard.title });
     await expect(featured.getByText(retailDashboard.eyebrow)).toBeVisible();
     if (retailDashboard.heroImage) {

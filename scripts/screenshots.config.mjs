@@ -22,6 +22,16 @@ const entries = [
     // The laptop shows the filters, KPIs and first charts; the phone keeps the title.
     scrollTo: { desktop: '[aria-label="Filter by store"]' },
   },
+  {
+    route: "/work/dashboards/online-retail",
+    name: "online-retail-dashboard",
+    viewports: ["desktop", "phone"],
+    theme: "dark",
+    outDir: "public/images/projects/online-retail-dashboard",
+    hero: true,
+    // The laptop starts at the section tabs: filters, KPI tiles, monthly line and map; the phone keeps the title.
+    scrollTo: { desktop: '[aria-label="Dashboard sections"]' },
+  },
 ];
 
 export default entries;
