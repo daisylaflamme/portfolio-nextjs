@@ -50,9 +50,9 @@ export default function DiscountSimulator() {
           Loyalty discount simulator
         </h2>
         <p className="text-[15px] leading-relaxed text-muted">
-          Larry wanted to reward his best customers without eroding margin. Each loyalty customer’s average purchase is
-          compared with the store-wide average, then assigned a 10%, 20% or 40% tier. Move the thresholds to see who
-          qualifies.
+          Larry wanted to reward his best customers without eroding margin. Each loyalty customer’s average spend per receipt
+          line is compared with the average line across all five stores, then assigned a 10%, 20% or 40% tier. Move the
+          thresholds to see who qualifies.
         </p>
         <div role="group" aria-label="Presets" className="flex flex-wrap gap-2">
           {presets.map((p) => (

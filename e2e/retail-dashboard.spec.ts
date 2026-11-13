@@ -54,7 +54,7 @@ test("loads with title, breadcrumb, KPIs and the source note", async ({ page }) 
   // The brief: three questions under the intro, and the closing line above the source note.
   await expect(page.getByRole("list", { name: "Questions the dashboard answers" }).getByRole("listitem")).toHaveCount(3);
   await expect(page.getByText(/^What this gives Larry:/)).toBeVisible();
-  await expect(page.getByText(`${data.meta.transactions.toLocaleString("en-US")} receipts`)).toBeVisible();
+  await expect(page.getByText(`${data.meta.transactions.toLocaleString("en-US")} transactions`)).toBeVisible();
   expect(errors).toEqual([]);
 });
 

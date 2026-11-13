@@ -82,7 +82,7 @@ export default async function RetailDashboardPage({ searchParams }: PageProps) {
         </ul>
         <p className="text-sm text-muted">
           {shortDate(meta.dateRange[0])}–{shortDate(meta.dateRange[1]).replace(/^\w+ /, "")}, 2012 · {stores.length} stores ·{" "}
-          {skus.length} products · {count(meta.transactions)} receipts
+          {skus.length} products · {count(meta.transactions)} transactions
         </p>
       </header>
 
