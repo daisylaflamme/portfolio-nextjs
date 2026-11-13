@@ -144,10 +144,10 @@ describe("guards", () => {
 
   it("the LRU cache evicts the least recently used entry", async () => {
     const cache = new MemoryCache(2);
-    await cache.set("a", "A", "m");
-    await cache.set("b", "B", "m");
+    await cache.set("a", "A");
+    await cache.set("b", "B");
     await cache.get("a");
-    await cache.set("c", "C", "m");
+    await cache.set("c", "C");
     assert.equal(await cache.get("b"), undefined);
     assert.equal(await cache.get("a"), "A");
   });
