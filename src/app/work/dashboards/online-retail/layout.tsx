@@ -10,6 +10,8 @@ import {
 import { monthLabel } from "@/lib/dashboards/online-retail/format";
 import DashboardControls from "./_components/DashboardControls";
 import SourceBadge from "./_components/SourceBadge";
+import SummaryPanel from "./_components/SummaryPanel";
+import { summariesEnabled } from "@/lib/dashboards/online-retail/summary/enabled";
 
 /** Breadcrumb, intro, section tabs, filters and the data note, around every tab. */
 export default async function OnlineRetailLayout({ children }: { children: ReactNode }) {
@@ -63,6 +65,13 @@ export default async function OnlineRetailLayout({ children }: { children: React
       </Suspense>
 
       {children}
+
+      {/* Decided on the server: the panel exists only when the summary route can answer. */}
+      {summariesEnabled() ? (
+        <Suspense fallback={null}>
+          <SummaryPanel meta={meta} />
+        </Suspense>
+      ) : null}
 
       <p className="text-xs leading-relaxed text-muted" data-source-note>
         {ONLINE_RETAIL_DATA_NOTE}

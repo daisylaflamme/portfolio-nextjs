@@ -3,6 +3,7 @@ import { poolRunner, writeTransaction } from "@/lib/dashboards/online-retail/pos
 import { createClaudeStreamer, summaryModel } from "@/lib/dashboards/online-retail/summary/claude";
 import { MemoryCache, MemoryDailyCap, RateLimiter } from "@/lib/dashboards/online-retail/summary/guards";
 import { handleSummary, type SummaryDeps } from "@/lib/dashboards/online-retail/summary/handler";
+import { summariesEnabled } from "@/lib/dashboards/online-retail/summary/enabled";
 import { FallbackDailyCap, PostgresCache, PostgresDailyCap } from "@/lib/dashboards/online-retail/summary/store";
 
 /**
@@ -32,6 +33,6 @@ function getDeps(): SummaryDeps {
 }
 
 export async function POST(request: Request) {
-  if (!process.env.ANTHROPIC_API_KEY) return new Response("Not found", { status: 404 });
+  if (!summariesEnabled()) return new Response("Not found", { status: 404 });
   return handleSummary(request, getDeps());
 }

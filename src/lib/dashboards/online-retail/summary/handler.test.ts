@@ -135,3 +135,12 @@ describe("summaryModel", () => {
     assert.equal(summaryModel({ ANTHROPIC_MODEL: " claude-haiku-5-5 " }), "claude-haiku-5-5");
   });
 });
+
+describe("summariesEnabled", () => {
+  it("is true only with a non-empty ANTHROPIC_API_KEY", async () => {
+    const { summariesEnabled } = await import("./enabled.ts");
+    assert.equal(summariesEnabled({}), false);
+    assert.equal(summariesEnabled({ ANTHROPIC_API_KEY: "  " }), false);
+    assert.equal(summariesEnabled({ ANTHROPIC_API_KEY: "sk-ant-test" }), true);
+  });
+});
