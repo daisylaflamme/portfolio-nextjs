@@ -1,27 +1,21 @@
-import { geoEqualEarth, geoPath } from "d3-geo";
+"use client";
+
+import { useId, type ReactNode } from "react";
 import { scaleLog } from "d3-scale";
-import { feature } from "topojson-client";
-import type { GeometryCollection, Topology } from "topojson-specification";
-import worldTopo from "@/data/world-110m.topo.json";
 import ChartCard from "@/components/charts/ChartCard";
 import BarList from "@/components/charts/BarList";
 import { countryLabel, mapName } from "@/lib/dashboards/online-retail/countries";
 import { count, money, moneyShort, percent } from "@/lib/dashboards/online-retail/format";
 import type { CountryRevenue as Row } from "@/lib/dashboards/online-retail/types";
 
-const W = 640;
-type Props = { name: string };
-const topo = worldTopo as unknown as Topology<{ countries: GeometryCollection<Props> }>;
-
-// The outlines never change, so they are projected once per server process.
-const world = feature(topo, topo.objects.countries);
-const projection = geoEqualEarth().fitWidth(W, world);
-const path = geoPath(projection).digits(1);
-const [[, y0], [, y1]] = path.bounds(world);
-const H = Math.ceil(y1 - y0) + 2;
-projection.translate([projection.translate()[0], projection.translate()[1] - y0 + 1]);
-const SHAPES = world.features.map((f) => ({ name: f.properties.name, d: path(f) ?? "" }));
-const ON_MAP = new Set(SHAPES.map((s) => s.name));
+export interface WorldMap {
+  width: number;
+  height: number;
+  /** The server-rendered outlines (WorldMapShapes): paths with data-map-country. */
+  shapes: ReactNode;
+  /** Country names on the map. */
+  countries: string[];
+}
 
 interface CountryRevenueProps {
   rows: Row[];
@@ -29,21 +23,35 @@ interface CountryRevenueProps {
   selected: string;
   /** e.g. "Dec 2009 – Dec 2011, all categories" */
   context: string;
+  map: WorldMap;
 }
 
+/** Quotes a value for a CSS attribute selector. */
+const attr = (v: string) => `"${v.replace(/["\\]/g, "\\$&")}"`;
+
 /**
- * Revenue by country: a world choropleth drawn on the server (d3-geo, Natural Earth
- * outlines), plus a ranked list that carries the exact values and the keyboard path.
+ * Revenue by country: the server-drawn world map, shaded from the current data through a
+ * scoped stylesheet, plus a ranked list that carries the exact values and the keyboard path.
  */
-export default function CountryRevenue({ rows, selected, context }: CountryRevenueProps) {
-  const byMapName = new Map(rows.map((r) => [mapName(r.country), r]));
+export default function CountryRevenue({ rows, selected, context, map }: CountryRevenueProps) {
+  const id = `map-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const positive = rows.filter((r) => r.revenue > 0);
   const opacity = scaleLog()
     .domain([Math.max(1, Math.min(...positive.map((r) => r.revenue))), Math.max(2, ...positive.map((r) => r.revenue))])
     .range([0.25, 1])
     .clamp(true);
-  const offMap = rows.filter((r) => !ON_MAP.has(mapName(r.country)));
+  const onMap = new Set(map.countries);
+  const offMap = rows.filter((r) => !onMap.has(mapName(r.country)));
   const filtered = selected !== "all";
+
+  // Land without sales, then one rule per country with sales; the selected one is outlined.
+  const css = [
+    `#${id} [data-map-country]{fill:var(--surface);stroke:var(--border)}`,
+    ...positive.map(
+      (r) => `#${id} [data-map-country=${attr(mapName(r.country))}]{fill:var(--accent);fill-opacity:${opacity(Math.max(1, r.revenue)).toFixed(3)};stroke:var(--bg)}`,
+    ),
+    filtered ? `#${id} [data-map-country=${attr(mapName(selected))}]{stroke:var(--fg);stroke-width:2px}` : "",
+  ].join("\n");
 
   const top = rows.slice(0, 8);
   if (filtered && !top.some((r) => r.country === selected)) {
@@ -71,25 +79,9 @@ export default function CountryRevenue({ rows, selected, context }: CountryReven
         </>
       }
     >
-      <svg role="img" aria-label={summary} viewBox={`0 0 ${W} ${H}`} className="block h-auto w-full rounded-xl bg-surface-2" data-world-map>
-        {SHAPES.map((s) => {
-          const r = byMapName.get(s.name);
-          return (
-            <path
-              key={s.name}
-              d={s.d}
-              className={r ? "fill-accent stroke-bg" : "fill-surface stroke-line"}
-              fillOpacity={r ? opacity(Math.max(1, r.revenue)) : 1}
-              strokeWidth={0.5}
-            />
-          );
-        })}
-        {/* The selected country again on top, outlined, so its border isn't hidden by neighbours. */}
-        {filtered
-          ? SHAPES.filter((s) => byMapName.get(s.name)?.country === selected).map((s) => (
-              <path key={`${s.name}-outline`} d={s.d} fill="none" className="stroke-fg" strokeWidth={1.75} data-selected-country />
-            ))
-          : null}
+      <style>{css}</style>
+      <svg id={id} role="img" aria-label={summary} viewBox={`0 0 ${map.width} ${map.height}`} className="block h-auto w-full rounded-xl bg-surface-2" data-world-map>
+        {map.shapes}
       </svg>
       <BarList
         summary={`Ranked revenue by country, ${context}. ${lead ? `${countryLabel(lead.country)} leads with ${money(lead.revenue)}.` : ""}`}

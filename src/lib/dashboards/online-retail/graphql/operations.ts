@@ -21,6 +21,8 @@ import type {
   SegmentsView,
 } from "../types.ts";
 import type { SourceKind } from "../source.ts";
+import { serializeFilters } from "../params.ts";
+import type { DashboardMeta } from "../types.ts";
 
 export const fragments = {
   Filters: /* GraphQL */ `fragment Filters on Dashboard { filters { from to country category } }`,
@@ -132,4 +134,18 @@ export interface OperationData {
   basket: BasketData;
   customers: CustomersData;
   returns: ReturnsData;
+}
+
+/** Filters as the API takes them: the same months and slugs as the URL (defaults left out). */
+export function filtersToInput(meta: DashboardMeta, f: Filters): FiltersInput {
+  return Object.fromEntries(new URLSearchParams(serializeFilters(meta, f).slice(1))) as FiltersInput;
+}
+
+/** Variables for one tab: the filters, plus the Products tab's search text and product code. */
+export function operationVariables(meta: DashboardMeta, f: Filters, extra: { q?: string | null; product?: string | null } = {}) {
+  return {
+    filters: filtersToInput(meta, f),
+    ...(extra.q ? { query: extra.q, withSearch: true } : {}),
+    ...(extra.product ? { code: extra.product, withProduct: true } : {}),
+  };
 }

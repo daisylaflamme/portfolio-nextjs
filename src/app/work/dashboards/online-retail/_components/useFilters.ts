@@ -1,25 +1,25 @@
 "use client";
 
-import { useCallback, useMemo, useTransition } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useMemo } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { operationVariables } from "@/lib/dashboards/online-retail/graphql/operations";
 import { parseFilters, serializeFilters } from "@/lib/dashboards/online-retail/params";
 import type { DashboardMeta, Filters } from "@/lib/dashboards/online-retail/types";
+import { changeFilters, usePending } from "./dashboardStore";
 
 const FILTER_KEYS = ["from", "to", "country", "category"];
 
 /**
  * The dashboard's filters, read from the query string, and a way to change them.
  *
- * Unlike Larry's Secret (which filters data already in the browser), every number here is
- * computed on the server from the snapshot, so a change goes through router.replace: Next
- * re-renders the page on the server with the new query and streams the result in, without
- * a scroll jump. The transition's pending flag lets the filters say "Updating…".
+ * A change rewrites the URL (history.replaceState, so no server render) and refetches the
+ * current tab through GraphQL in one request (dashboardStore.ts). Shared links and tab
+ * links still render on the server from the same query string.
  */
 export function useFilters(meta: DashboardMeta) {
   const search = useSearchParams();
   const pathname = usePathname();
-  const router = useRouter();
-  const [pending, startTransition] = useTransition();
+  const pending = usePending();
   const filters = useMemo(() => parseFilters(meta, new URLSearchParams(search.toString())), [meta, search]);
 
   const update = useCallback(
@@ -29,9 +29,9 @@ export function useFilters(meta: DashboardMeta) {
       for (const key of FILTER_KEYS) extra.delete(key);
       const query = [serializeFilters(meta, next).slice(1), extra.toString()].filter(Boolean).join("&");
       const url = `${pathname}${query ? `?${query}` : ""}`;
-      startTransition(() => router.replace(url, { scroll: false }));
+      void changeFilters(url, operationVariables(meta, next, { q: extra.get("q"), product: extra.get("product") }));
     },
-    [meta, pathname, router, search],
+    [meta, pathname, search],
   );
 
   return { filters, update, pending, query: serializeFilters(meta, filters) };
