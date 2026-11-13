@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useSyncExternalStore } from "react";
+
+const noopSubscribe = () => () => {};
 import { useDashboard } from "./DashboardProvider";
 import ChartCard from "./ChartCard";
 import { selectBasketMatrix } from "@/lib/dashboards/larrys/selectors";
@@ -13,6 +15,8 @@ const MAX_OPACITY = 0.42;
 export default function BasketMatrix({ className }: { className?: string }) {
   const { data, filters } = useDashboard();
   const m = useMemo(() => selectBasketMatrix(data, filters), [data, filters]);
+  // False in the server HTML, true once hydrated: marks the chart ready for tests and screenshots.
+  const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
   const store = filters.store === "all" ? "all stores" : data.stores.find((s) => s.id === filters.store)?.name;
 
   const pairs = m.products
@@ -46,7 +50,8 @@ export default function BasketMatrix({ className }: { className?: string }) {
         tabIndex={0}
         // relative: keeps the absolutely positioned sr-only labels inside the scroll box.
         className="relative max-w-full overflow-x-auto rounded-lg"
-        data-chart data-chart-ready="true"
+        data-chart
+        data-chart-ready={hydrated ? "true" : undefined}
       >
         <table className="w-full min-w-[30rem] border-separate border-spacing-[3px] text-xs">
           <caption className="sr-only">{caption}</caption>

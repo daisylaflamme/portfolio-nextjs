@@ -1,11 +1,13 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { hydrateWhenVisible } from "./hydrateWhenVisible";
 
 /**
- * Below-the-fold charts load as separate chunks, so the code for the headline numbers
- * and the first charts isn't held up by them. Each placeholder keeps the panel's height,
- * so nothing shifts when the chunk arrives.
+ * Below-the-fold charts. Their HTML is server-rendered like the rest of the page;
+ * their JavaScript loads and hydrates as they approach the viewport (see
+ * hydrateWhenVisible), which keeps the work at page load small. The placeholder only
+ * shows if a chart has to render on the client before its code has arrived, and it
+ * keeps the panel's height so nothing shifts.
  */
 function Placeholder({ height, label }: { height: number; label: string }) {
   return (
@@ -19,14 +21,23 @@ function Placeholder({ height, label }: { height: number; label: string }) {
   );
 }
 
-export const BasketMatrix = dynamic(() => import("./BasketMatrix"), {
-  loading: () => <Placeholder height={460} label="matrix" />,
+export const ProductBars = hydrateWhenVisible(() => import("./ProductBars"), {
+  fallback: <Placeholder height={520} label="chart" />,
 });
 
-export const DiscountSimulator = dynamic(() => import("./DiscountSimulator"), {
-  loading: () => <Placeholder height={560} label="simulator" />,
+export const BasketMatrix = hydrateWhenVisible(() => import("./BasketMatrix"), {
+  fallback: <Placeholder height={460} label="matrix" />,
 });
 
-export const PricePointChart = dynamic(() => import("./PricePointChart"), {
-  loading: () => <Placeholder height={420} label="chart" />,
+export const DiscountSimulator = hydrateWhenVisible(() => import("./DiscountSimulator"), {
+  fallback: <Placeholder height={560} label="simulator" />,
+});
+
+export const PricePointChart = hydrateWhenVisible(() => import("./PricePointChart"), {
+  fallback: <Placeholder height={420} label="chart" />,
+});
+
+/** The focusable dots over the server-rendered map. */
+export const MapMarks = hydrateWhenVisible(() => import("./MapMarks"), {
+  wrapperClassName: "absolute inset-0",
 });

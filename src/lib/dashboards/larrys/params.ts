@@ -3,7 +3,7 @@
  * Anything missing or invalid falls back to the defaults, so every link renders.
  */
 import { isValidThresholds } from "./selectors.ts";
-import type { LarrysData, StoreFilter, Thresholds } from "./types.ts";
+import type { ClientLarrysData, StoreFilter, Thresholds } from "./types.ts";
 
 export interface DashboardParams {
   store: StoreFilter;
@@ -24,7 +24,7 @@ export const DEFAULT_SKU = "S7310";
 /** Rounds to the slider step (one decimal). */
 export const toStep = (v: number) => Math.round(v * 10) / 10;
 
-export function defaultParams(data: LarrysData): DashboardParams {
+export function defaultParams(data: ClientLarrysData): DashboardParams {
   return { store: "all", thresholds: [...data.meta.discountTiers2013.workbook1], sku: DEFAULT_SKU };
 }
 
@@ -45,7 +45,7 @@ function parseThresholds(value: string | undefined): Thresholds | null {
   return inRange && isValidThresholds(t) ? t : null;
 }
 
-export function parseDashboardParams(data: LarrysData, source: ParamSource): DashboardParams {
+export function parseDashboardParams(data: ClientLarrysData, source: ParamSource): DashboardParams {
   const defaults = defaultParams(data);
   const storeRaw = read(source, "store");
   const storeId = storeRaw && /^\d+$/.test(storeRaw) ? Number(storeRaw) : NaN;
@@ -57,7 +57,7 @@ export function parseDashboardParams(data: LarrysData, source: ParamSource): Das
 }
 
 /** Query string for the params, leaving out values that equal the defaults. */
-export function serializeDashboardParams(data: LarrysData, p: DashboardParams): string {
+export function serializeDashboardParams(data: ClientLarrysData, p: DashboardParams): string {
   const d = defaultParams(data);
   const q = new URLSearchParams();
   if (p.store !== d.store) q.set("store", String(p.store));

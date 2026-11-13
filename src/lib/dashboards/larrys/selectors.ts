@@ -8,6 +8,7 @@
  * aggregates; they honor the store filter only. Loyalty towns have no store at all.
  */
 import type {
+  ClientLarrysData,
   Filters,
   LarrysData,
   LoyaltyZip,
@@ -44,7 +45,7 @@ export interface Kpis {
   loyaltyShare: number;
 }
 
-export function selectKpis(data: LarrysData, f: Filters): Kpis {
+export function selectKpis(data: ClientLarrysData, f: Filters): Kpis {
   let revenue = 0;
   let cost = 0;
   let units = 0;
@@ -84,7 +85,7 @@ export interface DailyPoint {
 }
 
 /** Revenue per day across the selected stores, in date order. */
-export function selectDailyRevenue(data: LarrysData, f: Filters): DailyPoint[] {
+export function selectDailyRevenue(data: ClientLarrysData, f: Filters): DailyPoint[] {
   const byDate = new Map<string, DailyPoint>();
   for (const d of data.daily) {
     if (!matches(f, d)) continue;
@@ -107,7 +108,7 @@ export interface StoreRevenue {
 }
 
 /** Every store's revenue (week range applied), largest first, with the filter marked. */
-export function selectRevenueByStore(data: LarrysData, f: Filters): StoreRevenue[] {
+export function selectRevenueByStore(data: ClientLarrysData, f: Filters): StoreRevenue[] {
   const totals = new Map<number, number>();
   for (const r of data.storeWeekSku) {
     if (!matchesWeek(f.weeks, r.week)) continue;
@@ -134,7 +135,7 @@ export interface ProductRevenue {
 }
 
 /** Revenue, units and gross margin per product, largest revenue first. */
-export function selectProducts(data: LarrysData, f: Filters): ProductRevenue[] {
+export function selectProducts(data: ClientLarrysData, f: Filters): ProductRevenue[] {
   const totals = new Map<string, { revenue: number; cost: number; units: number }>();
   for (const r of data.storeWeekSku) {
     if (!matches(f, r)) continue;
@@ -169,7 +170,7 @@ export interface BasketMatrix {
 }
 
 /** Symmetric "bought together" matrix. Whole period: the week range does not apply. */
-export function selectBasketMatrix(data: LarrysData, f: Filters): BasketMatrix {
+export function selectBasketMatrix(data: ClientLarrysData, f: Filters): BasketMatrix {
   const order = selectProducts(data, { store: f.store }).map((p) => p.id);
   const skuById = new Map(data.skus.map((s) => [s.id, s]));
   const products = order.map((id) => skuById.get(id)).filter((s): s is Sku => Boolean(s));
@@ -206,7 +207,7 @@ export interface PriceBucket {
 }
 
 /** Units sold at each price for one product, lowest price first. Whole period. */
-export function selectPricePoints(data: LarrysData, f: Filters, skuId: string): PriceBucket[] {
+export function selectPricePoints(data: ClientLarrysData, f: Filters, skuId: string): PriceBucket[] {
   const sku = data.skus.find((s) => s.id === skuId);
   const totals = new Map<number, { units: number; revenue: number }>();
   for (const p of data.pricePoints) {
@@ -252,7 +253,7 @@ export interface DiscountTiers {
  * are filtered by home store. Throws on thresholds that are not strictly increasing.
  */
 export function selectDiscountTiers(
-  data: LarrysData,
+  data: ClientLarrysData,
   f: Filters,
   thresholds: Thresholds,
 ): DiscountTiers {

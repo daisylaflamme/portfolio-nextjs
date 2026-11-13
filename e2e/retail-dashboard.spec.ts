@@ -15,11 +15,19 @@ const usd = (v: number) => new Intl.NumberFormat("en-US", { style: "currency", c
 const { workbook1: ruleA, workbook2: ruleB } = data.meta.discountTiers2013;
 
 /**
- * Opens the dashboard and waits until every chart has hydrated: charts set
- * data-chart-ready once they've measured themselves in the browser.
+ * Opens the dashboard and waits until every chart has hydrated. Below-the-fold charts
+ * hydrate as they near the viewport, so scroll through the page first; charts set
+ * data-chart-ready once they've rendered in the browser.
  */
 async function open(page: Page, query = "") {
   await page.goto(`${PATH}${query}`);
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.documentElement.scrollHeight; y += window.innerHeight / 2) {
+      window.scrollTo(0, y);
+      await new Promise((r) => requestAnimationFrame(r));
+    }
+    window.scrollTo(0, 0);
+  });
   await page.waitForFunction(
     () =>
       !document.querySelector("[data-chart-loading]") &&

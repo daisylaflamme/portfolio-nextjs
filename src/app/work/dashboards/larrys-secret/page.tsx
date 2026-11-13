@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PAGES, pageMetadata } from "@/lib/seo";
-import { larrysData } from "@/lib/dashboards/larrys/data";
+import { larrysData, toClientData } from "@/lib/dashboards/larrys/data";
 import { RETAIL_DASHBOARD_SOURCE } from "@/lib/dashboards/larrys/content";
 import { count, shortDate } from "@/lib/dashboards/larrys/format";
 import { DashboardProvider } from "./_components/DashboardProvider";
@@ -9,10 +9,9 @@ import StoreFilter from "./_components/StoreFilter";
 import KpiTiles from "./_components/KpiTiles";
 import DailyRevenueChart from "./_components/DailyRevenueChart";
 import StoreBars from "./_components/StoreBars";
-import ProductBars from "./_components/ProductBars";
 import LoyaltyMap from "./_components/LoyaltyMap";
 import ThenNow from "./_components/ThenNow";
-import { BasketMatrix, DiscountSimulator, PricePointChart } from "./_components/LazyCharts";
+import { BasketMatrix, DiscountSimulator, PricePointChart, ProductBars } from "./_components/LazyCharts";
 
 export const metadata: Metadata = pageMetadata(PAGES.retailDashboard);
 
@@ -66,7 +65,7 @@ export default async function RetailDashboardPage({ searchParams }: PageProps) {
         </p>
       </header>
 
-      <DashboardProvider>
+      <DashboardProvider data={toClientData(larrysData)}>
         <StoreFilter />
         <KpiTiles />
 

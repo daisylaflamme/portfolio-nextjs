@@ -12,7 +12,7 @@ import { larrysData } from "@/lib/dashboards/larrys/data";
 import { placeLabel, selectLoyaltyTowns } from "@/lib/dashboards/larrys/selectors";
 import { count, money } from "@/lib/dashboards/larrys/format";
 import ChartCard from "./ChartCard";
-import MapMarks from "./MapMarks";
+import { MapMarks } from "./LazyCharts";
 import type { Mark } from "./MarkLayer";
 
 const W = 600;

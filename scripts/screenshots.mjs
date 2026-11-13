@@ -97,13 +97,24 @@ function startServer() {
 
 // ---------- Capture ----------
 
-/** Waits for fonts, visible images and every chart (elements marked data-chart). */
+/**
+ * Waits for fonts, visible images and every chart in the viewport (elements marked
+ * data-chart set data-chart-ready="true" once rendered; charts further down may hydrate
+ * only when scrolled to, so they're not waited for).
+ */
 async function waitUntilRendered(page) {
   await page.evaluate(() => document.fonts.ready);
   await page.waitForFunction(
-    () =>
-      !document.querySelector("[data-chart-loading]") &&
-      [...document.querySelectorAll("[data-chart]")].every((el) => el.getAttribute("data-chart-ready") === "true"),
+    () => {
+      const inView = (el) => {
+        const r = el.getBoundingClientRect();
+        return r.bottom > 0 && r.top < window.innerHeight;
+      };
+      return (
+        ![...document.querySelectorAll("[data-chart-loading]")].some(inView) &&
+        [...document.querySelectorAll("[data-chart]")].filter(inView).every((el) => el.getAttribute("data-chart-ready") === "true")
+      );
+    },
     null,
     { timeout: 20_000 },
   );

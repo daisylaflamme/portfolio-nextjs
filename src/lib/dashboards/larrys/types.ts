@@ -122,6 +122,14 @@ export interface LarrysData {
   loyaltyZips: LoyaltyZip[];
 }
 
+/**
+ * What the browser needs: no zip/demographic rows (the map is drawn on the server), no
+ * per-SKU transaction counts, and only each loyalty customer's ratio and home store.
+ */
+export type ClientLarrysData = Omit<LarrysData, "loyaltyCustomers" | "loyaltyZips" | "skuTransactions"> & {
+  loyaltyCustomers: Pick<LoyaltyCustomer, "homeStore" | "ratio">[];
+};
+
 export type StoreFilter = number | "all";
 
 export interface Filters {
