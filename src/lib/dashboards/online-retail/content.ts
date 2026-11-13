@@ -13,7 +13,11 @@ export const ONLINE_RETAIL_INTRO =
   "Two years of a UK online gift retailer’s orders, about a million invoice lines, aggregated on the server so every filter stays fast. Explore revenue, products, baskets, customer retention and returns.";
 export const ONLINE_RETAIL_DATA_NOTE =
   "Data: Online Retail II, UCI Machine Learning Repository (CC BY 4.0). Cleaned and aggregated; cancellations kept as returns.";
-export const ONLINE_RETAIL_STACK = ["React", "TypeScript", "Next.js", "D3"];
+/**
+ * What runs on the live site. Postgres and the Claude API are built in but switched off until
+ * their environment variables are set; add them here once they are live.
+ */
+export const ONLINE_RETAIL_STACK = ["Next.js", "React", "TypeScript", "D3", "GraphQL"];
 
 export type TabId = "overview" | "products" | "basket" | "customers" | "returns";
 
