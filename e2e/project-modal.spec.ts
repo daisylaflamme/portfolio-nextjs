@@ -116,6 +116,34 @@ test.describe("Larry's Secret dashboard card", () => {
   });
 });
 
+test.describe("Online retail dashboard card", () => {
+  const dash = byId("online-retail-dashboard");
+  const cardFor = (page: Page) =>
+    page.getByRole("article").filter({ has: page.getByRole("heading", { name: dash.title }) });
+
+  test("is the 4th featured case study, after the top three", () => {
+    expect(featuredProjectIds.slice(0, 4)).toEqual([featuredProjectIds[0], "larrys-secret-dashboard", "js-in-colors", "online-retail-dashboard"]);
+  });
+
+  test("its main button opens the dashboard in the same tab, and the case study links there too", async ({ page }) => {
+    await page.goto(WORK);
+    const open = cardFor(page).getByRole("link", { name: new RegExp(`^open dashboard ?: ${escapeRegExp(dash.title)}`) });
+    await expect(open).toHaveAttribute("href", dash.link ?? "");
+    await expect(open).not.toHaveAttribute("target", /.+/);
+
+    await cardFor(page).getByRole("button", { name: /^View details/ }).click();
+    const dialog = page.getByRole("dialog", { name: dash.title });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByText("Solo, built with Claude Code")).toBeVisible();
+    const primary = dialog.getByRole("link", { name: /^open dashboard/ });
+    await expect(primary).toHaveAttribute("href", dash.link ?? "");
+    await primary.click();
+    await expect(page).toHaveURL(new RegExp(`${escapeRegExp(dash.link ?? "")}$`));
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(dash.title);
+    await expect(page.locator("html")).not.toHaveClass(/has-open-dialog/);
+  });
+});
+
 test("a case study without a link shows no visit-site button", async ({ page }) => {
   const project = projects.find((p) => p.link === null && !p.extraLinks?.length);
   expect(project).toBeDefined();

@@ -1,5 +1,5 @@
 import type { Project } from "./types";
-import { retailDashboard } from "./dashboards.ts";
+import { onlineRetailDashboard, retailDashboard } from "./dashboards.ts";
 
 /**
  * Portfolio projects data.
@@ -249,6 +249,35 @@ export const projects: Project[] = [
       "Larry’s Secret dashboard on a phone, dark theme: the title, the three questions it answers, the date and store summary, and store filters.",
     ],
     link: retailDashboard.href,
+    linkLabel: "open dashboard",
+    tags: ["react", "typescript", "nextjs", "d3", "accessibility", "ui-components"],
+  },
+  {
+    // Copy and images come from the Dashboards entry (src/data/dashboards.ts), so both read the same.
+    id: "online-retail-dashboard",
+    title: onlineRetailDashboard.title,
+    summary: onlineRetailDashboard.summary,
+    description: onlineRetailDashboard.problem,
+    role: onlineRetailDashboard.role,
+    team: "Solo, built with Claude Code",
+    dates: onlineRetailDashboard.dates,
+    stack: onlineRetailDashboard.stack,
+    problem: onlineRetailDashboard.problem,
+    whatIBuilt: onlineRetailDashboard.whatIBuilt,
+    thumbnail: "/images/projects/online-retail-dashboard/online-retail-dashboard-hero.webp",
+    heroImage: "/images/projects/online-retail-dashboard/online-retail-dashboard-hero.webp",
+    images: [
+      "/images/projects/online-retail-dashboard/online-retail-dashboard-hero.webp",
+      "/images/projects/online-retail-dashboard/online-retail-dashboard-desktop.webp",
+      "/images/projects/online-retail-dashboard/online-retail-dashboard-phone.webp",
+    ],
+    imageAlt: onlineRetailDashboard.imageAlt,
+    imageAlts: [
+      onlineRetailDashboard.imageAlt,
+      "Online retail dashboard in a desktop browser, dark theme: section tabs, date, country and category filters, four KPI tiles, the monthly revenue line and the revenue-by-country map.",
+      "Online retail dashboard on a phone, dark theme: the title, intro, the date range and snapshot badge, section tabs and filters.",
+    ],
+    link: onlineRetailDashboard.href,
     linkLabel: "open dashboard",
     tags: ["react", "typescript", "nextjs", "d3", "accessibility", "ui-components"],
   },
@@ -1209,6 +1238,7 @@ export const featuredProjectIds: Project["id"][] = [
   "checkout-multi-payments",
   "larrys-secret-dashboard",
   "js-in-colors",
+  "online-retail-dashboard",
   "asi-header-redesign",
   "store-details-maps",
   "blueport-multisite-platform-ui",

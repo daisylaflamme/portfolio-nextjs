@@ -33,8 +33,8 @@ describe("featured online retail dashboard", () => {
     assert.equal(onlineRetailDashboard.images.length, 2);
   });
 
-  it("lists only the stack that runs on the live site, with the brief's role and dates", () => {
-    assert.deepEqual(onlineRetailDashboard.stack, ["Next.js", "React", "TypeScript", "D3", "GraphQL"]);
+  it("lists the stack, with the optional services marked, and the brief's role and dates", () => {
+    assert.deepEqual(onlineRetailDashboard.stack, ["Next.js", "React", "TypeScript", "D3", "GraphQL", "Postgres (optional)", "Claude API (optional)"]);
     assert.equal(onlineRetailDashboard.role, "Designer and engineer (solo)");
     assert.equal(onlineRetailDashboard.dates, "2026");
     assert.ok(onlineRetailDashboard.whatIBuilt.some((b) => b.includes("Claude Code")), "says it was built with Claude Code");

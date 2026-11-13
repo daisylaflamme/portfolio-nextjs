@@ -32,7 +32,7 @@ for (const theme of THEMES) {
       expect(await blockingViolations(page)).toEqual([]);
     });
 
-    for (const id of ["asi-header-redesign", "mvc-to-angular-migration", "larrys-secret-dashboard"]) {
+    for (const id of ["asi-header-redesign", "mvc-to-angular-migration", "larrys-secret-dashboard", "online-retail-dashboard"]) {
       test(`the ${id} case study has no serious or critical axe violations`, async ({ page }) => {
         const project = projects.find((p) => p.id === id);
         expect(project, `${id} is in src/data/projects.ts`).toBeDefined();
