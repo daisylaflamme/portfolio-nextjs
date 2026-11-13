@@ -7,7 +7,7 @@ import { presentations, SLIDESHARE_PROFILE } from "../src/data/presentations";
 import { featuredProjectIds, projects } from "../src/data/projects";
 import { withAvailableFiles } from "../src/lib/archive";
 import { WORK_CATEGORIES } from "../src/lib/work";
-import { useSavedTheme, type Theme } from "./helpers";
+import { escapeRegExp, useSavedTheme, type Theme } from "./helpers";
 
 // What the pages can show depends on which archive images are in public/ (they're
 // added separately), so expectations are computed the same way the pages do it.
@@ -235,8 +235,4 @@ for (const theme of ["light", "dark"] as Theme[]) {
       .map((v) => ({ id: v.id, targets: v.nodes.map((n) => n.target.join(" ")) }));
     expect(blocking).toEqual([]);
   });
-}
-
-function escapeRegExp(text: string): string {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

@@ -16,6 +16,11 @@ export async function blockingViolations(page: Page) {
 
 export type Theme = "light" | "dark";
 
+/** Escapes text for use inside a RegExp, e.g. a project title with parentheses. */
+export function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 /** Every public route, from the same list that builds the sitemap. */
 export const ROUTES = Object.values(PAGES).map(({ path, title }) => ({ path, title }));
 

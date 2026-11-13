@@ -1,6 +1,7 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { featuredProjectIds, projects } from "../src/data/projects";
 import { PAGES } from "../src/lib/seo";
+import { escapeRegExp } from "./helpers";
 
 const WORK = PAGES.work.path;
 
@@ -75,6 +76,44 @@ test("JavaScript in Colors: featured card opens a case study with live links and
   // Every screen has its own alt text, not "screenshot n of m".
   await screens.nth(3).click();
   await expect(dialog.getByRole("button", { name: `View full size: ${app.imageAlts?.[3]}` })).toBeVisible();
+});
+
+test.describe("Larry's Secret dashboard card", () => {
+  const dash = byId("larrys-secret-dashboard");
+  const cardFor = (page: Page) =>
+    page.getByRole("article").filter({ has: page.getByRole("heading", { name: dash.title }) });
+
+  test("is the 2nd featured case study, with JavaScript in Colors 3rd", () => {
+    expect(featuredProjectIds.slice(0, 3)).toEqual([featuredProjectIds[0], "larrys-secret-dashboard", "js-in-colors"]);
+  });
+
+  test("its main button opens the dashboard in the same tab", async ({ page }) => {
+    await page.goto(WORK);
+    const open = cardFor(page).getByRole("link", { name: new RegExp(`^open dashboard ?: ${escapeRegExp(dash.title)}`) });
+    await expect(open).toHaveAttribute("href", dash.link ?? "");
+    await expect(open).not.toHaveAttribute("target", /.+/);
+    await open.click();
+    await expect(page).toHaveURL(new RegExp(`${escapeRegExp(dash.link ?? "")}$`));
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(dash.title);
+  });
+
+  test("View details opens the case study, whose primary link opens the dashboard", async ({ page }) => {
+    await page.goto(WORK);
+    await cardFor(page).getByRole("button", { name: /^View details/ }).click();
+    const dialog = page.getByRole("dialog", { name: dash.title });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("link", { name: /visit site/ })).toHaveCount(0);
+    const primary = dialog.getByRole("link", { name: /^open dashboard/ });
+    await expect(primary).toHaveAttribute("href", dash.link ?? "");
+    await expect(primary).not.toHaveAttribute("target", /.+/);
+    await expect(primary).not.toContainText("opens in a new tab");
+
+    await primary.click();
+    await expect(page).toHaveURL(new RegExp(`${escapeRegExp(dash.link ?? "")}$`));
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(dash.title);
+    // Leaving with the dialog open must not keep the page scroll-locked.
+    await expect(page.locator("html")).not.toHaveClass(/has-open-dialog/);
+  });
 });
 
 test("a case study without a link shows no visit-site button", async ({ page }) => {
