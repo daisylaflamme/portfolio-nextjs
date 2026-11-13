@@ -1,4 +1,5 @@
 import type { Project } from "./types";
+import { retailDashboard } from "./dashboards.ts";
 
 /**
  * Portfolio projects data.
@@ -221,6 +222,35 @@ export const projects: Project[] = [
       "Store details pages showing an interactive map with a branded location pin, nearby store results, and a store-type legend across multiple furniture brands.",
     link: "https://www.morrisathome.com/store/furniture-store/OH/Reynoldsburg/2339-Taylor-Park-Drive",
     tags: ["html", "angular", "ecommerce", "scss", "css", "api-integrations", "maps"],
+  },
+  {
+    // Copy comes from the Dashboards entry (src/data/dashboards.ts), so both read the same.
+    // Only the bottom source note on the dashboard page mentions where the data comes from.
+    id: "larrys-secret-dashboard",
+    title: retailDashboard.title,
+    summary: retailDashboard.summary,
+    description: retailDashboard.problem,
+    role: retailDashboard.role,
+    dates: retailDashboard.dates,
+    stack: ["React", "TypeScript", "Next.js", "D3"],
+    problem: retailDashboard.problem,
+    whatIBuilt: retailDashboard.whatIBuilt,
+    thumbnail: "/images/projects/retail-dashboard/retail-dashboard-hero.webp",
+    heroImage: "/images/projects/retail-dashboard/retail-dashboard-hero.webp",
+    images: [
+      "/images/projects/retail-dashboard/retail-dashboard-hero.webp",
+      "/images/projects/retail-dashboard/retail-dashboard-desktop.webp",
+      "/images/projects/retail-dashboard/retail-dashboard-phone.webp",
+    ],
+    imageAlt: retailDashboard.imageAlt,
+    imageAlts: [
+      retailDashboard.imageAlt,
+      "Larry’s Secret dashboard in a desktop browser, dark theme: store filters, five KPI tiles, the daily revenue chart and revenue by store.",
+      "Larry’s Secret dashboard on a phone, dark theme: the title, the three questions it answers, the date and store summary, and store filters.",
+    ],
+    link: retailDashboard.href,
+    linkLabel: "open dashboard",
+    tags: ["react", "typescript", "nextjs", "d3", "accessibility", "ui-components"],
   },
   {
     id: "js-in-colors",
@@ -1177,8 +1207,9 @@ export const projects: Project[] = [
  */
 export const featuredProjectIds: Project["id"][] = [
   "checkout-multi-payments",
-  "asi-header-redesign",
+  "larrys-secret-dashboard",
   "js-in-colors",
+  "asi-header-redesign",
   "store-details-maps",
   "blueport-multisite-platform-ui",
   "angular-modal-system",
