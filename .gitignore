@@ -19,9 +19,8 @@
 # full-size image originals (kept locally; the site ships WebP from public/)
 /assets/originals/
 
-# raw course data (Larry's Secret Excel/Tableau files); only the anonymized JSON is committed
-/data-raw/*.xlsx
-/data-raw/*.tde
+# raw source data (Larry's Secret, Online Retail II) and its local CSV exports; only aggregated JSON is committed
+/data-raw/
 
 # misc
 .DS_Store
