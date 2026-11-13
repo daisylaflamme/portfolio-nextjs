@@ -12,7 +12,8 @@ import {
 } from "react";
 import type { Project } from "@/data/types";
 import Image from "next/image";
-import { caseStudyContent, projectImages, stackLabels, topicLabels } from "@/lib/projectDisplay";
+import Link from "next/link";
+import { caseStudyContent, isInternalHref, projectImages, stackLabels, topicLabels } from "@/lib/projectDisplay";
 import ImageLightbox, { CloseIcon } from "@/components/ImageLightbox";
 
 function ExpandIcon() {
@@ -23,18 +24,22 @@ function ExpandIcon() {
   );
 }
 
-function ExternalLink({ href, children, primary = false }: { href: string; children: ReactNode; primary?: boolean }) {
+const linkClass = (primary: boolean) =>
+  primary
+    ? "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-accent px-5 font-mono text-[15px] text-on-accent no-underline hover:opacity-90"
+    : "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-line px-5 font-mono text-[15px] text-fg no-underline hover:border-field";
+
+/** A project link: pages on this site open in the same tab, other sites in a new one. */
+function ProjectLink({ href, children, primary = false }: { href: string; children: ReactNode; primary?: boolean }) {
+  if (isInternalHref(href)) {
+    return (
+      <Link href={href} className={linkClass(primary)}>
+        {children} <span aria-hidden="true">→</span>
+      </Link>
+    );
+  }
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={
-        primary
-          ? "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-accent px-5 font-mono text-[15px] text-on-accent no-underline hover:opacity-90"
-          : "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-line px-5 font-mono text-[15px] text-fg no-underline hover:border-field"
-      }
-    >
+    <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass(primary)}>
       {children} <span aria-hidden="true">↗</span>
       <span className="sr-only">(opens in a new tab)</span>
     </a>
@@ -255,6 +260,17 @@ export default function ProjectModal({ project, onClose, prevProject, nextProjec
     return () => dialog.removeEventListener("close", handleClose);
   }, [onClose]);
 
+  // Leaving the page with the dialog open (e.g. the "open dashboard" link) unmounts it
+  // without a close event; <html> persists across client navigations, so release the
+  // scroll lock here unless another dialog is still open.
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    return () => {
+      const othersOpen = [...document.querySelectorAll("dialog[open]")].some((d) => d !== dialog);
+      if (!othersOpen) document.documentElement.classList.remove("has-open-dialog");
+    };
+  }, []);
+
   // After prev/next: back to the top and move focus to the new title.
   useEffect(() => {
     if (!project || !navigatedRef.current) return;
@@ -284,7 +300,10 @@ export default function ProjectModal({ project, onClose, prevProject, nextProjec
       ].filter((item) => item.value !== "")
     : [];
   const links = project
-    ? [...(project.link ? [{ label: "visit site", href: project.link }] : []), ...(project.extraLinks ?? [])]
+    ? [
+        ...(project.link ? [{ label: project.linkLabel ?? "visit site", href: project.link }] : []),
+        ...(project.extraLinks ?? []),
+      ]
     : [];
 
   return (
@@ -340,9 +359,9 @@ export default function ProjectModal({ project, onClose, prevProject, nextProjec
               {links.length > 0 ? (
                 <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                   {links.map((link, i) => (
-                    <ExternalLink key={link.href} href={link.href} primary={i === 0}>
+                    <ProjectLink key={link.href} href={link.href} primary={i === 0}>
                       {link.label}
-                    </ExternalLink>
+                    </ProjectLink>
                   ))}
                 </div>
               ) : null}
