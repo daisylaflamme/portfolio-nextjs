@@ -1,4 +1,4 @@
-import { onlineRetailSource as source } from "@/lib/dashboards/online-retail/data";
+import { getOnlineRetailSource } from "@/lib/dashboards/online-retail/data";
 import KpiTiles from "./_components/KpiTiles";
 import MonthlyRevenueChart from "./_components/MonthlyRevenueChart";
 import CountryRevenue from "./_components/CountryRevenue";
@@ -7,6 +7,7 @@ import { context, partialMonthNote, readFilters, scope, tabMetadata, type Search
 export const metadata = tabMetadata("overview");
 
 export default async function OverviewPage({ searchParams }: { searchParams: SearchParams }) {
+  const source = getOnlineRetailSource();
   const filters = await readFilters(searchParams);
   const [kpis, months, countries] = await Promise.all([
     source.kpis(filters),

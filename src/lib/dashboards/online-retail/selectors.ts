@@ -185,7 +185,7 @@ export function selectTopProducts(s: OnlineRetailSnapshot, c: OnlineRetailCatego
       share: totalRevenue ? p.revenue / totalRevenue : 0,
     }))
     .filter((p) => f.category === ALL || p.category === f.category);
-  return { scope, fromYear, toYear, exact, productCount, totalRevenue, curve, rows };
+  return { scope, fromYear, toYear, exact, productCount, totalRevenue, curve, rows, rangeKind: "years" };
 }
 
 /** Smallest share of products that brings in at least `target` of revenue, from a Pareto curve. */
@@ -218,6 +218,7 @@ export function selectBasket(s: OnlineRetailSnapshot, f: Filters): BasketView {
     products: top.map(([, code, o, sh]) => ({ code, description: s.products[code] ?? code, orders: o, share: sh })),
     share,
     counts,
+    live: false,
   };
 }
 
@@ -242,6 +243,7 @@ export function selectCohorts(s: OnlineRetailSnapshot, f: Filters): CohortsView 
     scope,
     fallback,
     maxMonths: COHORT_MONTHS,
+    live: false,
     rows: [...rows].sort(([a], [b]) => a.localeCompare(b)).map(([cohort, r]) => ({ cohort, ...r })),
   };
 }

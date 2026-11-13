@@ -1,4 +1,4 @@
-import { onlineRetailSource as source } from "@/lib/dashboards/online-retail/data";
+import { getOnlineRetailSource } from "@/lib/dashboards/online-retail/data";
 import { countryLabel } from "@/lib/dashboards/online-retail/countries";
 import { count, money } from "@/lib/dashboards/online-retail/format";
 import { productShareFor } from "@/lib/dashboards/online-retail/selectors";
@@ -9,6 +9,7 @@ import { ScopeNote, readFilters, scope, tabMetadata, type SearchParams } from ".
 export const metadata = tabMetadata("products");
 
 export default async function ProductsPage({ searchParams }: { searchParams: SearchParams }) {
+  const source = getOnlineRetailSource();
   const filters = await readFilters(searchParams);
   const view = await source.topProducts(filters);
   const years = view.fromYear === view.toYear ? String(view.fromYear) : `${view.fromYear}–${view.toYear}`;
