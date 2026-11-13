@@ -16,5 +16,14 @@ export default defineConfig([
     files: ["**/*.cjs"],
     rules: { "@typescript-eslint/no-require-imports": "off" },
   },
-  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts", "assets/**"]),
+  globalIgnores([
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+    "assets/**",
+    // Playwright output (git-ignored); the HTML report bundles its own trace viewer JS.
+    "playwright-report/**",
+    "test-results/**",
+  ]),
 ]);

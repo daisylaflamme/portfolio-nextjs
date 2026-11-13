@@ -19,6 +19,7 @@ export type PageKey =
   | "home"
   | "work"
   | "dashboards"
+  | "retailDashboard"
   | "marketingDesign"
   | "presentations"
   | "about"
@@ -46,6 +47,13 @@ export const PAGES: Record<PageKey, PageInfo> = {
     description:
       "Dashboards by Daisy Laflamme: Tableau retail KPI and market basket analysis, customer segmentation, demographics maps and project tracking mockups.",
     priority: 0.7,
+  },
+  retailDashboard: {
+    path: "/work/dashboards/larrys-secret",
+    title: "Retail sales dashboard",
+    description:
+      "An interactive, accessible retail sales dashboard by Daisy Laflamme: a 2013 Tableau project rebuilt in React, TypeScript and D3 with store filters, a market basket matrix and a loyalty discount simulator.",
+    priority: 0.8,
   },
   marketingDesign: {
     path: "/work/marketing-design",
