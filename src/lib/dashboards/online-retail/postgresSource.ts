@@ -39,11 +39,13 @@ export type Runner = <T>(query: Query) => Promise<T[]>;
 
 const SEGMENTS: SegmentName[] = ["Champions", "Loyal", "Promising", "At risk", "Lost"];
 
-/** A pg Pool runner for the connection string (SSL unless the host is local or sslmode=disable). */
-export function poolRunner(url: string): Runner {
-  let pool: Promise<Pool> | null = null;
-  const getPool = () =>
-    (pool ??= import("pg").then(({ default: pg }) => {
+const pools = new Map<string, Promise<Pool>>();
+
+/** One pg Pool per connection string, shared by the data source and the summary store. */
+export function getPool(url: string): Promise<Pool> {
+  let pool = pools.get(url);
+  if (!pool) {
+    pool = import("pg").then(({ default: pg }) => {
       const u = new URL(url);
       const local = ["localhost", "127.0.0.1"].includes(u.hostname) || u.searchParams.get("sslmode") === "disable";
       // pg reads sslmode from the URL and it would override the ssl option below.
@@ -58,9 +60,39 @@ export function poolRunner(url: string): Runner {
         statement_timeout: 5_000,
         application_name: "portfolio-online-retail",
       });
-    }));
+    });
+    pools.set(url, pool);
+  }
+  return pool;
+}
+
+/**
+ * Runs queries in one READ WRITE transaction on a single connection. The reader role's
+ * sessions are read-only by default; only the summary store uses this, and its grants allow
+ * writing just the two ai_summary tables.
+ */
+export function writeTransaction(url: string) {
+  return async <T,>(queries: Query[]): Promise<T[][]> => {
+    const client = await (await getPool(url)).connect();
+    try {
+      await client.query("begin read write");
+      const out: T[][] = [];
+      for (const q of queries) out.push((await client.query(q.text, q.values)).rows as T[]);
+      await client.query("commit");
+      return out;
+    } catch (error) {
+      await client.query("rollback").catch(() => {});
+      throw error;
+    } finally {
+      client.release();
+    }
+  };
+}
+
+/** A pg Pool runner for the connection string (SSL unless the host is local or sslmode=disable). */
+export function poolRunner(url: string): Runner {
   return async <T,>(q: Query) => {
-    const result = await (await getPool()).query(q.text, q.values);
+    const result = await (await getPool(url)).query(q.text, q.values);
     return result.rows as T[];
   };
 }

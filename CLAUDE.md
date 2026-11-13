@@ -64,6 +64,8 @@ Before calling a task done: lint, typecheck, test:unit, build, test:e2e. CI (`.g
 - `GITHUB_TOKEN`: optional, fine-grained, **Public repositories (read-only)**, no permissions. Without it the home chart shows labelled sample data.
 - `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`: contact form and résumé-visit email. See `.env.local.example` and `CONTACT_SETUP.md`.
 - `ONLINE_RETAIL_DATABASE_URL`: optional. It's the read-only `online_retail_reader` role, through Supabase's transaction pooler. When set, the Online Retail dashboard reads Postgres (`postgresSource.ts`, badge "live data") and unlocks product search. Without it, the dashboard uses the committed snapshot (badge "snapshot"). Setup is in `db/online-retail/README.md`. Never put the owner's (admin) URL here or in Vercel.
+- `ANTHROPIC_API_KEY`: optional and server-only. It turns on "Summarize this view" on the Online Retail dashboard (`/api/online-retail/summary`, logic in `src/lib/dashboards/online-retail/summary/`). Without it, the panel isn't rendered and the route returns 404. The browser sends only the tab and the filters; the server recomputes the numbers. Cost guards: strict validation, a per-IP rate limit, a daily cap, and a cache per tab and filters (shared through Postgres when live). e2e uses a placeholder key and mocks the route.
+- `ANTHROPIC_MODEL`: optional, the Claude model for summaries (default `claude-opus-5-5`).
 - The build and tests need no secrets.
 
 ## Gotchas
