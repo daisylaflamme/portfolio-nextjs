@@ -65,7 +65,15 @@ export default function ChartCard({
       {description ? <p className="text-sm leading-relaxed text-muted">{description}</p> : null}
       {controls}
       {children}
-      <div id={tableId} hidden={!open} className="max-w-full overflow-x-auto">
+      {/* Wide tables scroll sideways on phones, so the box is a focusable, labelled region. */}
+      <div
+        id={tableId}
+        hidden={!open}
+        role="region"
+        aria-label={`${table.caption} (data table)`}
+        tabIndex={open ? 0 : -1}
+        className="relative max-w-full overflow-x-auto rounded-md"
+      >
         {open ? (
           <table className="w-full border-collapse text-left text-sm">
             <caption className="pb-2 text-left text-sm text-muted">{table.caption}</caption>

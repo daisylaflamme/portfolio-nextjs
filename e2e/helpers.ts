@@ -1,5 +1,18 @@
+import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
 import { PAGES } from "../src/lib/seo";
+
+const BLOCKING = new Set(["serious", "critical"]);
+
+/** Serious and critical WCAG 2.2 AA violations, trimmed to what's useful in a failure message. */
+export async function blockingViolations(page: Page) {
+  const results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
+  return results.violations
+    .filter((v) => v.impact != null && BLOCKING.has(v.impact))
+    .map((v) => ({ id: v.id, impact: v.impact, help: v.help, targets: v.nodes.map((n) => n.target.join(" ")) }));
+}
 
 export type Theme = "light" | "dark";
 
