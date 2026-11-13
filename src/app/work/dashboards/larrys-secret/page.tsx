@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PAGES, pageMetadata } from "@/lib/seo";
+import { PAGES, SITE_NAME, pageMetadata } from "@/lib/seo";
 import { larrysData, toClientData } from "@/lib/dashboards/larrys/data";
 import { RETAIL_DASHBOARD_SOURCE } from "@/lib/dashboards/larrys/content";
 import { count, shortDate } from "@/lib/dashboards/larrys/format";
@@ -13,7 +13,12 @@ import LoyaltyMap from "./_components/LoyaltyMap";
 import ThenNow from "./_components/ThenNow";
 import { BasketMatrix, DiscountSimulator, PricePointChart, ProductBars } from "./_components/LazyCharts";
 
-export const metadata: Metadata = pageMetadata(PAGES.retailDashboard);
+const page = PAGES.retailDashboard;
+
+export const metadata: Metadata = {
+  ...pageMetadata(page),
+  twitter: { card: "summary_large_image", title: `${page.title} | ${SITE_NAME}`, description: page.description },
+};
 
 /** The three questions from Larry's brief, listed under the intro. */
 const BRIEF_QUESTIONS = [
@@ -59,7 +64,7 @@ export default async function RetailDashboardPage({ searchParams }: PageProps) {
       <header className="flex flex-col gap-3">
         <p className="font-mono text-[13px] text-accent">{"// data case study · retail analytics"}</p>
         <h1 className="font-display text-[clamp(2rem,5vw,2.9rem)] font-bold leading-[1.08] tracking-tight text-fg">
-          Larry’s Secret: retail sales dashboard
+          {page.title}
         </h1>
         <p className="max-w-[70ch] text-[17px] leading-relaxed text-muted">
           Larry’s Secret is a five-store clothing chain around Boston. Larry needed to know where to focus: which stores and
