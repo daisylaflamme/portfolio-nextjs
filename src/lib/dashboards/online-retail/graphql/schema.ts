@@ -19,8 +19,9 @@ import { parseFilters } from "../params.ts";
 import type { Filters } from "../types.ts";
 import { typeDefs } from "./typeDefs.ts";
 import { complexityLimit, depthLimit } from "./rules.ts";
+import { GRAPHQL_ENDPOINT } from "./endpoint.ts";
 
-export const GRAPHQL_ENDPOINT = "/api/online-retail/graphql";
+export { GRAPHQL_ENDPOINT };
 export const MAX_DEPTH = 8;
 export const MAX_COMPLEXITY = 300;
 export const MAX_QUERY_LENGTH = 8_000;
@@ -106,7 +107,14 @@ function guardRails(production: boolean, limits: { depth: number; complexity: nu
     onValidate({ addValidationRule }) {
       addValidationRule(depthLimit(limits.depth));
       addValidationRule(complexityLimit(limits.complexity));
-      if (production) addValidationRule(NoSchemaIntrospectionCustomRule);
+      if (!production) return;
+      addValidationRule(NoSchemaIntrospectionCustomRule);
+      // "Did you mean …?" hints would list field names that introspection hides.
+      return ({ result, setResult }) => {
+        if (result.some((e) => e.message.includes("Did you mean"))) {
+          setResult(result.map((e) => createGraphQLError(e.message.replace(/ Did you mean .*$/, ""), { nodes: e.nodes })));
+        }
+      };
     },
     onExecute({ args }) {
       const request = (args.contextValue as { request?: Request }).request;

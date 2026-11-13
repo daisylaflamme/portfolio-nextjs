@@ -120,6 +120,13 @@ describe("guard rails", () => {
     assert.equal(prod.body.data, undefined);
   });
 
+  it("doesn't suggest field names in production", async () => {
+    const dev = await get(yoga, "{ dashboard { kpi { current { revenue } } } }");
+    assert.match(dev.body.errors?.[0]?.message ?? "", /Did you mean "kpis"/);
+    const prod = await get(prodYoga, "{ dashboard { kpi { current { revenue } } } }");
+    assert.equal(prod.body.errors?.[0]?.message, 'Cannot query field "kpi" on type "Dashboard".');
+  });
+
   it("masks unexpected errors", async () => {
     const broken = createOnlineRetailYoga({
       getSource: () => ({ ...source, kpis: async () => { throw new Error("connection to db.secret.host refused"); } }),
