@@ -1,7 +1,6 @@
-import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { featuredProjectIds, projects } from "../src/data/projects";
-import { ROUTES, useSavedTheme, type Theme } from "./helpers";
+import { blockingViolations, ROUTES, useSavedTheme, type Theme } from "./helpers";
 
 const THEMES: Theme[] = ["light", "dark"];
 
