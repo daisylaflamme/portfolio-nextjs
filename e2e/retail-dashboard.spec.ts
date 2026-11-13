@@ -50,7 +50,29 @@ test("loads with title, breadcrumb, KPIs and the source note", async ({ page }) 
   await expect(page.locator("[data-kpi]")).toHaveCount(5);
   await expect(revenueKpi(page)).toContainText(usd(selectKpis(data, { store: "all" }).revenue));
   await expect(page.getByText(RETAIL_DASHBOARD_SOURCE)).toBeVisible();
+
+  // The brief: three questions under the intro, and the closing line above the source note.
+  await expect(page.getByRole("list", { name: "Questions the dashboard answers" }).getByRole("listitem")).toHaveCount(3);
+  await expect(page.getByText(/^What this gives Larry:/)).toBeVisible();
+  await expect(page.getByText(`${data.meta.transactions.toLocaleString("en-US")} receipts`)).toBeVisible();
   expect(errors).toEqual([]);
+});
+
+test("no course, class or year references outside the source note", async ({ page }) => {
+  await open(page);
+  // Every data table open, so their captions and cells are checked too.
+  const toggles = page.getByRole("button", { name: "Show data table" });
+  while ((await toggles.count()) > 0) await toggles.first().click();
+  const text = await page.locator("main").evaluate((main) => {
+    const labels = [...main.querySelectorAll("[aria-label], img[alt]")].map(
+      (el) => `${el.getAttribute("aria-label") ?? ""} ${el.getAttribute("alt") ?? ""}`,
+    );
+    return [main.innerText, ...labels].join("\n");
+  });
+  const withoutSource = text.split(RETAIL_DASHBOARD_SOURCE).join("");
+  expect(withoutSource).not.toMatch(/\b(course(work)?|class|students?|homework|assignments?|IT 478|2013)\b/i);
+  // The source note itself is still there, once.
+  expect(text.split(RETAIL_DASHBOARD_SOURCE).length - 1).toBe(1);
 });
 
 test("store filter updates the KPIs and the URL without scrolling", async ({ page }) => {
@@ -77,7 +99,7 @@ test("presets and sliders change the tier counts", async ({ page }) => {
   const a = selectDiscountTiers(data, { store: "all" }, ruleA);
   await expect(tierSummary(page)).toContainText(`${a.counts[1]} at 10%, ${a.counts[2]} at 20%, ${a.counts[3]} at 40%`);
 
-  const presetB = page.getByRole("button", { name: /^2013 rule B/ });
+  const presetB = page.getByRole("button", { name: /^Rule B \(1× \/ 1\.6× \/ 2\.2×\)/ });
   await presetB.click();
   await expect(presetB).toHaveAttribute("aria-pressed", "true");
   const b = selectDiscountTiers(data, { store: "all" }, ruleB);
@@ -108,12 +130,12 @@ test("thresholds stay in order: t1 can't pass t2", async ({ page }) => {
 test("shared links restore the view; invalid values fall back to defaults", async ({ page }) => {
   await open(page, `?store=${data.stores[4].id}&t=${ruleB.join(",")}&sku=G4451`);
   await expect(storeFilter(page).getByRole("button", { name: data.stores[4].name })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByRole("button", { name: /^2013 rule B/ })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: /^Rule B/ })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("combobox", { name: "Product" })).toHaveValue("G4451");
 
   await open(page, "?store=999&t=9,9,9&sku=nope");
   await expect(storeFilter(page).getByRole("button", { name: "All stores" })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByRole("button", { name: /^2013 rule A/ })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: /^Rule A \(1× \/ 2× \/ 3×\)/ })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("combobox", { name: "Product" })).toHaveValue("S7310");
 });
 

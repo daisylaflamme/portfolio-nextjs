@@ -248,7 +248,7 @@ export interface DiscountTiers {
 }
 
 /**
- * The 2013 workbook rule: a loyalty customer whose ratio (their average line ÷ the
+ * The loyalty discount rule (same as the first version of the dashboard): a loyalty customer whose ratio (their average line ÷ the
  * overall average line) is above t1 gets 10%, above t2 20%, above t3 40%. Customers
  * are filtered by home store. Throws on thresholds that are not strictly increasing.
  */
@@ -283,7 +283,7 @@ export function selectLoyaltyTowns(data: LarrysData, f: Filters): LoyaltyZip[] {
   );
 }
 
-/** "JamaicaPlain" → "Jamaica Plain": the course data drops spaces in place names. */
+/** "JamaicaPlain" → "Jamaica Plain": the source data drops spaces in place names. */
 export function placeLabel(place: string): string {
   return place.replace(/([a-z])([A-Z])/g, "$1 $2");
 }
