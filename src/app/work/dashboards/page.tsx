@@ -53,9 +53,9 @@ export default function DashboardsPage() {
                   <p className="text-base leading-relaxed text-body">{item.summary}</p>
                   {item.id === retailDashboard.before ? (
                     <p className="text-[15px] leading-relaxed text-body">
-                      <span className="font-semibold text-fg">Before:</span> the 2013 version of the{" "}
+                      <span className="font-semibold text-fg">Before:</span> the first version of the{" "}
                       <Link href={retailDashboard.href} className="font-semibold text-fg underline underline-offset-4 hover:text-accent">
-                        retail sales dashboard
+                        Larry’s Secret dashboard
                       </Link>{" "}
                       above.
                     </p>
