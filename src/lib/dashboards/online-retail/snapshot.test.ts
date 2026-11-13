@@ -86,8 +86,28 @@ describe("Online Retail snapshot", () => {
     assert.equal(sum([...sizes.values()]), meta.customers);
   });
 
+  it("year spans match monthCountry revenue and their Pareto curves rise to 1", () => {
+    const yearOf = (month: string) => Number(month.slice(0, 4));
+    for (const [scope, fromYear, toYear, products, revenue] of snapshot.productSpans.rows) {
+      const expected = sum(
+        snapshot.monthCountry.rows
+          .filter(([month, country]) => (scope === "all" || country === scope) && yearOf(month) >= fromYear && yearOf(month) <= toYear)
+          .map((r) => r[2]),
+      );
+      assert.ok(Math.abs(expected - revenue) < 1, `${scope} ${fromYear}-${toYear}: ${revenue} vs ${expected}`);
+      const top = snapshot.topProductsSpan.rows.filter((r) => r[0] === scope && r[1] === fromYear && r[2] === toYear);
+      assert.equal(top.length, Math.min(200, products));
+      const curve = snapshot.productCurves.rows.find((r) => r[0] === scope && r[1] === fromYear && r[2] === toYear)?.[3];
+      assert.ok(curve && curve.length === 100, `${scope} ${fromYear}-${toYear} curve`);
+      assert.equal(curve[99], 1);
+      for (let i = 1; i < curve.length; i++) assert.ok(curve[i] >= curve[i - 1]);
+    }
+    assert.deepEqual([...new Set(snapshot.productSpans.rows.map((r) => r[0]))], ["all", ...meta.topCountries]);
+  });
+
   it("describes every product it references", () => {
     for (const row of snapshot.topProducts.rows) assert.ok(row[2] in snapshot.products, row[2]);
+    for (const row of snapshot.topProductsSpan.rows) assert.ok(row[3] in snapshot.products, row[3]);
     for (const row of snapshot.basketTopPairs.rows) {
       assert.ok(row[1] in snapshot.products && row[2] in snapshot.products, `${row[1]} ${row[2]}`);
     }

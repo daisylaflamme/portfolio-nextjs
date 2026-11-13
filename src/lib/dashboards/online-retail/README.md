@@ -67,6 +67,7 @@ Large tables are stored as `{ columns, rows }`, with tuples in column order. Pro
 | `monthCountry` | month × country | revenue, units, orders, returnsValue, returnLines |
 | `monthCountryCategory` | month × country × category | same columns; orders = invoices containing the category |
 | `topProducts` | scope × year × code | top 200 by revenue per scope ("all" or a country) and calendar year (2009 is December only; 2011 ends 9 December) |
+| `productSpans` / `productCurves` / `topProductsSpan` | scope × span of calendar years | for "all" and the top-5 countries, every contiguous span of years (2009, 2009–2010, …, 2009–2011): product count and revenue, a 100-point Pareto curve (`curve[i]` = share of revenue from the top i + 1 % of products), and an exact top 200 |
 | `basketTopProducts` / `basketTopPairs` | scope × product / pair | top 10 products by revenue for "all" and the top-5 countries; share = orders containing the product (or both products) ÷ all orders in the scope |
 | `cohorts` | scope × cohort month × months since | cohort = month of the first order; a customer's country is that order's country; share = customers ordering N months later ÷ cohort size |
 | `segments` | scope × RFM segment | customers, share, average recency, orders and revenue |

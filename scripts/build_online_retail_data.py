@@ -44,6 +44,9 @@ order, fewer is better), F (orders) and M (revenue) are each scored 1-5 by quint
 split evenly). FM = (F + M) / 2 rounded half up. Champions R>=4 and FM>=4; Loyal R>=3 and FM>=3 (not Champions);
 Promising R>=3 and FM<=2; At risk R<=2 and FM>=3; Lost R<=2 and FM<=2. Every customer falls in exactly one.
 
+Year spans (products): for "all" and the top-5 countries, every contiguous span of calendar years gets its product
+count, an exact top 200 and a revenue Pareto curve (share of revenue from the top 1%, 2%, ... 100% of products).
+
 Cohorts: a customer's cohort is the month of their first order, and their country is that order's country (customers
 in a country scope are followed across all their later orders). Retention share = customers with an order in month
 N after the cohort month / cohort size.
@@ -190,6 +193,25 @@ for scope in scopes_all:
     g = g.sort_values(["year", "revenue"], ascending=[True, False]).groupby("year").head(200)
     tp_rows += [[scope, int(r.year), r.code, int(r.units), round(float(r.revenue), 2)] for r in g.itertuples()]
 
+# Year spans for "all" and the top-5 countries: every contiguous run of calendar years (2009, 2009-2010, ...).
+# For each: the product count, the revenue Pareto curve (cumulative share of revenue held by the top 1%, 2%, ...
+# 100% of products, ranked by revenue) and an exact top 200, so a multi-year range ranks products exactly.
+years = sorted(int(y) for y in sales["year"].unique())
+spans = [(a, b) for i, a in enumerate(years) for b in years[i:]]
+span_rows, curve_rows, tps_rows = [], [], []
+for scope in scopes_top:
+    s_scope = scoped(sales, scope)
+    for a, b in spans:
+        s = s_scope[(s_scope["year"] >= a) & (s_scope["year"] <= b)]
+        g = (s.groupby("code").agg(units=("qty", "sum"), revenue=("revenue", "sum"))
+             .sort_values("revenue", ascending=False).reset_index())
+        n, total = len(g), float(g["revenue"].sum())
+        cum = g["revenue"].cumsum().to_numpy() / total
+        curve = [round(float(cum[max(0, int(np.ceil(n * p / 100)) - 1)]), 4) for p in range(1, 101)]
+        span_rows.append([scope, a, b, int(n), round(total, 2)])
+        curve_rows.append([scope, a, b, curve])
+        tps_rows += [[scope, a, b, r.code, int(r.units), round(float(r.revenue), 2)] for r in g.head(200).itertuples()]
+
 # Basket pairs: top 10 products by revenue per scope; share = orders with both / orders in scope
 pair_rows, share_rows = [], []
 for scope in scopes_top:
@@ -248,7 +270,7 @@ for scope in scopes_top:
 def table(columns, rows): return {"columns": columns, "rows": rows}
 def df_rows(df, cols): return [[v.item() if hasattr(v, "item") else v for v in row] for row in df[cols].itertuples(index=False)]
 
-used = {r[2] for r in tp_rows} | {r[1] for r in share_rows}
+used = {r[2] for r in tp_rows} | {r[3] for r in tps_rows} | {r[1] for r in share_rows}
 guest_orders = int(sales.loc[sales["customer"].isna(), "invoice"].nunique())
 mc_cols = ["month", "country", "revenue", "units", "orders", "returnsValue", "returnLines"]
 mcc_cols = ["month", "country", "category", "revenue", "units", "orders", "returnsValue", "returnLines"]
@@ -286,12 +308,18 @@ snapshot = {
                      "segments": {"Champions": "R >= 4 and FM >= 4", "Loyal": "R >= 3 and FM >= 3, not Champions",
                                   "Promising": "R >= 3 and FM <= 2", "At risk": "R <= 2 and FM >= 3", "Lost": "R <= 2 and FM <= 2"}},
         "cohortRule": "Cohort = month of a customer's first order; country = that order's country. Share = customers ordering N months later / cohort size.",
+        "productSpanRule": ("For all countries and the top-5 countries, every contiguous span of calendar years has its "
+                            "product count, an exact top 200 and a Pareto curve: curve[i] is the share of revenue "
+                            "from the top (i + 1)% of products by revenue. Other countries have per-year top 200s only."),
         "basketRule": "Top 10 products by revenue per scope. share = orders containing both / all orders in the scope.",
     },
     "products": {c: desc_mode.get(c, "") for c in sorted(used)},
     "monthCountry": table(mc_cols, df_rows(mc, mc_cols)),
     "monthCountryCategory": table(mcc_cols, df_rows(mcc, mcc_cols)),
     "topProducts": table(["scope", "year", "code", "units", "revenue"], tp_rows),
+    "productSpans": table(["scope", "fromYear", "toYear", "products", "revenue"], span_rows),
+    "productCurves": table(["scope", "fromYear", "toYear", "curve"], curve_rows),
+    "topProductsSpan": table(["scope", "fromYear", "toYear", "code", "units", "revenue"], tps_rows),
     "basketTopProducts": table(["scope", "code", "orders", "share"], share_rows),
     "basketTopPairs": table(["scope", "a", "b", "orders", "share"], pair_rows),
     "cohorts": table(["scope", "cohort", "size", "monthsSince", "active", "share"], cohort_rows),

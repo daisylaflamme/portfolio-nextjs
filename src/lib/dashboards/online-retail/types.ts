@@ -49,6 +49,7 @@ export interface OnlineRetailMeta {
   cleaningRules: string[];
   rfmRules: { referenceDate: string; scores: string; segments: Record<SegmentName, string> };
   cohortRule: string;
+  productSpanRule: string;
   basketRule: string;
 }
 
@@ -66,6 +67,15 @@ export interface OnlineRetailSnapshot {
     [string, string, string, number, number, number, number, number]
   >;
   topProducts: Table<["scope", "year", "code", "units", "revenue"], [Scope, number, string, number, number]>;
+  /** "all" and the top-5 countries, per contiguous span of calendar years. */
+  productSpans: Table<["scope", "fromYear", "toYear", "products", "revenue"], [Scope, number, number, number, number]>;
+  /** curve[i] = share of revenue from the top (i + 1)% of products by revenue; 100 points ending at 1. */
+  productCurves: Table<["scope", "fromYear", "toYear", "curve"], [Scope, number, number, number[]]>;
+  /** Exact top 200 by revenue per scope and span of years. */
+  topProductsSpan: Table<
+    ["scope", "fromYear", "toYear", "code", "units", "revenue"],
+    [Scope, number, number, string, number, number]
+  >;
   basketTopProducts: Table<["scope", "code", "orders", "share"], [Scope, string, number, number]>;
   basketTopPairs: Table<["scope", "a", "b", "orders", "share"], [Scope, string, string, number, number]>;
   cohorts: Table<
