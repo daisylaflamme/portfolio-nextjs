@@ -143,6 +143,12 @@ test.describe("dashboards", () => {
     await expect(page.getByRole("article")).toHaveCount(shownDashboards.length + 1);
     const featured = page.getByRole("article", { name: retailDashboard.title });
     await expect(featured.getByText(retailDashboard.eyebrow)).toBeVisible();
+    if (retailDashboard.heroImage) {
+      const hero = featured.getByRole("img", { name: retailDashboard.imageAlt });
+      await expect(hero).toBeVisible();
+      // Loaded, not a broken image.
+      expect(await hero.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+    }
     await expect(featured.getByText(retailDashboard.stack.join(" · "))).toBeVisible();
     // Chrome puts a space before the sr-only ": title" span, so allow either.
     const openName = new RegExp(`^open dashboard ?: ${escapeRegExp(retailDashboard.title)}`);

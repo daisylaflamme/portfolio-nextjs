@@ -23,8 +23,12 @@ export const retailDashboard: FeaturedWorkItem = {
   summary: RETAIL_DASHBOARD_SUMMARY,
   year: 2026,
   href: RETAIL_DASHBOARD_PATH,
-  // Card and gallery images are added once the framed screenshots are approved.
-  images: [],
+  // Framed captures from `npm run screenshots` (scripts/screenshots.config.mjs).
+  heroImage: "/images/projects/retail-dashboard/retail-dashboard-hero.webp",
+  images: [
+    "/images/projects/retail-dashboard/retail-dashboard-desktop.webp",
+    "/images/projects/retail-dashboard/retail-dashboard-phone.webp",
+  ],
   imageAlt: "Retail sales dashboard in dark theme on a laptop and a phone: store filters, KPI tiles and charts",
   tags: ["react", "typescript", "d3", "nextjs", "accessibility", "data-visualization", "retail"],
   stack: RETAIL_DASHBOARD_STACK,
