@@ -4,6 +4,11 @@ import {
   RETAIL_DASHBOARD_PATH,
   RETAIL_DASHBOARD_TITLE,
 } from "./dashboards/larrys/content.ts";
+import {
+  ONLINE_RETAIL_DESCRIPTION,
+  ONLINE_RETAIL_PATH,
+  ONLINE_RETAIL_TITLE,
+} from "./dashboards/online-retail/content.ts";
 
 export const SITE_URL = "https://www.daisylaflamme.net";
 export const SITE_NAME = "Daisy Laflamme";
@@ -25,6 +30,7 @@ export type PageKey =
   | "work"
   | "dashboards"
   | "retailDashboard"
+  | "onlineRetailDashboard"
   | "marketingDesign"
   | "presentations"
   | "about"
@@ -57,6 +63,12 @@ export const PAGES: Record<PageKey, PageInfo> = {
     path: RETAIL_DASHBOARD_PATH,
     title: RETAIL_DASHBOARD_TITLE,
     description: RETAIL_DASHBOARD_DESCRIPTION,
+    priority: 0.8,
+  },
+  onlineRetailDashboard: {
+    path: ONLINE_RETAIL_PATH,
+    title: ONLINE_RETAIL_TITLE,
+    description: ONLINE_RETAIL_DESCRIPTION,
     priority: 0.8,
   },
   marketingDesign: {

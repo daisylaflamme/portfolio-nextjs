@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { dashboards, retailDashboard } from "@/data/dashboards";
+import { dashboards, onlineRetailDashboard, retailDashboard } from "@/data/dashboards";
 import FeaturedDashboardCard from "./FeaturedDashboardCard";
+import { LarrysPreview, OnlineRetailPreview } from "./DashboardPreviews";
 import { withAvailableFiles } from "@/lib/archive";
 import { PAGES, pageMetadata } from "@/lib/seo";
 import ImageSetButton from "@/components/ImageSetButton";
@@ -20,8 +21,9 @@ export default function DashboardsPage() {
         intro="Interactive data interfaces built in React and D3, plus earlier Tableau and JavaScript dashboards from 2013–2014. Select a screenshot to see it full size."
       />
 
-      <div className="mx-auto max-w-6xl px-4 pt-8 sm:px-6">
-        <FeaturedDashboardCard item={retailDashboard} />
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 pt-8 sm:px-6">
+        <FeaturedDashboardCard item={retailDashboard} preview={<LarrysPreview />} priority />
+        <FeaturedDashboardCard item={onlineRetailDashboard} preview={<OnlineRetailPreview />} />
       </div>
 
       <section aria-labelledby="earlier-dashboards" className="mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6">

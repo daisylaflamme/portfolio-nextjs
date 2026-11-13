@@ -6,6 +6,13 @@ import {
   RETAIL_DASHBOARD_SUMMARY,
   RETAIL_DASHBOARD_TITLE,
 } from "../lib/dashboards/larrys/content.ts";
+import {
+  ONLINE_RETAIL_DATA_NOTE,
+  ONLINE_RETAIL_PATH,
+  ONLINE_RETAIL_STACK,
+  ONLINE_RETAIL_SUMMARY,
+  ONLINE_RETAIL_TITLE,
+} from "../lib/dashboards/online-retail/content.ts";
 
 /**
  * Dashboards for /work/dashboards: screenshots and short write-ups. The original
@@ -46,6 +53,31 @@ export const retailDashboard: FeaturedWorkItem = {
   ],
   source: RETAIL_DASHBOARD_SOURCE,
   before: "retail-kpi-dashboard",
+};
+
+/** The second live dashboard, below Larry's Secret. No screenshots yet: the card draws a preview from the data. */
+export const onlineRetailDashboard: FeaturedWorkItem = {
+  id: "online-retail-dashboard",
+  title: ONLINE_RETAIL_TITLE,
+  eyebrow: "// live dashboard · 1M+ invoice lines",
+  summary: ONLINE_RETAIL_SUMMARY,
+  year: 2026,
+  href: ONLINE_RETAIL_PATH,
+  images: [],
+  imageAlt: "Online retail dashboard in dark theme: KPI tiles, monthly revenue line and revenue by country",
+  tags: ["react", "typescript", "d3", "nextjs", "accessibility", "data-visualization", "retail"],
+  stack: ONLINE_RETAIL_STACK,
+  role: "Designer and engineer (solo)",
+  dates: "2026",
+  problem:
+    "Two years of a UK online gift retailer’s orders, about a million invoice lines, are too much to ship to a browser. The dashboard needed to stay fast with every filter while answering where revenue comes from, which products and baskets matter, whether customers come back, and where returns are high.",
+  whatIBuilt: [
+    "A Python cleaning script with documented rules (cancellations kept as returns, guest orders out of customer metrics) that turns 1.07M lines into a 1.3 MB aggregated snapshot.",
+    "A typed DataSource interface with a snapshot-backed implementation, so the pages can later switch to a database without changes; pure, unit-tested selectors for every number.",
+    "Five server-rendered tabs that share filters through the URL: KPIs against the previous period, a drag-to-select monthly line, a world map, an 80/20 Pareto view, a basket matrix, cohort retention, RFM segments and return rates.",
+    "Accessible by design: a summary and a data table for every chart, keyboard paths for every interaction, real tables for the matrix and heatmap, and notes wherever a filter doesn’t apply.",
+  ],
+  source: ONLINE_RETAIL_DATA_NOTE,
 };
 
 export const dashboards: WorkItem[] = [
