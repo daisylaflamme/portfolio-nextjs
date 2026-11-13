@@ -63,7 +63,7 @@ test("no course, class or year references outside the source note", async ({ pag
   // Every data table open, so their captions and cells are checked too.
   const toggles = page.getByRole("button", { name: "Show data table" });
   while ((await toggles.count()) > 0) await toggles.first().click();
-  const text = await page.locator("main").evaluate((main) => {
+  const text = await page.locator("main").evaluate((main: HTMLElement) => {
     const labels = [...main.querySelectorAll("[aria-label], img[alt]")].map(
       (el) => `${el.getAttribute("aria-label") ?? ""} ${el.getAttribute("alt") ?? ""}`,
     );
