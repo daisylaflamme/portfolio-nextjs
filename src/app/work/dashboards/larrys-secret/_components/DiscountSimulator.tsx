@@ -2,8 +2,8 @@
 
 import { useId, useMemo } from "react";
 import { useDashboard } from "./DashboardProvider";
-import BarList from "./BarList";
-import ChartCard from "./ChartCard";
+import BarList from "@/components/charts/BarList";
+import ChartCard from "@/components/charts/ChartCard";
 import { selectDiscountTiers, TIER_LABELS } from "@/lib/dashboards/larrys/selectors";
 import { THRESHOLD_RANGES, THRESHOLD_STEP, withThreshold } from "@/lib/dashboards/larrys/params";
 import { count, percent, times } from "@/lib/dashboards/larrys/format";

@@ -3,9 +3,9 @@
 import { useId, useMemo } from "react";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { useDashboard } from "./DashboardProvider";
-import { useElementWidth } from "./useElementWidth";
-import ChartCard from "./ChartCard";
-import MarkLayer, { type Mark } from "./MarkLayer";
+import { useElementWidth } from "@/components/charts/useElementWidth";
+import ChartCard from "@/components/charts/ChartCard";
+import MarkLayer, { type Mark } from "@/components/charts/MarkLayer";
 import { selectPricePoints } from "@/lib/dashboards/larrys/selectors";
 import { count, money, percent, price } from "@/lib/dashboards/larrys/format";
 

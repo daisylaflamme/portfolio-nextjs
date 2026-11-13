@@ -8,7 +8,7 @@ import {
   type DashboardParams,
 } from "@/lib/dashboards/larrys/params";
 import type { ClientLarrysData, Filters } from "@/lib/dashboards/larrys/types";
-import { openAllGates } from "./hydrateWhenVisible";
+import { openAllGates } from "@/components/charts/hydrateWhenVisible";
 
 interface DashboardContextValue {
   data: ClientLarrysData;

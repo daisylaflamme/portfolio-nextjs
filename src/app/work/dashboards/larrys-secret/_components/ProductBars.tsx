@@ -2,8 +2,8 @@
 
 import { useMemo } from "react";
 import { useDashboard } from "./DashboardProvider";
-import ChartCard from "./ChartCard";
-import BarList from "./BarList";
+import ChartCard from "@/components/charts/ChartCard";
+import BarList from "@/components/charts/BarList";
 import { selectProducts } from "@/lib/dashboards/larrys/selectors";
 import { count, money, moneyShort, percent } from "@/lib/dashboards/larrys/format";
 

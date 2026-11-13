@@ -11,9 +11,9 @@ import townsTopo from "@/data/ma-towns.topo.json";
 import { larrysData } from "@/lib/dashboards/larrys/data";
 import { placeLabel, selectLoyaltyTowns } from "@/lib/dashboards/larrys/selectors";
 import { count, money } from "@/lib/dashboards/larrys/format";
-import ChartCard from "./ChartCard";
+import ChartCard from "@/components/charts/ChartCard";
 import { MapMarks } from "./LazyCharts";
-import type { Mark } from "./MarkLayer";
+import type { Mark } from "@/components/charts/MarkLayer";
 
 const W = 600;
 const H = 450;
