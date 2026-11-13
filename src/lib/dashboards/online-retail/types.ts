@@ -185,6 +185,28 @@ export interface ProductsView {
   curve: number[] | null;
   /** Ranked by revenue, filtered by category (at most 200). */
   rows: ProductRow[];
+  /**
+   * "years": the snapshot ranks whole calendar years and ranks first, then filters by category.
+   * "months": the database ranks the exact From–To months, within the category.
+   */
+  rangeKind: "years" | "months";
+}
+
+/** A product search hit, with its sales for the current filters. */
+export interface ProductSearchRow {
+  code: string;
+  description: string;
+  category: string;
+  units: number;
+  revenue: number;
+}
+
+/** One product's monthly sales for the country filter (every month, flagged when inside From–To). */
+export interface ProductMonthly {
+  code: string;
+  description: string;
+  category: string;
+  months: { month: string; units: number; revenue: number; orders: number; inRange: boolean }[];
 }
 
 export interface BasketView {
@@ -197,6 +219,8 @@ export interface BasketView {
   share: (number | null)[][];
   /** Orders containing both products. */
   counts: (number | null)[][];
+  /** True when From, To and Category apply (the database); the snapshot covers the whole period, all categories. */
+  live: boolean;
 }
 
 export interface CohortRow {
@@ -211,6 +235,11 @@ export interface CohortsView {
   fallback: boolean;
   maxMonths: number;
   rows: CohortRow[];
+  /**
+   * True when the category applies and the country means the orders' country (the database).
+   * The snapshot counts every category and places a customer in their first order's country.
+   */
+  live: boolean;
 }
 
 export interface SegmentRow {

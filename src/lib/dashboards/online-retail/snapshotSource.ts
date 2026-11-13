@@ -19,7 +19,9 @@ import {
 
 export function createSnapshotSource(snapshot: OnlineRetailSnapshot, categories: OnlineRetailCategories): DataSource {
   return {
+    kind: "snapshot",
     meta: dashboardMeta(snapshot),
+    status: async () => "snapshot",
     kpis: async (f) => selectKpis(snapshot, f),
     monthlyRevenue: async (f) => selectMonthlyRevenue(snapshot, f),
     countries: async (f) => selectCountries(snapshot, f),

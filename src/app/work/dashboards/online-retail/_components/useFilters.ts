@@ -5,6 +5,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { parseFilters, serializeFilters } from "@/lib/dashboards/online-retail/params";
 import type { DashboardMeta, Filters } from "@/lib/dashboards/online-retail/types";
 
+const FILTER_KEYS = ["from", "to", "country", "category"];
+
 /**
  * The dashboard's filters, read from the query string, and a way to change them.
  *
@@ -22,10 +24,14 @@ export function useFilters(meta: DashboardMeta) {
 
   const update = useCallback(
     (next: Filters) => {
-      const url = `${pathname}${serializeFilters(meta, next)}`;
+      // Keep a tab's own parameters (the Products tab's ?q= and ?product=) across filter changes.
+      const extra = new URLSearchParams(search.toString());
+      for (const key of FILTER_KEYS) extra.delete(key);
+      const query = [serializeFilters(meta, next).slice(1), extra.toString()].filter(Boolean).join("&");
+      const url = `${pathname}${query ? `?${query}` : ""}`;
       startTransition(() => router.replace(url, { scroll: false }));
     },
-    [meta, pathname, router],
+    [meta, pathname, router, search],
   );
 
   return { filters, update, pending, query: serializeFilters(meta, filters) };

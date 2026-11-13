@@ -54,6 +54,9 @@ for (const tab of ONLINE_RETAIL_TABS) {
     await expect(tabs.getByRole("link", { name: tab.label })).toHaveAttribute("aria-current", "page");
     await expect(tabs.locator('[aria-current="page"]')).toHaveCount(1);
     await expect(page.getByText(ONLINE_RETAIL_DATA_NOTE)).toBeVisible();
+    // Tests run with no database URL, so every tab says it shows the snapshot.
+    await expect(page.locator("[data-source-badge]")).toHaveAttribute("data-source-badge", "snapshot");
+    await expect(page.locator("[data-source-badge]")).toHaveText(/snapshot$/);
     await expect(page).toHaveTitle(new RegExp(`^${tab.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`));
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow).toBeLessThanOrEqual(0);
@@ -200,6 +203,18 @@ test("products: Pareto summary and search", async ({ page }) => {
   await page.getByRole("searchbox", { name: "Search products" }).fill("lantern");
   await expect(table.locator("tbody tr")).toHaveCount(matches);
   await expect(page.locator("[data-product-count]")).toContainText(`${matches} of ${view.rows.length}`);
+});
+
+test("products: live-only search and product sales stay hidden on the snapshot", async ({ page }) => {
+  // Even with the live parameters in the URL, the snapshot page renders without them.
+  await open(page, `${tabPath(ONLINE_RETAIL_TABS[1])}?q=lantern&product=85123A`);
+  await expect(page.locator("[data-product-search]")).toHaveCount(0);
+  await expect(page.getByRole("search", { name: "Find any product" })).toHaveCount(0);
+  await expect(page.getByRole("img", { name: /^Line chart of monthly revenue for/ })).toHaveCount(0);
+  await expect(page.locator("[data-scope-note]")).toContainText("needs the live database");
+  // A filter change keeps the tab's own parameters.
+  await field(page, "Country").selectOption(germany);
+  await expect(page).toHaveURL(/country=germany.*q=lantern&product=85123A|q=lantern&product=85123A.*country=germany/);
 });
 
 test("basket: the matrix is a table with row and column headers", async ({ page }) => {

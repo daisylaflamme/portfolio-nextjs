@@ -1,4 +1,4 @@
-import { onlineRetailSource as source } from "@/lib/dashboards/online-retail/data";
+import { getOnlineRetailSource } from "@/lib/dashboards/online-retail/data";
 import ChartCard from "@/components/charts/ChartCard";
 import BarList from "@/components/charts/BarList";
 import { countryLabel } from "@/lib/dashboards/online-retail/countries";
@@ -8,6 +8,7 @@ import { context, tabMetadata, readFilters, type SearchParams } from "../_compon
 export const metadata = tabMetadata("returns");
 
 export default async function ReturnsPage({ searchParams }: { searchParams: SearchParams }) {
+  const source = getOnlineRetailSource();
   const filters = await readFilters(searchParams);
   const view = await source.returns(filters);
   const ctx = context(filters);
