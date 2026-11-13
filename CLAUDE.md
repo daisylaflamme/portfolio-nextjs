@@ -28,6 +28,7 @@ Before calling a task done: lint, typecheck, test:unit, build, test:e2e. CI (`.g
 - `src/lib/` helpers: `seo.ts` (`PAGES`, titles, sitemap), `work.ts` (category list), `github.ts` (GraphQL languages, typed, falls back to labelled sample data), `archive.ts` (hides items whose images are missing).
 - Résumé PDF: `public/resume/`, linked from `RESUME_PDF` in `src/lib/resume.ts` (home hero and /resume). To update it, replace the file and the `details` text.
 - `src/components/` shared UI, including `ImageLightbox` (the `<dialog>` pattern used everywhere).
+- `docs/adr/` architecture decisions. 0001 covers how the Online Retail dashboard gets its data: the `DataSource` (snapshot or Postgres), server components for the first render, and GraphQL at `/api/online-retail/graphql` for client refetches. Its schema, operations and guard rails are in `src/lib/dashboards/online-retail/graphql/`.
 - `e2e/` Playwright specs. Expected titles, ids and counts come from `src/data` and `src/lib/seo.ts`, never hard-coded.
 
 ## Rules
