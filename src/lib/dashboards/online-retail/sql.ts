@@ -258,7 +258,7 @@ group by segment`.replace("\n\n", "\n"),
   };
 }
 
-/** Products whose description or code contains the text, with sales for the filters, best first. */
+/** Products whose description or code contains the text and that sold in the filters' scope, best first. */
 export function searchProductsQuery(query: string, f: Filters, limit = 25): Query {
   const p = new Params();
   const pattern = p.add(`%${escapeLike(query.trim())}%`);
@@ -273,6 +273,7 @@ from ${S}.products pr
 left join ${S}.mv_product_month_country m on m.stock_code = pr.stock_code and ${range}${country}
 where (pr.description ilike ${pattern} escape '\\' or pr.stock_code ilike ${pattern} escape '\\')${category}
 group by pr.stock_code, pr.description, pr.category
+having coalesce(sum(m.revenue), 0) > 0
 order by revenue desc, pr.stock_code
 limit ${lim}`,
     values: p.values,

@@ -1,7 +1,7 @@
 import { Suspense, type ReactNode } from "react";
 import Link from "next/link";
 import { PAGES } from "@/lib/seo";
-import { onlineRetailSource } from "@/lib/dashboards/online-retail/data";
+import { getOnlineRetailSource } from "@/lib/dashboards/online-retail/data";
 import {
   ONLINE_RETAIL_DATA_NOTE,
   ONLINE_RETAIL_INTRO,
@@ -9,10 +9,13 @@ import {
 } from "@/lib/dashboards/online-retail/content";
 import { monthLabel } from "@/lib/dashboards/online-retail/format";
 import DashboardControls from "./_components/DashboardControls";
+import SourceBadge from "./_components/SourceBadge";
 
 /** Breadcrumb, intro, section tabs, filters and the data note, around every tab. */
-export default function OnlineRetailLayout({ children }: { children: ReactNode }) {
-  const { meta } = onlineRetailSource;
+export default async function OnlineRetailLayout({ children }: { children: ReactNode }) {
+  const source = getOnlineRetailSource();
+  const { meta } = source;
+  const kind = await source.status();
   const first = meta.months[0];
   const last = meta.months[meta.months.length - 1];
 
@@ -46,8 +49,11 @@ export default function OnlineRetailLayout({ children }: { children: ReactNode }
           {ONLINE_RETAIL_TITLE}
         </h1>
         <p className="max-w-[72ch] text-[17px] leading-relaxed text-muted">{ONLINE_RETAIL_INTRO}</p>
-        <p className="text-sm text-muted">
-          {monthLabel(first)} – {monthLabel(last)} · GBP
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+          <span>
+            {monthLabel(first)} – {monthLabel(last)} · GBP
+          </span>
+          <SourceBadge kind={kind} />
         </p>
       </header>
 
