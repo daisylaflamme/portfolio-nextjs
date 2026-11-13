@@ -42,6 +42,25 @@ test("filters update the result count", async ({ page }) => {
   await expect(payments).toHaveAttribute("aria-pressed", "false");
 });
 
+test("the Larry's Secret dashboard shows under Data visualization and React / Next.js", async ({ page }) => {
+  const dash = projects.find((p) => p.id === "larrys-secret-dashboard");
+  if (!dash) throw new Error("larrys-secret-dashboard is missing from projects.ts");
+  await page.goto("/work/web-engineering");
+  const status = page.getByRole("status");
+  const card = page.getByRole("heading", { level: 3, name: dash.title });
+
+  // Data visualization sits in the More menu.
+  await page.getByRole("button", { name: "More", exact: true }).click();
+  await page.getByRole("button", { name: filterLabel("data-viz"), exact: true }).click();
+  await expect(status).toHaveText(matching(expectedCount(["data-viz"])));
+  await expect(card).toBeVisible();
+  await page.getByRole("button", { name: /^Clear filters/ }).click();
+
+  await page.getByRole("button", { name: filterLabel("react"), exact: true }).click();
+  await expect(status).toHaveText(matching(expectedCount(["react"])));
+  await expect(card).toBeVisible();
+});
+
 test("earlier work opens while filters are active and closes when they are cleared", async ({ page }) => {
   // The first filter whose matches include earlier (non-featured) projects, from the data.
   const filter = PROJECT_FILTERS.find((f) => groupProjects(projects, featuredProjectIds, [f]).earlier.length > 0);

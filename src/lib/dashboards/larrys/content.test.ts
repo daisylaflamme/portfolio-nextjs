@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import * as copy from "./content.ts";
 import { retailDashboard } from "../../../data/dashboards.ts";
+import { projects } from "../../../data/projects.ts";
 
 /** Words that would frame the dashboard as coursework. Only the source note may mention the class. */
 const BANNED = /\b(course(work)?|class|students?|homework|assignments?|IT 478|2013)\b/i;
@@ -18,6 +19,13 @@ describe("Larry's Secret copy", () => {
     const { source, ...rest } = retailDashboard;
     assert.equal(source, copy.RETAIL_DASHBOARD_SOURCE);
     assert.doesNotMatch(JSON.stringify(rest), BANNED);
+  });
+
+  it("the Web engineering case study has none either", () => {
+    const project = projects.find((p) => p.id === "larrys-secret-dashboard");
+    assert.ok(project, "larrys-secret-dashboard is in projects.ts");
+    assert.doesNotMatch(JSON.stringify(project), BANNED);
+    assert.equal(project.link, copy.RETAIL_DASHBOARD_PATH);
   });
 
   it("the source note names the class once", () => {

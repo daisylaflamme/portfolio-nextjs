@@ -10,6 +10,7 @@ const TAG_LABELS: Partial<Record<ProjectTag, string>> = {
   angular: "Angular",
   react: "React",
   nextjs: "Next.js",
+  d3: "D3",
   typescript: "TypeScript",
   javascript: "JavaScript",
   vite: "Vite",
@@ -66,6 +67,7 @@ const STACK_TAGS: ProjectTag[] = [
   "angular",
   "react",
   "nextjs",
+  "d3",
   "typescript",
   "javascript",
   "vite",
@@ -80,6 +82,18 @@ const STACK_TAGS: ProjectTag[] = [
   "css",
   "html",
 ];
+
+/** True for a path on this site ("/work/…"), which opens in the same tab. */
+export function isInternalHref(href: string): boolean {
+  return href.startsWith("/") && !href.startsWith("//");
+}
+
+/** The project's own page on this site, if its `link` is one, with its button label. */
+export function internalLink(project: Pick<Project, "link" | "linkLabel">): { href: string; label: string } | null {
+  return project.link && isInternalHref(project.link)
+    ? { href: project.link, label: project.linkLabel ?? "visit site" }
+    : null;
+}
 
 export function tagLabel(tag: ProjectTag): string {
   return TAG_LABELS[tag] ?? tag.replace(/-/g, " ");

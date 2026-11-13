@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { Project } from "@/data/types";
-import { projectImages, topicLabels } from "@/lib/projectDisplay";
+import { internalLink, projectImages, topicLabels } from "@/lib/projectDisplay";
 
 // The 250px files in /thumbnails look soft when stretched across a card, so cards use
 // the first full-size screenshot and fall back to the thumbnail only when there is none.
@@ -16,12 +17,15 @@ interface ProjectCardProps {
 }
 
 /**
- * Case-study card. The "View details" button opens the project dialog;
- * its accessible name includes the project title.
+ * Case-study card. The "View details" button opens the project dialog; its accessible
+ * name includes the project title. When the project's link is a page on this site, a
+ * link to that page (its `linkLabel`) becomes the main button and "View details" the second.
  */
 export default function ProjectCard({ project, onOpen, featured = false }: ProjectCardProps) {
   const topics = topicLabels(project).join(" · ");
   const src = cardImage(project);
+  // A project whose link is a page on this site gets that page as its main button.
+  const page = internalLink(project);
 
   if (featured) {
     const hero = project.heroImage;
@@ -58,13 +62,33 @@ export default function ProjectCard({ project, onOpen, featured = false }: Proje
           </h3>
           <p className="text-base leading-relaxed text-body sm:text-[17px]">{project.summary}</p>
           {topics ? <p className="font-mono text-[13px] text-muted">{topics}</p> : null}
-          <button
-            type="button"
-            onClick={() => onOpen(project)}
-            className="mt-1 inline-flex min-h-12 items-center self-start rounded-lg bg-accent px-6 font-mono text-[15px] font-medium text-on-accent transition-opacity hover:opacity-90"
-          >
-            read case study<span className="sr-only">: {project.title}</span>
-          </button>
+          {page ? (
+            <div className="mt-1 flex flex-wrap items-center gap-x-5 gap-y-2">
+              <Link
+                href={page.href}
+                className="inline-flex min-h-12 items-center rounded-lg bg-accent px-6 font-mono text-[15px] font-medium text-on-accent transition-opacity hover:opacity-90"
+              >
+                {page.label}
+                <span className="sr-only">: {project.title}</span>
+                <span aria-hidden="true">&nbsp;→</span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => onOpen(project)}
+                className="inline-flex min-h-12 items-center font-mono text-[15px] text-fg underline underline-offset-4 hover:text-accent"
+              >
+                read case study<span className="sr-only">: {project.title}</span>
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => onOpen(project)}
+              className="mt-1 inline-flex min-h-12 items-center self-start rounded-lg bg-accent px-6 font-mono text-[15px] font-medium text-on-accent transition-opacity hover:opacity-90"
+            >
+              read case study<span className="sr-only">: {project.title}</span>
+            </button>
+          )}
         </div>
       </article>
     );
@@ -98,13 +122,34 @@ export default function ProjectCard({ project, onOpen, featured = false }: Proje
         {topics ? <p className="font-mono text-xs text-accent">{topics}</p> : null}
         <h3 className="font-display text-xl font-semibold leading-snug text-fg">{project.title}</h3>
         <p className="flex-1 text-[15px] leading-relaxed text-muted">{project.summary}</p>
-        <button
-          type="button"
-          onClick={() => onOpen(project)}
-          className="mt-1 inline-flex min-h-11 items-center self-start font-semibold text-fg underline-offset-4 hover:text-accent hover:underline"
-        >
-          View details<span className="sr-only">: {project.title}</span> <span aria-hidden="true">&nbsp;→</span>
-        </button>
+        {page ? (
+          // A page on this site (e.g. a live dashboard): opening it is the main action.
+          <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
+            <Link
+              href={page.href}
+              className="inline-flex min-h-11 items-center rounded-lg bg-accent px-4 font-mono text-sm font-medium text-on-accent transition-opacity hover:opacity-90"
+            >
+              {page.label}
+              <span className="sr-only">: {project.title}</span>
+              <span aria-hidden="true">&nbsp;→</span>
+            </Link>
+            <button
+              type="button"
+              onClick={() => onOpen(project)}
+              className="inline-flex min-h-11 items-center font-semibold text-fg underline-offset-4 hover:text-accent hover:underline"
+            >
+              View details<span className="sr-only">: {project.title}</span>
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => onOpen(project)}
+            className="mt-1 inline-flex min-h-11 items-center self-start font-semibold text-fg underline-offset-4 hover:text-accent hover:underline"
+          >
+            View details<span className="sr-only">: {project.title}</span> <span aria-hidden="true">&nbsp;→</span>
+          </button>
+        )}
       </div>
     </article>
   );

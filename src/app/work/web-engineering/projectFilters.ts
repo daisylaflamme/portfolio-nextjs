@@ -3,6 +3,7 @@ import {
   AccessibilityIcon,
   AngularIcon,
   BoxIcon,
+  ChartIcon,
   CodeIcon,
   CreditCardIcon,
   GraduationCapIcon,
@@ -46,6 +47,7 @@ export const PROJECT_FILTERS: ProjectFilter[] = [
   { id: "cms", label: "CMS", Icon: FileTextIcon, tags: ["cms"], placement: "primary" },
 
   { id: "accessibility", label: "Accessibility", Icon: AccessibilityIcon, tags: ["accessibility"], placement: "more" },
+  { id: "data-viz", label: "Data visualization", Icon: ChartIcon, tags: ["d3"], placement: "more" },
   { id: "javascript", label: "JavaScript / TypeScript", Icon: CodeIcon, tags: ["javascript", "typescript"], placement: "more" },
   { id: "styling", label: "Styling / CSS", Icon: PaletteIcon, tags: ["css", "scss", "tailwind", "bootstrap"], placement: "more" },
   { id: "wordpress", label: "WordPress", Icon: WordPressIcon, tags: ["wordpress"], placement: "more" },
