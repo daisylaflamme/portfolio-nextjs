@@ -13,6 +13,7 @@ a database.
 | `002_indexes.sql` | indexes for live queries, plus a trigram index for product search (`pg_trgm`) |
 | `003_views.sql` | materialized views matching the `DataSource` methods: `mv_month_country`, `mv_month_country_category`, `mv_product_month_country`, `mv_customer_activity`, `mv_rfm` |
 | `004_reader_role.sql` | `online_retail_reader`: read-only, this schema only, 5 s statement timeout |
+| `005_ai_summaries.sql` | the AI summary cache and daily call counter: the only two tables the reader may write |
 | `load.sql` | loads the Phase 1 CSVs and refreshes the views (psql) |
 
 The data stays in its own schema, not `public`: Supabase's auto-generated REST API only exposes `public`, so the
@@ -28,6 +29,7 @@ You need `psql` (PostgreSQL client 14+) on your machine. The SQL files themselve
    psql "$ONLINE_RETAIL_ADMIN_URL" -f db/online-retail/002_indexes.sql
    psql "$ONLINE_RETAIL_ADMIN_URL" -f db/online-retail/003_views.sql
    psql "$ONLINE_RETAIL_ADMIN_URL" -f db/online-retail/004_reader_role.sql
+   psql "$ONLINE_RETAIL_ADMIN_URL" -f db/online-retail/005_ai_summaries.sql
    ```
    `ONLINE_RETAIL_ADMIN_URL` is the owner's **direct** connection string (Supabase: Connect → Direct connection, port
    5432). Keep it in your shell only: it's never used by the site, and it doesn't belong in `.env.local` or Vercel.
@@ -75,3 +77,17 @@ score off from the Python build. Segment counts can differ from the snapshot by 
 ## Size
 
 About 1M rows in `sales`, roughly 250 MB with indexes and views. That fits Supabase's free plan (500 MB database).
+
+## AI summaries (005)
+
+When `ANTHROPIC_API_KEY` is also set, "Summarize this view" caches each summary in `online_retail.ai_summaries` (one per tab, filters, model and prompt version, since the data never changes) and counts Claude calls per UTC day in `online_retail.ai_summary_usage`, so the cache and the daily cap are shared by every server instance.
+
+The reader can select, insert and update these two tables and nothing else. Its sessions stay read-only by default; the summary store opens an explicit `begin read write` transaction for these writes only. Writes to `sales`, `products` or the views, and any delete, are still refused.
+
+```sql
+-- Calls today, and the cached summaries.
+select * from online_retail.ai_summary_usage order by day desc limit 7;
+select cache_key, created_at from online_retail.ai_summaries order by created_at desc limit 20;
+-- After changing the prompt or the data, clear the cache (as the owner):
+truncate online_retail.ai_summaries;
+```
