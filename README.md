@@ -1,6 +1,6 @@
 # Daisy Laflamme — portfolio
 
-Portfolio site for Daisy Laflamme, senior front-end and UI engineer: case studies, résumé, certificates and a contact form.
+Portfolio site for Daisy Laflamme, senior front-end and UI engineer: case studies, résumé, education and a contact form.
 
 **Production:** [www.daisylaflamme.net](https://www.daisylaflamme.net/), deployed on [Vercel](https://vercel.com).
 
@@ -56,12 +56,12 @@ src/
 │   │   ├── dashboards/       Dashboard screenshots and write-ups
 │   │   ├── marketing-design/ Design gallery with lightbox
 │   │   └── presentations/    Deck covers with slide links and PDFs
-│   ├── about/  resume/  certificates/  contact/
+│   ├── about/  resume/  contact/          About includes Education (/certificates redirects there)
 │   ├── api/contact/          POST: contact form → Resend
 │   ├── api/resume-visit/     POST: email when the site is opened from a résumé link
 │   ├── sitemap.ts  robots.ts
 │   └── globals.css           Design tokens (both themes), dialog styles, reduced motion
-├── components/               SiteHeader, SiteFooter, ThemeToggle, ResumeVisitTracker, ImageLightbox, ImageSetButton
+├── components/               SiteHeader, SiteFooter, ThemeToggle, ResumeVisitTracker, ImageLightbox, ImageSetButton, Education
 ├── data/
 │   ├── types.ts              Project, ProjectTag, WorkItem, WorkTag, Certificate
 │   ├── projects.ts           Case studies + featuredProjectIds
@@ -86,7 +86,7 @@ scripts/                      Node scripts (image conversion)
 - **One list of pages.** `PAGES` in `src/lib/seo.ts` drives each route's title, description, canonical URL and Open Graph tags, the sitemap, and the Playwright route list. To add a page, add it there.
 - **Work categories.** `/work/web-engineering`, `/work/dashboards`, `/work/marketing-design` and `/work/presentations` share `WorkHeader`, whose tabs are links with `aria-current`. `WORK_CATEGORIES` in `src/lib/work.ts` feeds the tabs and the home page tiles. `/web-projects` redirects permanently to `/work/web-engineering`, keeping `?project=`.
 - **Case-study state.** Filter chips are local state; the open case study is the URL (`/work/web-engineering?project=<id>`), read with `useSearchParams` inside a Suspense boundary. Deep links, reloads and sharing all work, and the rest of the page is still prerendered.
-- **Dialogs.** The case-study dialog, the image lightbox (case studies, design gallery, dashboards) and the diploma viewer use native `<dialog>` with `showModal()`. The browser traps focus, closes on Escape and returns focus to the trigger; `html.has-open-dialog` stops the page behind from scrolling.
+- **Dialogs.** The case-study dialog, the image lightbox (case studies, design gallery, dashboards) and the certificate viewer (About → Education) use native `<dialog>` with `showModal()`. The browser traps focus, closes on Escape and returns focus to the trigger; `html.has-open-dialog` stops the page behind from scrolling.
 - **Theme.** `data-theme` on `<html>` is set by an inline script before first paint, from `localStorage` or else the OS preference. `ThemeToggle` reads it with `useSyncExternalStore`, so the server markup and the hydrated toggle always agree.
 - **Accessibility.** Every page is checked with axe in both themes. Motion is turned off under `prefers-reduced-motion`.
 

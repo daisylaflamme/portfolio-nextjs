@@ -76,3 +76,17 @@ test("JavaScript in Colors: featured card opens a case study with live links and
   await screens.nth(3).click();
   await expect(dialog.getByRole("button", { name: `View full size: ${app.imageAlts?.[3]}` })).toBeVisible();
 });
+
+test("a case study without a link shows no visit-site button", async ({ page }) => {
+  const project = projects.find((p) => p.link === null && !p.extraLinks?.length);
+  expect(project).toBeDefined();
+  await page.goto(`${WORK}?project=${project?.id}`);
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByRole("heading", { level: 2 })).toHaveText(project?.title ?? "");
+  await expect(dialog.getByRole("link", { name: /visit site/ })).toHaveCount(0);
+});
+
+test("no case study links to cardis.com", () => {
+  const hrefs = projects.flatMap((p) => [p.link ?? "", ...(p.extraLinks ?? []).map((l) => l.href)]);
+  expect(hrefs.filter((href) => href.includes("cardis.com"))).toEqual([]);
+});

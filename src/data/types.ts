@@ -90,7 +90,18 @@ export interface Project {
   teamContribution?: string;
 }
 
-export type CertificateProvider = "linkedin" | "lynda";
+/** A degree in the Education section: school logo (or initials) plus text. */
+export interface Degree {
+  school: string;
+  degree: string;
+  field: string;
+  year: number;
+  /** Path under public/. Without one (or until the file exists), the initials tile is shown. */
+  logo?: string;
+  initials: string;
+}
+
+export type CertificateProvider = "linkedin" | "lynda" | "udemy";
 
 export interface Certificate {
   /** Empty string when the provider's logo is used instead (see `provider`). */

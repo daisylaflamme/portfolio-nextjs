@@ -1,27 +1,34 @@
-import type { Certificate } from "./types";
+import type { Certificate, CertificateProvider, Degree } from "./types";
 
-export const diplomas: Certificate[] = [
-    {
-        thumbnail: "/images/certificates/thumbnails/harvarde.jpg",
-        image: "/images/certificates/harvard-diploma.jpg",
-        title: "Harvard University Master's Degree - Digital Media and Instructional Design",
-        year: 2015
-    },
-    {
-        thumbnail: "/images/certificates/thumbnails/umass.jpg",
-        image: "/images/certificates/umass-diploma.jpg",
-        title: "UMass Boston Bachelor of Science - Information Architecture - Information Technology",
-        year: 2012
-      },
-      {
-        thumbnail: "/images/certificates/thumbnails/cccc.jpg",
-        image: "/images/certificates/cccc-diploma.jpg",
-        title: "Cape Cod Community College Associate in Science - Web Development",
-        year: 2010
-      },
-]
+/** Degrees, newest first. */
+export const diplomas: Degree[] = [
+  {
+    school: "Harvard University Extension School",
+    degree: "Master's Degree",
+    field: "Digital Media and Instructional Design",
+    year: 2015,
+    logo: "/images/education/harvard.webp",
+    initials: "H",
+  },
+  {
+    school: "University of Massachusetts Boston",
+    degree: "Bachelor of Science",
+    field: "Information Architecture (Information Technology)",
+    year: 2012,
+    logo: "/images/education/umass-boston.webp",
+    initials: "UMB",
+  },
+  {
+    school: "Cape Cod Community College",
+    degree: "Associate in Science",
+    field: "Web Development",
+    year: 2010,
+    initials: "CC",
+  },
+];
 
-export const programs: Certificate[] = [
+/** Professional certifications, shown under "Certifications". */
+export const certifications: Certificate[] = [
     {
         thumbnail: "/images/certificates/thumbnails/marketo.jpg",
         image: "/images/certificates/marketo.png",
@@ -36,6 +43,7 @@ export const programs: Certificate[] = [
     },
 ]
 
+/** Every course certificate. `recentLearning` picks a few; the rest make up the course history. */
 export const certificates: Certificate[] = [
     {
       thumbnail: "",
@@ -197,12 +205,14 @@ export const certificates: Certificate[] = [
       image: "/images/certificates/UC-XDIFCEXI.jpg",
       title: "Using MODX CMS to Build Websites: Intermediate",
       year: 2015,
+      provider: "udemy",
     },
     {
       thumbnail: "/images/certificates/thumbnails/udemy.jpg",
       image: "/images/certificates/UC-FTYF6DNB.jpg",
-      title: "Using MODX CMS to Build Websites: A Begginer's Guide",
+      title: "Using MODX CMS to Build Websites: A Beginner's Guide",
       year: 2015,
+      provider: "udemy",
     },
     {
       thumbnail: "/images/certificates/thumbnails/twd.jpg",
@@ -324,3 +334,43 @@ export const certificates: Certificate[] = [
       provider: "lynda"
     }
   ];
+
+export const CERTIFICATE_PROVIDER_LABELS: Record<CertificateProvider, string> = {
+  linkedin: "LinkedIn Learning",
+  lynda: "Lynda.com",
+  udemy: "Udemy",
+};
+
+/** Courses listed under "Recent learning", in display order. Each must match a title in `certificates`. */
+export const RECENT_LEARNING_TITLES = [
+  "React Essential Training",
+  "Tailwind CSS 4 Essential Training",
+  "Generative Development with Artificial Intelligence and Cursor",
+  "Artificial Intelligence Foundations: Machine Learning",
+  "Python Essential Training",
+] as const;
+
+const recentTitles: ReadonlySet<string> = new Set(RECENT_LEARNING_TITLES);
+
+export const recentLearning: Certificate[] = RECENT_LEARNING_TITLES.flatMap((title) =>
+  certificates.filter((cert) => cert.title === title)
+);
+
+export interface CourseYear {
+  year: number;
+  courses: Certificate[];
+}
+
+/** Every course not in "Recent learning", grouped by year, newest year first. */
+export const courseHistory: CourseYear[] = (() => {
+  const byYear = new Map<number, Certificate[]>();
+  for (const cert of certificates) {
+    if (recentTitles.has(cert.title)) continue;
+    byYear.set(cert.year, [...(byYear.get(cert.year) ?? []), cert]);
+  }
+  return [...byYear.entries()]
+    .sort(([a], [b]) => b - a)
+    .map(([year, courses]) => ({ year, courses }));
+})();
+
+export const courseHistoryCount = courseHistory.reduce((sum, group) => sum + group.courses.length, 0);

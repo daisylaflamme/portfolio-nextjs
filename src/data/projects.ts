@@ -100,6 +100,62 @@ export const projects: Project[] = [
     tags: ["html", "angular", "javascript", "scss", "css", "bootstrap", "ecommerce", "cms", "api-integrations", "ui-components"],
   },
   {
+    id: "asi-header-redesign",
+    title: "Responsive Header Redesign for American Signature & Value City",
+    summary:
+      "Redesigned the shared storefront header for American Signature and Value City Furniture on Blueport's multi-tenant Angular platform, with separate mobile, tablet and desktop navigation and keyboard-accessible, click-to-open menus.",
+    description:
+      "Worked on the shared, versioned header for American Signature and Value City Furniture on Blueport's multi-tenant Angular platform. The header combined CMS-driven navigation, search suggestions, cart status, Auth0 sign-in states, store location and promotional content, and new Figma designs called for different navigation and information architecture on mobile, tablet and desktop. The BFF supplied nested menu nodes with different behaviors, and RxJS streams supplied menu variants, search, cart, store and postal code, and sign-in state. The redesign separated navigation triggers from dropdown rendering, replaced hover with click-to-open, and reused dropdown layouts for desktop mega menus and mobile flyouts. It shipped as a configurable 2025 header path alongside the existing header variations, keeping each brand's styling and behavior through shared CSS tokens.",
+    role: "Senior Front-End Engineer",
+    team: "Platform team; worked from new Figma designs",
+    dates: "2025",
+    stack: ["Angular", "RxJS", "Auth0", "BFF APIs", "CMS"],
+    problem:
+      "New Figma designs called for different navigation and information architecture on mobile, tablet and desktop, in a header that already combined CMS navigation, search suggestions, cart status, Auth0 sign-in states, store location and promotions.",
+    whatIBuilt: [
+      "Separated top-level navigation triggers from dropdown rendering and replaced hover with click-to-open.",
+      "Reusable dropdown layouts for desktop mega menus and mobile flyouts, driven by nested BFF menu nodes and RxJS streams for menus, search, cart, store and sign-in state.",
+      "Distinct mobile, tablet and desktop structures instead of one desktop layout compressed with CSS, plus a sticky minified header and CMS promo zones.",
+      "Keyboard traversal, visible focus and focus restoration through menus and dropdowns, labelled controls and hidden decorative SVGs.",
+      "Debounced search requests, conditional results, priority loading for the brand logo and attention to layout stability (CLS).",
+    ],
+    impact: [
+      "Shipped behind a config flag alongside the existing header variations",
+      "One shared, versioned header; each brand keeps its own branding through shared CSS tokens",
+      "Keyboard-accessible, click-to-open menus at every breakpoint",
+    ],
+    teamContribution:
+      "The header is a shared, versioned platform component built by the team. I worked on the design and refactor decisions above, starting with the config-flagged 2025 header path in May 2025, then header modals, close-all behavior and the favorites modal in June–July 2025.",
+    thumbnail: "/images/projects/asi-header/asi-header-hero.webp",
+    heroImage: "/images/projects/asi-header/asi-header-hero.webp",
+    images: [
+      "/images/projects/asi-header/asi-header-hero.webp",
+      "/images/projects/asi-header/asi-header-account-menu.webp",
+      "/images/projects/asi-header/asi-header-order-lookup-validation.webp",
+      "/images/projects/asi-header/asi-header-location-modal.webp",
+      "/images/projects/asi-header/asi-header-favorites-flyout.webp",
+      "/images/projects/asi-header/asi-header-mobile-menu.webp",
+      "/images/projects/asi-header/vcf-header-mobile-home.webp",
+      "/images/projects/asi-header/vcf-header-desktop-home.webp",
+      "/images/projects/asi-header/asi-header-pdp.webp",
+    ],
+    imageAlt:
+      "Redesigned American Signature Furniture header on desktop, tablet and phone: the account menu with order lookup, the location modal with closest store details, and the mobile navigation menu.",
+    imageAlts: [
+      "Redesigned American Signature Furniture header on desktop, tablet and phone: the account menu with order lookup, the location modal with closest store details, and the mobile navigation menu.",
+      "American Signature desktop header with the signed-in account menu open, showing order lookup, account links and a Continue Shopping button.",
+      "Account menu order lookup with an inline \"Order number is required\" validation message and a close button.",
+      "Header location modal with a zip code field, delivery and pick-up availability, closest store address, phone and showroom hours.",
+      "Header favorites flyout showing saved product thumbnails and a View Your Favorites button.",
+      "American Signature mobile navigation menu with favorites, stores, financing, order and help shortcuts above expandable category links.",
+      "Value City Furniture mobile header on the homepage, sharing the redesigned header with brand-specific styling.",
+      "Value City Furniture desktop homepage with the shared redesigned header, utility links and category navigation.",
+      "American Signature product page with the redesigned header, utility bar, category navigation and cart count.",
+    ],
+    link: null,
+    tags: ["html", "css", "angular", "ecommerce", "cms", "api-integrations", "ui-components", "accessibility"],
+  },
+  {
     id: "checkout-multi-payments",
     title: "Multi‑Payment Checkout Enablement",
     summary:
@@ -354,7 +410,7 @@ export const projects: Project[] = [
       "Morris Home tablet homepage carousel showing the anniversary sale with a Shop MH Studio call to action.",
       "Morris Home mobile homepage carousel with an anniversary mattress sale slide and slide arrows.",
     ],
-    link: "https://www.cardis.com/",
+    link: null,
     tags: ["html", "javascript", "cms", "ecommerce", "scss", "css", "ui-components"],
   },
   {
@@ -426,7 +482,7 @@ export const projects: Project[] = [
       "Cardi's desktop gift card balance page with a card number field and a Cardi's and Ashley gift card image.",
       "August Haven desktop gift card balance page using the default card graphic, showing per-brand theming.",
     ],
-    link: "https://www.cardis.com/gift-card-balance",
+    link: null,
     tags: ["html", "angular", "ecommerce", "scss", "css","javascript", "api-integrations", "ui-components"],
   },
   {
@@ -627,6 +683,35 @@ export const projects: Project[] = [
     link:
       "https://www.americansignaturefurniture.com/product/group/living-room/seating/sectionals/campbell-cumulus-2-piece-sectional-with-right-facing-sofa-cement/2224589/2141781",
     tags: ["html", "angular", "css", "ecommerce", "scss"],
+  },
+  {
+    id: "mvc-to-angular-migration",
+    title: "ASP.NET MVC to Angular Storefront Migration",
+    summary:
+      "Helped move multi-brand furniture storefronts from ASP.NET MVC Razor views, jQuery and AngularJS to Angular components, keeping each brand's look while modernizing the front end.",
+    description:
+      "Blueport's storefronts started as ASP.NET MVC with Razor views, brand SCSS and LESS, jQuery and AngularJS. Tenant pages for product, cart, checkout and custom content moved into Angular, backed by REST/BFF contracts and shared Angular libraries. I scoped existing C# Razor views, planned how each would split into Angular parent and child components, and migrated pages client by client while keeping each brand's visual design.",
+    role: "Front-End Developer",
+    dates: "2018 – 2019",
+    stack: ["ASP.NET MVC", "Razor", "AngularJS", "jQuery", "Angular", "SCSS", "LESS"],
+    problem:
+      "Storefronts ran on ASP.NET MVC Razor views with brand SCSS/LESS, jQuery and AngularJS, and needed to move to Angular pages backed by REST/BFF contracts and shared Angular libraries.",
+    whatIBuilt: [
+      "Scoped existing C# Razor views and planned how each would split into Angular parent and child components.",
+      "Migrated product (PDP), shopping cart, checkout and custom pages to Angular, client by client.",
+      "Tenant Angular page and brand SCSS work for American Signature, Steinhafels, Cardi's, Levin and Morris Home.",
+      "Moved the product configurator into core Angular.",
+    ],
+    impact: [
+      "Storefronts looked the same to shoppers, now on modern Angular",
+      "Pages built on shared Angular libraries and REST/BFF contracts",
+    ],
+    thumbnail: "/images/projects/thumbnails/asi-variant-pdp.webp",
+    images: ["/images/projects/asi-variant-pdp.webp"],
+    imageAlt:
+      "American Signature Furniture product page on Angular for the Brittney Sofa, with color swatches, pricing and financing, pick-up details and an add-to-cart button.",
+    link: null,
+    tags: ["html", "css", "scss", "javascript", "angular", "ecommerce"],
   },
 
   {
@@ -1092,6 +1177,7 @@ export const projects: Project[] = [
  */
 export const featuredProjectIds: Project["id"][] = [
   "checkout-multi-payments",
+  "asi-header-redesign",
   "js-in-colors",
   "store-details-maps",
   "blueport-multisite-platform-ui",
