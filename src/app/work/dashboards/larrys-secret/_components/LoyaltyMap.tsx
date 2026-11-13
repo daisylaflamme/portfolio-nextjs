@@ -96,7 +96,7 @@ export default function LoyaltyMap({ className }: { className?: string }) {
       title="Where loyalty customers live"
       description="Home zip codes with 3 or more loyalty customers, all stores."
       table={{
-        caption: "Loyalty customers by home zip code, with course demographics",
+        caption: "Loyalty customers by home zip code, with Massachusetts demographic data by zip code",
         columns: ["Town (zip)", "Customers", "Population", "Median age", "Avg income"],
         rows: towns.map((z) => [
           `${placeLabel(z.place)} (${z.zip})`,
@@ -109,8 +109,8 @@ export default function LoyaltyMap({ className }: { className?: string }) {
       footnote={
         <>
           Town boundaries: MassGIS (Bureau of Geographic Information). {count(larrysData.meta.loyaltyCustomersInSmallZips)}{" "}
-          customers in zip codes with fewer than 3 are not shown. Income is average gross income from the course’s
-          Massachusetts demographics sheet.
+          customers in zip codes with fewer than 3 are not shown. Income is average gross income from Massachusetts
+          demographic data by zip code.
         </>
       }
     >

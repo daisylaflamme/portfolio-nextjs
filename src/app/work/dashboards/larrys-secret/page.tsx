@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PAGES, pageMetadata } from "@/lib/seo";
+import { PAGES, SITE_NAME, pageMetadata } from "@/lib/seo";
 import { larrysData, toClientData } from "@/lib/dashboards/larrys/data";
 import { RETAIL_DASHBOARD_SOURCE } from "@/lib/dashboards/larrys/content";
 import { count, shortDate } from "@/lib/dashboards/larrys/format";
@@ -13,7 +13,19 @@ import LoyaltyMap from "./_components/LoyaltyMap";
 import ThenNow from "./_components/ThenNow";
 import { BasketMatrix, DiscountSimulator, PricePointChart, ProductBars } from "./_components/LazyCharts";
 
-export const metadata: Metadata = pageMetadata(PAGES.retailDashboard);
+const page = PAGES.retailDashboard;
+
+export const metadata: Metadata = {
+  ...pageMetadata(page),
+  twitter: { card: "summary_large_image", title: `${page.title} | ${SITE_NAME}`, description: page.description },
+};
+
+/** The three questions from Larry's brief, listed under the intro. */
+const BRIEF_QUESTIONS = [
+  "Which stores and products drive revenue and margin?",
+  "What do customers buy together?",
+  "Which loyalty customers should get a discount, and how big?",
+];
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -50,18 +62,27 @@ export default async function RetailDashboardPage({ searchParams }: PageProps) {
       </nav>
 
       <header className="flex flex-col gap-3">
-        <p className="font-mono text-[13px] text-accent">{"// data case study · 2013 Tableau → 2026 React + D3"}</p>
+        <p className="font-mono text-[13px] text-accent">{"// data case study · retail analytics"}</p>
         <h1 className="font-display text-[clamp(2rem,5vw,2.9rem)] font-bold leading-[1.08] tracking-tight text-fg">
-          Retail sales dashboard
+          {page.title}
         </h1>
         <p className="max-w-[70ch] text-[17px] leading-relaxed text-muted">
-          A clothing chain’s April 2012 sales, rebuilt from my 2013 Tableau work for UMass Boston’s Business Intelligence
-          course (IT 478) as an accessible, interactive dashboard. Filter by store, explore what shoppers buy together, and
-          test the discount rules.
+          Larry’s Secret is a five-store clothing chain around Boston. Larry needed to know where to focus: which stores and
+          products were pulling their weight, what his customers bought together, and whether a loyalty discount would help
+          or just give away margin. He shared four weeks of register receipts from April 2012 and asked for a dashboard that
+          answers three questions:
         </p>
+        <ul aria-label="Questions the dashboard answers" className="flex max-w-[70ch] flex-col gap-1.5" data-brief-questions>
+          {BRIEF_QUESTIONS.map((q) => (
+            <li key={q} className="flex gap-3 text-[17px] leading-relaxed text-body">
+              <span aria-hidden="true" className="mt-[0.7rem] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+              <span>{q}</span>
+            </li>
+          ))}
+        </ul>
         <p className="text-sm text-muted">
           {shortDate(meta.dateRange[0])}–{shortDate(meta.dateRange[1]).replace(/^\w+ /, "")}, 2012 · {stores.length} stores ·{" "}
-          {skus.length} products · {count(meta.transactions)} transactions · anonymized course data
+          {skus.length} products · {count(meta.transactions)} transactions
         </p>
       </header>
 
@@ -89,7 +110,12 @@ export default async function RetailDashboardPage({ searchParams }: PageProps) {
 
       <ThenNow />
 
-      <p className="text-xs leading-relaxed text-muted">Source: {RETAIL_DASHBOARD_SOURCE}</p>
+      <p className="max-w-[70ch] text-[15px] leading-relaxed text-body" data-closing>
+        What this gives Larry: a single view to compare stores, plan bundles around products bought together, and test
+        discount rules before rolling them out.
+      </p>
+
+      <p className="text-xs leading-relaxed text-muted">{RETAIL_DASHBOARD_SOURCE}</p>
     </main>
   );
 }

@@ -1,4 +1,9 @@
 import type { Metadata } from "next";
+import {
+  RETAIL_DASHBOARD_DESCRIPTION,
+  RETAIL_DASHBOARD_PATH,
+  RETAIL_DASHBOARD_TITLE,
+} from "./dashboards/larrys/content.ts";
 
 export const SITE_URL = "https://www.daisylaflamme.net";
 export const SITE_NAME = "Daisy Laflamme";
@@ -49,10 +54,9 @@ export const PAGES: Record<PageKey, PageInfo> = {
     priority: 0.7,
   },
   retailDashboard: {
-    path: "/work/dashboards/larrys-secret",
-    title: "Retail sales dashboard",
-    description:
-      "An interactive, accessible retail sales dashboard by Daisy Laflamme: a 2013 Tableau project rebuilt in React, TypeScript and D3 with store filters, a market basket matrix and a loyalty discount simulator.",
+    path: RETAIL_DASHBOARD_PATH,
+    title: RETAIL_DASHBOARD_TITLE,
+    description: RETAIL_DASHBOARD_DESCRIPTION,
     priority: 0.8,
   },
   marketingDesign: {

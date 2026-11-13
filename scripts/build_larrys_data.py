@@ -51,7 +51,7 @@ basket = (pd.DataFrame(pairs, columns=["store", "a", "b"]).groupby(["store", "a"
 sku_txn = (d.groupby(["Store Number", "SKU"])["Transaction Number"].nunique().reset_index()
            .rename(columns={"Store Number": "store", "SKU": "sku", "Transaction Number": "transactions"}))
 
-# Grain 5: loyalty customers, anonymized (for the discount what-if). Same metric as the 2013 workbook:
+# Grain 5: loyalty customers, anonymized (for the discount what-if). Same metric as the first version of the dashboard:
 # a customer's average line amount compared with the overall average line amount.
 L = d[d["loyal"]]
 overall_avg_line = float(d["Extended"].mean())
@@ -77,7 +77,7 @@ def records(df): return json.loads(df.to_json(orient="records"))
 data = {
     "meta": {
         "title": "Larry's Secret: retail sales, April 2012",
-        "source": "Larry\'s Secret sales data from Business Intelligence (IT 478), UMass Boston, 2013. Students were permitted to publish public dashboards with this data. Aggregated and anonymized; no customer names or raw transactions.",
+        "source": "Data: Larry’s Secret case-study sales data from the Business Intelligence class at UMass Boston. Aggregated and anonymized; 554 duplicate lines removed.",
         "dateRange": [d["date"].min(), d["date"].max()],
         "weeks": sorted(int(w) for w in d["Fiscal Week"].unique()),
         "rawLines": int(len(raw)), "duplicateLinesRemoved": dupes, "lines": int(len(d)),

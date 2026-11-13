@@ -92,7 +92,7 @@ export interface LoyaltyCustomer {
   spend: number;
   transactions: number;
   homeStore: number;
-  /** avgLine ÷ meta.overallAvgLine, the 2013 workbook's discount metric. */
+  /** avgLine ÷ meta.overallAvgLine, the loyalty discount metric. */
   ratio: number;
   ageBand: string;
 }
