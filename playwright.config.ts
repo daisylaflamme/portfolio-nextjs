@@ -36,5 +36,8 @@ export default defineConfig({
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
+    // A placeholder, not a secret: it makes the server render the Online Retail summary panel.
+    // Every e2e test mocks /api/online-retail/summary with page.route, so nothing reaches Anthropic.
+    env: { ANTHROPIC_API_KEY: "e2e-placeholder-not-a-key" },
   },
 });

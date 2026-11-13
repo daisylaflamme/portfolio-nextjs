@@ -352,3 +352,104 @@ for (const theme of ["light", "dark"] as Theme[]) {
     });
   }
 }
+
+// ---- "Summarize this view" ----------------------------------------------------------------
+// The panel renders because playwright.config.ts gives the server a placeholder key; every test
+// here answers the summary route with page.route, so no request ever reaches Anthropic.
+
+const SUMMARY = "/api/online-retail/summary";
+const ndjson = (...events: object[]) => events.map((e) => JSON.stringify(e)).join("\n") + "\n";
+const summaryPanel = (page: Page) => page.locator("[data-summary-panel]");
+const summaryOutput = (page: Page) => page.locator("[data-summary-output]");
+const summaryAction = (page: Page) => summaryPanel(page).locator("[data-summary-action]");
+
+test("summarize sends only the tab and filters, and streams into a live region", async ({ page }) => {
+  const bodies: unknown[] = [];
+  await page.route(`**${SUMMARY}`, async (route) => {
+    bodies.push(route.request().postDataJSON());
+    await route.fulfill({
+      status: 200,
+      contentType: "application/x-ndjson",
+      body: ndjson({ type: "text", text: "From Dec 2009 to Dec 2011, " }, { type: "text", text: "revenue was £19,354,775." }, { type: "done", cached: false }),
+    });
+  });
+  await open(page, urlFor({ ...ALL_TIME, country: germany }));
+  await expect(summaryPanel(page).getByRole("heading", { name: "Summarize this view" })).toBeVisible();
+  await expect(summaryOutput(page)).toHaveAttribute("aria-live", "polite");
+  await expect(summaryOutput(page)).toHaveAttribute("role", "status");
+
+  await summaryAction(page).click();
+  await expect(summaryOutput(page)).toContainText("From Dec 2009 to Dec 2011, revenue was £19,354,775.");
+  await expect(summaryOutput(page)).toHaveAttribute("data-summary-status", "done");
+  await expect(summaryOutput(page)).toHaveAttribute("aria-busy", "false");
+  // Never numbers from the browser: the server recomputes them.
+  expect(bodies).toEqual([{ tab: "overview", filters: { country: slugify(germany) } }]);
+
+  // Another view hides the old summary.
+  await field(page, "Category").selectOption(category);
+  await expect(summaryOutput(page)).toHaveAttribute("data-summary-status", "idle");
+  await expect(summaryOutput(page)).not.toContainText("£19,354,775");
+});
+
+test("summarize on another tab sends that tab", async ({ page }) => {
+  let body: unknown = null;
+  await page.route(`**${SUMMARY}`, async (route) => {
+    body = route.request().postDataJSON();
+    await route.fulfill({ status: 200, contentType: "application/x-ndjson", body: ndjson({ type: "text", text: "Returns summary." }, { type: "done", cached: true }) });
+  });
+  await open(page, tabPath(ONLINE_RETAIL_TABS[4]));
+  await summaryAction(page).click();
+  await expect(summaryOutput(page)).toContainText("Returns summary.");
+  await expect(summaryOutput(page)).toContainText("From the cache");
+  expect(body).toEqual({ tab: "returns", filters: {} });
+});
+
+test("stop ends a summary in progress", async ({ page }) => {
+  await page.route(`**${SUMMARY}`, async (route) => {
+    await new Promise((r) => setTimeout(r, 4000));
+    await route.fulfill({ status: 200, contentType: "application/x-ndjson", body: ndjson({ type: "text", text: "Too late." }, { type: "done", cached: false }) }).catch(() => {});
+  });
+  await open(page, PAGES.onlineRetailDashboard.path);
+  await summaryAction(page).click();
+  await expect(summaryAction(page)).toHaveText("stop");
+  await expect(summaryOutput(page)).toHaveAttribute("aria-busy", "true");
+  await summaryAction(page).click();
+  await expect(summaryOutput(page)).toHaveAttribute("data-summary-status", "stopped");
+  await expect(summaryAction(page)).toHaveText("summarize");
+  await expect(summaryAction(page)).toBeFocused();
+  await page.waitForTimeout(4500);
+  await expect(summaryOutput(page)).not.toContainText("Too late.");
+});
+
+test("an error shows a message and retry recovers", async ({ page }) => {
+  let calls = 0;
+  await page.route(`**${SUMMARY}`, async (route) => {
+    calls += 1;
+    if (calls === 1) {
+      await route.fulfill({ status: 429, contentType: "application/x-ndjson", body: ndjson({ type: "error", message: "Too many summaries from this address." }) });
+    } else {
+      await route.fulfill({ status: 200, contentType: "application/x-ndjson", body: ndjson({ type: "text", text: "Second try worked." }, { type: "done", cached: false }) });
+    }
+  });
+  await open(page, PAGES.onlineRetailDashboard.path);
+  await summaryAction(page).click();
+  await expect(summaryPanel(page).locator("[data-summary-error]")).toContainText("Too many summaries from this address.");
+  await expect(summaryAction(page)).toHaveText("retry");
+  await summaryAction(page).click();
+  await expect(summaryOutput(page)).toContainText("Second try worked.");
+  expect(calls).toBe(2);
+});
+
+for (const theme of ["light", "dark"] as Theme[]) {
+  test(`the summary panel has no serious or critical axe violations (${theme})`, async ({ page }) => {
+    await page.route(`**${SUMMARY}`, (route) =>
+      route.fulfill({ status: 200, contentType: "application/x-ndjson", body: ndjson({ type: "text", text: "A short summary." }, { type: "done", cached: true }) }),
+    );
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await useSavedTheme(page, theme);
+    await open(page, PAGES.onlineRetailDashboard.path);
+    await summaryAction(page).click();
+    await expect(summaryOutput(page)).toHaveAttribute("data-summary-status", "done");
+    expect(await blockingViolations(page)).toEqual([]);
+  });
+}
