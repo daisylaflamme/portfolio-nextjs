@@ -17,6 +17,7 @@ export const PROJECT_TAGS = [
   "angular",
   "react",
   "nextjs",
+  "d3",
   "vite",
   "wordpress",
   "supabase",
@@ -72,8 +73,13 @@ export interface Project {
   imageAlt: string;
   /** Optional alt text for every image, in `images` order (the case-study gallery and lightbox use it). */
   imageAlts?: string[];
-  /** Live site, or null when the work isn't public any more. */
+  /**
+   * Live site, or null when the work isn't public any more. A link starting with "/" is a
+   * page on this site: it opens in the same tab and also becomes the card's main button.
+   */
   link: string | null;
+  /** Label for `link` on the card and in the modal; defaults to "visit site". */
+  linkLabel?: string;
   extraLinks?: ProjectLink[];
   tags: ProjectTag[];
 

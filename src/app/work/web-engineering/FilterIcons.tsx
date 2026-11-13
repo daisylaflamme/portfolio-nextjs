@@ -101,6 +101,18 @@ export function AccessibilityIcon({ className }: IconProps) {
   );
 }
 
+export function ChartIcon({ className }: IconProps) {
+  return (
+    <svg {...iconProps} className={className}>
+      <path d="M3.5 20.5h17" />
+      <path d="M6.5 16.5v-4" />
+      <path d="M11 16.5V8" />
+      <path d="M15.5 16.5v-6" />
+      <path d="M20 16.5V4.5" />
+    </svg>
+  );
+}
+
 export function PaletteIcon({ className }: IconProps) {
   return (
     <svg {...iconProps} className={className}>
