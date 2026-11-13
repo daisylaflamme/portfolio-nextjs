@@ -10,6 +10,7 @@ import {
   tabPath,
 } from "../src/lib/dashboards/online-retail/content";
 import { createSnapshotSource } from "../src/lib/dashboards/online-retail/snapshotSource";
+import { GRAPHQL_ENDPOINT } from "../src/lib/dashboards/online-retail/graphql/endpoint";
 import { defaultFilters, serializeFilters, slugify } from "../src/lib/dashboards/online-retail/params";
 import { money, monthLabel, rangeLabel } from "../src/lib/dashboards/online-retail/format";
 import type { Filters, OnlineRetailCategories, OnlineRetailSnapshot } from "../src/lib/dashboards/online-retail/types";
@@ -134,6 +135,7 @@ test("a shared link restores the view; invalid values fall back to defaults", as
 test("dragging across the monthly chart sets the date range", async ({ page, isMobile }, testInfo) => {
   test.skip(isMobile || testInfo.project.name.includes("390"), "Pointer drag is checked at desktop width");
   await open(page, PAGES.onlineRetailDashboard.path);
+  const requests = trackRequests(page, PAGES.onlineRetailDashboard.path);
   const chart = page.getByRole("img", { name: /^Line chart of monthly revenue/ });
   // Mouse coordinates are viewport-relative, so the chart must be on screen.
   await chart.scrollIntoViewIfNeeded();
@@ -151,6 +153,86 @@ test("dragging across the monthly chart sets the date range", async ({ page, isM
   expect(from < to).toBe(true);
   await expect(field(page, "From")).toHaveValue(from);
   await expect(revenueKpi(page)).toContainText(money((await source.kpis({ ...ALL_TIME, from, to })).current.revenue));
+  // The drag goes through the same path as the selects: one GraphQL request, no server render.
+  await expectOneGraphqlRequest(requests);
+});
+
+/**
+ * Records, from now on, the GraphQL requests and the non-prefetch RSC requests (a server
+ * render) for `path`. Next prefetches tab links with the RSC header too, so those are excluded.
+ */
+function trackRequests(page: Page, path: string) {
+  const graphql: URL[] = [];
+  const serverRenders: URL[] = [];
+  page.on("request", (r) => {
+    const url = new URL(r.url());
+    const headers = r.headers();
+    if (url.pathname === GRAPHQL_ENDPOINT) graphql.push(url);
+    else if (url.pathname === path && headers["rsc"] && !headers["next-router-prefetch"]) serverRenders.push(url);
+  });
+  return { graphql, serverRenders };
+}
+
+async function expectOneGraphqlRequest(requests: ReturnType<typeof trackRequests>) {
+  // Give any stray second request time to show up before counting.
+  await new Promise((r) => setTimeout(r, 500));
+  expect(requests.graphql).toHaveLength(1);
+  expect(requests.serverRenders).toHaveLength(0);
+}
+
+test("a filter change refreshes every Overview chart with one GraphQL request", async ({ page }) => {
+  await open(page, PAGES.onlineRetailDashboard.path);
+  const requests = trackRequests(page, PAGES.onlineRetailDashboard.path);
+  const response = page.waitForResponse((r) => new URL(r.url()).pathname === GRAPHQL_ENDPOINT);
+  await field(page, "Country").selectOption(germany);
+
+  const res = await response;
+  expect(res.request().method()).toBe("GET");
+  expect(res.status()).toBe(200);
+  expect(res.headers()["cache-control"]).toContain("public");
+  const variables = JSON.parse(new URL(res.url()).searchParams.get("variables") ?? "{}");
+  expect(variables.filters).toEqual({ country: slugify(germany) });
+
+  // Every chart on the tab shows Germany's numbers, from that one response.
+  const f: Filters = { ...ALL_TIME, country: germany };
+  const [k, months, countries] = await Promise.all([source.kpis(f), source.monthlyRevenue(f), source.countries(f)]);
+  await expect(page).toHaveURL(new RegExp(`[?&]country=${slugify(germany)}`));
+  await expect(revenueKpi(page)).toContainText(money(k.current.revenue));
+  const inRange = months.filter((m) => m.inRange).reduce((s, m) => s + m.revenue, 0);
+  await expect(page.getByRole("img", { name: /^Line chart of monthly revenue/ })).toHaveAttribute(
+    "aria-label",
+    new RegExp(`for ${germany}, all categories.*${money(inRange).replace(/[£,]/g, ".")}`),
+  );
+  await expect(page.getByText(`${germany} is outlined; the others are shown for comparison.`)).toBeVisible();
+  await expect(page.getByRole("group", { name: /^Revenue by country values/ }).getByRole("button", { name: new RegExp(`^${germany}: .*\\(selected\\)$`) })).toHaveCount(1);
+  expect(countries.find((c) => c.country === germany)).toBeDefined();
+  await expectOneGraphqlRequest(requests);
+});
+
+test("on another tab, a filter change is one GraphQL request for that tab's charts", async ({ page }) => {
+  const path = tabPath(ONLINE_RETAIL_TABS[4]);
+  await open(page, path);
+  const requests = trackRequests(page, path);
+  const response = page.waitForResponse((r) => new URL(r.url()).pathname === GRAPHQL_ENDPOINT);
+  await field(page, "Category").selectOption(category);
+  const query = new URL((await response).url()).searchParams.get("query") ?? "";
+  expect(query).toMatch(/^query Returns\(/);
+  expect(query).not.toMatch(/kpis|monthlyRevenue/);
+
+  const returns = await source.returns({ ...ALL_TIME, category });
+  await expect(page.getByRole("group", { name: /^Return rate values/ }).locator("[data-mark]")).toHaveCount(returns.rows.length);
+  await expect(page.getByText(`Overall: ${(returns.overall.rate * 100).toFixed(1)}%`, { exact: false })).toBeVisible();
+  await expectOneGraphqlRequest(requests);
+});
+
+test("the GraphQL endpoint refuses introspection in production", async ({ request }) => {
+  const res = await request.get(`${GRAPHQL_ENDPOINT}?query=${encodeURIComponent("{ __schema { types { name } } }")}`, {
+    headers: { accept: "application/json" },
+  });
+  const body = await res.json();
+  expect(body.data).toBeUndefined();
+  expect(body.errors[0].message).toMatch(/introspection has been disabled/);
+  expect(res.headers()["cache-control"]).toBe("no-store");
 });
 
 test("chart values are reachable by keyboard", async ({ page }) => {
