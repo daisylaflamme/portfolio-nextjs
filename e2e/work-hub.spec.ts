@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { dashboards, retailDashboard } from "../src/data/dashboards";
+import { dashboards, onlineRetailDashboard, retailDashboard } from "../src/data/dashboards";
 import { graphics } from "../src/data/graphics";
 import { landingPages } from "../src/data/landingPages";
 import { presentations, SLIDESHARE_PROFILE } from "../src/data/presentations";
@@ -139,8 +139,10 @@ test.describe("dashboards", () => {
       await expect(page.getByText(EMPTY_MESSAGE)).toBeVisible();
       return;
     }
-    // The featured live dashboard, then the archive under its own heading.
-    await expect(page.getByRole("article")).toHaveCount(shownDashboards.length + 1);
+    // The two featured live dashboards, then the archive under its own heading.
+    await expect(page.getByRole("article")).toHaveCount(shownDashboards.length + 2);
+    const second = page.getByRole("article", { name: onlineRetailDashboard.title });
+    await expect(second.getByText(onlineRetailDashboard.eyebrow)).toBeVisible();
     const featured = page.getByRole("article", { name: retailDashboard.title });
     await expect(featured.getByText(retailDashboard.eyebrow)).toBeVisible();
     if (retailDashboard.heroImage) {

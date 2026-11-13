@@ -1,5 +1,6 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ONLINE_RETAIL_TABS, tabPath } from "@/lib/dashboards/online-retail/content";
@@ -8,6 +9,8 @@ import { monthLabel } from "@/lib/dashboards/online-retail/format";
 import { ALL, defaultFilters, withRange } from "@/lib/dashboards/online-retail/params";
 import type { DashboardMeta } from "@/lib/dashboards/online-retail/types";
 import { useFilters } from "./useFilters";
+
+const noopSubscribe = () => () => {};
 
 const fieldClass =
   "min-h-11 w-full rounded-lg border border-field bg-bg px-2.5 text-sm text-fg hover:border-fg disabled:opacity-60";
@@ -19,6 +22,8 @@ const fieldClass =
 export default function DashboardControls({ meta }: { meta: DashboardMeta }) {
   const pathname = usePathname();
   const { filters, update, pending, query } = useFilters(meta);
+  // False in the server HTML, true once hydrated: tells tests the selects are live.
+  const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
   const defaults = defaultFilters(meta);
   const isDefault =
     filters.from === defaults.from &&
@@ -56,6 +61,7 @@ export default function DashboardControls({ meta }: { meta: DashboardMeta }) {
         aria-label="Filters"
         className="grid grid-cols-2 items-end gap-2.5 sm:flex sm:flex-wrap"
         onSubmit={(e) => e.preventDefault()}
+        data-ready={hydrated ? "true" : undefined}
       >
         <label className="flex min-w-0 flex-col gap-1 text-[13px] text-muted sm:w-40">
           From
