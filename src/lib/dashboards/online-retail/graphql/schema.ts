@@ -15,7 +15,7 @@
 import { NoSchemaIntrospectionCustomRule } from "graphql";
 import { createGraphQLError, createSchema, createYoga, type Plugin } from "graphql-yoga";
 import type { DataSource } from "../source.ts";
-import { parseFilters } from "../params.ts";
+import { parseFiltersStrict } from "../params.ts";
 import type { Filters } from "../types.ts";
 import { typeDefs } from "./typeDefs.ts";
 import { complexityLimit, depthLimit } from "./rules.ts";
@@ -64,11 +64,11 @@ export function createResolvers() {
       meta: (_: unknown, __: unknown, ctx: Context) => ctx.source.meta,
       source: async (_: unknown, __: unknown, ctx: Context) => ({ kind: ctx.source.kind, status: await ctx.source.status() }),
       dashboard: (_: unknown, args: { filters?: FilterInput | null }, ctx: Context): DashboardParent => {
-        // The URL's own parser: same validation, same defaults for anything missing or invalid.
-        const raw = args.filters ?? {};
-        const record: Record<string, string | undefined> = {};
-        for (const key of ["from", "to", "country", "category"] as const) record[key] = raw[key] ?? undefined;
-        return { filters: parseFilters(ctx.source.meta, record) };
+        // The URL's rules, but strict: an API caller gets an error, not silently different data.
+        // (Missing filters still mean the whole period.)
+        const parsed = parseFiltersStrict(ctx.source.meta, args.filters ? { ...args.filters } : undefined);
+        if (!parsed.ok) throw createGraphQLError(parsed.error, { extensions: { code: "BAD_USER_INPUT" } });
+        return { filters: parsed.value };
       },
     },
     Dashboard: {

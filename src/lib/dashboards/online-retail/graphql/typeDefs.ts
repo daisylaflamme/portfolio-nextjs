@@ -5,7 +5,7 @@
  * view type returns exactly that TypeScript type.
  */
 export const typeDefs = /* GraphQL */ `
-  "Filter values in the URL's format: months as YYYY-MM, country and category as slugs (e.g. united-kingdom, home-decor-signs). Missing or invalid values fall back to the defaults, exactly like the dashboard's query string."
+  "Filter values in the URL's format: months as YYYY-MM, country and category as slugs (e.g. united-kingdom, home-decor-signs). Missing values mean the defaults (the whole period, all countries, all categories). Invalid values are rejected with a BAD_USER_INPUT error; unlike the dashboard's query string, the API never silently falls back."
   input FiltersInput {
     from: String
     to: String
