@@ -60,8 +60,9 @@ Why GraphQL here and not one REST endpoint per chart:
 - Introspection is off in production, and so are "Did you mean …" field suggestions. GraphiQL runs in development
   only.
 - Errors are masked: no stack traces or SQL text in responses.
-- Filter input goes through the same `parseFilters` as the URL, so the API and the page agree on validation and
-  defaults.
+- Filter input is validated with the URL's rules, but strictly (`parseFiltersStrict`): an invalid month, country,
+  category or a reversed range is a `BAD_USER_INPUT` error, not quietly different data. The URL keeps falling back to
+  defaults so shared links always render. The summary route uses the same strict check.
 - `Cache-Control: public, s-maxage=86400, stale-while-revalidate` applies to successful GET queries only;
   everything else gets `no-store`.
 
