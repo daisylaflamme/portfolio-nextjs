@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { onlineRetailSource } from "./data.ts";
-import { defaultFilters, parseFilters, serializeFilters, slugify, withRange } from "./params.ts";
+import { defaultFilters, parseFilters, parseFiltersStrict, serializeFilters, slugify, withRange } from "./params.ts";
 
 const meta = onlineRetailSource.meta;
 const parse = (q: string) => parseFilters(meta, new URLSearchParams(q));
@@ -70,5 +70,42 @@ describe("withRange", () => {
     assert.deepEqual(withRange(f, { from: "2010-07" }), { ...f, from: "2010-07" });
     assert.deepEqual(withRange(f, { from: "2010-10" }), { ...f, from: "2010-10", to: "2010-10" });
     assert.deepEqual(withRange(f, { to: "2010-02" }), { ...f, from: "2010-02", to: "2010-02" });
+  });
+});
+
+describe("parseFiltersStrict", () => {
+  it("accepts canonical input and gives exactly what parseFilters gives", () => {
+    const input = { from: "2010-03", to: "2011-09", country: slugify(country), category: slugify(category) };
+    assert.deepEqual(parseFiltersStrict(meta, input), { ok: true, value: parseFilters(meta, input) });
+    assert.deepEqual(parseFiltersStrict(meta, { country: "all", category: "all" }), { ok: true, value: defaultFilters(meta) });
+  });
+
+  it("treats missing filters as the defaults", () => {
+    for (const input of [undefined, null, {}]) assert.deepEqual(parseFiltersStrict(meta, input), { ok: true, value: defaultFilters(meta) });
+  });
+
+  it("rejects what the URL parser would silently default", () => {
+    const cases: [unknown, RegExp][] = [
+      [[], /must be an object/],
+      ["germany", /must be an object/],
+      [{ revenue: 1 }, /Unknown filter: revenue/],
+      [{ from: "1999-01" }, /Invalid from/],
+      [{ to: "2010-1" }, /Invalid to/],
+      [{ from: 201001 }, /Invalid from/],
+      [{ country: "" }, /Invalid country/],
+      [{ category: "x".repeat(65) }, /Invalid category/],
+      [{ from: "2011-05", to: "2010-02" }, /from must not be after to/],
+      [{ country: "atlantis" }, /Unknown country/],
+      // A display name isn't a slug.
+      [{ country: "Germany" }, /Unknown country/],
+      [{ category: "nope" }, /Unknown category/],
+    ];
+    for (const [input, error] of cases) {
+      const r = parseFiltersStrict(meta, input);
+      assert.equal(r.ok, false, JSON.stringify(input));
+      if (!r.ok) assert.match(r.error, error, JSON.stringify(input));
+      // The lenient URL parser would have produced a filter set instead.
+      if (input && typeof input === "object" && !Array.isArray(input)) assert.ok(parseFilters(meta, input as Record<string, string>));
+    }
   });
 });

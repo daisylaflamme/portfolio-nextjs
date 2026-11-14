@@ -235,6 +235,24 @@ test("the GraphQL endpoint refuses introspection in production", async ({ reques
   expect(res.headers()["cache-control"]).toBe("no-store");
 });
 
+test("the GraphQL endpoint rejects invalid filters instead of defaulting them", async ({ request }) => {
+  const query = "query($f: FiltersInput) { dashboard(filters: $f) { kpis { current { revenue } } } }";
+  const url = (filters: object) =>
+    `${GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}&variables=${encodeURIComponent(JSON.stringify({ f: filters }))}`;
+  const bad = await request.get(url({ country: "atlantis" }), { headers: { accept: "application/json" } });
+  const body = await bad.json();
+  expect(body.errors[0].message).toBe("Unknown country.");
+  expect(body.errors[0].extensions.code).toBe("BAD_USER_INPUT");
+  expect(body.data?.dashboard ?? null).toBeNull();
+  expect(bad.headers()["cache-control"]).toBe("no-store");
+
+  // A valid slug still answers, cacheably, with the source's numbers.
+  const good = await request.get(url({ country: slugify(germany) }), { headers: { accept: "application/json" } });
+  const ok = await good.json();
+  expect(ok.data.dashboard.kpis.current.revenue).toBeCloseTo((await source.kpis({ ...ALL_TIME, country: germany })).current.revenue, 2);
+  expect(good.headers()["cache-control"]).toContain("public");
+});
+
 test("chart values are reachable by keyboard", async ({ page }) => {
   await open(page, PAGES.onlineRetailDashboard.path);
   const group = page.getByRole("group", { name: /^Monthly revenue values/ });

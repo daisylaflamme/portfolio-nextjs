@@ -75,11 +75,35 @@ describe("client operations", () => {
 });
 
 describe("filters input", () => {
-  it("is validated by params.ts: invalid values fall back to the defaults", async () => {
-    const input = { from: "1999-01", to: "2011-02", country: "atlantis", category: "Kitchen & dining" };
-    const data = await run("overview", { filters: input });
-    assert.deepEqual(data.dashboard.filters, parseFilters(meta, input));
-    assert.deepEqual(data.dashboard.filters, { ...defaultFilters(meta), to: "2011-02" });
+  it("rejects invalid values with BAD_USER_INPUT instead of defaulting them", async () => {
+    const cases: [Record<string, unknown>, RegExp][] = [
+      [{ from: "1999-01" }, /Invalid from/],
+      [{ to: "2011-13" }, /Invalid to/],
+      [{ from: "2011-05", to: "2010-02" }, /from must not be after to/],
+      [{ country: "atlantis" }, /Unknown country/],
+      [{ country: "Germany" }, /Unknown country/],
+      [{ category: "Kitchen & dining" }, /Unknown category/],
+      [{ country: "" }, /Invalid country/],
+    ];
+    for (const [filters, error] of cases) {
+      const { res, body } = await get(yoga, operations.overview, { filters });
+      assert.match(body.errors?.[0]?.message ?? "", error, JSON.stringify(filters));
+      assert.equal((body.errors?.[0] as { extensions?: { code?: string } } | undefined)?.extensions?.code, "BAD_USER_INPUT");
+      assert.equal((body.data as { dashboard?: unknown } | null | undefined)?.dashboard ?? null, null);
+      assert.equal(res.headers.get("cache-control"), "no-store");
+      // The URL parser, by contrast, would have shown default data.
+      assert.ok(parseFilters(meta, filters as Record<string, string>));
+    }
+  });
+
+  it("an unknown input field is refused by the schema itself", async () => {
+    const { body } = await get(yoga, operations.overview, { filters: { revenue: 1 } });
+    assert.match(body.errors?.[0]?.message ?? "", /revenue/);
+  });
+
+  it("valid slugs and 'all' pass", async () => {
+    const data = await run("overview", { filters: { country: "all", category: slugify(category) } });
+    assert.deepEqual(data.dashboard.filters, { ...defaultFilters(meta), category });
   });
 
   it("no filters means the whole period", async () => {
