@@ -51,6 +51,42 @@ export function parseFilters(meta: DashboardMeta, source: ParamSource): Filters 
   };
 }
 
+export type StrictResult = { ok: true; value: Filters } | { ok: false; error: string };
+
+const FILTER_KEYS = ["from", "to", "country", "category"] as const;
+const MAX_FILTER_LENGTH = 64;
+const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);
+
+/**
+ * For APIs (GraphQL, the summary route): the same rules as parseFilters, but anything unknown
+ * or invalid is an error instead of a default. URLs keep the lenient parser so shared links
+ * always render. Missing filters (undefined, null or {}) mean the defaults.
+ */
+export function parseFiltersStrict(meta: DashboardMeta, input: unknown): StrictResult {
+  if (input === undefined || input === null) return { ok: true, value: defaultFilters(meta) };
+  if (!isRecord(input)) return { ok: false, error: "filters must be an object." };
+  const unknown = Object.keys(input).filter((k) => !(FILTER_KEYS as readonly string[]).includes(k));
+  if (unknown.length) return { ok: false, error: `Unknown filter: ${unknown[0]}.` };
+
+  const raw: Record<string, string | undefined> = {};
+  for (const key of FILTER_KEYS) {
+    const v = input[key];
+    if (v === undefined || v === null) continue;
+    if (typeof v !== "string" || v.length === 0 || v.length > MAX_FILTER_LENGTH) return { ok: false, error: `Invalid ${key}.` };
+    raw[key] = v;
+  }
+  for (const key of ["from", "to"] as const) {
+    if (raw[key] !== undefined && !meta.months.includes(raw[key])) return { ok: false, error: `Invalid ${key}.` };
+  }
+  if (raw.from && raw.to && raw.from > raw.to) return { ok: false, error: "from must not be after to." };
+  if (raw.country !== undefined && raw.country !== ALL && !fromSlug(meta.countries, raw.country)) return { ok: false, error: "Unknown country." };
+  if (raw.category !== undefined && raw.category !== ALL && !fromSlug(meta.categories, raw.category)) {
+    return { ok: false, error: "Unknown category." };
+  }
+  // Everything is known to be valid, so the URL parser yields the canonical filters.
+  return { ok: true, value: parseFilters(meta, raw) };
+}
+
 /** Query string for the filters, leaving out values that equal the defaults ("" when all are). */
 export function serializeFilters(meta: DashboardMeta, f: Filters): string {
   const d = defaultFilters(meta);
