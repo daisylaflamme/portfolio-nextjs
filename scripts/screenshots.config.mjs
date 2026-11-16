@@ -3,7 +3,7 @@
  * framed like the existing case-study heroes (browser window and phone).
  *
  * - route:     path on the site
- * - name:      file prefix, e.g. "retail-dashboard" → retail-dashboard-hero.webp
+ * - name:      file prefix, e.g. "retail-dashboard-light" → retail-dashboard-light-hero.webp
  * - viewports: any of "desktop" (1280×800) and "phone" (390×844)
  * - theme:     "dark" or "light"
  * - outDir:    folder under the repo, usually public/images/projects/<name>
@@ -13,10 +13,12 @@
  */
 const entries = [
   {
-    route: "/work/dashboards/larrys-secret",
-    name: "retail-dashboard",
+    route: "/work/dashboards/larrys-stores",
+    // "-light" in the file names, so caches never serve the earlier dark captures under the same URL.
+    name: "retail-dashboard-light",
     viewports: ["desktop", "phone"],
-    theme: "dark",
+    // Light, so its cards read differently from the Online Retail ones (dark).
+    theme: "light",
     outDir: "public/images/projects/retail-dashboard",
     hero: true,
     // The laptop shows the filters, KPIs and first charts; the phone keeps the title.

@@ -32,18 +32,18 @@ export const retailDashboard: FeaturedWorkItem = {
   year: 2026,
   href: RETAIL_DASHBOARD_PATH,
   // Framed captures from `npm run screenshots` (scripts/screenshots.config.mjs).
-  heroImage: "/images/projects/retail-dashboard/retail-dashboard-hero.webp",
+  heroImage: "/images/projects/retail-dashboard/retail-dashboard-light-hero.webp",
   images: [
-    "/images/projects/retail-dashboard/retail-dashboard-desktop.webp",
-    "/images/projects/retail-dashboard/retail-dashboard-phone.webp",
+    "/images/projects/retail-dashboard/retail-dashboard-light-desktop.webp",
+    "/images/projects/retail-dashboard/retail-dashboard-light-phone.webp",
   ],
-  imageAlt: "Larry’s Secret retail sales dashboard in dark theme on a laptop and a phone: store filters, KPI tiles and charts",
+  imageAlt: "Larry’s Stores retail sales dashboard in light theme on a laptop and a phone: store filters, KPI tiles and charts",
   tags: ["react", "typescript", "d3", "nextjs", "accessibility", "data-visualization", "retail"],
   stack: RETAIL_DASHBOARD_STACK,
   role: "Designer and engineer (solo)",
   dates: "2026",
   problem:
-    "Larry’s Secret, a five-store clothing chain around Boston, needed to know which stores and products drive revenue and margin, what customers buy together, and which loyalty customers should get a discount. The data: four weeks of register receipts from April 2012.",
+    "Larry’s Stores, a five-store clothing chain around Boston, needed to know which stores and products drive revenue and margin, what customers buy together, and which loyalty customers should get a discount. The data: four weeks of register receipts from April 2012.",
   whatIBuilt: [
     "A typed data layer over anonymized, aggregated sales data, with pure, unit-tested selectors for every number on the page.",
     "Charts drawn as SVG by React, with D3 used only for scales, shapes and the map projection; heavier panels load as separate chunks.",
@@ -55,7 +55,7 @@ export const retailDashboard: FeaturedWorkItem = {
   before: "retail-kpi-dashboard",
 };
 
-/** The second live dashboard, below Larry's Secret. */
+/** The second live dashboard, below Larry's Stores. */
 export const onlineRetailDashboard: FeaturedWorkItem = {
   id: "online-retail-dashboard",
   title: ONLINE_RETAIL_TITLE,
@@ -95,7 +95,7 @@ export const dashboards: WorkItem[] = [
     year: 2013,
     images: [img("kpi1")],
     imageAlt:
-      "Tableau dashboard titled Larry’s Secret with weekly store sales tables, product profitability bars and a customer discount list",
+      "Tableau dashboard with weekly store sales tables, product profitability bars and a customer discount list",
     tags: ["tableau", "data-visualization", "retail"],
     tools: ["Tableau"],
     highlights: [

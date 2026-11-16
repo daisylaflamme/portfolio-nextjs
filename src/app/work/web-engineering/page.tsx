@@ -2,7 +2,7 @@
 
 import { Suspense, useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { projects, featuredProjectIds } from "@/data/projects";
+import { projects, featuredProjectIds, projectIdAliases } from "@/data/projects";
 import type { Project } from "@/data/types";
 import { groupProjects } from "@/lib/projectSections";
 import ProjectCard, { ProjectRow } from "./ProjectCard";
@@ -32,7 +32,9 @@ interface CaseStudyFromUrlProps {
 }
 
 function CaseStudyFromUrl({ visible, onOpen, onClose }: CaseStudyFromUrlProps) {
-  const id = useSearchParams().get(PROJECT_PARAM);
+  const raw = useSearchParams().get(PROJECT_PARAM);
+  // Renamed case studies keep their old shared links working.
+  const id = raw ? (projectIdAliases[raw] ?? raw) : null;
   const selectedProject = (id && projects.find((p) => p.id === id)) || null;
 
   // Prev/next follow the order currently on screen (or the full list for deep links).

@@ -19,7 +19,7 @@
 # full-size image originals (kept locally; the site ships WebP from public/)
 /assets/originals/
 
-# raw source data (Larry's Secret, Online Retail II) and its local CSV exports; only aggregated JSON is committed
+# raw source data (Larry's Stores, Online Retail II) and its local CSV exports; only aggregated JSON is committed
 /data-raw/
 
 # misc

@@ -42,9 +42,9 @@ test("filters update the result count", async ({ page }) => {
   await expect(payments).toHaveAttribute("aria-pressed", "false");
 });
 
-test("the Larry's Secret dashboard shows under Data visualization and React / Next.js", async ({ page }) => {
-  const dash = projects.find((p) => p.id === "larrys-secret-dashboard");
-  if (!dash) throw new Error("larrys-secret-dashboard is missing from projects.ts");
+test("the Larry's Stores dashboard shows under Data visualization and React / Next.js", async ({ page }) => {
+  const dash = projects.find((p) => p.id === "larrys-stores-dashboard");
+  if (!dash) throw new Error("larrys-stores-dashboard is missing from projects.ts");
   await page.goto("/work/web-engineering");
   const status = page.getByRole("status");
   const card = page.getByRole("heading", { level: 3, name: dash.title });

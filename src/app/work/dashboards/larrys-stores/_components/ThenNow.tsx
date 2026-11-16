@@ -23,8 +23,8 @@ export default function ThenNow() {
           item={{
             ...before,
             // Feeds the button label, the lightbox caption and the dialog name.
-            title: "First version of the Larry’s Secret dashboard",
-            imageAlt: "First version of the Larry’s Secret dashboard, built in Tableau",
+            title: "First version of the dashboard",
+            imageAlt: "First version of the dashboard, built in Tableau",
           }}
           aspectClass="aspect-[16/10]"
           sizes="(min-width: 1152px) 520px, (min-width: 1024px) 45vw, calc(100vw - 4rem)"

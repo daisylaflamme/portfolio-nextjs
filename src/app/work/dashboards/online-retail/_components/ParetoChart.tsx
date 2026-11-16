@@ -3,12 +3,14 @@
 import { scaleLinear } from "d3-scale";
 import { line } from "d3-shape";
 import ChartCard from "@/components/charts/ChartCard";
+import { Axes, axisMargins, fitXTicks } from "@/components/charts/axis";
 import MarkLayer, { type Mark } from "@/components/charts/MarkLayer";
 import { useElementWidth } from "@/components/charts/useElementWidth";
 import { count, percent } from "@/lib/dashboards/online-retail/format";
 
 const HEIGHT = 240;
-const M = { top: 12, right: 12, bottom: 30, left: 44 };
+const Y_TICKS = [0, 0.25, 0.5, 0.75, 1];
+const X_TICKS = [0, 20, 40, 60, 80, 100];
 
 interface Props {
   /** curve[i] = share of revenue from the top (i + 1)% of products, ranked by revenue. */
@@ -26,6 +28,8 @@ interface Props {
  */
 export default function ParetoChart({ curve, productCount, share80, context }: Props) {
   const { ref, width, measured } = useElementWidth<HTMLDivElement>(560);
+  // Margin convention: the y labels (0%–100%) set the left gutter.
+  const M = axisMargins(Y_TICKS.map((t) => percent(t, 0)));
   const x = scaleLinear().domain([0, 100]).range([M.left, width - M.right]);
   const y = scaleLinear().domain([0, 1]).range([HEIGHT - M.bottom, M.top]);
   const bw = (width - M.left - M.right) / 100;
@@ -70,19 +74,13 @@ export default function ParetoChart({ curve, productCount, share80, context }: P
     >
       <div ref={ref} className="relative" style={{ height: HEIGHT }} data-chart data-chart-ready={measured ? "true" : undefined}>
         <svg role="img" aria-label={summary} viewBox={`0 0 ${width} ${HEIGHT}`} className="block h-full w-full overflow-visible">
-          {[0, 0.25, 0.5, 0.75, 1].map((t) => (
-            <g key={t}>
-              <line x1={M.left} x2={width - M.right} y1={y(t)} y2={y(t)} className="stroke-line" />
-              <text x={M.left - 8} y={y(t)} dy="0.32em" textAnchor="end" className="fill-muted font-mono text-[11px]">
-                {percent(t, 0)}
-              </text>
-            </g>
-          ))}
-          {[0, 20, 40, 60, 80, 100].map((t) => (
-            <text key={t} x={x(t)} y={HEIGHT - 10} textAnchor={t === 0 ? "start" : t === 100 ? "end" : "middle"} className="fill-muted font-mono text-[11px]">
-              {t}%
-            </text>
-          ))}
+          <Axes
+            width={width}
+            height={HEIGHT}
+            margins={M}
+            yTicks={Y_TICKS.map((t) => ({ key: String(t), y: y(t), label: percent(t, 0) }))}
+            xTicks={fitXTicks(X_TICKS.map((t) => ({ key: String(t), x: x(t), label: `${t}%` })), M.left, width - M.right)}
+          />
           <g className="fill-accent" fillOpacity={0.45}>
             {groups.map((g, i) => (
               <rect key={i} x={x(i) + 0.5} y={y(g)} width={Math.max(0.5, bw - 1)} height={y(0) - y(g)} />

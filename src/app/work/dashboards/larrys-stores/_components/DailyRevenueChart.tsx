@@ -7,12 +7,12 @@ import { max } from "d3-array";
 import { useDashboard } from "./DashboardProvider";
 import { useElementWidth } from "@/components/charts/useElementWidth";
 import ChartCard from "@/components/charts/ChartCard";
+import { Axes, axisMargins, fitXTicks } from "@/components/charts/axis";
 import MarkLayer, { type Mark } from "@/components/charts/MarkLayer";
 import { selectDailyRevenue } from "@/lib/dashboards/larrys/selectors";
 import { count, longDate, money, moneyShort, shortDate } from "@/lib/dashboards/larrys/format";
 
 const HEIGHT = 240;
-const M = { top: 12, right: 12, bottom: 26, left: 48 };
 const toDate = (iso: string) => new Date(`${iso}T00:00:00Z`);
 
 export default function DailyRevenueChart({ className }: { className?: string }) {
@@ -21,11 +21,18 @@ export default function DailyRevenueChart({ className }: { className?: string })
   const { ref, width, measured } = useElementWidth<HTMLDivElement>(640);
 
   const [start, end] = data.meta.dateRange;
-  const x = scaleUtc().domain([toDate(start), toDate(end)]).range([M.left, width - M.right]);
+  // Margin convention: the widest y label sets the left gutter, so no label overlaps the plot.
   const yMax = (max(days, (d) => d.revenue) ?? 0) * 1.1 || 1;
-  const y = scaleLinear().domain([0, yMax]).nice(4).range([HEIGHT - M.bottom, M.top]);
+  const y = scaleLinear().domain([0, yMax]).nice(4);
   const yTicks = y.ticks(4);
-  const xTicks = width < 480 ? [start, "2012-04-16", end] : [start, "2012-04-09", "2012-04-16", "2012-04-23", end];
+  const M = axisMargins(yTicks.map(moneyShort));
+  y.range([HEIGHT - M.bottom, M.top]);
+  const x = scaleUtc().domain([toDate(start), toDate(end)]).range([M.left, width - M.right]);
+  const xTicks = fitXTicks(
+    [start, "2012-04-09", "2012-04-16", "2012-04-23", end].map((t) => ({ key: t, x: x(toDate(t)), label: shortDate(t) })),
+    M.left,
+    width - M.right,
+  );
 
   const linePath = line<(typeof days)[number]>()
     .x((d) => x(toDate(d.date)))
@@ -71,19 +78,13 @@ export default function DailyRevenueChart({ className }: { className?: string })
     >
       <div ref={ref} className="relative" data-chart data-chart-ready={measured ? "true" : undefined} style={{ height: HEIGHT }}>
         <svg role="img" aria-label={summary} viewBox={`0 0 ${width} ${HEIGHT}`} className="block h-full w-full overflow-visible">
-          {yTicks.map((t) => (
-            <g key={t}>
-              <line x1={M.left} x2={width - M.right} y1={y(t)} y2={y(t)} className="stroke-line" />
-              <text x={M.left - 8} y={y(t)} dy="0.32em" textAnchor="end" className="fill-muted font-mono text-[11px]">
-                {moneyShort(t)}
-              </text>
-            </g>
-          ))}
-          {xTicks.map((t) => (
-            <text key={t} x={x(toDate(t))} y={HEIGHT - 6} textAnchor={t === start ? "start" : t === end ? "end" : "middle"} className="fill-muted font-mono text-[11px]">
-              {shortDate(t)}
-            </text>
-          ))}
+          <Axes
+            width={width}
+            height={HEIGHT}
+            margins={M}
+            yTicks={yTicks.map((t) => ({ key: String(t), y: y(t), label: moneyShort(t) }))}
+            xTicks={xTicks}
+          />
           <path d={areaPath} className="fill-accent" fillOpacity={0.14} />
           <path d={linePath} fill="none" className="stroke-accent" strokeWidth={2.5} strokeLinejoin="round" />
           {peak ? (

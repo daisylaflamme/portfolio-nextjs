@@ -175,7 +175,7 @@ test.describe("dashboards", () => {
       const before = shownDashboards.find((d) => d.id === retailDashboard.before);
       if (before) {
         await expect(
-          earlier.getByRole("article", { name: before.title }).getByRole("link", { name: "Larry’s Secret dashboard" }),
+          earlier.getByRole("article", { name: before.title }).getByRole("link", { name: "Larry’s Stores dashboard" }),
         ).toHaveAttribute("href", retailDashboard.href);
       }
     }

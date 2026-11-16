@@ -212,3 +212,12 @@ for (const theme of ["light", "dark"] as Theme[]) {
     expect(await blockingViolations(page)).toEqual([]);
   });
 }
+
+test("the old /larrys-secret address redirects permanently to /larrys-stores, keeping the query", async ({ request, page }) => {
+  const res = await request.get("/work/dashboards/larrys-secret?store=424&sku=S4803", { maxRedirects: 0 });
+  expect(res.status()).toBe(308);
+  expect(res.headers()["location"]).toBe(`${PATH}?store=424&sku=S4803`);
+  await page.goto("/work/dashboards/larrys-secret?store=424");
+  await expect(page).toHaveURL((url) => url.pathname === PATH && url.search === "?store=424");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(PAGES.retailDashboard.title);
+});
