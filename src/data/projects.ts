@@ -235,12 +235,12 @@ export const projects: Project[] = [
     stack: ["React", "TypeScript", "Next.js", "D3"],
     problem: retailDashboard.problem,
     whatIBuilt: retailDashboard.whatIBuilt,
-    thumbnail: "/images/projects/retail-dashboard/retail-dashboard-hero.webp",
-    heroImage: "/images/projects/retail-dashboard/retail-dashboard-hero.webp",
+    thumbnail: "/images/projects/retail-dashboard/retail-dashboard-light-hero.webp",
+    heroImage: "/images/projects/retail-dashboard/retail-dashboard-light-hero.webp",
     images: [
-      "/images/projects/retail-dashboard/retail-dashboard-hero.webp",
-      "/images/projects/retail-dashboard/retail-dashboard-desktop.webp",
-      "/images/projects/retail-dashboard/retail-dashboard-phone.webp",
+      "/images/projects/retail-dashboard/retail-dashboard-light-hero.webp",
+      "/images/projects/retail-dashboard/retail-dashboard-light-desktop.webp",
+      "/images/projects/retail-dashboard/retail-dashboard-light-phone.webp",
     ],
     imageAlt: retailDashboard.imageAlt,
     imageAlts: [

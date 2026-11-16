@@ -11,7 +11,7 @@
  * Usage:
  *   npm run build && npm run screenshots
  *   npm run screenshots -- --base http://localhost:3100   (use a running server)
- *   npm run screenshots -- --only retail-dashboard
+ *   npm run screenshots -- --only retail-dashboard-light
  *
  * Config: scripts/screenshots.config.mjs. Build-time only: nothing here ships to the browser.
  */

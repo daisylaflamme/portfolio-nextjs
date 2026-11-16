@@ -32,10 +32,10 @@ export const retailDashboard: FeaturedWorkItem = {
   year: 2026,
   href: RETAIL_DASHBOARD_PATH,
   // Framed captures from `npm run screenshots` (scripts/screenshots.config.mjs).
-  heroImage: "/images/projects/retail-dashboard/retail-dashboard-hero.webp",
+  heroImage: "/images/projects/retail-dashboard/retail-dashboard-light-hero.webp",
   images: [
-    "/images/projects/retail-dashboard/retail-dashboard-desktop.webp",
-    "/images/projects/retail-dashboard/retail-dashboard-phone.webp",
+    "/images/projects/retail-dashboard/retail-dashboard-light-desktop.webp",
+    "/images/projects/retail-dashboard/retail-dashboard-light-phone.webp",
   ],
   imageAlt: "Larry’s Stores retail sales dashboard in light theme on a laptop and a phone: store filters, KPI tiles and charts",
   tags: ["react", "typescript", "d3", "nextjs", "accessibility", "data-visualization", "retail"],
