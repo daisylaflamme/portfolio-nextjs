@@ -245,8 +245,8 @@ export const projects: Project[] = [
     imageAlt: retailDashboard.imageAlt,
     imageAlts: [
       retailDashboard.imageAlt,
-      "Larry’s Stores dashboard in a desktop browser, dark theme: store filters, five KPI tiles, the daily revenue chart and revenue by store.",
-      "Larry’s Stores dashboard on a phone, dark theme: the title, the three questions it answers, the date and store summary, and store filters.",
+      "Larry’s Stores dashboard in a desktop browser, light theme: store filters, five KPI tiles, the daily revenue chart and revenue by store.",
+      "Larry’s Stores dashboard on a phone, light theme: the title, the three questions it answers, the date and store summary, and store filters.",
     ],
     link: retailDashboard.href,
     linkLabel: "open dashboard",

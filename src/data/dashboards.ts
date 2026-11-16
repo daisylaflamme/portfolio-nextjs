@@ -37,7 +37,7 @@ export const retailDashboard: FeaturedWorkItem = {
     "/images/projects/retail-dashboard/retail-dashboard-desktop.webp",
     "/images/projects/retail-dashboard/retail-dashboard-phone.webp",
   ],
-  imageAlt: "Larry’s Stores retail sales dashboard in dark theme on a laptop and a phone: store filters, KPI tiles and charts",
+  imageAlt: "Larry’s Stores retail sales dashboard in light theme on a laptop and a phone: store filters, KPI tiles and charts",
   tags: ["react", "typescript", "d3", "nextjs", "accessibility", "data-visualization", "retail"],
   stack: RETAIL_DASHBOARD_STACK,
   role: "Designer and engineer (solo)",

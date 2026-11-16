@@ -16,7 +16,8 @@ const entries = [
     route: "/work/dashboards/larrys-stores",
     name: "retail-dashboard",
     viewports: ["desktop", "phone"],
-    theme: "dark",
+    // Light, so its cards read differently from the Online Retail ones (dark).
+    theme: "light",
     outDir: "public/images/projects/retail-dashboard",
     hero: true,
     // The laptop shows the filters, KPIs and first charts; the phone keeps the title.
