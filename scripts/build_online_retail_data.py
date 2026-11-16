@@ -10,7 +10,7 @@ Usage:  python scripts/build_online_retail_data.py data-raw/online_retail_II.xls
 
 Cleaning rules, applied in this order (lines removed by each are printed and stored in meta.rowsRemoved):
   0. Stock codes are upper-cased ("85123a" and "85123A" are one product).
-  1. duplicates:   exact duplicate lines are dropped as data errors (same rule as the Larry's Secret build).
+  1. duplicates:   exact duplicate lines are dropped as data errors (same rule as the Larry's Stores build).
   2. nonProduct:   non-product stock codes are dropped: postage (POST, DOT, C2, C3), manual entries (M), discounts (D),
                    samples (S), bad-debt adjustments (B, ADJUST, ADJUST2), bank and marketplace fees (BANK CHARGES,
                    AMAZONFEE), commissions (CRUK), PADS, test lines (TEST001, TEST002), gift vouchers (GIFT_0001_*),

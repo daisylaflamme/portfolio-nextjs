@@ -7,7 +7,7 @@ import { projects } from "../../../data/projects.ts";
 /** Words that would frame the dashboard as coursework. Only the source note may mention the class. */
 const BANNED = /\b(course(work)?|class|students?|homework|assignments?|IT 478|2013)\b/i;
 
-describe("Larry's Secret copy", () => {
+describe("Larry's Stores copy", () => {
   it("shared copy has no course, class or year references (except the source note)", () => {
     for (const [name, value] of Object.entries(copy)) {
       if (name === "RETAIL_DASHBOARD_SOURCE") continue;
@@ -22,8 +22,8 @@ describe("Larry's Secret copy", () => {
   });
 
   it("the Web engineering case study has none either", () => {
-    const project = projects.find((p) => p.id === "larrys-secret-dashboard");
-    assert.ok(project, "larrys-secret-dashboard is in projects.ts");
+    const project = projects.find((p) => p.id === "larrys-stores-dashboard");
+    assert.ok(project, "larrys-stores-dashboard is in projects.ts");
     assert.doesNotMatch(JSON.stringify(project), BANNED);
     assert.equal(project.link, copy.RETAIL_DASHBOARD_PATH);
   });

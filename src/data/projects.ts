@@ -226,7 +226,7 @@ export const projects: Project[] = [
   {
     // Copy comes from the Dashboards entry (src/data/dashboards.ts), so both read the same.
     // Only the bottom source note on the dashboard page mentions where the data comes from.
-    id: "larrys-secret-dashboard",
+    id: "larrys-stores-dashboard",
     title: retailDashboard.title,
     summary: retailDashboard.summary,
     description: retailDashboard.problem,
@@ -245,8 +245,8 @@ export const projects: Project[] = [
     imageAlt: retailDashboard.imageAlt,
     imageAlts: [
       retailDashboard.imageAlt,
-      "Larry’s Secret dashboard in a desktop browser, dark theme: store filters, five KPI tiles, the daily revenue chart and revenue by store.",
-      "Larry’s Secret dashboard on a phone, dark theme: the title, the three questions it answers, the date and store summary, and store filters.",
+      "Larry’s Stores dashboard in a desktop browser, dark theme: store filters, five KPI tiles, the daily revenue chart and revenue by store.",
+      "Larry’s Stores dashboard on a phone, dark theme: the title, the three questions it answers, the date and store summary, and store filters.",
     ],
     link: retailDashboard.href,
     linkLabel: "open dashboard",
@@ -1234,9 +1234,14 @@ export const projects: Project[] = [
  * Any project whose id is not listed here appears under "Earlier Web & UI Work",
  * in its order within `projects`.
  */
+/** Old project ids that still open their renamed case study (?project=<old id> in shared links). */
+export const projectIdAliases: Record<string, Project["id"]> = {
+  "larrys-secret-dashboard": "larrys-stores-dashboard",
+};
+
 export const featuredProjectIds: Project["id"][] = [
   "checkout-multi-payments",
-  "larrys-secret-dashboard",
+  "larrys-stores-dashboard",
   "js-in-colors",
   "online-retail-dashboard",
   "asi-header-redesign",

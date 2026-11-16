@@ -67,7 +67,7 @@ export default async function RetailDashboardPage({ searchParams }: PageProps) {
           {page.title}
         </h1>
         <p className="max-w-[70ch] text-[17px] leading-relaxed text-muted">
-          Larry’s Secret is a five-store clothing chain around Boston. Larry needed to know where to focus: which stores and
+          Larry’s Stores is a five-store clothing chain around Boston. Larry needed to know where to focus: which stores and
           products were pulling their weight, what his customers bought together, and whether a loyalty discount would help
           or just give away margin. He shared four weeks of register receipts from April 2012 and asked for a dashboard that
           answers three questions:

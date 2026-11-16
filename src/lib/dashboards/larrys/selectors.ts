@@ -1,5 +1,5 @@
 /**
- * Pure selectors for the Larry's Secret dashboard. Every selector takes the dataset
+ * Pure selectors for the Larry's Stores dashboard. Every selector takes the dataset
  * and the current filters, so the page, the tests and the OG image all compute the
  * same numbers.
  *

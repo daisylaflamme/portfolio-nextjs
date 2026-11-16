@@ -1,5 +1,5 @@
 """
-Build anonymized, aggregated JSON for the Larry's Secret dashboard.
+Build anonymized, aggregated JSON for the Larry's Stores dashboard.
 Input: LarrysSecretSalesData-Part1.xlsx (Part2 is an identical copy).
 Output: larrys-secret.json. No customer names, numbers, birth data or raw rows.
 Usage: python build_larrys_data.py <path-to-xlsx> <output.json>
@@ -76,8 +76,8 @@ zips = [{"zip": r.ZipCode, "place": r.PlaceName, "county": r.County, "lat": roun
 def records(df): return json.loads(df.to_json(orient="records"))
 data = {
     "meta": {
-        "title": "Larry's Secret: retail sales, April 2012",
-        "source": "Data: Larry’s Secret case-study sales data from the Business Intelligence class at UMass Boston. Aggregated and anonymized; 554 duplicate lines removed.",
+        "title": "Larry's Stores: retail sales, April 2012",
+        "source": "Data: Larry’s Stores case-study sales data from the Business Intelligence class at UMass Boston. Aggregated and anonymized; 554 duplicate lines removed.",
         "dateRange": [d["date"].min(), d["date"].max()],
         "weeks": sorted(int(w) for w in d["Fiscal Week"].unique()),
         "rawLines": int(len(raw)), "duplicateLinesRemoved": dupes, "lines": int(len(d)),

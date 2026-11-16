@@ -2,14 +2,14 @@
 
 - Status: accepted
 - Date: 2026-11-13
-- Scope: `/work/dashboards/online-retail` (the Larry's Secret dashboard keeps its own approach; see below)
+- Scope: `/work/dashboards/online-retail` (the Larry's Stores dashboard keeps its own approach; see below)
 
 ## Context
 
 The Online Retail II data is about 1.07 million invoice lines (UCI, CC BY 4.0). The dashboard filters by month range,
 country and category, across five tabs. There are three places the numbers could come from:
 
-1. **In the browser.** Ship the data and aggregate on the client, as the Larry's Secret dashboard does: its whole
+1. **In the browser.** Ship the data and aggregate on the client, as the Larry's Stores dashboard does: its whole
    dataset is a ~1 MB JSON slice, which makes every filter instant with no server. At a million lines that stops
    working: the raw lines are out of the question, and even the aggregates the dashboard needs come to 1.3 MB of
    JSON (the snapshot), all downloaded and parsed before the first chart, on every phone.
@@ -73,7 +73,7 @@ Why GraphQL here and not one REST endpoint per chart:
   through a scoped stylesheet, so no path data travels as JSON.
 - If the GraphQL request fails, the page does a normal navigation and the server renders the new filters, so the
   dashboard keeps working without the API.
-- Larry's Secret stays in-browser: its data is small, and instant filtering without a server is the point of that
+- Larry's Stores stays in-browser: its data is small, and instant filtering without a server is the point of that
   rebuild.
 
 **Revisit if** filters change often enough that per-filter CDN caching stops hitting, the snapshot outgrows ~2 MB, or

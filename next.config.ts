@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
       // The Work page moved under /work; old links (including ?project=<id>) keep working.
       { source: "/web-projects", destination: "/work/web-engineering", permanent: true },
       { source: "/work", destination: "/work/web-engineering", permanent: false },
+      // The retail dashboard was renamed from Larry’s Secret to Larry’s Stores; the query string carries over.
+      { source: "/work/dashboards/larrys-secret", destination: "/work/dashboards/larrys-stores", permanent: true },
       // Education moved into the About page.
       { source: "/certificates", destination: "/about#education", permanent: true },
     ];

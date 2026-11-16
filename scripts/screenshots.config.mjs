@@ -13,7 +13,7 @@
  */
 const entries = [
   {
-    route: "/work/dashboards/larrys-secret",
+    route: "/work/dashboards/larrys-stores",
     name: "retail-dashboard",
     viewports: ["desktop", "phone"],
     theme: "dark",

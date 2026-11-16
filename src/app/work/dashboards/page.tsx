@@ -57,7 +57,7 @@ export default function DashboardsPage() {
                     <p className="text-[15px] leading-relaxed text-body">
                       <span className="font-semibold text-fg">Before:</span> the first version of the{" "}
                       <Link href={retailDashboard.href} className="font-semibold text-fg underline underline-offset-4 hover:text-accent">
-                        Larry’s Secret dashboard
+                        Larry’s Stores dashboard
                       </Link>{" "}
                       above.
                     </p>

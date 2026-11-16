@@ -78,13 +78,13 @@ test("JavaScript in Colors: featured card opens a case study with live links and
   await expect(dialog.getByRole("button", { name: `View full size: ${app.imageAlts?.[3]}` })).toBeVisible();
 });
 
-test.describe("Larry's Secret dashboard card", () => {
-  const dash = byId("larrys-secret-dashboard");
+test.describe("Larry's Stores dashboard card", () => {
+  const dash = byId("larrys-stores-dashboard");
   const cardFor = (page: Page) =>
     page.getByRole("article").filter({ has: page.getByRole("heading", { name: dash.title }) });
 
   test("is the 2nd featured case study, with JavaScript in Colors 3rd", () => {
-    expect(featuredProjectIds.slice(0, 3)).toEqual([featuredProjectIds[0], "larrys-secret-dashboard", "js-in-colors"]);
+    expect(featuredProjectIds.slice(0, 3)).toEqual([featuredProjectIds[0], "larrys-stores-dashboard", "js-in-colors"]);
   });
 
   test("its main button opens the dashboard in the same tab", async ({ page }) => {
@@ -122,7 +122,7 @@ test.describe("Online retail dashboard card", () => {
     page.getByRole("article").filter({ has: page.getByRole("heading", { name: dash.title }) });
 
   test("is the 4th featured case study, after the top three", () => {
-    expect(featuredProjectIds.slice(0, 4)).toEqual([featuredProjectIds[0], "larrys-secret-dashboard", "js-in-colors", "online-retail-dashboard"]);
+    expect(featuredProjectIds.slice(0, 4)).toEqual([featuredProjectIds[0], "larrys-stores-dashboard", "js-in-colors", "online-retail-dashboard"]);
   });
 
   test("its main button opens the dashboard in the same tab, and the case study links there too", async ({ page }) => {
@@ -156,4 +156,10 @@ test("a case study without a link shows no visit-site button", async ({ page }) 
 test("no case study links to cardis.com", () => {
   const hrefs = projects.flatMap((p) => [p.link ?? "", ...(p.extraLinks ?? []).map((l) => l.href)]);
   expect(hrefs.filter((href) => href.includes("cardis.com"))).toEqual([]);
+});
+
+test("an old shared link to the renamed Larry's Stores case study still opens it", async ({ page }) => {
+  const dash = byId("larrys-stores-dashboard");
+  await page.goto(`${WORK}?project=larrys-secret-dashboard`);
+  await expect(page.getByRole("dialog", { name: dash.title })).toBeVisible();
 });
