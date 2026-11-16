@@ -83,8 +83,18 @@ test.describe("Larry's Stores dashboard card", () => {
   const cardFor = (page: Page) =>
     page.getByRole("article").filter({ has: page.getByRole("heading", { name: dash.title }) });
 
-  test("is the 2nd featured case study, with JavaScript in Colors 3rd", () => {
-    expect(featuredProjectIds.slice(0, 3)).toEqual([featuredProjectIds[0], "larrys-stores-dashboard", "js-in-colors"]);
+  test("is the last card in the featured grid, with GifSpark first after the featured card", () => {
+    expect(featuredProjectIds[1]).toBe("gifspark-ai-greeting-app");
+    expect(featuredProjectIds.at(-1)).toBe("larrys-stores-dashboard");
+  });
+
+  test("sits last in the featured grid on the page, just before Earlier work", async ({ page }) => {
+    await page.goto(WORK);
+    const titles = await page.locator("section[aria-labelledby='featured-heading'] h3").allInnerTexts();
+    // The section's headings start with the large featured card, then the grid.
+    expect(titles[0]).toBe(hero.title);
+    expect(titles[1]).toBe(byId("gifspark-ai-greeting-app").title);
+    expect(titles.at(-1)).toBe(dash.title);
   });
 
   test("its main button opens the dashboard in the same tab", async ({ page }) => {
@@ -121,8 +131,8 @@ test.describe("Online retail dashboard card", () => {
   const cardFor = (page: Page) =>
     page.getByRole("article").filter({ has: page.getByRole("heading", { name: dash.title }) });
 
-  test("is the 4th featured case study, after the top three", () => {
-    expect(featuredProjectIds.slice(0, 4)).toEqual([featuredProjectIds[0], "larrys-stores-dashboard", "js-in-colors", "online-retail-dashboard"]);
+  test("keeps its place: 4th, after GifSpark and JavaScript in Colors", () => {
+    expect(featuredProjectIds.slice(0, 4)).toEqual([featuredProjectIds[0], "gifspark-ai-greeting-app", "js-in-colors", "online-retail-dashboard"]);
   });
 
   test("its main button opens the dashboard in the same tab, and the case study links there too", async ({ page }) => {

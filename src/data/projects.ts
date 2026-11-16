@@ -1241,7 +1241,7 @@ export const projectIdAliases: Record<string, Project["id"]> = {
 
 export const featuredProjectIds: Project["id"][] = [
   "checkout-multi-payments",
-  "larrys-stores-dashboard",
+  "gifspark-ai-greeting-app",
   "js-in-colors",
   "online-retail-dashboard",
   "asi-header-redesign",
@@ -1255,5 +1255,6 @@ export const featuredProjectIds: Project["id"][] = [
   "finance-messaging-integrations",
   "custom-input-controls",
   "gift-card-balance-widget",
-  "gifspark-ai-greeting-app",
+  // Last in the featured grid, just before Earlier work.
+  "larrys-stores-dashboard",
 ];
