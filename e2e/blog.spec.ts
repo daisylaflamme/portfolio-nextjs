@@ -52,5 +52,7 @@ test("the Webflow note: summary on the index, bold leads and where it was learne
   const firstLead = post.body.find((b) => b.type === "p" && b.lead);
   if (firstLead?.type !== "p" || !firstLead.lead) throw new Error("no lead");
   await expect(page.locator("article strong").first()).toHaveText(firstLead.lead);
-  await expect(page.getByText(`Where I learned: ${post.source.label}`)).toBeVisible();
+  const source = page.getByRole("link", { name: post.source.label });
+  await expect(source).toHaveAttribute("href", post.source.href ?? "");
+  await expect(source).toHaveAttribute("target", "_blank");
 });

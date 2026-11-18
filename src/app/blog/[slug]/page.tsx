@@ -93,7 +93,20 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
         <BlogBody blocks={post.body} />
         {post.source ? (
           <p className="mt-8 text-[15px] leading-6 text-muted">
-            <span className="font-semibold text-fg">Where I learned:</span> {post.source.label}
+            <span className="font-semibold text-fg">Where I learned:</span>{" "}
+            {post.source.href ? (
+              <a
+                href={post.source.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent underline underline-offset-4 hover:text-fg"
+              >
+                {post.source.label}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            ) : (
+              post.source.label
+            )}
           </p>
         ) : null}
       </article>

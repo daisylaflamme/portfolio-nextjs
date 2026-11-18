@@ -223,6 +223,6 @@ export interface BlogPost {
   /** Card text on the Notes index; falls back to description (which is the meta description). */
   summary?: string;
   /** Where the material was learned, shown under the post as "Where I learned: …". */
-  source?: { label: string };
+  source?: { label: string; href?: string };
   body: BlogBlock[];
 }

@@ -17,7 +17,10 @@ const posts: BlogPost[] = [
     date: "2026-11-15",
     kicker: "Learning",
     tags: ["webflow", "react", "angular", "css", "accessibility"],
-    source: { label: "Learning Webflow – Adapting our design for mobile (LinkedIn Learning)" },
+    source: {
+      label: "Learning Webflow – Adapting our design for mobile (LinkedIn Learning)",
+      href: "https://www.linkedin.com/learning/learning-webflow-23115084/adapting-our-design-for-mobile",
+    },
     body: [
       {
         type: "p",
