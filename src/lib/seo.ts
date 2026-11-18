@@ -33,6 +33,7 @@ export type PageKey =
   | "onlineRetailDashboard"
   | "marketingDesign"
   | "presentations"
+  | "blog"
   | "about"
   | "resume"
   | "contact";
@@ -85,6 +86,13 @@ export const PAGES: Record<PageKey, PageInfo> = {
       "Presentations by Daisy Laflamme: a JavaScript learning platform for women, a usability study and redesign, a retail KPI dashboard, Smart TV app research and a website plan.",
     priority: 0.6,
   },
+  blog: {
+    path: "/blog",
+    title: "Notes",
+    description:
+      "Technical notes by Daisy Laflamme on Angular, React, REST integrations, accessibility and automated testing from production storefronts and side projects.",
+    priority: 0.7,
+  },
   about: {
     path: "/about",
     title: "About",
@@ -107,6 +115,17 @@ export const PAGES: Record<PageKey, PageInfo> = {
     priority: 0.7,
   },
 };
+
+/** Sitemap and metadata priority for each Notes post, a step below the Notes index. */
+export const BLOG_POST_PRIORITY = Math.round((PAGES.blog.priority - 0.15) * 100) / 100;
+
+/**
+ * JSON for a <script type="application/ld+json">. "<" is escaped so text such as
+ * "</script>" in a title can't close the tag early.
+ */
+export function jsonLdHtml(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
 
 /**
  * Per-page metadata: title (the root layout's template adds " | Daisy Laflamme"),

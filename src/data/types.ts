@@ -195,3 +195,23 @@ export interface FeaturedWorkItem extends WorkItem {
   /** id of the archive item this rebuilds (shown as its "before"). */
   before?: string;
 }
+
+/** A block in a Notes post. Kept as data so the pages stay server components. */
+export type BlogBlock =
+  | { type: "p"; text: string; /** Optional link shown after the paragraph. */ link?: { href: string; label: string } }
+  | { type: "h2"; text: string }
+  | { type: "ul"; items: string[] }
+  | { type: "code"; caption: string; code: string };
+
+export interface BlogPost {
+  /** URL slug under /blog/. */
+  slug: string;
+  title: string;
+  description: string;
+  /** ISO date, YYYY-MM-DD. */
+  date: string;
+  /** Short kicker above the title, e.g. "Angular and React". */
+  kicker: string;
+  tags: string[];
+  body: BlogBlock[];
+}

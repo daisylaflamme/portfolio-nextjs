@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
+import { blogPath, blogPosts } from "../src/data/blog";
 import { PAGES } from "../src/lib/seo";
 
 const BLOCKING = new Set(["serious", "critical"]);
@@ -22,7 +23,10 @@ export function escapeRegExp(text: string): string {
 }
 
 /** Every public route, from the same list that builds the sitemap. */
-export const ROUTES = Object.values(PAGES).map(({ path, title }) => ({ path, title }));
+export const ROUTES = [
+  ...Object.values(PAGES).map(({ path, title }) => ({ path, title })),
+  ...blogPosts.map((post) => ({ path: blogPath(post.slug), title: post.title })),
+];
 
 /** Save a theme before any page script runs, like a returning visitor's earlier choice. */
 export async function useSavedTheme(page: Page, theme: Theme): Promise<void> {

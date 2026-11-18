@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { PAGES, SITE_URL } from "@/lib/seo";
+import { blogPath, blogPosts } from "@/data/blog";
+import { BLOG_POST_PRIORITY, PAGES, SITE_URL } from "@/lib/seo";
 import { ONLINE_RETAIL_TABS, tabPath } from "@/lib/dashboards/online-retail/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -14,5 +15,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: PAGES.onlineRetailDashboard.priority - 0.1,
   }));
-  return [...pages, ...tabs];
+  const notes = blogPosts.map((post) => ({
+    url: `${SITE_URL}${blogPath(post.slug)}`,
+    changeFrequency: "monthly" as const,
+    priority: BLOG_POST_PRIORITY,
+  }));
+  return [...pages, ...tabs, ...notes];
 }

@@ -22,6 +22,7 @@ for (const route of ROUTES) {
 
 const NAV = [
   { name: "Work", path: "/work/web-engineering" },
+  { name: "Notes", path: "/blog" },
   { name: "About", path: "/about" },
   { name: "Résumé", path: "/resume" },
   { name: "Contact", path: "/contact" },
