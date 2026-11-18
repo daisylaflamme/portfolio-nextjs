@@ -8,6 +8,7 @@ import ThemeToggle from "./ThemeToggle";
 export const NAV_ITEMS: ReadonlyArray<{ label: string; href: string; section?: string }> = [
   // "Work" stays current on every /work/* category page.
   { label: "Work", href: "/work/web-engineering", section: "/work" },
+  { label: "Notes", href: "/blog", section: "/blog" },
   { label: "About", href: "/about" },
   { label: "Résumé", href: "/resume" },
   { label: "Contact", href: "/contact" },
