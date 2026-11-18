@@ -10,6 +10,7 @@ export default function BlogBody({ blocks }: { blocks: readonly BlogBlock[] }) {
         if (block.type === "p") {
           return (
             <p key={index}>
+              {block.lead ? <strong className="font-semibold text-fg">{block.lead} </strong> : null}
               {block.text}
               {block.link ? (
                 <>

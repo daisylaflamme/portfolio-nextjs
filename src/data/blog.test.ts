@@ -5,9 +5,9 @@ import { blogPath, blogPosts, formatPostDate, getPost, headingIds } from "./blog
 import type { BlogBlock } from "./types.ts";
 
 describe("blog posts", () => {
-  it("has unique slugs and three notes", () => {
+  it("has unique slugs and four notes", () => {
     const slugs = blogPosts.map((post) => post.slug);
-    assert.equal(slugs.length, 3);
+    assert.equal(slugs.length, 4);
     assert.equal(new Set(slugs).size, slugs.length);
   });
 
@@ -17,10 +17,16 @@ describe("blog posts", () => {
       assert.ok(post.title.length > 10);
       assert.ok(post.description.length > 40);
       assert.ok(post.body.some((block) => block.type === "h2"));
-      assert.ok(post.body.some((block) => block.type === "code"));
       assert.equal(getPost(post.slug)?.slug, post.slug);
       assert.equal(blogPath(post.slug), `/blog/${post.slug}`);
     }
+  });
+
+  it("is sorted newest first, one note per date, and the Webflow note is Nov 15, 2026", () => {
+    const dates = blogPosts.map((post) => post.date);
+    assert.deepEqual(dates, [...dates].sort().reverse());
+    assert.equal(new Set(dates).size, dates.length);
+    assert.equal(getPost("webflow-through-a-react-angular-developers-eyes")?.date, "2026-11-15");
   });
 
   it("unknown slugs are missing", () => {

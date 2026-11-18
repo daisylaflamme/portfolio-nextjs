@@ -30,7 +30,7 @@ export default function BlogIndexPage() {
                   {post.title}
                 </Link>
               </h2>
-              <p className="mt-2 text-[15px] leading-6 text-body">{post.description}</p>
+              <p className="mt-2 text-[15px] leading-6 text-body">{post.summary ?? post.description}</p>
               <p className="mt-4">
                 <Link
                   href={blogPath(post.slug)}

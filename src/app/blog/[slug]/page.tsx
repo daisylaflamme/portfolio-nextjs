@@ -91,6 +91,11 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
       </header>
       <article>
         <BlogBody blocks={post.body} />
+        {post.source ? (
+          <p className="mt-8 text-[15px] leading-6 text-muted">
+            <span className="font-semibold text-fg">Where I learned:</span> {post.source.label}
+          </p>
+        ) : null}
       </article>
       <p className="mt-12 border-t border-line pt-6">
         <Link

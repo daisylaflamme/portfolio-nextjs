@@ -198,7 +198,14 @@ export interface FeaturedWorkItem extends WorkItem {
 
 /** A block in a Notes post. Kept as data so the pages stay server components. */
 export type BlogBlock =
-  | { type: "p"; text: string; /** Optional link shown after the paragraph. */ link?: { href: string; label: string } }
+  | {
+      type: "p";
+      text: string;
+      /** Optional bold opening sentence. */
+      lead?: string;
+      /** Optional link shown after the paragraph. */
+      link?: { href: string; label: string };
+    }
   | { type: "h2"; text: string }
   | { type: "ul"; items: string[] }
   | { type: "code"; caption: string; code: string };
@@ -213,5 +220,9 @@ export interface BlogPost {
   /** Short kicker above the title, e.g. "Angular and React". */
   kicker: string;
   tags: string[];
+  /** Card text on the Notes index; falls back to description (which is the meta description). */
+  summary?: string;
+  /** Where the material was learned, shown under the post as "Where I learned: …". */
+  source?: { label: string };
   body: BlogBlock[];
 }

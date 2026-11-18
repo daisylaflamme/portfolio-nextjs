@@ -2,16 +2,77 @@ import { RETAIL_DASHBOARD_PATH } from "../lib/dashboards/larrys/content.ts";
 import type { BlogBlock, BlogPost } from "./types.ts";
 
 /**
- * Notes at /blog. Written from work that actually exists: Blueport Angular storefronts,
- * GifSpark (React), this Next.js portfolio, js-in-colors (Angular 22).
+ * Notes at /blog, newest first. Written from work that actually exists: Blueport Angular
+ * storefronts, GifSpark (React), this Next.js portfolio, js-in-colors (Angular 22), and what
+ * Daisy learned building in Webflow. A note is never dated before the work it mentions.
  */
-export const blogPosts: BlogPost[] = [
+const posts: BlogPost[] = [
+  {
+    slug: "webflow-through-a-react-angular-developers-eyes",
+    title: "Webflow through a React/Angular developer’s eyes",
+    description:
+      "A React and Angular developer’s notes on learning Webflow: classes, components, CMS, variables, and adapting to desktop-first breakpoints.",
+    summary:
+      "Observations and takeaways from moving from component-driven React and Angular codebases to Webflow’s visual layout engine.",
+    date: "2026-11-15",
+    kicker: "Learning",
+    tags: ["webflow", "react", "angular", "css", "accessibility"],
+    source: { label: "Learning Webflow – Adapting our design for mobile (LinkedIn Learning)" },
+    body: [
+      {
+        type: "p",
+        text: "I spent nearly a decade building Angular and TypeScript interfaces: shared UI libraries and configuration-driven layouts for many brands on one platform. Lately I’ve been working in React and Next.js. To learn Webflow properly, I built a blog in it. Here’s how its mental model mapped to mine, and where it didn’t.",
+      },
+      { type: "h2", text: "What felt familiar" },
+      {
+        type: "p",
+        lead: "Classes are a design system in disguise.",
+        text: "A Webflow class works like a utility or BEM class. Combo classes work like modifiers: .card plus .is-featured. Name them with intent and you get a reusable system. Skip that and you end up with div-block-47.",
+      },
+      {
+        type: "p",
+        lead: "Components are components.",
+        text: "Webflow Components with properties and slots feel close to React props and children, or Angular @Input() and <ng-content>. Build one once, use it everywhere, and change it in one place.",
+      },
+      {
+        type: "p",
+        lead: "The CMS is your data layer.",
+        text: "A Collection works like a typed data source. A Collection List is basically .map() in React or @for in Angular, with fields bound to elements instead of passed as props or inputs.",
+      },
+      {
+        type: "p",
+        lead: "Variables are design tokens.",
+        text: "Color, spacing, and type variables, with modes for light and dark, felt like the CSS custom properties and theme files I already maintain.",
+      },
+      { type: "h2", text: "What took adjusting" },
+      {
+        type: "p",
+        lead: "Breakpoints cascade down, not up.",
+        text: "I design mobile first. Webflow’s base breakpoint is desktop, and styles cascade down to tablet and phone, while larger breakpoints cascade up. Once I stopped fighting it and checked every element at each breakpoint, it clicked. It also made me more deliberate about what each screen size really needs.",
+      },
+      {
+        type: "p",
+        lead: "No state, just interactions.",
+        text: "There’s no useState, no signals, no services, no RxJS streams. Interactions handle the visual states, such as hover, scroll, and open or closed. That’s enough for marketing sites, and anything more complex is where custom code or DevLink comes in.",
+      },
+      {
+        type: "p",
+        lead: "The visual editor is the source of truth.",
+        text: "In React or Angular, the code is the design. In Webflow, the canvas is. My habits still apply: semantic tags, one H1, labelled links, alt text, and checking contrast. I just set them in a panel instead of writing them in code.",
+      },
+      { type: "h2", text: "Takeaway" },
+      {
+        type: "p",
+        text: "Webflow doesn’t replace engineering thinking. It rewards it. The same principles that keep a React or Angular codebase maintainable keep a Webflow site maintainable: reusable components, consistent naming, tokens over hard-coded values, and accessibility from the start.",
+      },
+    ],
+  },
   {
     slug: "angular-and-react-same-ui-two-runtimes",
     title: "I ship Angular and React. Here is the translation layer.",
     description:
       "A working map between Angular and React — components, async state, change detection, forms, routing and CSS — from someone who has shipped both in production.",
-    date: "2026-11-17",
+    date: "2026-11-10",
     kicker: "Angular and React",
     tags: ["angular", "react", "typescript", "rxjs"],
     body: [
@@ -127,7 +188,7 @@ export class SessionFacade {
     title: "The frontend of a cloud app: REST, tokens, and what you actually own",
     description:
       "How an Angular storefront and a React product talk to REST, Auth0, TokenEx, Stripe, GTM and Edge Functions — without pretending the UI engineer owns AWS.",
-    date: "2026-11-17",
+    date: "2026-11-13",
     kicker: "APIs and hosted services",
     tags: ["angular", "rest", "auth0", "stripe", "gtm"],
     body: [
@@ -197,7 +258,7 @@ const reader = response.body!.getReader();
     title: "Accessible forms, tests, and data you can trust",
     description:
       "How production Angular forms, Cypress-axe, JSON-LD and a retail dashboard treat data collection — and where that is not a federal survey platform or a Section 508 program.",
-    date: "2026-11-17",
+    date: "2026-11-12",
     kicker: "A11y, tests, data UIs",
     tags: ["accessibility", "testing", "seo", "angular"],
     body: [
@@ -266,6 +327,9 @@ cy.checkA11y(undefined, {
     ],
   },
 ];
+
+/** Every note, newest first. */
+export const blogPosts: readonly BlogPost[] = [...posts].sort((a, b) => b.date.localeCompare(a.date));
 
 export function blogPath(slug: string): string {
   return `/blog/${slug}`;
