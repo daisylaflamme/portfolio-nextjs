@@ -56,3 +56,18 @@ test("the Webflow note: summary on the index, bold leads and where it was learne
   await expect(source).toHaveAttribute("href", post.source.href ?? "");
   await expect(source).toHaveAttribute("target", "_blank");
 });
+
+test("a figure loads with its alt text and caption, and external links open in a new tab", async ({ page }) => {
+  const post = blogPosts.find((p) => p.body.some((block) => block.type === "figure"));
+  const figure = post?.body.find((b) => b.type === "figure");
+  if (!post || figure?.type !== "figure") throw new Error("no post with a figure");
+  await page.goto(blogPath(post.slug));
+  const image = page.getByRole("img", { name: figure.alt });
+  await expect(image).toBeVisible();
+  await expect.poll(() => image.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+  await expect(page.getByText(figure.caption)).toBeVisible();
+  const external = post.body.find((b) => b.type === "p" && b.link?.href.startsWith("https://"));
+  if (external?.type === "p" && external.link) {
+    await expect(page.getByRole("link", { name: external.link.label })).toHaveAttribute("target", "_blank");
+  }
+});

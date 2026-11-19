@@ -1,5 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import { headingIds } from "@/data/blog";
+import { headingIds, isExternal } from "@/data/blog";
 import type { BlogBlock } from "@/data/types";
 
 export default function BlogBody({ blocks }: { blocks: readonly BlogBlock[] }) {
@@ -15,9 +16,21 @@ export default function BlogBody({ blocks }: { blocks: readonly BlogBlock[] }) {
               {block.link ? (
                 <>
                   {" "}
-                  <Link href={block.link.href} className="text-accent underline underline-offset-4 hover:text-fg">
-                    {block.link.label}
-                  </Link>
+                  {isExternal(block.link.href) ? (
+                    <a
+                      href={block.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent underline underline-offset-4 hover:text-fg"
+                    >
+                      {block.link.label}
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  ) : (
+                    <Link href={block.link.href} className="text-accent underline underline-offset-4 hover:text-fg">
+                      {block.link.label}
+                    </Link>
+                  )}
                 </>
               ) : null}
             </p>
@@ -41,6 +54,21 @@ export default function BlogBody({ blocks }: { blocks: readonly BlogBlock[] }) {
                 <li key={i}>{item}</li>
               ))}
             </ul>
+          );
+        }
+        if (block.type === "figure") {
+          return (
+            <figure key={index} className="my-1 max-w-full min-w-0">
+              <Image
+                src={block.src}
+                alt={block.alt}
+                width={block.width}
+                height={block.height}
+                sizes="(min-width: 768px) 720px, calc(100vw - 2rem)"
+                className="h-auto w-full rounded-xl border border-line"
+              />
+              <figcaption className="mt-2 text-[15px] leading-6 text-muted">{block.caption}</figcaption>
+            </figure>
           );
         }
         // A scrollable <pre> must be focusable; role="region" lets it carry the caption as its name.
