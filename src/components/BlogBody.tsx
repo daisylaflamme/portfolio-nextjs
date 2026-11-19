@@ -59,14 +59,26 @@ export default function BlogBody({ blocks }: { blocks: readonly BlogBlock[] }) {
         if (block.type === "figure") {
           return (
             <figure key={index} className="my-1 max-w-full min-w-0">
+              {/* With a light version, CSS shows one image per theme; the hidden one (display: none,
+                  loading="lazy") is never downloaded and is out of the accessibility tree. */}
               <Image
                 src={block.src}
                 alt={block.alt}
                 width={block.width}
                 height={block.height}
                 sizes="(min-width: 768px) 720px, calc(100vw - 2rem)"
-                className="h-auto w-full rounded-xl border border-line"
+                className={`h-auto w-full rounded-xl border border-line ${block.srcLight ? "theme-dark-only" : ""}`}
               />
+              {block.srcLight ? (
+                <Image
+                  src={block.srcLight}
+                  alt={block.alt}
+                  width={block.width}
+                  height={block.height}
+                  sizes="(min-width: 768px) 720px, calc(100vw - 2rem)"
+                  className="theme-light-only h-auto w-full rounded-xl border border-line"
+                />
+              ) : null}
               <figcaption className="mt-2 text-[15px] leading-6 text-muted">{block.caption}</figcaption>
             </figure>
           );

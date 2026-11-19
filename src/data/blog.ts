@@ -192,7 +192,7 @@ export class SessionFacade {
     title: "What the frontend actually does in a cloud app",
     description:
       "A plain-language look at how a web page talks to the services behind it, keeps people informed while it waits, and keeps their data safe.",
-    date: "2026-11-13",
+    date: "2026-04-13",
     kicker: "APIs and hosted services",
     tags: ["rest", "auth", "payments", "security", "ux"],
     body: [
@@ -203,6 +203,7 @@ export class SessionFacade {
       {
         type: "figure",
         src: "/images/blog/frontend-cloud-app.webp",
+        srcLight: "/images/blog/frontend-cloud-app-light.webp",
         width: 1600,
         height: 900,
         alt: "Diagram: the page in your browser asks the server to make a greeting and shows progress steps (uploading image, generating motion, finalizing) while it waits. The server checks who you are, decides prices and payments, keeps the secret keys and talks to trusted services for sign-in (Auth0, Supabase), payments (TokenEx, Stripe) and AI. The browser holds only a short-lived token.",

@@ -58,6 +58,10 @@ describe("blog posts", () => {
         if (block.type !== "figure") continue;
         assert.match(block.src, /^\/images\/blog\/[a-z0-9-]+\.webp$/);
         assert.ok(existsSync(join("public", block.src)), block.src);
+        if (block.srcLight) {
+          assert.match(block.srcLight, /^\/images\/blog\/[a-z0-9-]+\.webp$/);
+          assert.ok(existsSync(join("public", block.srcLight)), block.srcLight);
+        }
         assert.ok(block.alt.length > 20 && block.caption.length > 0, block.src);
         assert.ok(block.width > 0 && block.height > 0, block.src);
       }

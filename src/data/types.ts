@@ -209,8 +209,19 @@ export type BlogBlock =
   | { type: "h2"; text: string }
   | { type: "ul"; items: string[] }
   | { type: "code"; caption: string; code: string }
-  /** An image under public/ (WebP), with its intrinsic size so it never shifts the layout. */
-  | { type: "figure"; src: string; alt: string; caption: string; width: number; height: number };
+  /**
+   * An image under public/ (WebP), with its intrinsic size so it never shifts the layout.
+   * `src` is the dark-theme image; optional `srcLight` (same size) replaces it in the light theme.
+   */
+  | {
+      type: "figure";
+      src: string;
+      srcLight?: string;
+      alt: string;
+      caption: string;
+      width: number;
+      height: number;
+    };
 
 export interface BlogPost {
   /** URL slug under /blog/. */
