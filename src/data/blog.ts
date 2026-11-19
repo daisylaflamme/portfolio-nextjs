@@ -1,4 +1,5 @@
 import { RETAIL_DASHBOARD_PATH } from "../lib/dashboards/larrys/content.ts";
+import { ONLINE_RETAIL_PATH } from "../lib/dashboards/online-retail/content.ts";
 import type { BlogBlock, BlogPost } from "./types.ts";
 
 /**
@@ -188,71 +189,83 @@ export class SessionFacade {
   },
   {
     slug: "frontend-of-a-cloud-app",
-    title: "The frontend of a cloud app: REST, tokens, and what you actually own",
+    title: "What the frontend actually does in a cloud app",
     description:
-      "How an Angular storefront and a React product talk to REST, Auth0, TokenEx, Stripe, GTM and Edge Functions — without pretending the UI engineer owns AWS.",
-    date: "2026-11-13",
+      "A plain-language look at how a web page talks to the services behind it, keeps people informed while it waits, and keeps their data safe.",
+    date: "2026-04-13",
     kicker: "APIs and hosted services",
-    tags: ["angular", "rest", "auth0", "stripe", "gtm"],
+    tags: ["rest", "auth", "payments", "security", "ux"],
     body: [
       {
         type: "p",
-        text: "Job posts say “integrate with AWS” the way they used to say “cloud.” What I can defend is this: a browser talks JSON to something you do not SSH into. On the furniture platform that something is a C# BFF. On GifSpark it is Supabase and Deno Edge Functions. On this site, optional Postgres through a pooler. I consume those endpoints. I do not design VPCs.",
+        text: "When you tap “Add to cart” or “Pay now,” the page in your browser doesn’t do the work itself. It sends a short message to a server somewhere (“add this item,” “charge this card”) and waits for an answer. The frontend’s job is to ask clearly, keep you informed while it waits, show the answer well, and protect what it touches along the way.",
       },
-      { type: "h2", text: "The BFF is the cloud, as far as Angular is concerned" },
+      {
+        type: "figure",
+        src: "/images/blog/frontend-cloud-app.webp",
+        srcLight: "/images/blog/frontend-cloud-app-light.webp",
+        width: 1600,
+        height: 900,
+        alt: "Diagram: the page in your browser asks the server to make a greeting and shows progress steps (uploading image, generating motion, finalizing) while it waits. The server checks who you are, decides prices and payments, keeps the secret keys and talks to trusted services for sign-in (Auth0, Supabase), payments (TokenEx, Stripe) and AI. The browser holds only a short-lived token.",
+        caption: "The browser asks, the server decides, and the screen keeps people informed in between.",
+      },
+      { type: "h2", text: "The browser asks, the server decides" },
       {
         type: "p",
-        text: "Search, product, cart, payment, and account facades call REST. SearchFacadeV2 maps classifications, variant groups, promotions and availability into a stable UI model so the PLP does not care which search vendor shaped the JSON. Feature flags and GTM container IDs arrive from /api/environment/config. If the BFF is down, the UI has an error state, not a retry storm I invented.",
+        text: "On the ecommerce platform I worked on, the website never decided prices, stock, or whether a payment went through. It asked a server and displayed the reply. The same is true in GifSpark, my AI greeting app. That keeps the important decisions in one trusted place, and it means the screen shows the real answer, not a guess.",
+        link: { href: "https://gifspark.lovable.app/", label: "Try GifSpark" },
+      },
+      { type: "h2", text: "Waiting is part of the design" },
+      {
+        type: "p",
+        text: "Asking a server takes time: a fraction of a second for a product list, a minute or more for an AI animation. Without feedback, people wonder whether their click worked, click again, or leave. A spinner, a progress bar or a step list all say the same thing: your request is on its way and the page is waiting for an answer.",
+      },
+      {
+        type: "p",
+        text: "In GifSpark, creating a greeting shows named steps instead of a blank screen, so people can see how far along it is. If a step fails, the same panel says something went wrong instead of spinning forever.",
       },
       {
         type: "code",
-        caption: "HttpClient in a facade, mapped once, torn down with the view",
-        code: `this.searchFacade
-  .search(query)
-  .pipe(takeUntil(this.destroy$))
-  .subscribe({
-    next: (page) => {
-      this.products = page.products;
-      this.tagging.updateSearchV2(page.details);
-    },
-    error: (err) => this.error = err.message ?? "Search failed",
-  });`,
+        caption: "GifSpark: the steps people see while their greeting is made",
+        code: `const STATUS_STEPS = [
+  { key: "uploading", label: "Uploading image" },
+  { key: "generating_video", label: "Generating motion" },
+  { key: "finalizing", label: "Finalizing greeting" },
+  { key: "ready", label: "Ready!" },
+];`,
       },
       {
         type: "p",
-        text: "Checkout GTM events are not decoration. applicationLoad, PageViewDelivery, PageViewPayment, PageViewReview, PageViewThankyou — and a PageViewAll on each step — go through angular-google-tag-manager. TaggingService writes btData (cart lines, SKUs, categories, prices, promotions, payments, email). Marketing can report because the UI put the fields in the data layer. I do not own the GA4 property.",
+        text: "Payments need the same care. After checkout, the payment provider confirms the purchase to the server a moment later, so the page says “Processing your purchase… your credits are being added” and checks back until the credits appear. If it takes longer than expected, it says the payment was received and the credits may take a moment, rather than leaving people to worry they were charged for nothing.",
       },
-      { type: "h2", text: "Auth and secrets stay out of the bundle" },
+      {
+        type: "p",
+        text: "On my online retail dashboard, “Summarize this view” asks an AI model for a short summary. While it writes, the button turns into “stop,” the panel says “Writing…,” and if the request fails, the button becomes “retry” with a plain message. Screen readers hear the finished summary, so the update is clear to everyone, not only to people who can see the screen.",
+        link: { href: ONLINE_RETAIL_PATH, label: "See the dashboard" },
+      },
       {
         type: "ul",
         items: [
-          "Storefront sign-in is Auth0 (@auth0/auth0-spa-js). Session guards decide whether account and checkout routes exist for this user.",
-          "Card data goes through TokenEx hosted fields. The Angular model sees a token, not a PAN. That is the PCI line.",
-          "GifSpark Google sign-in sits in Supabase Auth. Edge Functions use the service role on the server. The SPA never gets that key.",
-          "Termly CMP is the first script in the document head on the storefronts that use it. GTM tags wait on consent categories. Analytics is not more important than the checkbox.",
+          "Waiting: show that something is happening, and how far along it is when you know.",
+          "Success: show the result, and confirm what changed.",
+          "Error: say what went wrong in plain words and offer a way to try again.",
+          "Empty: when there’s nothing to show, say so instead of leaving a blank space.",
         ],
       },
-      {
-        type: "code",
-        caption: "GifSpark support chat: the browser streams; the key stays on the Edge Function",
-        code: `const response = await fetch("/functions/v1/support-chat", {
-  method: "POST",
-  headers: { Authorization: \`Bearer \${session.access_token}\` },
-  body: JSON.stringify({ messages, credits }),
-  signal: controller.signal,
-});
-const reader = response.body!.getReader();
-// Parse text/event-stream "data:" deltas into the transcript.`,
-      },
-      { type: "h2", text: "Payments are vendor SDKs plus your state machine" },
+      { type: "h2", text: "Secrets never ship to the browser" },
       {
         type: "p",
-        text: "Affirm, Acima, ChargeAfter, Progressive Leasing, Synchrony, Unifi, gift cards, split pay — each one is a script or npm package wrapped in a library component, gated by tenant config. The BFF still authorizes and captures. GifSpark maps Stripe price IDs to credit packs in a webhook, then a Postgres function add_credits_from_purchase. The React app polls until the balance moves, then sends the user home. That is full-stack in the small: UI, function, table. It is not RDS, ECS, or API Gateway as a platform I run.",
+        text: "Anything in a web page can be viewed by anyone who opens it. So passwords, payment keys and AI service keys stay on the server. Sign-in runs through a dedicated service such as Auth0 or Supabase, and the browser only holds a short-lived pass that proves who you are. On the dashboard, the browser sends only the tab and the filters; the server works out the numbers and holds the AI key.",
       },
-      { type: "h2", text: "Python, AWS, and the honest sentence" },
+      { type: "h2", text: "Card numbers never touch our code" },
       {
         type: "p",
-        text: "I have used Python as a data script (building a typed snapshot for a dashboard). I have not written the Python API a federal posting means. I have not shipped Lambda, CloudFront, or ECS. The closest cloud work is: call a hosted HTTPS API, keep secrets on the server, handle 401/429/402 in the UI, and log enough to debug without putting PII in Rapid7. If a team needs that plus someone who will learn their AWS account, I can do the first half on day one.",
+        text: "At checkout on the ecommerce platform, the card fields came from TokenEx, a secure payment service. When you typed your card number, our code never saw it. It got back a token, a stand-in that is useless to anyone else. In GifSpark, Stripe works the same way: Stripe’s checkout handles the card, and the app only learns that the purchase went through. The provider handles the sensitive part, and the site handles the experience around it.",
+      },
+      { type: "h2", text: "The takeaway" },
+      {
+        type: "p",
+        text: "The cloud does the heavy lifting. The frontend is where people meet it. My job is to make that moment clear, fast and safe: keep people informed while they wait, explain what happened when something goes wrong, keep secrets off the page, and let trusted services handle what they do best.",
       },
     ],
   },
@@ -336,6 +349,11 @@ export const blogPosts: readonly BlogPost[] = [...posts].sort((a, b) => b.date.l
 
 export function blogPath(slug: string): string {
   return `/blog/${slug}`;
+}
+
+/** True for an https:// link to another site (it opens in a new tab); site paths start with "/". */
+export function isExternal(href: string): boolean {
+  return href.startsWith("https://");
 }
 
 export function getPost(slug: string): BlogPost | undefined {

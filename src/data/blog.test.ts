@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { describe, it } from "node:test";
 import { BLOG_POST_PRIORITY, PAGES, jsonLdHtml } from "../lib/seo.ts";
-import { blogPath, blogPosts, formatPostDate, getPost, headingIds } from "./blog.ts";
+import { blogPath, blogPosts, formatPostDate, getPost, headingIds, isExternal } from "./blog.ts";
 import type { BlogBlock } from "./types.ts";
 
 describe("blog posts", () => {
@@ -38,11 +40,30 @@ describe("blog posts", () => {
     assert.doesNotMatch(text, /Larry[’']s Secret/);
   });
 
-  it("links point at real pages", () => {
+  it("links point at real pages or https sites", () => {
     const paths = new Set(Object.values(PAGES).map((page) => page.path));
     for (const post of blogPosts) {
       for (const block of post.body) {
-        if (block.type === "p" && block.link) assert.ok(paths.has(block.link.href), block.link.href);
+        if (block.type !== "p" || !block.link) continue;
+        const { href } = block.link;
+        if (isExternal(href)) assert.doesNotThrow(() => new URL(href), href);
+        else assert.ok(paths.has(href), href);
+      }
+    }
+  });
+
+  it("figures are WebP files under public/ with alt text and a size", () => {
+    for (const post of blogPosts) {
+      for (const block of post.body) {
+        if (block.type !== "figure") continue;
+        assert.match(block.src, /^\/images\/blog\/[a-z0-9-]+\.webp$/);
+        assert.ok(existsSync(join("public", block.src)), block.src);
+        if (block.srcLight) {
+          assert.match(block.srcLight, /^\/images\/blog\/[a-z0-9-]+\.webp$/);
+          assert.ok(existsSync(join("public", block.srcLight)), block.srcLight);
+        }
+        assert.ok(block.alt.length > 20 && block.caption.length > 0, block.src);
+        assert.ok(block.width > 0 && block.height > 0, block.src);
       }
     }
   });
