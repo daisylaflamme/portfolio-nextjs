@@ -73,117 +73,94 @@ const posts: BlogPost[] = [
   },
   {
     slug: "angular-and-react-same-ui-two-runtimes",
-    title: "I ship Angular and React. Here is the translation layer.",
+    title: "Angular and React: the same ideas with different wiring",
     description:
-      "A working map between Angular and React — components, async state, change detection, forms, routing and CSS — from someone who has shipped both in production.",
-    date: "2026-11-10",
+      "A plain-language map between Angular and React: where the HTML and CSS live, how components and data work, how flexible each one is, and when to choose which.",
+    date: "2026-06-10",
     kicker: "Angular and React",
-    tags: ["angular", "react", "typescript", "rxjs"],
+    tags: ["angular", "react", "typescript", "css", "architecture"],
     body: [
       {
         type: "p",
-        text: "For nearly a decade I spent most of my week in Angular. The storefronts I worked on are Angular, TypeScript, RxJS and Signals, SCSS, a versioned component library, and a C# BFF. I also ship React: GifSpark is React 18, Vite, TanStack Query and Stripe; this site is Next.js 16 and React 19. Recruiters treat that as two résumés. It is one job — user interface — with two runtimes.",
+        text: "Angular and React look different on the surface, but they solve the same problem: turn data into a screen, and update the screen when the data or the user changes something. Once you see the shared ideas, moving between them is mostly learning where each one puts things.",
+      },
+      { type: "h2", text: "Where the HTML lives" },
+      {
+        type: "p",
+        text: "In Angular, the HTML is a template: usually its own .html file next to the component, or a short inline template. It looks like regular HTML with a few extras, such as @if and @for for conditions and lists, and {{ }} to show a value. In React, the HTML is JSX, written inside the component function itself. Conditions and lists are plain JavaScript: a ternary or && for “show this if,” and .map() for lists.",
       },
       {
         type: "p",
-        text: "This is the translation I use when I move a pattern from one codebase to the other. None of it is “Angular is better” or “React is the future.” It is what actually has to match: a typed model, a place for async work, a way to stop leaking subscriptions, and markup a screen reader can use.",
+        text: "Both end up as the same HTML in the browser, so the same rules apply: real buttons and links, headings in order, labels on form fields.",
       },
-      { type: "h2", text: "Components are the same idea with different wiring" },
-      {
-        type: "p",
-        text: "In the storefront, a versioned library component is an NgModule (or a standalone component on newer surfaces) with @Input for data, @Output EventEmitter for user intent, OnPush change detection, and a host class so tenant SCSS can theme it. The same product card exists as slate / sky / crimson versions. The parent does not fork the template; it picks a version from server-driven config.",
-      },
-      {
-        type: "p",
-        text: "In React I do the same split with props and a callback. GifSpark’s generation flow is a page that owns the machine (uploading | generating_video | finalizing | ready) and child views that only render that state. There is no EventEmitter; there is onComplete. There is no NgModule; there is a file that exports a function. The design rule does not change: the child does not fetch the world. The parent, or a hook the parent owns, does.",
-      },
-      {
-        type: "code",
-        caption: "Angular: data in, events out, OnPush (storefront library pattern)",
-        code: `@Component({
-  selector: "bpc-product-card-slate",
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: "bpc-product-card bpc-product-card-slate" },
-})
-export class ProductCardSlateComponent {
-  @Input({ required: true }) product!: Product;
-  @Output() readonly add = new EventEmitter<Product>();
-}`,
-      },
-      {
-        type: "code",
-        caption: "React: same contract as props (GifSpark-style view)",
-        code: `type ResultViewProps = {
-  status: "uploading" | "generating_video" | "finalizing" | "ready";
-  onDownload: (kind: "webp" | "gif" | "mp4") => void;
-};
-
-export function ResultView({ status, onDownload }: ResultViewProps) {
-  // The parent owns the job. This file only draws it.
-}`,
-      },
-      { type: "h2", text: "Async state: facades and Observables vs Query and hooks" },
-      {
-        type: "p",
-        text: "The storefront does not use NgRx on the pages I live in. Shared state is a facade service: inject HttpClient, map the BFF JSON into a UI model, hold it on a BehaviorSubject, expose an Observable. Search, cart, session, and product details all follow that shape. Components subscribe in the template with async pipe, or in the class with takeUntil(this.destroy$). That last part matters. A subscribe without a teardown is a leak; OnPush will not save you.",
-      },
-      {
-        type: "p",
-        text: "GifSpark’s equivalent is TanStack Query. useCredits() is useQuery on user_credits, refetchInterval 10 seconds, enabled only when there is a user. Auth invalidates that query on sign-in; a finished generation invalidates it again so the header credit count moves. I did not hand-roll a global store. The cache is the store.",
-      },
-      {
-        type: "code",
-        caption: "Angular facade: one subject, one public stream",
-        code: `@Injectable({ providedIn: "root" })
-export class SessionFacade {
-  private readonly session = new BehaviorSubject<Session | null>(null);
-  readonly session$ = this.session.asObservable();
-
-  constructor(private readonly http: HttpClient) {}
-
-  refresh(): Observable<Session> {
-    return this.http.get<Session>("/api/session").pipe(
-      tap((value) => this.session.next(value)),
-    );
-  }
-}`,
-      },
-      {
-        type: "code",
-        caption: "React Query: the cache is the subject",
-        code: `export function useCredits(userId: string | undefined) {
-  return useQuery({
-    queryKey: ["user_credits", userId],
-    queryFn: () => fetchCredits(userId!),
-    enabled: Boolean(userId),
-    refetchInterval: 10_000,
-  });
-}`,
-      },
-      {
-        type: "p",
-        text: "Signals are the closest thing the storefront has to React state. I use them where the team has adopted them. I do not rewrite a working facade into a signal store for the résumé. js-in-colors is the place I used NgRx SignalStore on purpose, in a greenfield Angular 22 app, with ADRs. That is not the same as “four years of NgRx on the platform.”",
-      },
-      { type: "h2", text: "Change detection vs render" },
-      {
-        type: "p",
-        text: "OnPush means Angular only checks the component when an @Input reference changes, an event originates inside it, or you markForCheck(). That is why facades emit new objects instead of mutating arrays. IntersectionObserver on lazy images has to play with OnPush: the callback must mark the view dirty or the image never swaps. React’s default is the opposite — render the function again, then bail out if you memoized. I have useMemo and useCallback in GifSpark. I do not have a React Profiler practice I would defend in an interview. I do have a CLS practice I would: do not lazy-load the logo in the first viewport; reserve height; eager + fetchpriority high on the header mark.",
-      },
-      { type: "h2", text: "Forms, routing, CSS" },
+      { type: "h2", text: "Where the CSS can live" },
       {
         type: "ul",
         items: [
-          "Angular reactive forms on checkout: FormGroup, validators, valueChanges, disable the Place order button until the TokenEx iframe says the PAN is tokenized. The card number never sits in the Angular model.",
-          "GifSpark checkout is Stripe Embedded Checkout, not a hand-rolled card form. That is the right amount of React for PCI.",
-          "Storefront routing is lazy NgModules (search, product, cart, checkout, account). Checkout is a second Angular bootstrap so the payment bundle is not in the browsing app.",
-          "GifSpark uses route-level React.lazy / Suspense. This site uses the App Router: server components by default, \"use client\" only where there is state.",
-          "CSS: storefront is SCSS, ITCSS-ish, Figma tokens compiled to custom properties, per-tenant skins. GifSpark and this site are Tailwind. Tokens vs utility classes is a team choice. Specificity wars vs class-string wars — pick one and lint it.",
+          "Angular: each component can have its own stylesheet (CSS or SCSS), and Angular scopes it to that component by default, so a .title class in one component doesn’t leak into another. Global styles and design tokens sit in a shared stylesheet.",
+          "React: there’s no built-in rule. Teams choose plain CSS files, CSS Modules (scoped class names), utility classes like Tailwind, or CSS-in-JS.",
+          "Both: design tokens as CSS custom properties, SCSS, and Tailwind all work. The choice is about the team’s conventions, not the framework.",
         ],
       },
-      { type: "h2", text: "What I say when someone asks which one I “really” am" },
+      { type: "h2", text: "Components: data in, events out" },
       {
         type: "p",
-        text: "I am an Angular production engineer who also ships React. The longest scars — multi-tenant libraries, checkout, Auth0, GTM, schema.org — are Angular. The newest product loops — Query, SSE chat, Stripe, Next metadata — are React. If a team needs Module Federation, NgRx as the platform, or a React render-budget expert, that is not the work in these repos. If they need someone who can read a Figma file, type the model, and not leak a subscription in either runtime, that is the work.",
+        text: "In both, a component receives data from its parent and tells the parent when the user does something. Angular calls these inputs and outputs. React calls them props, with functions passed in for events. The idea is identical: the child draws, and the parent decides.",
+      },
+      {
+        type: "code",
+        caption: "Angular: a product card with an input and an output",
+        code: `@Component({
+  selector: "app-product-card",
+  template: \`
+    <h3>{{ product().name }}</h3>
+    <button type="button" (click)="add.emit(product())">Add to cart</button>
+  \`,
+})
+export class ProductCard {
+  product = input.required<Product>();
+  add = output<Product>();
+}`,
+      },
+      {
+        type: "code",
+        caption: "React: the same card with props",
+        code: `function ProductCard({ product, onAdd }: Props) {
+  return (
+    <>
+      <h3>{product.name}</h3>
+      <button type="button" onClick={() => onAdd(product)}>Add to cart</button>
+    </>
+  );
+}`,
+      },
+      { type: "h2", text: "Data and state" },
+      {
+        type: "p",
+        text: "Angular shares data through services: a class that loads data once and hands it to any component that asks, using RxJS streams or Signals. React keeps state inside components with hooks (useState, useEffect), shares it with context, and often uses a data library such as TanStack Query to fetch, cache and refresh server data. Different tools, same goals: load it once, keep it in sync, and clean up when the screen goes away.",
+      },
+      { type: "h2", text: "Updating the screen" },
+      {
+        type: "p",
+        text: "Angular checks components for changes and updates only the parts of the page that changed. Signals make that more precise. React runs the component function again when its state or props change, then updates only what’s different in the page. In both, the habit that matters is the same: replace data with new values instead of changing it in place, so the framework can tell something changed.",
+      },
+      { type: "h2", text: "How flexible is each one?" },
+      {
+        type: "ul",
+        items: [
+          "Angular is a full framework. Routing, forms, HTTP, dependency injection, testing and a command-line tool are included and work the same way in every Angular project. Less to decide, more consistency across teams.",
+          "React is a UI library. You choose the router, data fetching, forms and styling, or pick a framework such as Next.js that makes those choices and adds server rendering. More freedom, more decisions.",
+          "Both support lazy loading (download code only when a page needs it), server rendering, TypeScript, and large monorepos.",
+        ],
+      },
+      { type: "h2", text: "When to use which" },
+      {
+        type: "ul",
+        items: [
+          "Angular fits large, long-lived apps built by several teams: dashboards, admin tools, ecommerce platforms and form-heavy flows, where shared conventions matter more than freedom.",
+          "React fits when flexibility and ecosystem matter: content and marketing sites with Next.js, products that change fast, and teams that want to share skills with React Native for mobile apps.",
+          "Either one: the team’s existing skills and the code already in place usually decide more than the framework’s features.",
+        ],
       },
     ],
   },
