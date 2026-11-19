@@ -36,7 +36,8 @@ export type PageKey =
   | "blog"
   | "about"
   | "resume"
-  | "contact";
+  | "contact"
+  | "privacy";
 
 export const PAGES: Record<PageKey, PageInfo> = {
   home: {
@@ -113,6 +114,13 @@ export const PAGES: Record<PageKey, PageInfo> = {
     description:
       "Get in touch with Daisy Laflamme, senior front-end and UI engineer based in Braintree, MA and available for remote work.",
     priority: 0.7,
+  },
+  privacy: {
+    path: "/privacy",
+    title: "Privacy",
+    description:
+      "What this site collects and why: anonymous Vercel analytics without cookies, contact form messages sent by email, and résumé link tags.",
+    priority: 0.3,
   },
 };
 

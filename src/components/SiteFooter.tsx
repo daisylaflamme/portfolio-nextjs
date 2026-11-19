@@ -31,6 +31,11 @@ export default function SiteFooter() {
               education
             </Link>
           </li>
+          <li>
+            <Link href="/privacy" className="inline-flex min-h-11 items-center text-fg hover:text-accent">
+              privacy
+            </Link>
+          </li>
         </ul>
       </div>
       <p className="mx-auto max-w-6xl px-4 pb-8 text-sm text-muted sm:px-6">© {new Date().getFullYear()} Daisy Laflamme</p>
