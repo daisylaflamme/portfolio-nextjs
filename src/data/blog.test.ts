@@ -7,9 +7,9 @@ import { blogPath, blogPosts, formatPostDate, getPost, headingIds, isExternal } 
 import type { BlogBlock } from "./types.ts";
 
 describe("blog posts", () => {
-  it("has unique slugs and four notes", () => {
+  it("has unique slugs and five notes", () => {
     const slugs = blogPosts.map((post) => post.slug);
-    assert.equal(slugs.length, 4);
+    assert.equal(slugs.length, 5);
     assert.equal(new Set(slugs).size, slugs.length);
   });
 
@@ -47,7 +47,8 @@ describe("blog posts", () => {
         if (block.type !== "p" || !block.link) continue;
         const { href } = block.link;
         if (isExternal(href)) assert.doesNotThrow(() => new URL(href), href);
-        else assert.ok(paths.has(href), href);
+        // A site link may add a query string, such as ?project= to open a case study.
+        else assert.ok(paths.has(href.split("?")[0]), href);
       }
     }
   });
