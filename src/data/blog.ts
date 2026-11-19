@@ -26,6 +26,14 @@ const posts: BlogPost[] = [
         type: "p",
         text: "I spent nearly a decade building Angular and TypeScript interfaces: shared UI libraries and configuration-driven layouts for many brands on one platform. Lately I’ve been working in React and Next.js. To learn Webflow properly, I built a blog in it. Here’s how its mental model mapped to mine, and where it didn’t.",
       },
+      {
+        type: "figure",
+        src: "/images/blog/webflow-designer-pages.webp",
+        width: 1486,
+        height: 956,
+        alt: "Webflow Designer showing the blog’s home page: a mint-green navigation bar (daisy.laflamme, Blog, About, Portfolio, Contact), a dark hero with the label “// frontend field notes,” the heading “Practical notes on building accessible, fast interfaces” and a “read the latest posts” button, and three post cards. The Pages panel on the left lists Home, About, Posts, Post, a Style guide page and a Blog Posts Template CMS collection page.",
+        caption: "The Webflow version of the blog in the Designer, with its pages, style guide and CMS template on the left.",
+      },
       { type: "h2", text: "What felt familiar" },
       {
         type: "p",
@@ -54,6 +62,14 @@ const posts: BlogPost[] = [
         text: "I design mobile first. Webflow’s base breakpoint is desktop, and styles cascade down to tablet and phone, while larger breakpoints cascade up. Once I stopped fighting it and checked every element at each breakpoint, it clicked. It also made me more deliberate about what each screen size really needs.",
       },
       {
+        type: "figure",
+        src: "/images/blog/webflow-designer-breakpoints.webp",
+        width: 1600,
+        height: 743,
+        alt: "Webflow Designer showing the same home page at four breakpoints side by side: desktop, tablet, mobile landscape and mobile portrait. The navigation collapses to a menu button and the three post cards stack into fewer columns as the screen narrows. The right panel shows the “Daisy Hero” component’s properties: hero heading, hero label, hero subtext, primary button text and link, and a show-button visibility toggle.",
+        caption: "One page at four breakpoints, with the hero component’s editable properties on the right.",
+      },
+      {
         type: "p",
         lead: "No state, just interactions.",
         text: "There’s no useState, no signals, no services, no RxJS streams. Interactions handle the visual states, such as hover, scroll, and open or closed. That’s enough for marketing sites, and anything more complex is where custom code or DevLink comes in.",
@@ -62,6 +78,11 @@ const posts: BlogPost[] = [
         type: "p",
         lead: "The visual editor is the source of truth.",
         text: "In React or Angular, the code is the design. In Webflow, the canvas is. My habits still apply: semantic tags, one H1, labelled links, alt text, and checking contrast. I just set them in a panel instead of writing them in code.",
+      },
+      { type: "h2", text: "Same look, two design systems" },
+      {
+        type: "p",
+        text: "The Webflow blog and this Next.js blog look alike, but their design systems live in different places. Here, the system is code: colors are CSS custom properties in one stylesheet, exposed as Tailwind classes, with a dark theme by default and a light theme behind a toggle. Fonts load through next/font, and components are React files that go through pull requests and tests. In Webflow, the same ideas live in the Designer: classes hold the styles, a style guide page shows them in one place, and the hero is a Component whose heading, label, text and button are properties anyone can edit in the side panel. Changing a color is a commit here and a few clicks there. Code gives me version history and automated checks; Webflow gives non-developers a safe way to update content without breaking the layout.",
       },
       { type: "h2", text: "Takeaway" },
       {
