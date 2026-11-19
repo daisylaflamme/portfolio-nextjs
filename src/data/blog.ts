@@ -1,4 +1,3 @@
-import { RETAIL_DASHBOARD_PATH } from "../lib/dashboards/larrys/content.ts";
 import { ONLINE_RETAIL_PATH } from "../lib/dashboards/online-retail/content.ts";
 import type { BlogBlock, BlogPost } from "./types.ts";
 
@@ -248,74 +247,107 @@ export class ProductCard {
   },
   {
     slug: "accessible-forms-tests-and-data-you-can-trust",
-    title: "Accessible forms, tests, and data you can trust",
+    title: "Accessible forms: the rules, the tests, and where your data goes",
     description:
-      "How production Angular forms, Cypress-axe, JSON-LD and a retail dashboard treat data collection — and where that is not a federal survey platform or a Section 508 program.",
-    date: "2026-11-12",
-    kicker: "A11y, tests, data UIs",
-    tags: ["accessibility", "testing", "seo", "angular"],
+      "A plain-language guide to accessibility terms (a11y, WCAG 2.2 AA, Section 508, ADA), what makes a form easy for everyone, how cypress-axe tests it, and what happens to what you type.",
+    date: "2026-11-05",
+    kicker: "Accessibility",
+    tags: ["accessibility", "wcag", "forms", "testing", "privacy"],
     body: [
       {
         type: "p",
-        text: "Federal postings want Section 508, WCAG, automated tests, and often a survey or research app. I have not shipped a Census instrument or a 508 program of record. I have shipped the parts those systems are made of: forms that must not lose data, tests that fail on contrast and names, and pages that expose a real document to a crawler.",
-      },
-      { type: "h2", text: "Forms are data collection, even when they are checkout" },
-      {
-        type: "p",
-        text: "Checkout, delivery, account, and store-hours editors are long forms with validation, disabled submit, and errors that have to be associated with the control. Lead-gen work from earlier in my career posted a GPHomestay inquiry into Salesforce and a Cambridge registration into QuickBase. js-in-colors Ask Dot is a constrained form: a question in, a streamed answer out, with a system prompt that will not train on the child and a demo mode when CHAT_PROVIDER is not groq.",
+        text: "Forms are where a website asks you for something: your name, your email, your card. If a form is hard to use, some people can’t finish it at all. And once you press “Send,” it’s fair to ask where your information goes. This note covers both.",
       },
       {
-        type: "p",
-        text: "The storefront page builder is a different kind of collection: nested ContentRow / ContentColumn JSON, a path (stackTrace) to the node you are editing, and a snapshot list for undo. Retailers type merchandising, not survey answers. The UI problem is the same — do not corrupt the tree, do not lose the last good state.",
+        type: "figure",
+        src: "/images/blog/accessible-forms.webp",
+        srcLight: "/images/blog/accessible-forms-light.webp",
+        width: 1600,
+        height: 900,
+        alt: "Diagram of what happens when you press send. 1, the form: an Email field with a visible label, an error message in words (“Enter an email like name@example.com”) and a focused send button; every field has a label, errors are not shown by color alone, and it works with a keyboard and screen reader. The message travels over encrypted HTTPS to 2, the server, which checks again: required fields, a real-looking email, length limits, a spam trap and making any code in the text harmless. Only if it passes, it goes to 3, an email service that delivers it to the site owner’s inbox; on this site it is not saved in a database. A strip at the bottom explains the rules: a11y is short for accessibility, WCAG 2.2 AA is the usual target checklist, Section 508 covers US federal websites, and the ADA is a US civil rights law.",
+        caption: "A form that everyone can use, checked again on the server, and delivered to one inbox.",
       },
-      { type: "h2", text: "What “tested” means in these repos" },
+      { type: "h2", text: "The words, in plain English" },
       {
         type: "ul",
         items: [
-          "Storefront: Karma unit specs on components, guards and services, and Cypress component tests on the versioned library components. I kept them running; I did not build the test platform.",
-          "js-in-colors: Vitest for selectors and state; Cypress + cypress-axe at phone, tablet and desktop; Storybook a11y addon; GitHub Actions runs lint, unit, build, Storybook build, and the smoke.",
-          "This site: Node’s test runner on src/**/*.test.ts; Playwright at 390px and 1280px; axe on every public route in light and dark.",
-          "GifSpark: Playwright is in the tree. The Vitest file I will not pretend is a suite.",
+          "a11y: short for “accessibility” (an a, 11 letters, then a y). It means people with disabilities can use a site: with a screen reader, a keyboard only, zoomed in, or with low vision or color blindness.",
+          "WCAG: the Web Content Accessibility Guidelines from the W3C, the group that sets web standards. It’s a checklist of testable rules, in three levels: A (basic), AA and AAA (strictest).",
+          "WCAG 2.2 AA: the current version (2.2) at the middle level (AA), the one most organizations aim for. Examples: text has enough contrast, everything works with a keyboard, you can see where the focus is, and buttons are big enough to tap.",
+          "Section 508: a US law that requires federal agencies’ websites and software to be accessible. It uses WCAG 2.0 AA as its standard.",
+          "ADA: the Americans with Disabilities Act, a US civil rights law. Courts have applied it to websites, and a Justice Department rule names WCAG 2.1 AA for state and local government sites.",
         ],
       },
       {
+        type: "p",
+        text: "That’s a summary, not legal advice. For everyday building, the practical target is WCAG 2.2 AA.",
+      },
+      { type: "h2", text: "What makes a form easy for everyone" },
+      {
+        type: "p",
+        text: "A visible label on every field, errors written in words (not just a red border), and an error that’s connected to its field so a screen reader announces it. This is the email field from my contact form, simplified:",
+      },
+      {
         type: "code",
-        caption: "cypress-axe is the WCAG conversation I can have without a 508 office",
+        caption: "A label, an error in words, and the link between them",
+        code: `<label htmlFor="email">Email</label>
+<input
+  id="email"
+  type="email"
+  aria-invalid={hasError}
+  aria-describedby={hasError ? "email-error" : undefined}
+/>
+{hasError && (
+  <p id="email-error" role="alert">
+    Enter an email like name@example.com
+  </p>
+)}`,
+      },
+      {
+        type: "p",
+        text: "htmlFor ties the label to the field, so tapping the word “Email” focuses the box. aria-invalid tells assistive technology the value is wrong. aria-describedby points to the message, and role=\"alert\" reads it out as soon as it appears.",
+      },
+      { type: "h2", text: "Testing it automatically: cypress-axe" },
+      {
+        type: "p",
+        text: "Cypress is a tool that opens a real browser and clicks through a site like a person would. axe is an accessibility checker. cypress-axe joins them, so every test run also checks the page for problems such as missing labels or low contrast, and the build fails if it finds a serious one. I use it in js-in-colors, a free app that teaches JavaScript through colors.",
+        link: { href: "https://daisylaflamme.github.io/js-in-colors/", label: "Try js-in-colors" },
+      },
+      {
+        type: "code",
+        caption: "cypress-axe: open the page, then fail on serious accessibility problems",
         code: `cy.visit("/lesson/variables/");
 cy.injectAxe();
-cy.checkA11y(undefined, {
-  includedImpacts: ["critical", "serious"],
-});`,
+cy.checkA11y(undefined, { includedImpacts: ["critical", "serious"] });`,
       },
       {
         type: "p",
-        text: "On the storefront the a11y work looks like tickets: labels, keyboard on the mega menu (click-to-open, not hover-only), skip patterns, ADA-style bugs on checkout. That is not “I certified the product WCAG 2.2 AA.” js-in-colors is the place I set that bar on purpose, including high-contrast theme and 44px targets.",
+        text: "Automated checks catch many common problems, but not all of them. A person still needs to try the page with a keyboard and a screen reader.",
       },
-      { type: "h2", text: "Make the data visible to people and to machines" },
+      { type: "h2", text: "Where your form data goes" },
       {
         type: "p",
-        text: "SeoService on the storefront writes title, description, canonical, and JSON-LD for Product, ProductGroup, BreadcrumbList, collections, search results and stores. SPA “not found” pages still return HTTP 200, so we set prerender-status-code 404 for Prerender.io. js-in-colors prerenders every lesson so the HTML has a real <title> and the lesson text before JavaScript. This site keeps a sitemap.ts in lockstep with PAGES.",
-      },
-      {
-        type: "code",
-        caption: "JSON-LD is a script tag you replace, not a comment in the footer",
-        code: `private insertStructuredData(data: StructuredData[]) {
-  document.querySelector('script[type="application/ld+json"]')?.remove();
-  this.scriptService
-    .createEmbedScript(JSON.stringify(data), { type: "application/ld+json" })
-    .pipe(take(1))
-    .subscribe();
-}`,
+        text: "Here’s what happens with the contact form on this site. Your message travels encrypted (HTTPS). The server checks it again, because anything sent from a browser can be faked: required fields, a real-looking email, length limits, and a hidden spam-trap field that only bots fill in. It makes any code in the text harmless, then an email service delivers it to my inbox, with your email as the reply address. It isn’t saved in a database on this site.",
+        link: { href: "/contact", label: "See the contact form" },
       },
       {
         type: "p",
-        text: "When the job wants “statistical programs” or dashboards, the honest artefact is Larry’s Stores: React + TypeScript + D3, typed selectors, KPI tiles, market-basket matrix, a loyalty what-if, a table under every chart. It is course data, anonymized. It is not SAS, and it is not a VA survey ops tool. It is how I put numbers on screen so a non-engineer can filter them.",
-        link: { href: RETAIL_DASHBOARD_PATH, label: "Open the Larry’s Stores dashboard" },
+        text: "Other sites may do much more with the same form: save it to a database, add you to a mailing list, or send it to a sales system. That’s allowed, but they should tell you in a privacy policy.",
       },
-      { type: "h2", text: "The sentence I use for federal a11y and research apps" },
+      { type: "h2", text: "Can you assume a form is safe?" },
       {
         type: "p",
-        text: "I can build Angular forms, keep automated a11y in CI, put schema on the page, and not lose user input. I have not run Section 508 acceptance for an agency, and I have not operated a survey platform. If that is the domain, I will learn the instrument. I will not relabel checkout as research.",
+        text: "Not automatically. A few quick checks help:",
+      },
+      {
+        type: "ul",
+        items: [
+          "The address starts with https:// and the browser shows no warning.",
+          "You know who runs the site, and it has a privacy policy that says what happens to your data.",
+          "It only asks for what it needs. A contact form doesn’t need your birthday or your card.",
+          "Card details are typed into the payment provider’s secure fields, not a plain text box.",
+          "When in doubt, share less, or contact the company another way.",
+        ],
       },
     ],
   },
