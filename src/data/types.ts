@@ -96,12 +96,16 @@ export interface Project {
   teamContribution?: string;
 }
 
-/** A degree in the Education section: school logo (or initials) plus text. */
+/** A degree or university study in the Education section: school logo (or initials) plus text. */
 export interface Degree {
   school: string;
+  /** The degree, or the kind of study when it didn't end in a degree (coursework transferred elsewhere). */
   degree: string;
   field: string;
-  year: number;
+  /** Graduation year. Leave it out when there isn't one to show. */
+  year?: number;
+  /** City and country, shown after the school (used for study outside the US). */
+  location?: string;
   /** Path under public/. Without one (or until the file exists), the initials tile is shown. */
   logo?: string;
   initials: string;

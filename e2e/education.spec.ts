@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { PAGES } from "../src/lib/seo";
-import { certifications, courseHistoryCount, diplomas, recentLearning } from "../src/data/certificates";
+import { certifications, courseHistoryCount, diplomas, languagesText, recentLearning } from "../src/data/certificates";
 
 const EDUCATION = `${PAGES.about.path}#education`;
 
@@ -26,7 +26,7 @@ test("Education shows degrees, certifications, recent learning and the course hi
 
   const section = page.locator("#education");
   await expect(section.getByRole("heading", { level: 2, name: "Education" })).toBeVisible();
-  for (const name of ["Degrees", "Certifications", "Recent learning"]) {
+  for (const name of ["Degrees and studies", "Languages", "Certifications", "Recent learning"]) {
     await expect(section.getByRole("heading", { level: 3, name })).toBeVisible();
   }
 
@@ -36,18 +36,21 @@ test("Education shows degrees, certifications, recent learning and the course hi
   }
 
   // Degrees: a text list (logo or initials tile + text), with no buttons, links or images of diplomas.
-  const degrees = section.getByRole("region", { name: "Degrees" });
+  const degrees = section.getByRole("region", { name: "Degrees and studies" });
   await expect(degrees.getByRole("listitem")).toHaveCount(diplomas.length);
   for (const degree of diplomas) {
     const item = degrees.getByRole("listitem").filter({ hasText: degree.school });
     await expect(item).toContainText(`${degree.degree}, ${degree.field}`);
     await expect(item).toContainText(`${degree.school}`);
-    await expect(item).toContainText(String(degree.year));
+    if (degree.year !== undefined) await expect(item).toContainText(String(degree.year));
+    if (degree.location) await expect(item).toContainText(degree.location);
   }
   await expect(degrees.getByRole("button")).toHaveCount(0);
   await expect(degrees.getByRole("link")).toHaveCount(0);
   // Logos are decorative: the school name is in the text.
   await expect(degrees.getByRole("img")).toHaveCount(0);
+
+  await expect(section.getByRole("region", { name: "Languages" })).toContainText(languagesText);
 
   const recent = section.getByRole("region", { name: "Recent learning" }).getByRole("listitem");
   await expect(recent).toHaveCount(recentLearning.length);

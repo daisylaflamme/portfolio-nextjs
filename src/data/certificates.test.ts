@@ -9,12 +9,19 @@ import {
   courseHistory,
   courseHistoryCount,
   diplomas,
+  languagesText,
   recentLearning,
 } from "./certificates.ts";
 
 const PUBLIC_DIR = fileURLToPath(new URL("../../public", import.meta.url));
 
 describe("education content", () => {
+  it("certifications are newest first, and languages read as on LinkedIn", () => {
+    const years = certifications.map((cert) => cert.year);
+    assert.deepEqual(years, [...years].sort((a, b) => b - a));
+    assert.equal(languagesText, "English (fluent), Bulgarian (native)");
+  });
+
   it("every recent-learning title matches exactly one course", () => {
     for (const title of RECENT_LEARNING_TITLES) {
       assert.equal(certificates.filter((cert) => cert.title === title).length, 1, title);

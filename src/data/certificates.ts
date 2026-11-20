@@ -1,6 +1,6 @@
 import type { Certificate, CertificateProvider, Degree } from "./types";
 
-/** Degrees, newest first. */
+/** Degrees and university studies, newest first. Kept consistent with the LinkedIn Education section. */
 export const diplomas: Degree[] = [
   {
     school: "Harvard University Extension School",
@@ -25,22 +25,38 @@ export const diplomas: Degree[] = [
     year: 2010,
     initials: "CC",
   },
+  {
+    school: "Technical University of Sofia",
+    degree: "Undergraduate engineering studies",
+    field: "Automation, Information and Control Engineering",
+    location: "Sofia, Bulgaria, EU",
+    initials: "TU",
+  },
 ];
 
-/** Professional certifications, shown under "Certifications". */
+/** Languages, as on LinkedIn, shown under "Languages" and on the résumé page. */
+export const languages: { name: string; level: string }[] = [
+  { name: "English", level: "fluent" },
+  { name: "Bulgarian", level: "native" },
+];
+
+/** "English (fluent), Bulgarian (native)" */
+export const languagesText = languages.map((language) => `${language.name} (${language.level})`).join(", ");
+
+/** Professional certifications, newest first, shown under "Certifications". */
 export const certifications: Certificate[] = [
-    {
-        thumbnail: "/images/certificates/thumbnails/marketo.jpg",
-        image: "/images/certificates/marketo.png",
-        title: "Marketo Certified Expert",
-        year: 2015
-      },
     {
         thumbnail: "/images/certificates/thumbnails/lunametrics.jpg",
         image: "/images/certificates/google-analytics-201-certificate.jpg",
         title: "Google Analytics Intermediate 201",
         year: 2016,
     },
+    {
+        thumbnail: "/images/certificates/thumbnails/marketo.jpg",
+        image: "/images/certificates/marketo.png",
+        title: "Marketo Certified Expert",
+        year: 2015
+      },
 ]
 
 /** Every course certificate. `recentLearning` picks a few; the rest make up the course history. */
