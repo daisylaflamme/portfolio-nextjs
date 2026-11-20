@@ -1,5 +1,6 @@
 import { PAGES, pageMetadata } from "@/lib/seo";
 import { RESUME_PDF } from "@/lib/resume";
+import { languagesText } from "@/data/certificates";
 
 export const metadata = pageMetadata(PAGES.resume);
 
@@ -95,7 +96,19 @@ export default function ResumePage() {
                 Architecture
               </li>
               <li><span className="font-bold">Cape Cod Community College</span> - A.S., Web Development</li>
+              <li>
+                <span className="font-bold">Technical University of Sofia</span> (Sofia, Bulgaria, EU) - Undergraduate
+                engineering studies, Automation, Information and Control Engineering
+              </li>
             </ul>
+          </section>
+
+          {/* Languages */}
+          <section>
+            <h2 className="font-playfair-display font-semibold text-sm text-[var(--color-font-primary)] uppercase tracking-wide border-b border-[var(--color-petal-border)] pb-1 mb-3">
+              Languages
+            </h2>
+            <p className="text-[var(--color-font-primary)] text-sm">{languagesText}</p>
           </section>
 
           {/* Technical Skills */}

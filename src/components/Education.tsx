@@ -5,6 +5,7 @@ import {
   courseHistory,
   courseHistoryCount,
   diplomas,
+  languagesText,
   recentLearning,
 } from "@/data/certificates";
 import type { Certificate, Degree } from "@/data/types";
@@ -60,7 +61,7 @@ export default function Education() {
       <div className="space-y-8">
         <section aria-labelledby="degrees-heading">
           <h3 id="degrees-heading" className={h3Class}>
-            Degrees
+            Degrees and studies
           </h3>
           <ul className={`${panelClass} space-y-5`} role="list">
             {diplomas.map((degree) => (
@@ -72,15 +73,31 @@ export default function Education() {
                   </span>
                   <Pause />
                   <span className="block text-sm text-muted">
-                    {degree.school}
-                    <span aria-hidden="true"> · </span>
-                    <Pause />
-                    {degree.year}
+                    {[degree.school, degree.location, degree.year]
+                      .filter((part) => part !== undefined)
+                      .map((part, i) => (
+                        <span key={String(part)}>
+                          {i > 0 ? (
+                            <>
+                              <span aria-hidden="true"> · </span>
+                              <Pause />
+                            </>
+                          ) : null}
+                          {part}
+                        </span>
+                      ))}
                   </span>
                 </p>
               </li>
             ))}
           </ul>
+        </section>
+
+        <section aria-labelledby="languages-heading">
+          <h3 id="languages-heading" className={h3Class}>
+            Languages
+          </h3>
+          <p className={`${panelClass} text-fg`}>{languagesText}</p>
         </section>
 
         <section aria-labelledby="certifications-heading">
